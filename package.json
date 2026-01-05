@@ -1,0 +1,14 @@
+{
+  "name": "ek-studio-monorepo",
+  "private": true,
+  "scripts": {
+    "dev-converter:dev": "pnpm --filter dev-converter dev",
+    "dev-converter:build": "pnpm --filter dev-converter build",
+    "dev-converter:start": "pnpm --filter dev-converter start"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "typescript": "^5.7.2"
+  },
+  "packageManager": "pnpm@10.27.0"
+}

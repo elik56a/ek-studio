@@ -1,0 +1,631 @@
+import JsonFormatterTool from "@/components/tools/json-formatter"
+
+import { Tool } from "./types"
+
+// Placeholder component for now
+const PlaceholderTool = () => null
+
+export const tools: Tool[] = [
+  {
+    id: "json-formatter",
+    slug: "json-formatter",
+    name: "JSON Formatter & Validator",
+    description:
+      "Format, validate, and beautify JSON data with error highlighting",
+    category: "json-data",
+    keywords: ["json", "format", "validate", "prettify", "minify"],
+    metadata: {
+      title: "JSON Formatter & Validator - Format and Validate JSON Online",
+      description:
+        "Free online JSON formatter and validator. Beautify, minify, and validate JSON data with syntax highlighting and error detection.",
+      keywords: [
+        "json formatter",
+        "json validator",
+        "json beautifier",
+        "json minifier",
+        "json parser",
+      ],
+    },
+    examples: [
+      {
+        title: "Basic JSON formatting",
+        input: '{"name":"John","age":30,"city":"New York"}',
+        description: "Format a simple JSON object",
+      },
+      {
+        title: "Nested JSON",
+        input: '{"users":[{"id":1,"name":"Alice"},{"id":2,"name":"Bob"}]}',
+        description: "Format JSON with nested arrays and objects",
+      },
+    ],
+    faq: [
+      {
+        question: "What is JSON formatting?",
+        answer:
+          "JSON formatting adds proper indentation and line breaks to make JSON data more readable.",
+      },
+      {
+        question: "Can this validate JSON?",
+        answer:
+          "Yes, the tool will show an error if your JSON syntax is invalid.",
+      },
+    ],
+    relatedTools: ["json-to-yaml", "json-to-csv"],
+    ui: {
+      inputPlaceholder: "Paste your JSON here...",
+      outputPlaceholder: "Formatted JSON will appear here...",
+      inputLabel: "JSON Input",
+      outputLabel: "Formatted JSON",
+      convertLabel: "Format JSON",
+    },
+    component: JsonFormatterTool,
+  },
+  {
+    id: "json-to-yaml",
+    slug: "json-to-yaml",
+    name: "JSON to YAML Converter",
+    description: "Convert JSON data to YAML format with proper indentation",
+    category: "json-data",
+    keywords: ["json", "yaml", "convert", "transform"],
+    metadata: {
+      title: "JSON to YAML Converter - Convert JSON to YAML Online",
+      description:
+        "Free online JSON to YAML converter. Transform JSON data to YAML format with proper indentation and structure.",
+      keywords: [
+        "json to yaml",
+        "yaml converter",
+        "json converter",
+        "data transformation",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["yaml-to-json", "json-formatter"],
+    ui: {
+      inputPlaceholder: "Paste your JSON here...",
+      outputPlaceholder: "YAML output will appear here...",
+      inputLabel: "JSON Input",
+      outputLabel: "YAML Output",
+      convertLabel: "Convert to YAML",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "yaml-to-json",
+    slug: "yaml-to-json",
+    name: "YAML to JSON Converter",
+    description: "Convert YAML data to JSON format with proper formatting",
+    category: "json-data",
+    keywords: ["yaml", "json", "convert", "transform"],
+    metadata: {
+      title: "YAML to JSON Converter - Convert YAML to JSON Online",
+      description:
+        "Free online YAML to JSON converter. Transform YAML data to JSON format with proper formatting and validation.",
+      keywords: [
+        "yaml to json",
+        "json converter",
+        "yaml converter",
+        "data transformation",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["json-to-yaml", "json-formatter"],
+    ui: {
+      inputPlaceholder: "Paste your YAML here...",
+      outputPlaceholder: "JSON output will appear here...",
+      inputLabel: "YAML Input",
+      outputLabel: "JSON Output",
+      convertLabel: "Convert to JSON",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "json-to-csv",
+    slug: "json-to-csv",
+    name: "JSON to CSV Converter",
+    description: "Convert JSON data to CSV format for spreadsheet applications",
+    category: "json-data",
+    keywords: ["json", "csv", "convert", "spreadsheet"],
+    metadata: {
+      title: "JSON to CSV Converter - Convert JSON to CSV Online",
+      description:
+        "Free online JSON to CSV converter. Transform JSON arrays to CSV format for Excel and spreadsheet applications.",
+      keywords: [
+        "json to csv",
+        "csv converter",
+        "json converter",
+        "spreadsheet converter",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["csv-to-json", "json-formatter"],
+    ui: {
+      inputPlaceholder: "Paste your JSON array here...",
+      outputPlaceholder: "CSV output will appear here...",
+      inputLabel: "JSON Input",
+      outputLabel: "CSV Output",
+      convertLabel: "Convert to CSV",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "csv-to-json",
+    slug: "csv-to-json",
+    name: "CSV to JSON Converter",
+    description:
+      "Convert CSV data to JSON format with automatic header detection",
+    category: "json-data",
+    keywords: ["csv", "json", "convert", "spreadsheet"],
+    metadata: {
+      title: "CSV to JSON Converter - Convert CSV to JSON Online",
+      description:
+        "Free online CSV to JSON converter. Transform CSV data to JSON format with automatic header detection and validation.",
+      keywords: [
+        "csv to json",
+        "json converter",
+        "csv converter",
+        "data transformation",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["json-to-csv", "json-formatter"],
+    ui: {
+      inputPlaceholder: "Paste your CSV here...",
+      outputPlaceholder: "JSON output will appear here...",
+      inputLabel: "CSV Input",
+      outputLabel: "JSON Output",
+      convertLabel: "Convert to JSON",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "base64-encode-decode",
+    slug: "base64-encode-decode",
+    name: "Base64 Encoder & Decoder",
+    description: "Encode text to Base64 or decode Base64 back to text",
+    category: "encoding",
+    keywords: ["base64", "encode", "decode", "binary"],
+    metadata: {
+      title: "Base64 Encoder & Decoder - Encode and Decode Base64 Online",
+      description:
+        "Free online Base64 encoder and decoder. Convert text to Base64 encoding or decode Base64 back to readable text.",
+      keywords: [
+        "base64 encoder",
+        "base64 decoder",
+        "base64 converter",
+        "binary encoding",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["url-encode-decode", "html-escape-unescape"],
+    ui: {
+      inputPlaceholder: "Enter text to encode or Base64 to decode...",
+      outputPlaceholder: "Encoded/decoded result will appear here...",
+      inputLabel: "Text Input",
+      outputLabel: "Base64 Output",
+      convertLabel: "Encode/Decode",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "url-encode-decode",
+    slug: "url-encode-decode",
+    name: "URL Encoder & Decoder",
+    description: "Encode URLs for safe transmission or decode URL-encoded text",
+    category: "encoding",
+    keywords: ["url", "encode", "decode", "percent"],
+    metadata: {
+      title: "URL Encoder & Decoder - Encode and Decode URLs Online",
+      description:
+        "Free online URL encoder and decoder. Encode URLs for safe transmission or decode URL-encoded text.",
+      keywords: [
+        "url encoder",
+        "url decoder",
+        "percent encoding",
+        "uri encoding",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["base64-encode-decode", "html-escape-unescape"],
+    ui: {
+      inputPlaceholder: "Enter URL to encode or encoded URL to decode...",
+      outputPlaceholder: "Encoded/decoded URL will appear here...",
+      inputLabel: "URL Input",
+      outputLabel: "URL Output",
+      convertLabel: "Encode/Decode",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "html-escape-unescape",
+    slug: "html-escape-unescape",
+    name: "HTML Escape & Unescape",
+    description:
+      "Escape HTML characters for safe display or unescape HTML entities",
+    category: "encoding",
+    keywords: ["html", "escape", "unescape", "entities"],
+    metadata: {
+      title: "HTML Escape & Unescape - Escape HTML Characters Online",
+      description:
+        "Free online HTML escape and unescape tool. Convert HTML characters to entities or decode HTML entities back to text.",
+      keywords: [
+        "html escape",
+        "html unescape",
+        "html entities",
+        "html encoder",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["url-encode-decode", "json-escape-unescape"],
+    ui: {
+      inputPlaceholder: "Enter HTML to escape or HTML entities to unescape...",
+      outputPlaceholder: "Escaped/unescaped HTML will appear here...",
+      inputLabel: "HTML Input",
+      outputLabel: "HTML Output",
+      convertLabel: "Escape/Unescape",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "jwt-decoder",
+    slug: "jwt-decoder",
+    name: "JWT Decoder",
+    description: "Decode JWT tokens to view header, payload, and signature",
+    category: "security",
+    keywords: ["jwt", "decode", "token", "json web token"],
+    metadata: {
+      title: "JWT Decoder - Decode JSON Web Tokens Online",
+      description:
+        "Free online JWT decoder. Decode JWT tokens to view header, payload, and signature information.",
+      keywords: [
+        "jwt decoder",
+        "json web token",
+        "jwt parser",
+        "token decoder",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["hash-generator", "base64-encode-decode"],
+    ui: {
+      inputPlaceholder: "Paste your JWT token here...",
+      outputPlaceholder: "Decoded JWT will appear here...",
+      inputLabel: "JWT Token",
+      outputLabel: "Decoded JWT",
+      convertLabel: "Decode JWT",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "hash-generator",
+    slug: "hash-generator",
+    name: "Hash Generator",
+    description: "Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text",
+    category: "security",
+    keywords: ["hash", "md5", "sha1", "sha256", "sha512"],
+    metadata: {
+      title:
+        "Hash Generator - Generate MD5, SHA-1, SHA-256, SHA-512 Hashes Online",
+      description:
+        "Free online hash generator. Create MD5, SHA-1, SHA-256, and SHA-512 hashes from any text input.",
+      keywords: [
+        "hash generator",
+        "md5 generator",
+        "sha256 generator",
+        "checksum generator",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["jwt-decoder", "uuid-generator"],
+    ui: {
+      inputPlaceholder: "Enter text to hash...",
+      outputPlaceholder: "Generated hashes will appear here...",
+      inputLabel: "Text Input",
+      outputLabel: "Hash Output",
+      convertLabel: "Generate Hash",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "uuid-generator",
+    slug: "uuid-generator",
+    name: "UUID v4 Generator",
+    description: "Generate random UUID v4 identifiers for your applications",
+    category: "security",
+    keywords: ["uuid", "guid", "unique id", "random"],
+    metadata: {
+      title: "UUID v4 Generator - Generate Random UUIDs Online",
+      description:
+        "Free online UUID v4 generator. Create random universally unique identifiers for your applications.",
+      keywords: [
+        "uuid generator",
+        "guid generator",
+        "unique id generator",
+        "random uuid",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["hash-generator", "jwt-decoder"],
+    ui: {
+      inputPlaceholder: "Click generate to create UUIDs...",
+      outputPlaceholder: "Generated UUIDs will appear here...",
+      inputLabel: "Options",
+      outputLabel: "Generated UUIDs",
+      convertLabel: "Generate UUID",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "case-converter",
+    slug: "case-converter",
+    name: "Case Converter",
+    description:
+      "Convert text to different cases: camelCase, PascalCase, snake_case, and more",
+    category: "text",
+    keywords: ["case", "convert", "camel", "pascal", "snake", "kebab"],
+    metadata: {
+      title: "Case Converter - Convert Text Cases Online",
+      description:
+        "Free online case converter. Convert text to camelCase, PascalCase, snake_case, kebab-case, and more formats.",
+      keywords: [
+        "case converter",
+        "camelcase converter",
+        "snake case converter",
+        "text converter",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["diff-checker", "regex-tester"],
+    ui: {
+      inputPlaceholder: "Enter text to convert case...",
+      outputPlaceholder: "Converted text will appear here...",
+      inputLabel: "Text Input",
+      outputLabel: "Converted Text",
+      convertLabel: "Convert Case",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "unix-timestamp-converter",
+    slug: "unix-timestamp-converter",
+    name: "Unix Timestamp Converter",
+    description: "Convert between Unix timestamps and human-readable dates",
+    category: "time",
+    keywords: ["unix", "timestamp", "date", "time", "convert"],
+    metadata: {
+      title: "Unix Timestamp Converter - Convert Unix Time Online",
+      description:
+        "Free online Unix timestamp converter. Convert between Unix timestamps and human-readable dates with timezone support.",
+      keywords: [
+        "unix timestamp converter",
+        "epoch converter",
+        "time converter",
+        "date converter",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["case-converter", "hash-generator"],
+    ui: {
+      inputPlaceholder: "Enter Unix timestamp or date...",
+      outputPlaceholder: "Converted date/timestamp will appear here...",
+      inputLabel: "Input",
+      outputLabel: "Converted Output",
+      convertLabel: "Convert",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "json-escape-unescape",
+    slug: "json-escape-unescape",
+    name: "JSON Escape & Unescape",
+    description: "Escape text for JSON strings or unescape JSON-encoded text",
+    category: "encoding",
+    keywords: ["json", "escape", "unescape", "string"],
+    metadata: {
+      title: "JSON Escape & Unescape - Escape JSON Strings Online",
+      description:
+        "Free online JSON escape and unescape tool. Escape text for JSON strings or decode JSON-encoded text.",
+      keywords: [
+        "json escape",
+        "json unescape",
+        "json encoder",
+        "string escape",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["json-formatter", "html-escape-unescape"],
+    ui: {
+      inputPlaceholder: "Enter text to escape or JSON string to unescape...",
+      outputPlaceholder: "Escaped/unescaped text will appear here...",
+      inputLabel: "Text Input",
+      outputLabel: "JSON String Output",
+      convertLabel: "Escape/Unescape",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "diff-checker",
+    slug: "diff-checker",
+    name: "Diff Checker",
+    description: "Compare two texts side-by-side and highlight differences",
+    category: "text",
+    keywords: ["diff", "compare", "difference", "text"],
+    metadata: {
+      title: "Diff Checker - Compare Text Differences Online",
+      description:
+        "Free online diff checker. Compare two texts side-by-side and highlight differences with detailed analysis.",
+      keywords: [
+        "diff checker",
+        "text compare",
+        "difference checker",
+        "text diff",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["case-converter", "regex-tester"],
+    ui: {
+      inputPlaceholder: "Enter first text to compare...",
+      outputPlaceholder: "Differences will be highlighted here...",
+      inputLabel: "Text 1",
+      outputLabel: "Comparison Result",
+      convertLabel: "Compare",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "color-converter",
+    slug: "color-converter",
+    name: "Color Converter",
+    description: "Convert colors between HEX, RGB, and HSL formats",
+    category: "text",
+    keywords: ["color", "hex", "rgb", "hsl", "convert"],
+    metadata: {
+      title: "Color Converter - Convert HEX, RGB, HSL Colors Online",
+      description:
+        "Free online color converter. Convert colors between HEX, RGB, and HSL formats with visual color picker.",
+      keywords: ["color converter", "hex to rgb", "rgb to hex", "color picker"],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["case-converter", "hash-generator"],
+    ui: {
+      inputPlaceholder: "Enter color value (HEX, RGB, HSL)...",
+      outputPlaceholder: "Converted color values will appear here...",
+      inputLabel: "Color Input",
+      outputLabel: "Color Output",
+      convertLabel: "Convert Color",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "regex-tester",
+    slug: "regex-tester",
+    name: "Regex Tester",
+    description:
+      "Test regular expressions with live matching and group extraction",
+    category: "text",
+    keywords: ["regex", "regexp", "pattern", "match", "test"],
+    metadata: {
+      title: "Regex Tester - Test Regular Expressions Online",
+      description:
+        "Free online regex tester. Test regular expressions with live matching, group extraction, and detailed results.",
+      keywords: [
+        "regex tester",
+        "regexp tester",
+        "regular expression",
+        "pattern matcher",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["diff-checker", "case-converter"],
+    ui: {
+      inputPlaceholder: "Enter text to test against regex...",
+      outputPlaceholder: "Regex matches will appear here...",
+      inputLabel: "Test Text",
+      outputLabel: "Match Results",
+      convertLabel: "Test Regex",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "markdown-html-converter",
+    slug: "markdown-html-converter",
+    name: "Markdown ↔ HTML Converter",
+    description: "Convert between Markdown and HTML formats with split view",
+    category: "text",
+    keywords: ["markdown", "html", "convert", "md"],
+    metadata: {
+      title: "Markdown HTML Converter - Convert Markdown to HTML Online",
+      description:
+        "Free online Markdown to HTML converter. Convert between Markdown and HTML formats with split view preview.",
+      keywords: [
+        "markdown to html",
+        "html to markdown",
+        "md converter",
+        "markdown converter",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["html-escape-unescape", "case-converter"],
+    ui: {
+      inputPlaceholder: "Enter Markdown or HTML...",
+      outputPlaceholder: "Converted output will appear here...",
+      inputLabel: "Input",
+      outputLabel: "Converted Output",
+      convertLabel: "Convert",
+    },
+    component: PlaceholderTool,
+  },
+  {
+    id: "mime-type-lookup",
+    slug: "mime-type-lookup",
+    name: "MIME Type Lookup",
+    description: "Find MIME types for file extensions with search suggestions",
+    category: "utility",
+    keywords: ["mime", "type", "extension", "file", "lookup"],
+    metadata: {
+      title: "MIME Type Lookup - Find MIME Types for File Extensions",
+      description:
+        "Free online MIME type lookup tool. Find MIME types for file extensions with search suggestions and detailed information.",
+      keywords: [
+        "mime type lookup",
+        "file extension",
+        "content type",
+        "mime database",
+      ],
+    },
+    examples: [],
+    faq: [],
+    relatedTools: ["hash-generator", "base64-encode-decode"],
+    ui: {
+      inputPlaceholder: "Enter file extension (e.g., .pdf, .jpg)...",
+      outputPlaceholder: "MIME type information will appear here...",
+      inputLabel: "File Extension",
+      outputLabel: "MIME Type",
+      convertLabel: "Lookup",
+    },
+    component: PlaceholderTool,
+  },
+]
+
+export const getToolBySlug = (slug: string): Tool | undefined => {
+  return tools.find(tool => tool.slug === slug)
+}
+
+export const getToolById = (id: string): Tool | undefined => {
+  return tools.find(tool => tool.id === id)
+}
+
+export const getToolsByCategory = (categoryId: string): Tool[] => {
+  return tools.filter(tool => tool.category === categoryId)
+}
+
+export const getAllTools = (): Tool[] => {
+  return tools
+}
+
+export const searchTools = (query: string): Tool[] => {
+  const lowercaseQuery = query.toLowerCase()
+  return tools.filter(
+    tool =>
+      tool.name.toLowerCase().includes(lowercaseQuery) ||
+      tool.description.toLowerCase().includes(lowercaseQuery) ||
+      tool.keywords.some(keyword =>
+        keyword.toLowerCase().includes(lowercaseQuery)
+      )
+  )
+}

@@ -1,0 +1,23 @@
+# Package build outputs
+*/dist/
+*/build/
+*/lib/
+*/esm/
+*/cjs/
+
+# Package-specific node_modules
+*/node_modules/
+
+# TypeScript
+*/*.tsbuildinfo
+*/*.d.ts.map
+
+# Testing
+*/coverage/
+
+# Logs
+*/*.log
+
+# Temporary files
+*/*.tmp
+*/*.temp

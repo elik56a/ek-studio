@@ -1,0 +1,31 @@
+# Build outputs
+dist/
+build/
+lib/
+esm/
+cjs/
+
+# TypeScript
+*.tsbuildinfo
+*.d.ts.map
+
+# Testing
+coverage/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Dependencies (handled by root)
+node_modules/
