@@ -130,8 +130,8 @@ export function ToolLayout({
           <div className="space-y-4 sm:space-y-8">
             {/* Actions Toolbar with Tool Switcher - All on same level */}
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4 w-full">
-              {/* Tool Switcher - Left */}
-              <div className="flex justify-start lg:w-auto">
+              {/* Tool Switcher - Left (or empty space) */}
+              <div className="flex justify-start lg:w-auto lg:min-w-[200px]">
                 {toolActionsProps.tool && (
                   <ToolSwitcher 
                     currentTool={toolActionsProps.tool}
@@ -164,7 +164,7 @@ export function ToolLayout({
               </div>
 
               {/* Action Toolbar - Right */}
-              <div className="flex justify-end lg:w-auto">
+              <div className="flex justify-end lg:w-auto lg:min-w-[200px]">
                 {toolbarWithActions}
               </div>
             </div>

@@ -2,9 +2,9 @@
 
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useToolConverter } from "@/hooks/use-tool-converter"
-import { base64Convert, detectBase64 } from "@/lib/utils/encoding-utils"
+import { htmlEscapeUnescape, detectHtmlEscaped } from "@/lib/utils/encoding-utils"
 
-const Base64EncodeDecodeTool = () => {
+const HtmlEscapeUnescapeTool = () => {
   const {
     input,
     setInput,
@@ -19,7 +19,7 @@ const Base64EncodeDecodeTool = () => {
     convert,
     handleExampleClick,
   } = useToolConverter({
-    convertFn: base64Convert,
+    convertFn: htmlEscapeUnescape,
   })
 
   if (!tool) {
@@ -29,7 +29,7 @@ const Base64EncodeDecodeTool = () => {
   // Dynamic button label based on input detection
   const convertLabel = !input.trim() 
     ? tool.ui.convertLabel 
-    : detectBase64(input) ? "Decode" : "Encode"
+    : detectHtmlEscaped(input) ? "Unescape" : "Escape"
 
   return (
     <ToolLayout
@@ -73,4 +73,4 @@ const Base64EncodeDecodeTool = () => {
   )
 }
 
-export default Base64EncodeDecodeTool
+export default HtmlEscapeUnescapeTool
