@@ -2,6 +2,7 @@
   "name": "ek-studio-monorepo",
   "private": true,
   "scripts": {
+    "dev": "pnpm --filter dev-converter dev",
     "dev-converter:dev": "pnpm --filter dev-converter dev",
     "dev-converter:build": "pnpm --filter dev-converter build",
     "dev-converter:start": "pnpm --filter dev-converter start"
