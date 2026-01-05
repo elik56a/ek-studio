@@ -26,6 +26,8 @@ interface ToolLayoutProps {
     outputLabel?: string
     errorMessage?: string
     customOutputComponent?: React.ReactNode
+    showSwapButton?: boolean
+    onSwap?: () => void
   }
   footerProps: {
     examples?: Array<{ title: string; input: string; description?: string }>

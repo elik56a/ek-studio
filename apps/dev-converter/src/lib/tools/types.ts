@@ -25,6 +25,7 @@ export interface ToolUI {
   inputLabel: string
   outputLabel: string
   convertLabel: string
+  showSwapButton?: boolean
 }
 
 export interface ToolSwitcherGroup {

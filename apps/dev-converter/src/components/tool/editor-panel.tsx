@@ -1,5 +1,5 @@
-import { AlertCircle } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, Textarea } from "@ek-studio/ui"
+import { AlertCircle, ArrowLeftRight } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle, Textarea, Button } from "@ek-studio/ui"
 import { cn } from "@ek-studio/ui"
 
 interface EditorPanelProps {
@@ -16,6 +16,8 @@ interface EditorPanelProps {
   hasError?: boolean
   errorMessage?: string
   customOutputComponent?: React.ReactNode
+  showSwapButton?: boolean
+  onSwap?: () => void
 }
 
 export function EditorPanel({
@@ -32,10 +34,12 @@ export function EditorPanel({
   hasError = false,
   errorMessage,
   customOutputComponent,
+  showSwapButton = false,
+  onSwap,
 }: EditorPanelProps) {
   return (
     <div className={cn("space-y-4 sm:space-y-8", className)}>
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-8 relative">
         {/* Input Panel */}
         <Card className="glass border-0 shadow-glow flex flex-col h-full transition-all duration-200">
           <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6">
@@ -64,6 +68,20 @@ export function EditorPanel({
             />
           </CardContent>
         </Card>
+
+        {/* Swap Button - Floating between panels */}
+        {showSwapButton && onSwap && (
+          <div className="hidden xl:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+            <Button
+              onClick={onSwap}
+              size="icon"
+              className="h-12 w-12 rounded-full shadow-glow bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-110 transition-all duration-300 border-2 border-background"
+              title="Swap input and output"
+            >
+              <ArrowLeftRight className="h-5 w-5" />
+            </Button>
+          </div>
+        )}
 
         {/* Output Panel */}
         <Card className="glass border-0 shadow-glow flex flex-col h-full">

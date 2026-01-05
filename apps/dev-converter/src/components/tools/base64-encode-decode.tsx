@@ -13,6 +13,7 @@ const Base64EncodeDecodeTool = () => {
     statusMessage,
     handleCopy,
     handleClear,
+    handleSwap,
     toolSlug,
     tool,
     relatedTools,
@@ -46,6 +47,8 @@ const Base64EncodeDecodeTool = () => {
         inputLabel: tool.ui.inputLabel,
         outputLabel: tool.ui.outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
+        showSwapButton: tool.ui.showSwapButton,
+        onSwap: handleSwap,
       }}
       toolActionsProps={{
         onConvert: convert,

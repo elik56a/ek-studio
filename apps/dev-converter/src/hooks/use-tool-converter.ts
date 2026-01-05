@@ -89,6 +89,13 @@ export function useToolConverter({ convertFn, successMessage }: UseToolConverter
     }, 0)
   }, [convertFn, successMessage, setInput, setOutput, setStatus, setStatusMessage])
 
+  const handleSwap = useCallback(() => {
+    if (!toolState.output) return // Don't swap if there's no output
+    const temp = toolState.input
+    setInput(toolState.output)
+    setOutput(temp)
+  }, [toolState.input, toolState.output, setInput, setOutput])
+
   // Setup keyboard shortcuts
   useKeyboardShortcuts({
     onConvert: convert,
@@ -100,5 +107,6 @@ export function useToolConverter({ convertFn, successMessage }: UseToolConverter
     ...toolState,
     convert,
     handleExampleClick,
+    handleSwap,
   }
 }
