@@ -2,7 +2,7 @@
 
 import { Monitor, Moon, Sun } from "lucide-react"
 
-import { useTheme } from "@/components/theme-provider"
+import { useTheme } from "@/components/core/theme-provider"
 import { Button } from "@ek-studio/ui"
 
 export function ThemeToggle() {

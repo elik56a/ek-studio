@@ -3,6 +3,7 @@ import JsonToYamlTool from "@/components/tools/json-to-yaml"
 import YamlToJsonTool from "@/components/tools/yaml-to-json"
 import JsonToCsvTool from "@/components/tools/json-to-csv"
 import CsvToJsonTool from "@/components/tools/csv-to-json"
+import Base64EncodeDecodeTool from "@/components/tools/base64-encode-decode"
 import { ComingSoonPlaceholder } from "@/components/coming-soon-placeholder"
 
 import { Tool } from "./types"
@@ -359,8 +360,45 @@ export const tools: Tool[] = [
         "binary encoding",
       ],
     },
-    examples: [],
-    faq: [],
+    examples: [
+      {
+        title: "Encode text",
+        input: "Hello, World!",
+        description: "Encode plain text to Base64",
+      },
+      {
+        title: "Decode Base64",
+        input: "SGVsbG8sIFdvcmxkIQ==",
+        description: "Decode Base64 back to text",
+      },
+      {
+        title: "Encode JSON",
+        input: '{"name":"John","age":30}',
+        description: "Encode JSON data to Base64",
+      },
+    ],
+    faq: [
+      {
+        question: "What is Base64 encoding?",
+        answer:
+          "Base64 is a binary-to-text encoding scheme that represents binary data in ASCII string format. It uses 64 different ASCII characters (A-Z, a-z, 0-9, +, /) to encode data.",
+      },
+      {
+        question: "When should I use Base64?",
+        answer:
+          "Base64 is commonly used for encoding binary data in URLs, emails, data URIs, and when transmitting data over text-based protocols. It's also used in authentication tokens and embedding images in HTML/CSS.",
+      },
+      {
+        question: "Does Base64 encrypt data?",
+        answer:
+          "No, Base64 is an encoding method, not encryption. It makes data unreadable to casual observers but can be easily decoded by anyone. Never use Base64 alone for securing sensitive data.",
+      },
+      {
+        question: "How does auto-detection work?",
+        answer:
+          "The tool automatically detects if your input is valid Base64 (contains only Base64 characters and proper padding) and decodes it. Otherwise, it encodes your text to Base64.",
+      },
+    ],
     relatedTools: ["url-encode-decode", "html-escape-unescape"],
     ui: {
       inputPlaceholder: "Enter text to encode or Base64 to decode...",
@@ -369,7 +407,7 @@ export const tools: Tool[] = [
       outputLabel: "Base64 Output",
       convertLabel: "Encode/Decode",
     },
-    component: ComingSoonPlaceholder,
+    component: Base64EncodeDecodeTool,
   },
   {
     id: "url-encode-decode",

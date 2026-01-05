@@ -12,7 +12,7 @@ import {
 
 import { useState, useEffect } from "react"
 
-import { useToast } from "@/components/toast-provider"
+import { useToast } from "@/components/core/toast-provider"
 import {
   Button,
   DropdownMenu,

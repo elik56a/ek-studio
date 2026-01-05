@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google"
 
 import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
-import { ThemeProvider } from "@/components/theme-provider"
-import { ToastProvider } from "@/components/toast-provider"
+import { ThemeProvider } from "@/components/core/theme-provider"
+import { ToastProvider } from "@/components/core/toast-provider"
 
 import "./globals.css"
 

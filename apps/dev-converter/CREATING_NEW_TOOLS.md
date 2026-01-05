@@ -1,11 +1,12 @@
 # Creating New Tools Guide
 
-This guide explains how to create new tool pages in the DevConverter app, using the JsonFormatterTool as a reference example.
+This guide explains how to create new tool pages in the DevConverter app, using a clean, maintainable pattern with reusable utilities and hooks.
 
 ## Overview
 
 Each tool in DevConverter follows a consistent pattern with:
-- A React component that implements the tool logic
+- A utility function that handles the core conversion logic
+- A React component that uses the `useToolConverter` hook
 - Registration in the tools registry
 - Categorization for navigation
 - Metadata for SEO and sharing
@@ -13,7 +14,71 @@ Each tool in DevConverter follows a consistent pattern with:
 
 ## Step-by-Step Guide
 
-### 1. Create the Tool Component
+### 1. Create the Utility Function
+
+First, create or add to a utility file in `src/lib/utils/` that contains your conversion logic.
+
+**Example: `src/lib/utils/encoding-utils.ts`**
+
+```tsx
+export interface ConversionResult<T = any> {
+  success: boolean
+  data?: T
+  error?: string
+  message?: string
+  metadata?: Record<string, any>
+}
+
+/**
+ * Encodes text to Base64 or decodes Base64 to text
+ * @param input - The text to encode or Base64 string to decode
+ * @returns ConversionResult with encoded/decoded data or error
+ */
+export function base64Convert(input: string): ConversionResult<string> {
+  if (!input.trim()) {
+    return {
+      success: false,
+      error: "Input is empty",
+    }
+  }
+
+  try {
+    // Detect if input is Base64 (decode) or plain text (encode)
+    const isBase64 = /^[A-Za-z0-9+/]*={0,2}$/.test(input.trim())
+    
+    if (isBase64) {
+      // Try to decode
+      const decoded = atob(input.trim())
+      return {
+        success: true,
+        data: decoded,
+        message: "Base64 decoded successfully",
+      }
+    } else {
+      // Encode to Base64
+      const encoded = btoa(input)
+      return {
+        success: true,
+        data: encoded,
+        message: "Text encoded to Base64 successfully",
+      }
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Conversion failed",
+    }
+  }
+}
+```
+
+**Key Points:**
+- Return a `ConversionResult` object with `success`, `data`, `error`, and `message` fields
+- Handle all validation and error cases
+- Include a success `message` that will be displayed to users
+- Keep the function pure - no side effects or state management
+
+### 2. Create the Tool Component
 
 Create a new file in `src/components/tools/` following the naming pattern `{tool-slug}.tsx`.
 
@@ -23,71 +88,25 @@ Create a new file in `src/components/tools/` following the naming pattern `{tool
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
-import { useToolState } from "@/hooks/use-tool-state"
+import { useToolConverter } from "@/hooks/use-tool-converter"
+import { base64Convert } from "@/lib/utils/encoding-utils"
 
 const Base64EncoderTool = () => {
   const {
     input,
     setInput,
     output,
-    setOutput,
     status,
-    setStatus,
     statusMessage,
-    setStatusMessage,
-    handleClear,
     handleCopy,
+    handleClear,
     toolSlug,
     tool,
     relatedTools,
-  } = useToolState()
-
-  // Main conversion function
-  const convertText = () => {
-    if (!input.trim()) {
-      setOutput("")
-      setStatus("idle")
-      setStatusMessage("")
-      return
-    }
-
-    setStatus("loading")
-
-    try {
-      // Detect if input is Base64 (decode) or plain text (encode)
-      const isBase64 = /^[A-Za-z0-9+/]*={0,2}$/.test(input.trim())
-      
-      if (isBase64) {
-        // Try to decode
-        const decoded = atob(input.trim())
-        setOutput(decoded)
-        setStatusMessage("Base64 decoded successfully")
-      } else {
-        // Encode to Base64
-        const encoded = btoa(input)
-        setOutput(encoded)
-        setStatusMessage("Text encoded to Base64 successfully")
-      }
-      
-      setStatus("success")
-    } catch (error) {
-      setStatus("error")
-      setStatusMessage(error instanceof Error ? error.message : "Conversion failed")
-      setOutput("")
-    }
-  }
-
-  const handleExampleClick = (exampleInput: string) => {
-    setInput(exampleInput)
-    // Trigger conversion after setting input
-    setTimeout(convertText, 0)
-  }
-
-  useKeyboardShortcuts({
-    onConvert: convertText,
-    onCopy: handleCopy,
-    onClear: handleClear,
+    convert,
+    handleExampleClick,
+  } = useToolConverter({
+    convertFn: base64Convert,
   })
 
   if (!tool) {
@@ -108,9 +127,10 @@ const Base64EncoderTool = () => {
         outputPlaceholder: tool.ui.outputPlaceholder,
         inputLabel: tool.ui.inputLabel,
         outputLabel: tool.ui.outputLabel,
+        errorMessage: status === "error" ? statusMessage : undefined,
       }}
       toolActionsProps={{
-        onConvert: convertText,
+        onConvert: convert,
         onCopy: handleCopy,
         onClear: handleClear,
         toolSlug: toolSlug,
@@ -119,6 +139,7 @@ const Base64EncoderTool = () => {
         hasOutput: !!output,
         convertLabel: tool.ui.convertLabel,
         toolName: tool.name,
+        tool: tool,
       }}
       statusProps={{
         status: status,
@@ -137,7 +158,15 @@ const Base64EncoderTool = () => {
 export default Base64EncoderTool
 ```
 
-### 2. Register the Tool
+**That's it!** The `useToolConverter` hook handles:
+- ✅ Empty input validation
+- ✅ Loading state management
+- ✅ Success/error handling
+- ✅ Example click handling
+- ✅ Keyboard shortcuts (Ctrl/Cmd + Enter, C, K)
+- ✅ Status messages
+
+### 3. Register the Tool
 
 Add your tool to the registry in `src/lib/tools/registry.ts`:
 
@@ -199,7 +228,7 @@ import Base64EncoderTool from "@/components/tools/base64-encoder"
 }
 ```
 
-### 3. Add to Category
+### 4. Add to Category
 
 Update `src/lib/tools/categories.ts` to include your tool in the appropriate category:
 
@@ -218,6 +247,71 @@ Update `src/lib/tools/categories.ts` to include your tool in the appropriate cat
 }
 ```
 
+## Architecture Overview
+
+### Separation of Concerns
+
+1. **Utility Functions** (`src/lib/utils/`)
+   - Pure conversion logic
+   - No React dependencies
+   - Easily testable
+   - Returns `ConversionResult` with success/error/message
+
+2. **useToolConverter Hook** (`src/hooks/use-tool-converter.ts`)
+   - Handles all state management
+   - Manages loading/success/error states
+   - Provides keyboard shortcuts
+   - Handles example clicks
+   - Reusable across all tools
+
+3. **Tool Components** (`src/components/tools/`)
+   - Minimal, focused on UI layout
+   - Connects utility to hook
+   - Configures tool-specific UI elements
+
+### The useToolConverter Hook
+
+The hook provides everything you need:
+
+```tsx
+const {
+  // State
+  input,           // Current input value
+  setInput,        // Set input value
+  output,          // Current output value
+  status,          // "idle" | "loading" | "success" | "error"
+  statusMessage,   // Status message to display
+  
+  // Actions
+  convert,         // Main conversion function
+  handleCopy,      // Copy output to clipboard
+  handleClear,     // Clear all inputs/outputs
+  handleExampleClick, // Handle example click
+  
+  // Tool data
+  toolSlug,        // Current tool slug
+  tool,            // Tool configuration
+  relatedTools,    // Related tools list
+} = useToolConverter({
+  convertFn: yourConversionFunction,
+  successMessage: "Optional override message", // Optional
+})
+```
+
+### ConversionResult Interface
+
+All utility functions should return this structure:
+
+```tsx
+interface ConversionResult<T = any> {
+  success: boolean      // Whether conversion succeeded
+  data?: T             // The converted data (if successful)
+  error?: string       // Error message (if failed)
+  message?: string     // Success message to display
+  metadata?: Record<string, any> // Optional metadata (e.g., row count)
+}
+```
+
 ## Tool Component Structure
 
 ### Required Props for ToolLayout
@@ -230,27 +324,20 @@ The `ToolLayout` component expects these props:
 - **`statusProps`**: Status indicator (loading, success, error)
 - **`footerProps`**: Examples, FAQs, and related tools
 
-### State Management with useToolState
+### Custom Output Components
 
-The `useToolState` hook provides:
-- `input/setInput`: Input text state
-- `output/setOutput`: Output text state  
-- `status/setStatus`: Tool status ("idle" | "loading" | "success" | "error")
-- `statusMessage/setStatusMessage`: Status message text
-- `handleClear`: Clear all inputs and outputs
-- `handleCopy`: Copy output to clipboard
-- `tool`: Current tool configuration
-- `relatedTools`: Related tools for footer
+For tools that need special output rendering (like JSON with collapsible viewer):
 
-### Keyboard Shortcuts
-
-Use `useKeyboardShortcuts` to add keyboard support:
 ```tsx
-useKeyboardShortcuts({
-  onConvert: convertText,    // Ctrl/Cmd + Enter
-  onCopy: handleCopy,        // Ctrl/Cmd + C (when output focused)
-  onClear: handleClear,      // Ctrl/Cmd + K
-})
+editorProps={{
+  // ... other props
+  customOutputComponent: (
+    <CollapsibleJsonViewer
+      value={output}
+      placeholder={tool.ui.outputPlaceholder}
+    />
+  ),
+}}
 ```
 
 ## Tool Configuration Fields
@@ -287,47 +374,66 @@ useKeyboardShortcuts({
 
 ## Best Practices
 
-### 1. Error Handling
-Always wrap conversion logic in try-catch blocks:
+### 1. Utility Functions
+- Keep them pure (no side effects)
+- Handle all edge cases
+- Return descriptive error messages
+- Include success messages
+- Add JSDoc comments
+
+```tsx
+/**
+ * Converts JSON to YAML format
+ * @param jsonInput - The JSON string to convert
+ * @returns ConversionResult with YAML data or error
+ */
+export function jsonToYaml(jsonInput: string): ConversionResult<string> {
+  // Implementation
+}
+```
+
+### 2. Error Handling
+Always return proper error messages in your utility:
+
 ```tsx
 try {
   const result = performConversion(input)
-  setOutput(result)
-  setStatus("success")
-  setStatusMessage("Conversion successful")
+  return {
+    success: true,
+    data: result,
+    message: "Conversion successful",
+  }
 } catch (error) {
-  setStatus("error")
-  setStatusMessage(error instanceof Error ? error.message : "Conversion failed")
-  setOutput("")
+  return {
+    success: false,
+    error: error instanceof Error ? error.message : "Conversion failed",
+  }
 }
 ```
 
-### 2. Input Validation
-Check for empty inputs before processing:
+### 3. Input Validation
+Validate in the utility function:
+
 ```tsx
 if (!input.trim()) {
-  setOutput("")
-  setStatus("idle")
-  setStatusMessage("")
-  return
+  return {
+    success: false,
+    error: "Input is empty",
+  }
 }
 ```
 
-### 3. Loading States
-Set loading status for async operations:
-```tsx
-setStatus("loading")
-// ... perform conversion
-setStatus("success")
-```
+### 4. Success Messages
+Include helpful success messages with metadata:
 
-### 4. Example Integration
-Implement `handleExampleClick` to populate input from examples:
 ```tsx
-const handleExampleClick = (exampleInput: string) => {
-  setInput(exampleInput)
-  // Trigger conversion if needed
-  setTimeout(convertFunction, 0)
+return {
+  success: true,
+  data: csvOutput,
+  message: `JSON converted to CSV successfully (${dataArray.length} rows)`,
+  metadata: {
+    rowCount: dataArray.length,
+  },
 }
 ```
 
@@ -335,6 +441,16 @@ const handleExampleClick = (exampleInput: string) => {
 - Use kebab-case for IDs and slugs
 - Use descriptive, action-oriented names
 - Keep URLs clean and SEO-friendly
+- Group related utilities in the same file
+
+## Organizing Utilities
+
+Group related conversion functions in themed files:
+
+- **`json-utils.ts`**: JSON conversions (CSV↔JSON, YAML↔JSON, format JSON)
+- **`encoding-utils.ts`**: Encoding/decoding (Base64, URL, HTML)
+- **`text-utils.ts`**: Text transformations (case conversion, sorting)
+- **`hash-utils.ts`**: Hashing and encryption utilities
 
 ## Testing Your Tool
 
@@ -345,23 +461,15 @@ const handleExampleClick = (exampleInput: string) => {
    - Conversion logic
    - Error handling
    - Examples
-   - Keyboard shortcuts
+   - Keyboard shortcuts (Ctrl/Cmd + Enter, C, K)
    - Copy/clear functions
-
-## Next Tool to Implement
-
-Based on the registry, the next tool to implement would be **Base64 Encoder & Decoder** (`base64-encode-decode`), as it's already defined but uses a placeholder component.
-
-The implementation should:
-1. Auto-detect if input is Base64 (decode) or plain text (encode)
-2. Handle encoding/decoding errors gracefully
-3. Provide clear examples for both operations
-4. Include relevant FAQs about Base64 usage
+   - Status messages
 
 ## File Checklist
 
 When creating a new tool, ensure you've updated:
 
+- [ ] Created/updated utility function in `src/lib/utils/{category}-utils.ts`
 - [ ] Created component in `src/components/tools/{slug}.tsx`
 - [ ] Added import in `src/lib/tools/registry.ts`
 - [ ] Added tool object to `tools` array in registry
@@ -369,5 +477,83 @@ When creating a new tool, ensure you've updated:
 - [ ] Tested the tool functionality
 - [ ] Verified routing works (`/{slug}`)
 - [ ] Checked examples and FAQs display correctly
+- [ ] Verified keyboard shortcuts work
 
-This structure ensures consistency across all tools and provides a great user experience with proper SEO, sharing capabilities, and accessibility features.
+## Example: Complete Tool Implementation
+
+Here's a minimal example showing all pieces together:
+
+**1. Utility (`src/lib/utils/text-utils.ts`):**
+```tsx
+export function reverseText(input: string): ConversionResult<string> {
+  if (!input.trim()) {
+    return { success: false, error: "Input is empty" }
+  }
+  
+  return {
+    success: true,
+    data: input.split("").reverse().join(""),
+    message: "Text reversed successfully",
+  }
+}
+```
+
+**2. Component (`src/components/tools/text-reverser.tsx`):**
+```tsx
+"use client"
+
+import { ToolLayout } from "@/components/tool/tool-layout"
+import { useToolConverter } from "@/hooks/use-tool-converter"
+import { reverseText } from "@/lib/utils/text-utils"
+
+const TextReverserTool = () => {
+  const {
+    input, setInput, output, status, statusMessage,
+    handleCopy, handleClear, toolSlug, tool, relatedTools,
+    convert, handleExampleClick,
+  } = useToolConverter({ convertFn: reverseText })
+
+  if (!tool) return <div>Tool not found</div>
+
+  return (
+    <ToolLayout
+      headerProps={{ title: tool.name, description: tool.description }}
+      editorProps={{
+        inputValue: input,
+        outputValue: output,
+        onInputChange: setInput,
+        inputPlaceholder: tool.ui.inputPlaceholder,
+        outputPlaceholder: tool.ui.outputPlaceholder,
+        inputLabel: tool.ui.inputLabel,
+        outputLabel: tool.ui.outputLabel,
+        errorMessage: status === "error" ? statusMessage : undefined,
+      }}
+      toolActionsProps={{
+        onConvert: convert,
+        onCopy: handleCopy,
+        onClear: handleClear,
+        toolSlug,
+        shareData: { input, output },
+        isLoading: status === "loading",
+        hasOutput: !!output,
+        convertLabel: tool.ui.convertLabel,
+        toolName: tool.name,
+        tool,
+      }}
+      statusProps={{ status, message: statusMessage }}
+      footerProps={{
+        examples: tool.examples,
+        faqs: tool.faq,
+        relatedTools,
+        onExampleClick: handleExampleClick,
+      }}
+    />
+  )
+}
+
+export default TextReverserTool
+```
+
+**3. Registry entry** - Add to `src/lib/tools/registry.ts`
+
+This structure ensures consistency, maintainability, and a great developer experience when creating new tools!

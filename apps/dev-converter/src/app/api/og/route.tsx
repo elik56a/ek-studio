@@ -52,7 +52,7 @@ export async function GET(request: Request) {
           color: "#999",
         }}
       >
-        DevConverter.com
+        DevConverter.dev
       </div>
     </div>,
     {

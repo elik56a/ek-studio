@@ -8,7 +8,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { Logo } from "@/components/layout/logo"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { ThemeToggle } from "@/components/core/theme-toggle"
 import { Button, Input } from "@ek-studio/ui"
 import { categories } from "@/lib/tools/categories"
 import { searchTools, getToolBySlug } from "@/lib/tools/registry"
