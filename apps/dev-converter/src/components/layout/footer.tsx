@@ -5,8 +5,8 @@ import { Logo } from "@/components/layout/logo"
 export function Footer() {
   return (
     <footer className="border-t bg-background/95 backdrop-blur-sm">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 py-8 sm:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           <div className="space-y-4">
             <Logo size="sm" variant="default" />
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -26,8 +26,8 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4 text-foreground">Popular Tools</h4>
-            <ul className="space-y-3 text-sm">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-foreground">Popular Tools</h4>
+            <ul className="space-y-2 sm:space-y-3 text-sm">
               <li>
                 <Link
                   href="/json-formatter"
@@ -64,8 +64,8 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4 text-foreground">Categories</h4>
-            <ul className="space-y-3 text-sm">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-foreground">Categories</h4>
+            <ul className="space-y-2 sm:space-y-3 text-sm">
               <li>
                 <Link
                   href="/categories/json-data"
@@ -102,8 +102,8 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4 text-foreground">Company</h4>
-            <ul className="space-y-3 text-sm">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-foreground">Company</h4>
+            <ul className="space-y-2 sm:space-y-3 text-sm">
               <li>
                 <Link
                   href="/about"
@@ -140,7 +140,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
           <div className="text-sm text-muted-foreground">
             © 2026 DevConverter. All rights reserved.
           </div>

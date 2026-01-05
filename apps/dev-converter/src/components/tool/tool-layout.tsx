@@ -109,7 +109,7 @@ export function ToolLayout({
 
   return (
     <div className={cn("gradient-bg min-h-screen w-full", className)}>
-      <div className="w-full max-w-7xl mx-auto px-4 py-8 space-y-8">
+      <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
         {/* Header Section - No card, just text */}
         {headerProps && (
           <ToolHeader
@@ -119,19 +119,19 @@ export function ToolLayout({
         )}
 
         {/* Main Tool Section - Enhanced with glassmorphism */}
-        <Card className="glass border-0 shadow-glow p-0 md:p-8 overflow-hidden">
-          <div className="space-y-8">
+        <Card className="glass border-0 shadow-glow p-3 sm:p-4 md:p-8 overflow-hidden">
+          <div className="space-y-4 sm:space-y-8">
             {/* Actions Toolbar - More prominent positioning */}
-            <div className="flex justify-center px-4 md:px-0">
+            <div className="flex justify-center">
               {toolbarWithActions}
             </div>
 
             {/* Editor Panel - Enhanced spacing */}
-            <div className="px-4 md:px-0">
+            <div>
               <EditorPanel 
                 {...editorProps}
                 hasError={statusProps?.status === "error"}
-                className="space-y-8"
+                className="space-y-4 sm:space-y-8"
               />
             </div>
           </div>
@@ -139,7 +139,7 @@ export function ToolLayout({
 
         {/* Footer Section - Separate card for better organization */}
         {(footerProps.examples?.length || footerProps.faqs?.length || footerProps.relatedTools?.length) && (
-          <Card className="glass border-0 shadow-glow p-8">
+          <Card className="glass border-0 shadow-glow p-4 sm:p-6 md:p-8">
             <ToolFooter {...footerProps} />
           </Card>
         )}

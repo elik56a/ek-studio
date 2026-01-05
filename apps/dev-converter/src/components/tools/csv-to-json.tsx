@@ -1,0 +1,129 @@
+"use client"
+
+import { ToolLayout } from "@/components/tool/tool-layout"
+import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
+import { useToolState } from "@/hooks/use-tool-state"
+import Papa from "papaparse"
+
+const CsvToJsonTool = () => {
+  const {
+    input,
+    setInput,
+    output,
+    setOutput,
+    status,
+    setStatus,
+    statusMessage,
+    setStatusMessage,
+    handleClear,
+    handleCopy,
+    toolSlug,
+    tool,
+    relatedTools,
+  } = useToolState()
+
+  const convertToJson = () => {
+    if (!input.trim()) {
+      setOutput("")
+      setStatus("idle")
+      setStatusMessage("")
+      return
+    }
+
+    setStatus("loading")
+
+    try {
+      // Parse CSV input
+      const result = Papa.parse(input, {
+        header: true,
+        skipEmptyLines: true,
+        dynamicTyping: true, // Automatically convert numbers and booleans
+        transformHeader: (header) => header.trim(),
+      })
+
+      if (result.errors.length > 0) {
+        const errorMessages = result.errors
+          .map(err => `Row ${err.row}: ${err.message}`)
+          .join(", ")
+        throw new Error(errorMessages)
+      }
+
+      if (!result.data || result.data.length === 0) {
+        throw new Error("No data found in CSV")
+      }
+
+      // Convert to formatted JSON
+      const jsonOutput = JSON.stringify(result.data, null, 2)
+
+      setOutput(jsonOutput)
+      setStatus("success")
+      setStatusMessage(`CSV converted to JSON successfully (${result.data.length} rows)`)
+    } catch (error) {
+      setStatus("error")
+      if (error instanceof Error) {
+        setStatusMessage(`Invalid CSV: ${error.message}`)
+      } else {
+        setStatusMessage("Failed to convert CSV to JSON")
+      }
+      setOutput("")
+    }
+  }
+
+  const handleExampleClick = (exampleInput: string) => {
+    setInput(exampleInput)
+    // Trigger conversion after setting input
+    setTimeout(convertToJson, 0)
+  }
+
+  useKeyboardShortcuts({
+    onConvert: convertToJson,
+    onCopy: handleCopy,
+    onClear: handleClear,
+  })
+
+  if (!tool) {
+    return <div>Tool not found</div>
+  }
+
+  return (
+    <ToolLayout
+      headerProps={{
+        title: tool.name,
+        description: tool.description,
+      }}
+      editorProps={{
+        inputValue: input,
+        outputValue: output,
+        onInputChange: setInput,
+        inputPlaceholder: tool.ui.inputPlaceholder,
+        outputPlaceholder: tool.ui.outputPlaceholder,
+        inputLabel: tool.ui.inputLabel,
+        outputLabel: tool.ui.outputLabel,
+        errorMessage: status === "error" ? statusMessage : undefined,
+      }}
+      toolActionsProps={{
+        onConvert: convertToJson,
+        onCopy: handleCopy,
+        onClear: handleClear,
+        toolSlug: toolSlug,
+        shareData: { input, output },
+        isLoading: status === "loading",
+        hasOutput: !!output,
+        convertLabel: tool.ui.convertLabel,
+        toolName: tool.name,
+      }}
+      statusProps={{
+        status: status,
+        message: statusMessage,
+      }}
+      footerProps={{
+        examples: tool.examples,
+        faqs: tool.faq,
+        relatedTools,
+        onExampleClick: handleExampleClick,
+      }}
+    />
+  )
+}
+
+export default CsvToJsonTool

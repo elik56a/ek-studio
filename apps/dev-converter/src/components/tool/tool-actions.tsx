@@ -15,7 +15,7 @@ import {
   Zap,
 } from "lucide-react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { useToast } from "@/components/toast-provider"
 import {
@@ -70,6 +70,28 @@ export function ToolActions({
   const [previewMode, setPreviewMode] = useState(false)
   const { addToast } = useToast()
 
+  // Listen for fullscreen changes (e.g., when user presses ESC)
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isCurrentlyFullscreen = !!(
+        document.fullscreenElement ||
+        (document as any).webkitFullscreenElement ||
+        (document as any).msFullscreenElement
+      )
+      setIsExpanded(isCurrentlyFullscreen)
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange)
+    document.addEventListener('msfullscreenchange', handleFullscreenChange)
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
+      document.removeEventListener('msfullscreenchange', handleFullscreenChange)
+    }
+  }, [])
+
   const handleCopy = async () => {
     onCopy()
     setCopied(true)
@@ -77,6 +99,38 @@ export function ToolActions({
       addToast("Copied to clipboard!", "success")
     }
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  const handleExpand = async () => {
+    try {
+      if (!isExpanded) {
+        // Enter fullscreen
+        const elem = document.documentElement
+        if (elem.requestFullscreen) {
+          await elem.requestFullscreen()
+        } else if ((elem as any).webkitRequestFullscreen) {
+          await (elem as any).webkitRequestFullscreen()
+        } else if ((elem as any).msRequestFullscreen) {
+          await (elem as any).msRequestFullscreen()
+        }
+      
+      } else {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+          await document.exitFullscreen()
+        } else if ((document as any).webkitExitFullscreen) {
+          await (document as any).webkitExitFullscreen()
+        } else if ((document as any).msExitFullscreen) {
+          await (document as any).msExitFullscreen()
+        }
+     
+      }
+    } catch (error) {
+      console.error('Fullscreen error:', error)
+      if (showToasts) {
+        addToast("Fullscreen not supported", "error")
+      }
+    }
   }
 
   const handleClear = () => {
@@ -157,10 +211,6 @@ export function ToolActions({
     link.click()
     document.body.removeChild(link)
     URL.revokeObjectURL(url)
-
-    if (showToasts) {
-      addToast(`Downloaded as ${filename}`, "success")
-    }
   }
 
   const handlePrint = () => {
@@ -197,74 +247,39 @@ export function ToolActions({
     }
   }
 
-  const handleSaveToLocal = () => {
-    if (!hasOutput || !outputValue) {
-      if (showToasts) {
-        addToast("No output to save", "error")
-      }
-      return
-    }
-
-    try {
-      const saveData = {
-        tool: toolSlug,
-        input: inputValue,
-        output: outputValue,
-        timestamp: new Date().toISOString(),
-        toolName,
-      }
-
-      const existingSaves = JSON.parse(
-        localStorage.getItem("devconverter-saves") || "[]"
-      )
-      existingSaves.unshift(saveData)
-
-      // Keep only last 10 saves
-      const limitedSaves = existingSaves.slice(0, 10)
-      localStorage.setItem("devconverter-saves", JSON.stringify(limitedSaves))
-
-      if (showToasts) {
-        addToast("Saved to local storage", "success")
-      }
-    } catch (error) {
-      if (showToasts) {
-        addToast("Failed to save locally", "error")
-      }
-    }
-  }
 
   return (
     <TooltipProvider>
-      <div className={`flex items-center justify-between w-full ${className}`}>
-        {/* Left spacer for balance */}
-        <div className="flex-1" />
+      <div className={`flex flex-col lg:flex-row items-center justify-between w-full gap-4 ${className}`}>
+        {/* Left spacer for balance on desktop */}
+        <div className="hidden lg:block flex-1" />
 
         {/* Main Action Button - Centered */}
-        <div className="flex justify-center">
+        <div className="flex justify-center w-full lg:w-auto">
           <Button
             onClick={onConvert}
             disabled={isLoading}
             size="lg"
-            className="relative min-w-[240px] h-16 text-lg font-bold shadow-glow hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-[1.02] active:scale-[0.98] rounded-2xl border-0 overflow-hidden group"
+            className="relative w-full sm:w-auto sm:min-w-[240px] h-14 sm:h-16 text-base sm:text-lg font-bold shadow-glow hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-[1.02] active:scale-[0.98] rounded-2xl border-0 overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
             {isLoading ? (
               <div className="flex items-center gap-3 relative z-10">
-                <div className="animate-spin rounded-full h-6 w-6 border-3 border-current border-t-transparent" />
+                <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-3 border-current border-t-transparent" />
                 <span>Processing...</span>
               </div>
             ) : (
               <div className="flex items-center gap-3 relative z-10">
-                <Zap className="h-6 w-6 drop-shadow-sm" />
+                <Zap className="h-5 w-5 sm:h-6 sm:w-6 drop-shadow-sm" />
                 <span className="drop-shadow-sm">{convertLabel}</span>
               </div>
             )}
           </Button>
         </div>
 
-        {/* Action Toolbar - Right Side */}
-        <div className="flex-1 flex justify-end">
-          <div className="flex items-center bg-background border rounded-lg shadow-sm p-1 gap-1">
+        {/* Action Toolbar - Right Side on desktop, below on mobile */}
+        <div className="flex-1 flex justify-center lg:justify-end w-full lg:w-auto">
+          <div className="flex items-center bg-background border rounded-lg shadow-sm p-1 gap-1 overflow-x-auto max-w-full">
             {/* Primary Actions */}
             <div className="flex items-center gap-1">
               <Tooltip>
@@ -274,7 +289,7 @@ export function ToolActions({
                     size="sm"
                     onClick={handleCopy}
                     disabled={!hasOutput || isLoading}
-                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
+                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0"
                   >
                     <Copy className="h-4 w-4" />
                   </Button>
@@ -289,7 +304,7 @@ export function ToolActions({
                     size="sm"
                     onClick={handleClear}
                     disabled={isLoading}
-                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
+                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0"
                   >
                     <RotateCcw className="h-4 w-4" />
                   </Button>
@@ -298,10 +313,10 @@ export function ToolActions({
               </Tooltip>
             </div>
 
-            <Separator orientation="vertical" className="h-6" />
+            <Separator orientation="vertical" className="h-6 hidden sm:block" />
 
-            {/* Download Actions */}
-            <div className="flex items-center gap-1">
+            {/* Download Actions - Hidden on very small screens */}
+            <div className="hidden sm:flex items-center gap-1">
               <DropdownMenu>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -310,7 +325,7 @@ export function ToolActions({
                         variant="ghost"
                         size="sm"
                         disabled={!hasOutput || isLoading}
-                        className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer"
+                        className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer flex-shrink-0"
                       >
                         <Download className="h-4 w-4" />
                       </Button>
@@ -343,24 +358,9 @@ export function ToolActions({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={handleSaveToLocal}
-                    disabled={!hasOutput || isLoading}
-                    className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer"
-                  >
-                    <Save className="h-4 w-4" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>Save locally</TooltipContent>
-              </Tooltip>
-
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
                     onClick={handlePrint}
                     disabled={!hasOutput || isLoading}
-                    className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer"
+                    className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer flex-shrink-0"
                   >
                     <Printer className="h-4 w-4" />
                   </Button>
@@ -369,7 +369,7 @@ export function ToolActions({
               </Tooltip>
             </div>
 
-            <Separator orientation="vertical" className="h-6" />
+            <Separator orientation="vertical" className="h-6 hidden sm:block" />
 
             {/* Utility Actions */}
             <div className="flex items-center gap-1">
@@ -378,29 +378,8 @@ export function ToolActions({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => setPreviewMode(!previewMode)}
-                    disabled={!hasOutput || isLoading}
-                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
-                  >
-                    {previewMode ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  {previewMode ? "Exit preview" : "Preview mode"}
-                </TooltipContent>
-              </Tooltip>
-
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsExpanded(!isExpanded)}
-                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
+                    onClick={handleExpand}
+                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0 hidden sm:flex"
                   >
                     {isExpanded ? (
                       <Minimize2 className="h-4 w-4" />
@@ -410,7 +389,7 @@ export function ToolActions({
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  {isExpanded ? "Minimize" : "Expand"}
+                  {isExpanded ? "Exit fullscreen" : "Enter fullscreen"}
                 </TooltipContent>
               </Tooltip>
 
@@ -421,7 +400,7 @@ export function ToolActions({
                     size="sm"
                     onClick={handleShare}
                     disabled={!shareData || isLoading || sharing}
-                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
+                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0"
                   >
                     <Share2 className="h-4 w-4" />
                   </Button>
@@ -442,7 +421,7 @@ export function ToolActions({
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
+                      className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0"
                     >
                       <MoreHorizontal className="h-4 w-4" />
                     </Button>
@@ -451,8 +430,24 @@ export function ToolActions({
                 <TooltipContent>More actions</TooltipContent>
               </Tooltip>
               <DropdownMenuContent align="end" className="w-48">
+                {/* Mobile-only download options */}
+                <div className="sm:hidden">
+                  <DropdownMenuItem onClick={() => handleDownload("txt")}>
+                    <Download className="h-4 w-4 mr-2" />
+                    Download as TXT
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleDownload("json")}>
+                    <Download className="h-4 w-4 mr-2" />
+                    Download as JSON
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handlePrint}>
+                    <Printer className="h-4 w-4 mr-2" />
+                    Print output
+                  </DropdownMenuItem>
+                  <div className="my-1 h-px bg-border" />
+                </div>
                 <DropdownMenuItem
-                  onClick={() => window.open(`/tools/${toolSlug}`, "_blank")}
+                  onClick={() => window.open(`/${toolSlug}`, "_blank")}
                 >
                   <Maximize2 className="h-4 w-4 mr-2" />
                   Open in new tab
@@ -468,30 +463,6 @@ export function ToolActions({
                 >
                   <Copy className="h-4 w-4 mr-2" />
                   Copy tool URL
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={() => {
-                    try {
-                      const saves = JSON.parse(
-                        localStorage.getItem("devconverter-saves") || "[]"
-                      )
-                      console.log("Saved conversions:", saves)
-                      if (showToasts) {
-                        addToast(
-                          `Found ${saves.length} saved conversions`,
-                          "success"
-                        )
-                      }
-                    } catch {
-                      if (showToasts) {
-                        addToast("No saved conversions found", "error")
-                      }
-                    }
-                  }}
-                >
-                  <Settings className="h-4 w-4 mr-2" />
-                  View saved conversions
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
