@@ -1,11 +1,15 @@
 import { Badge, Card } from "@ek-studio/ui"
 import { cn } from "@ek-studio/ui"
+import { Zap } from "lucide-react"
+import { Button } from "@ek-studio/ui"
 
 import { EditorPanel } from "./editor-panel"
 import { ToolActions } from "./tool-actions"
 import { ToolFooter } from "./tool-footer"
 import { ToolHeader } from "./tool-header"
 import { ToolStatus } from "./tool-status"
+import { ToolSwitcher } from "./tool-switcher"
+import { Tool } from "@/lib/tools/types"
 
 interface ToolLayoutProps {
   headerProps?: {
@@ -40,6 +44,7 @@ interface ToolLayoutProps {
     hasOutput?: boolean
     convertLabel?: string
     toolName?: string
+    tool?: Tool  // Add tool here
   }
   // Status props for ToolStatus integration
   statusProps?: {
@@ -59,7 +64,7 @@ export function ToolLayout({
   statusProps,
   className,
 }: ToolLayoutProps) {
-  // Create the toolbar with ToolActions automatically
+  // Create the toolbar with ToolActions (just the action buttons, not the convert button)
   const toolbarWithActions = (
     <ToolActions
       onConvert={toolActionsProps.onConvert}
@@ -73,6 +78,7 @@ export function ToolLayout({
       outputValue={editorProps.outputValue}
       inputValue={editorProps.inputValue}
       toolName={toolActionsProps.toolName || headerProps?.title}
+      showConvertButton={false}
     />
   )
 
@@ -119,11 +125,47 @@ export function ToolLayout({
         )}
 
         {/* Main Tool Section - Enhanced with glassmorphism */}
-        <Card className="glass border-0 shadow-glow p-3 sm:p-4 md:p-8 overflow-hidden">
+        <Card id="editor-section" className="glass border-0 shadow-glow p-3 sm:p-4 md:p-8 overflow-hidden scroll-mt-20">
           <div className="space-y-4 sm:space-y-8">
-            {/* Actions Toolbar - More prominent positioning */}
-            <div className="flex justify-center">
-              {toolbarWithActions}
+            {/* Actions Toolbar with Tool Switcher - All on same level */}
+            <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4 w-full">
+              {/* Tool Switcher - Left */}
+              <div className="flex justify-start lg:w-auto">
+                {toolActionsProps.tool && (
+                  <ToolSwitcher 
+                    currentTool={toolActionsProps.tool}
+                    hasInput={!!editorProps.inputValue}
+                  />
+                )}
+              </div>
+              
+              {/* Main Action Button - Center */}
+              <div className="flex justify-center lg:flex-1">
+                <Button
+                  onClick={toolActionsProps.onConvert}
+                  disabled={toolActionsProps.isLoading}
+                  size="lg"
+                  className="relative w-full sm:w-auto sm:min-w-[240px] h-14 sm:h-16 text-base sm:text-lg font-bold shadow-glow hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-[1.02] active:scale-[0.98] rounded-2xl border-0 overflow-hidden group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                  {toolActionsProps.isLoading ? (
+                    <div className="flex items-center gap-3 relative z-10">
+                      <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-3 border-current border-t-transparent" />
+                      <span>Processing...</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-3 relative z-10">
+                      <Zap className="h-5 w-5 sm:h-6 sm:w-6 drop-shadow-sm" />
+                      <span className="drop-shadow-sm">{toolActionsProps.convertLabel}</span>
+                    </div>
+                  )}
+                </Button>
+              </div>
+
+              {/* Action Toolbar - Right */}
+              <div className="flex justify-end lg:w-auto">
+                {toolbarWithActions}
+              </div>
             </div>
 
             {/* Editor Panel - Enhanced spacing */}

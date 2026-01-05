@@ -86,6 +86,7 @@ const JsonFormatterTool = () => {
         hasOutput: !!output,
         convertLabel: tool.ui.convertLabel,
         toolName: tool.name,
+        tool: tool,
       }}
       statusProps={{
         status: status,

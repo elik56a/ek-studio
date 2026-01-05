@@ -27,6 +27,20 @@ export interface ToolUI {
   convertLabel: string
 }
 
+export interface ToolSwitcherGroup {
+  label: string
+  tools: string[] // tool IDs
+}
+
+export interface ToolSwitcherConfig {
+  enabled: boolean
+  mode?: 'category' | 'custom'
+  customTools?: string[]
+  groups?: ToolSwitcherGroup[]
+  showAllLink?: boolean
+  preserveInput?: boolean
+}
+
 export interface Tool {
   id: string
   slug: string
@@ -40,6 +54,7 @@ export interface Tool {
   relatedTools?: string[] // tool IDs
   ui: ToolUI
   component: React.ComponentType
+  switcher?: ToolSwitcherConfig
 }
 
 export interface Category {

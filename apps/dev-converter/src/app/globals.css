@@ -150,7 +150,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
@@ -178,6 +178,12 @@
   [type="reset"]:disabled,
   select:disabled {
     cursor: not-allowed;
+  }
+  
+  /* Override focus ring to use primary color */
+  *:focus-visible {
+    outline: 2px solid oklch(0.70 0.25 293);
+    outline-offset: 2px;
   }
 }
 

@@ -1,4 +1,5 @@
 import { ExternalLink, HelpCircle, Lightbulb, Settings } from "lucide-react"
+import Link from "next/link"
 
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@ek-studio/ui"
 
@@ -38,6 +39,24 @@ export function ToolFooter({
   className,
   hideAds = true,
 }: ToolFooterProps) {
+  const handleExampleClick = (input: string) => {
+    if (onExampleClick) {
+      onExampleClick(input)
+    }
+    
+    // Smooth scroll to the editor section
+    setTimeout(() => {
+      const editorSection = document.getElementById('editor-section')
+      if (editorSection) {
+        editorSection.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start',
+          inline: 'nearest'
+        })
+      }
+    }, 100)
+  }
+
   // Create an ordered list of content sections
   const sections = []
 
@@ -66,7 +85,7 @@ export function ToolFooter({
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => onExampleClick(example.input)}
+                        onClick={() => handleExampleClick(example.input)}
                         className="h-9 px-4 font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
                       >
                         Try This
@@ -158,25 +177,22 @@ export function ToolFooter({
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {relatedTools.map((tool, index) => (
-              <Card
+              <Link
                 key={index}
-                className="glass border-0 shadow-glow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
+                href={tool.href}
+                className="block group"
               >
-                <CardContent className="p-6 space-y-3">
-                  <Button
-                    variant="ghost"
-                    className="h-auto p-0 justify-start text-left w-full transition-colors"
-                    asChild
-                  >
-                    <a href={tool.href}>
-                      <span className="text-lg font-semibold">{tool.name}</span>
-                    </a>
-                  </Button>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {tool.description}
-                  </p>
-                </CardContent>
-              </Card>
+                <Card className="glass border-0 shadow-glow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
+                  <CardContent className="p-6 space-y-3">
+                    <h4 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                      {tool.name}
+                    </h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {tool.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>

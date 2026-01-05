@@ -58,7 +58,7 @@ export function EditorPanel({
               value={inputValue}
               onChange={e => onInputChange(e.target.value)}
               placeholder={inputPlaceholder}
-              className="w-full h-full min-h-[300px] sm:min-h-[400px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
+              className="w-full h-full min-h-[250px] sm:min-h-[300px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
             />
           </CardContent>
         </Card>
@@ -84,7 +84,7 @@ export function EditorPanel({
           </CardHeader>
           <CardContent className="flex-1 p-3 sm:p-6 pt-0">
             {hasError && errorMessage ? (
-              <div className="w-full h-full min-h-[300px] sm:min-h-[400px] flex items-center justify-center bg-red-50/50 dark:bg-red-950/10 border border-red-200 dark:border-red-800 rounded-lg p-4 sm:p-6">
+              <div className="w-full h-full min-h-[250px] sm:min-h-[300px] flex items-center justify-center bg-red-50/50 dark:bg-red-950/10 border border-red-200 dark:border-red-800 rounded-lg p-4 sm:p-6">
                 <div className="text-center space-y-3 sm:space-y-4 max-w-md">
                   <div className="flex justify-center">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-red-100 dark:bg-red-950/50 flex items-center justify-center">
@@ -104,7 +104,7 @@ export function EditorPanel({
                 value={outputValue}
                 readOnly
                 placeholder={outputPlaceholder}
-                className="w-full h-full min-h-[300px] sm:min-h-[400px] resize-none font-mono text-xs sm:text-sm bg-muted/30 border-border/50 cursor-default"
+                className="w-full h-full min-h-[250px] sm:min-h-[300px] resize-none font-mono text-xs sm:text-sm bg-muted/30 border-border/50 cursor-default"
               />
             )}
           </CardContent>
