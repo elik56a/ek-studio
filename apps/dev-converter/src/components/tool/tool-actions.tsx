@@ -1,18 +1,13 @@
 import {
   Copy,
   Download,
-  Eye,
-  EyeOff,
   FileText,
   Maximize2,
   Minimize2,
   MoreHorizontal,
   Printer,
   RotateCcw,
-  Save,
-  Settings,
   Share2,
-  Zap,
 } from "lucide-react"
 
 import { useState, useEffect } from "react"
@@ -66,10 +61,8 @@ export function ToolActions({
   toolName = "Tool",
   showConvertButton = true,
 }: ToolActionsProps) {
-  const [copied, setCopied] = useState(false)
   const [sharing, setSharing] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
-  const [previewMode, setPreviewMode] = useState(false)
   const { addToast } = useToast()
 
   // Listen for fullscreen changes (e.g., when user presses ESC)
@@ -96,11 +89,9 @@ export function ToolActions({
 
   const handleCopy = async () => {
     onCopy()
-    setCopied(true)
     if (showToasts) {
       addToast("Copied to clipboard!", "success")
     }
-    setTimeout(() => setCopied(false), 2000)
   }
 
   const handleExpand = async () => {

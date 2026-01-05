@@ -1,6 +1,7 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
+import { CollapsibleJsonViewer } from "@/components/tool/collapsible-json-viewer"
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
 import { useToolState } from "@/hooks/use-tool-state"
 import yaml from "js-yaml"
@@ -84,6 +85,12 @@ const YamlToJsonTool = () => {
         inputLabel: tool.ui.inputLabel,
         outputLabel: tool.ui.outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
+        customOutputComponent: (
+          <CollapsibleJsonViewer
+            value={output}
+            placeholder={tool.ui.outputPlaceholder}
+          />
+        ),
       }}
       toolActionsProps={{
         onConvert: convertToJson,

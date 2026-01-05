@@ -25,6 +25,7 @@ interface ToolLayoutProps {
     inputLabel?: string
     outputLabel?: string
     errorMessage?: string
+    customOutputComponent?: React.ReactNode
   }
   footerProps: {
     examples?: Array<{ title: string; input: string; description?: string }>

@@ -13,6 +13,7 @@ import { Button, Input } from "@ek-studio/ui"
 import { categories } from "@/lib/tools/categories"
 import { searchTools, getToolBySlug } from "@/lib/tools/registry"
 import { CategoryDropdown } from "@/components/common/category-dropdown"
+import { DropdownItem } from "@/components/common/dropdown"
 
 export function Header() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -80,31 +81,29 @@ export function Header() {
               className="pl-10 w-48 lg:w-64 bg-background/50 border-border/50 focus:bg-background focus:border-primary/50"
             />
             {showSearch && (
-              <div className="absolute top-full mt-2 w-full border rounded-xl shadow-2xl z-[100] overflow-hidden max-h-[400px] overflow-y-auto bg-background backdrop-blur-xl">
-                {searchResults.length > 0 ? (
-                  searchResults.slice(0, 5).map(tool => (
-                    <Link
-                      key={tool.id}
-                      href={`/${tool.slug}`}
-                      className="block px-4 py-3 hover:bg-accent/10 transition-colors border-b border-border/30 last:border-b-0"
-                      onClick={() => setShowSearch(false)}
-                    >
-                      <div className="font-medium text-foreground">{tool.name}</div>
-                      <div className="text-sm text-muted-foreground truncate">
-                        {tool.description}
+              <div className="absolute top-full mt-2 w-full border rounded-xl shadow-2xl z-[100] overflow-hidden bg-background backdrop-blur-xl">
+                <div className="p-2 space-y-0.5 max-h-[400px] overflow-y-auto">
+                  {searchResults.length > 0 ? (
+                    searchResults.slice(0, 5).map(tool => (
+                      <DropdownItem
+                        key={tool.id}
+                        href={`/${tool.slug}`}
+                        onClick={() => setShowSearch(false)}
+                        title={tool.name}
+                        description={tool.description}
+                      />
+                    ))
+                  ) : (
+                    <div className="px-4 py-6 text-center">
+                      <div className="text-muted-foreground text-sm">
+                        No results found for "{searchQuery}"
                       </div>
-                    </Link>
-                  ))
-                ) : (
-                  <div className="px-4 py-6 text-center">
-                    <div className="text-muted-foreground text-sm">
-                      No results found for "{searchQuery}"
+                      <div className="text-xs text-muted-foreground mt-1">
+                        Try a different search term
+                      </div>
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1">
-                      Try a different search term
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -137,31 +136,29 @@ export function Header() {
                 className="pl-10 w-full bg-background/50 border-border/50 focus:bg-background focus:border-primary/50"
               />
               {showSearch && (
-                <div className="absolute top-full mt-2 w-full border rounded-xl shadow-2xl z-[100] overflow-hidden max-h-[300px] overflow-y-auto bg-background backdrop-blur-xl">
-                  {searchResults.length > 0 ? (
-                    searchResults.slice(0, 5).map(tool => (
-                      <Link
-                        key={tool.id}
-                        href={`/${tool.slug}`}
-                        className="block px-4 py-3 hover:bg-accent/10 transition-colors border-b border-border/30 last:border-b-0"
-                        onClick={() => {
-                          setShowSearch(false)
-                          setMobileMenuOpen(false)
-                        }}
-                      >
-                        <div className="font-medium text-foreground">{tool.name}</div>
-                        <div className="text-sm text-muted-foreground truncate">
-                          {tool.description}
+                <div className="absolute top-full mt-2 w-full border rounded-xl shadow-2xl z-[100] overflow-hidden bg-background backdrop-blur-xl">
+                  <div className="p-2 space-y-0.5 max-h-[300px] overflow-y-auto">
+                    {searchResults.length > 0 ? (
+                      searchResults.slice(0, 5).map(tool => (
+                        <DropdownItem
+                          key={tool.id}
+                          href={`/${tool.slug}`}
+                          onClick={() => {
+                            setShowSearch(false)
+                            setMobileMenuOpen(false)
+                          }}
+                          title={tool.name}
+                          description={tool.description}
+                        />
+                      ))
+                    ) : (
+                      <div className="px-4 py-6 text-center">
+                        <div className="text-muted-foreground text-sm">
+                          No results found for "{searchQuery}"
                         </div>
-                      </Link>
-                    ))
-                  ) : (
-                    <div className="px-4 py-6 text-center">
-                      <div className="text-muted-foreground text-sm">
-                        No results found for "{searchQuery}"
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               )}
             </div>

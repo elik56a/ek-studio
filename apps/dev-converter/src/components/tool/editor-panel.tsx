@@ -15,6 +15,7 @@ interface EditorPanelProps {
   status?: React.ReactNode
   hasError?: boolean
   errorMessage?: string
+  customOutputComponent?: React.ReactNode
 }
 
 export function EditorPanel({
@@ -30,6 +31,7 @@ export function EditorPanel({
   status,
   hasError = false,
   errorMessage,
+  customOutputComponent,
 }: EditorPanelProps) {
   return (
     <div className={cn("space-y-4 sm:space-y-8", className)}>
@@ -99,6 +101,8 @@ export function EditorPanel({
                   </div>
                 </div>
               </div>
+            ) : customOutputComponent ? (
+              customOutputComponent
             ) : (
               <Textarea
                 value={outputValue}
