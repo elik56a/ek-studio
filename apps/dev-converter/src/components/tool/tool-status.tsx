@@ -20,48 +20,52 @@ export function ToolStatus({
 
   const statusConfig = {
     idle: {
-      icon: <Info className="h-3 w-3" />,
+      icon: <Info className="h-4 w-4" />,
       variant: "secondary" as const,
-      className: "text-muted-foreground bg-muted",
+      className: "text-muted-foreground bg-muted/50 border-muted",
     },
     loading: {
-      icon: <Loader2 className="h-3 w-3 animate-spin" />,
+      icon: <Loader2 className="h-4 w-4 animate-spin" />,
       variant: "secondary" as const,
-      className: "text-blue-600 bg-blue-50 border-blue-200",
+      className: "text-blue-600 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-950/50 dark:border-blue-800",
     },
     success: {
-      icon: <CheckCircle2 className="h-3 w-3" />,
+      icon: <CheckCircle2 className="h-4 w-4" />,
       variant: "default" as const,
-      className: "text-green-600 bg-green-50 border-green-200",
+      className: "text-green-600 bg-green-50 border-green-200 dark:text-green-400 dark:bg-green-950/50 dark:border-green-800",
     },
     error: {
-      icon: <AlertCircle className="h-3 w-3" />,
+      icon: <AlertCircle className="h-4 w-4" />,
       variant: "destructive" as const,
-      className: "text-red-600 bg-red-50 border-red-200",
+      className: "text-red-600 bg-red-50 border-red-200 dark:text-red-400 dark:bg-red-950/50 dark:border-red-800",
     },
     info: {
-      icon: <Info className="h-3 w-3" />,
+      icon: <Info className="h-4 w-4" />,
       variant: "secondary" as const,
-      className: "text-blue-600 bg-blue-50 border-blue-200",
+      className: "text-blue-600 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-950/50 dark:border-blue-800",
     },
   }
 
   const config = statusConfig[status]
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-4">
       <Badge
         variant={config.variant}
         className={cn(
-          "flex items-center gap-1.5 px-3 py-1.5 min-h-[32px]",
+          "flex items-center gap-2 px-4 py-2 min-h-[40px] text-sm font-medium rounded-full shadow-sm",
           config.className,
           className
         )}
       >
         {config.icon}
-        {message && <span className="text-xs">{message}</span>}
+        {message && <span>{message}</span>}
       </Badge>
-      {details && details}
+      {details && (
+        <div className="flex items-center gap-2">
+          {details}
+        </div>
+      )}
     </div>
   )
 }

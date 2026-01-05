@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react"
+
 export interface ToolExample {
   title: string
   input: string
@@ -44,6 +46,6 @@ export interface Category {
   id: string
   name: string
   description: string
-  icon: string
+  icon: LucideIcon
   tools: string[] // tool IDs
 }

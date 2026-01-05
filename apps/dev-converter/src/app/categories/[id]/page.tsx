@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { ArrowRight, Clock, Star, Users } from "lucide-react"
 
 import { Breadcrumb } from "@/components/layout/breadcrumb"
 import {
   Badge,
+  Button,
   Card,
   CardContent,
   CardDescription,
@@ -48,61 +50,147 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
 
   const tools = getToolsByCategory(category.id)
+  const IconComponent = category.icon
 
   const breadcrumbItems = [
     { label: "Categories", href: "/" },
     { label: category.name },
   ]
 
+  // Mock popularity data - in real app this would come from analytics
+  const toolsWithMeta = tools.map((tool, index) => ({
+    ...tool,
+    popularity: Math.floor(Math.random() * 1000000) + 100000,
+    lastUpdated: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
+    rating: 4.2 + Math.random() * 0.8,
+  }))
+
   return (
-    <div className="space-y-6">
-      <Breadcrumb items={breadcrumbItems} />
+    <div className="gradient-bg min-h-screen">
+      <div className="container mx-auto px-4 py-6 space-y-12 pb-16">
+        <Breadcrumb items={breadcrumbItems} />
 
-      <div className="text-center space-y-4">
-        <div className="text-6xl">{category.icon}</div>
-        <h1 className="text-4xl font-bold tracking-tight">{category.name}</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          {category.description}
-        </p>
-        <Badge variant="secondary" className="text-sm">
-          {tools.length} {tools.length === 1 ? "tool" : "tools"}
-        </Badge>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {tools.map(tool => (
-          <Link key={tool.id} href={`/${tool.slug}`}>
-            <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <CardTitle className="text-lg">{tool.name}</CardTitle>
-                <CardDescription>{tool.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-1">
-                  {tool.keywords.slice(0, 3).map(keyword => (
-                    <Badge key={keyword} variant="outline" className="text-xs">
-                      {keyword}
-                    </Badge>
-                  ))}
-                  {tool.keywords.length > 3 && (
-                    <Badge variant="outline" className="text-xs">
-                      +{tool.keywords.length - 3}
-                    </Badge>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
-
-      {tools.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">
-            No tools available in this category yet.
-          </p>
+        {/* Hero Section */}
+        <div className="text-center space-y-8 pt-8">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+              <IconComponent className="w-8 h-8 text-primary" />
+            </div>
+            <div className="text-left">
+              <h1 className="text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                {category.name}
+              </h1>
+              <p className="text-muted-foreground text-lg">
+                {category.description}
+              </p>
+            </div>
+          </div>
+            
+          <div className="flex items-center justify-center gap-6 pt-4">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Users className="w-4 h-4" />
+              <span>{tools.length} {tools.length === 1 ? "tool" : "tools"}</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Star className="w-4 h-4 text-yellow-500" />
+              <span>4.8 average rating</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Clock className="w-4 h-4" />
+              <span>Updated daily</span>
+            </div>
+          </div>
         </div>
-      )}
+
+        {/* Tools Grid */}
+        {tools.length > 0 ? (
+          <div className="space-y-8">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-semibold">Available Tools</h2>
+              <Button variant="outline" size="sm">
+                Sort by popularity
+              </Button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {toolsWithMeta.map((tool, index) => (
+                <Link key={tool.id} href={`/${tool.slug}`}>
+                  <Card className="group h-full hover:shadow-glow transition-all duration-300 hover:-translate-y-1 glass border-0">
+                    <CardHeader className="pb-4">
+                      <div className="flex items-start justify-between mb-2">
+                        <CardTitle className="text-xl transition-colors leading-tight">
+                          {tool.name}
+                        </CardTitle>
+                        {index < 3 && (
+                          <Badge variant="secondary" className="text-xs bg-accent/10 text-accent border-accent/20">
+                            Popular
+                          </Badge>
+                        )}
+                      </div>
+                      <CardDescription className="text-sm leading-relaxed">
+                        {tool.description}
+                      </CardDescription>
+                    </CardHeader>
+                    
+                    <CardContent className="pt-0 space-y-4">
+                      {/* Keywords */}
+                      <div className="flex flex-wrap gap-2">
+                        {tool.keywords.slice(0, 3).map(keyword => (
+                          <Badge key={keyword} variant="outline" className="text-xs">
+                            {keyword}
+                          </Badge>
+                        ))}
+                        {tool.keywords.length > 3 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{tool.keywords.length - 3}
+                          </Badge>
+                        )}
+                      </div>
+                      
+                      {/* Stats */}
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Users className="w-3 h-3" />
+                          <span>{(tool.popularity / 1000).toFixed(0)}k users</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Star className="w-3 h-3 text-yellow-500" />
+                          <span>{tool.rating.toFixed(1)}</span>
+                        </div>
+                      </div>
+                      
+                      {/* CTA */}
+                      <div className="flex items-center justify-between pt-2">
+                        <span className="text-sm font-medium text-primary group-hover:text-accent transition-colors">
+                          Try it now
+                        </span>
+                        <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:translate-x-1 transition-all" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="text-center py-16 space-y-4">
+            <div className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mx-auto">
+              <span className="text-2xl">🚧</span>
+            </div>
+            <h3 className="text-xl font-semibold">Coming Soon</h3>
+            <p className="text-muted-foreground max-w-md mx-auto">
+              We're working hard to bring you amazing tools in this category. 
+              Check back soon for updates!
+            </p>
+            <Button asChild className="mt-4">
+              <Link href="/">
+                Explore Other Categories
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

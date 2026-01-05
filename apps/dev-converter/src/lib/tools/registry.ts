@@ -1,9 +1,7 @@
 import JsonFormatterTool from "@/components/tools/json-formatter"
+import { ComingSoonPlaceholder } from "@/components/coming-soon-placeholder"
 
 import { Tool } from "./types"
-
-// Placeholder component for now
-const PlaceholderTool = () => null
 
 export const tools: Tool[] = [
   {
@@ -88,7 +86,7 @@ export const tools: Tool[] = [
       outputLabel: "YAML Output",
       convertLabel: "Convert to YAML",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "yaml-to-json",
@@ -118,7 +116,7 @@ export const tools: Tool[] = [
       outputLabel: "JSON Output",
       convertLabel: "Convert to JSON",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "json-to-csv",
@@ -148,7 +146,7 @@ export const tools: Tool[] = [
       outputLabel: "CSV Output",
       convertLabel: "Convert to CSV",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "csv-to-json",
@@ -179,7 +177,7 @@ export const tools: Tool[] = [
       outputLabel: "JSON Output",
       convertLabel: "Convert to JSON",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "base64-encode-decode",
@@ -209,7 +207,7 @@ export const tools: Tool[] = [
       outputLabel: "Base64 Output",
       convertLabel: "Encode/Decode",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "url-encode-decode",
@@ -239,7 +237,7 @@ export const tools: Tool[] = [
       outputLabel: "URL Output",
       convertLabel: "Encode/Decode",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "html-escape-unescape",
@@ -270,7 +268,7 @@ export const tools: Tool[] = [
       outputLabel: "HTML Output",
       convertLabel: "Escape/Unescape",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "jwt-decoder",
@@ -300,7 +298,7 @@ export const tools: Tool[] = [
       outputLabel: "Decoded JWT",
       convertLabel: "Decode JWT",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "hash-generator",
@@ -331,7 +329,7 @@ export const tools: Tool[] = [
       outputLabel: "Hash Output",
       convertLabel: "Generate Hash",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "uuid-generator",
@@ -361,7 +359,7 @@ export const tools: Tool[] = [
       outputLabel: "Generated UUIDs",
       convertLabel: "Generate UUID",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "case-converter",
@@ -392,7 +390,7 @@ export const tools: Tool[] = [
       outputLabel: "Converted Text",
       convertLabel: "Convert Case",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "unix-timestamp-converter",
@@ -422,7 +420,7 @@ export const tools: Tool[] = [
       outputLabel: "Converted Output",
       convertLabel: "Convert",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "json-escape-unescape",
@@ -452,7 +450,7 @@ export const tools: Tool[] = [
       outputLabel: "JSON String Output",
       convertLabel: "Escape/Unescape",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "diff-checker",
@@ -482,7 +480,7 @@ export const tools: Tool[] = [
       outputLabel: "Comparison Result",
       convertLabel: "Compare",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "color-converter",
@@ -507,7 +505,7 @@ export const tools: Tool[] = [
       outputLabel: "Color Output",
       convertLabel: "Convert Color",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "regex-tester",
@@ -538,7 +536,7 @@ export const tools: Tool[] = [
       outputLabel: "Match Results",
       convertLabel: "Test Regex",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "markdown-html-converter",
@@ -568,7 +566,7 @@ export const tools: Tool[] = [
       outputLabel: "Converted Output",
       convertLabel: "Convert",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
   {
     id: "mime-type-lookup",
@@ -598,7 +596,7 @@ export const tools: Tool[] = [
       outputLabel: "MIME Type",
       convertLabel: "Lookup",
     },
-    component: PlaceholderTool,
+    component: ComingSoonPlaceholder,
   },
 ]
 

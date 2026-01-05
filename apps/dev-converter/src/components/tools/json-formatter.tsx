@@ -74,6 +74,7 @@ const JsonFormatterTool = () => {
         outputPlaceholder: tool.ui.outputPlaceholder,
         inputLabel: tool.ui.inputLabel,
         outputLabel: tool.ui.outputLabel,
+        errorMessage: status === "error" ? statusMessage : undefined,
       }}
       toolActionsProps={{
         onConvert: formatJson,

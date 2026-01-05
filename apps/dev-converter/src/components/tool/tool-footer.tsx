@@ -45,46 +45,51 @@ export function ToolFooter({
     sections.push({
       id: "examples",
       content: (
-        <Card key="examples">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-sm">
-              <Lightbulb className="h-4 w-4" />
+        <div key="examples" className="space-y-6">
+          <div className="text-center space-y-2">
+            <h3 className="text-2xl font-bold flex items-center justify-center gap-2">
+              <Lightbulb className="h-6 w-6 text-accent" />
               Examples
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+            </h3>
+            <p className="text-muted-foreground">Try these examples to get started</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {examples.map((example, index) => (
-              <div
+              <Card
                 key={index}
-                className="space-y-3 p-3 rounded-lg border bg-muted/20"
+                className="glass border-0 shadow-glow hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">{example.title}</span>
-                  {onExampleClick && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onExampleClick(example.input)}
-                      className="h-8 text-xs"
-                    >
-                      Try This
-                    </Button>
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg font-semibold">{example.title}</CardTitle>
+                    {onExampleClick && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onExampleClick(example.input)}
+                        className="h-9 px-4 font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
+                      >
+                        Try This
+                      </Button>
+                    )}
+                  </div>
+                  {example.description && (
+                    <p className="text-sm text-muted-foreground">
+                      {example.description}
+                    </p>
                   )}
-                </div>
-                {example.description && (
-                  <p className="text-xs text-muted-foreground">
-                    {example.description}
-                  </p>
-                )}
-                <div className="bg-background p-3 rounded border text-xs overflow-x-auto max-w-full">
-                  <pre className="whitespace-pre-wrap break-words font-mono">
-                    {example.input}
-                  </pre>
-                </div>
-              </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="bg-muted/30 p-4 rounded-lg border text-sm overflow-x-auto">
+                    <pre className="whitespace-pre-wrap break-words font-mono text-foreground/90">
+                      {example.input}
+                    </pre>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       ),
     })
   }
@@ -93,15 +98,18 @@ export function ToolFooter({
     sections.push({
       id: "settings",
       content: (
-        <Card key="settings">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-sm">
-              <Settings className="h-4 w-4" />
+        <div key="settings" className="space-y-6">
+          <div className="text-center space-y-2">
+            <h3 className="text-2xl font-bold flex items-center justify-center gap-2">
+              <Settings className="h-6 w-6 text-accent" />
               Settings
-            </CardTitle>
-          </CardHeader>
-          <CardContent>{settings}</CardContent>
-        </Card>
+            </h3>
+            <p className="text-muted-foreground">Customize your experience</p>
+          </div>
+          <Card className="glass border-0 shadow-glow">
+            <CardContent className="p-6">{settings}</CardContent>
+          </Card>
+        </div>
       ),
     })
   }
@@ -110,25 +118,28 @@ export function ToolFooter({
     sections.push({
       id: "faqs",
       content: (
-        <Card key="faqs">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-sm">
-              <HelpCircle className="h-4 w-4" />
-              FAQ
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+        <div key="faqs" className="space-y-6">
+          <div className="text-center space-y-2">
+            <h3 className="text-2xl font-bold flex items-center justify-center gap-2">
+              <HelpCircle className="h-6 w-6 text-accent" />
+              Frequently Asked Questions
+            </h3>
+            <p className="text-muted-foreground">Common questions and answers</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {faqs.map((faq, index) => (
-              <div
+              <Card
                 key={index}
-                className="space-y-2 pb-3 border-b last:border-b-0"
+                className="glass border-0 shadow-glow"
               >
-                <h4 className="text-sm font-medium">{faq.question}</h4>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
-              </div>
+                <CardContent className="p-6 space-y-3">
+                  <h4 className="text-lg font-semibold text-foreground">{faq.question}</h4>
+                  <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
+                </CardContent>
+              </Card>
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       ),
     })
   }
@@ -137,32 +148,38 @@ export function ToolFooter({
     sections.push({
       id: "related-tools",
       content: (
-        <Card key="related-tools">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-sm">
-              <ExternalLink className="h-4 w-4" />
+        <div key="related-tools" className="space-y-6">
+          <div className="text-center space-y-2">
+            <h3 className="text-2xl font-bold flex items-center justify-center gap-2">
+              <ExternalLink className="h-6 w-6 text-accent" />
               Related Tools
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
+            </h3>
+            <p className="text-muted-foreground">Explore more developer tools</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {relatedTools.map((tool, index) => (
-              <div key={index} className="space-y-1">
-                <Button
-                  variant="ghost"
-                  className="h-auto p-0 justify-start text-left"
-                  asChild
-                >
-                  <a href={tool.href}>
-                    <span className="text-sm font-medium">{tool.name}</span>
-                  </a>
-                </Button>
-                <p className="text-xs text-muted-foreground pl-0">
-                  {tool.description}
-                </p>
-              </div>
+              <Card
+                key={index}
+                className="glass border-0 shadow-glow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
+              >
+                <CardContent className="p-6 space-y-3">
+                  <Button
+                    variant="ghost"
+                    className="h-auto p-0 justify-start text-left w-full transition-colors"
+                    asChild
+                  >
+                    <a href={tool.href}>
+                      <span className="text-lg font-semibold">{tool.name}</span>
+                    </a>
+                  </Button>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {tool.description}
+                  </p>
+                </CardContent>
+              </Card>
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       ),
     })
   }
@@ -170,7 +187,7 @@ export function ToolFooter({
   // When hiding ads (default), just return the sections without ad placeholders
   if (hideAds) {
     return (
-      <div className={`space-y-6 ${className}`}>
+      <div className={`space-y-16 ${className}`}>
         {sections.map(section => section.content)}
       </div>
     )
@@ -186,13 +203,13 @@ export function ToolFooter({
       contentWithAds.push(
         <Card
           key={`ad-${index}`}
-          className="bg-muted border-2 border-dashed border-muted-foreground/30"
+          className="glass border-2 border-dashed border-muted-foreground/30"
         >
-          <CardContent className="flex items-center justify-center p-6 text-center">
-            <div className="space-y-2">
-              <div className="mx-auto h-6 w-6 rounded-full bg-muted-foreground/20" />
-              <p className="text-sm text-muted-foreground">Ad Space</p>
-              <p className="text-xs text-muted-foreground/60">Advertisement</p>
+          <CardContent className="flex items-center justify-center p-8 text-center">
+            <div className="space-y-3">
+              <div className="mx-auto h-8 w-8 rounded-full bg-muted-foreground/20" />
+              <p className="text-lg font-medium text-muted-foreground">Ad Space</p>
+              <p className="text-sm text-muted-foreground/60">Advertisement</p>
             </div>
           </CardContent>
         </Card>
@@ -200,5 +217,5 @@ export function ToolFooter({
     }
   })
 
-  return <div className={`space-y-6 ${className}`}>{contentWithAds}</div>
+  return <div className={`space-y-16 ${className}`}>{contentWithAds}</div>
 }

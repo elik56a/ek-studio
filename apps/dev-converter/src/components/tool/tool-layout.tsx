@@ -20,6 +20,7 @@ interface ToolLayoutProps {
     outputPlaceholder?: string
     inputLabel?: string
     outputLabel?: string
+    errorMessage?: string
   }
   footerProps: {
     examples?: Array<{ title: string; input: string; description?: string }>
@@ -107,30 +108,42 @@ export function ToolLayout({
   }
 
   return (
-    <div className={cn("w-full max-w-7xl mx-auto space-y-6", className)}>
-      <Card className="p-0 md:p-6 shadow-sm border">
-        <div className="space-y-6">
-          {headerProps && (
-            <div className="pb-6 border-b">
-              <ToolHeader
-                title={headerProps.title}
-                description={headerProps.description}
+    <div className={cn("gradient-bg min-h-screen w-full", className)}>
+      <div className="w-full max-w-7xl mx-auto px-4 py-8 space-y-8">
+        {/* Header Section - No card, just text */}
+        {headerProps && (
+          <ToolHeader
+            title={headerProps.title}
+            description={headerProps.description}
+          />
+        )}
+
+        {/* Main Tool Section - Enhanced with glassmorphism */}
+        <Card className="glass border-0 shadow-glow p-0 md:p-8 overflow-hidden">
+          <div className="space-y-8">
+            {/* Actions Toolbar - More prominent positioning */}
+            <div className="flex justify-center px-4 md:px-0">
+              {toolbarWithActions}
+            </div>
+
+            {/* Editor Panel - Enhanced spacing */}
+            <div className="px-4 md:px-0">
+              <EditorPanel 
+                {...editorProps}
+                hasError={statusProps?.status === "error"}
+                className="space-y-8"
               />
             </div>
-          )}
+          </div>
+        </Card>
 
-          {/* Main Tool Area */}
-          <EditorPanel {...editorProps} toolbar={toolbarWithActions} />
-
-          {/* Status Section */}
-          {statusProps && (
-            <div className="flex justify-center">{renderStatus()}</div>
-          )}
-
-          {/* Footer content below the main tool */}
-          <ToolFooter {...footerProps} />
-        </div>
-      </Card>
+        {/* Footer Section - Separate card for better organization */}
+        {(footerProps.examples?.length || footerProps.faqs?.length || footerProps.relatedTools?.length) && (
+          <Card className="glass border-0 shadow-glow p-8">
+            <ToolFooter {...footerProps} />
+          </Card>
+        )}
+      </div>
     </div>
   )
 }

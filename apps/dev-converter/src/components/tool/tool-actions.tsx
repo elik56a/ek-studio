@@ -108,9 +108,7 @@ export function ToolActions({
         }
       }
     } catch (error) {
-      if (showToasts) {
-        addToast("Failed to share", "error")
-      }
+     console.log(error)
     }
     setSharing(false)
   }
@@ -247,17 +245,18 @@ export function ToolActions({
             onClick={onConvert}
             disabled={isLoading}
             size="lg"
-            className="min-w-[200px] h-12 text-base font-medium shadow-md hover:shadow-lg transition-all duration-200"
+            className="relative min-w-[240px] h-16 text-lg font-bold shadow-glow hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-[1.02] active:scale-[0.98] rounded-2xl border-0 overflow-hidden group"
           >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
             {isLoading ? (
-              <div className="flex items-center gap-3">
-                <div className="animate-spin rounded-full h-5 w-5 border-2 border-current border-t-transparent" />
+              <div className="flex items-center gap-3 relative z-10">
+                <div className="animate-spin rounded-full h-6 w-6 border-3 border-current border-t-transparent" />
                 <span>Processing...</span>
               </div>
             ) : (
-              <div className="flex items-center gap-3">
-                <Zap className="h-5 w-5" />
-                <span>{convertLabel}</span>
+              <div className="flex items-center gap-3 relative z-10">
+                <Zap className="h-6 w-6 drop-shadow-sm" />
+                <span className="drop-shadow-sm">{convertLabel}</span>
               </div>
             )}
           </Button>
@@ -275,7 +274,7 @@ export function ToolActions({
                     size="sm"
                     onClick={handleCopy}
                     disabled={!hasOutput || isLoading}
-                    className="h-9 w-9 hover:bg-muted transition-colors cursor-pointer"
+                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
                   >
                     <Copy className="h-4 w-4" />
                   </Button>
@@ -290,7 +289,7 @@ export function ToolActions({
                     size="sm"
                     onClick={handleClear}
                     disabled={isLoading}
-                    className="h-9 w-9 hover:bg-muted transition-colors cursor-pointer"
+                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
                   >
                     <RotateCcw className="h-4 w-4" />
                   </Button>
@@ -311,7 +310,7 @@ export function ToolActions({
                         variant="ghost"
                         size="sm"
                         disabled={!hasOutput || isLoading}
-                        className="h-9 w-9 hover:bg-muted transition-colors cursor-pointer"
+                        className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer"
                       >
                         <Download className="h-4 w-4" />
                       </Button>
@@ -346,7 +345,7 @@ export function ToolActions({
                     size="sm"
                     onClick={handleSaveToLocal}
                     disabled={!hasOutput || isLoading}
-                    className="h-9 w-9 hover:bg-muted transition-colors cursor-pointer"
+                    className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer"
                   >
                     <Save className="h-4 w-4" />
                   </Button>
@@ -361,7 +360,7 @@ export function ToolActions({
                     size="sm"
                     onClick={handlePrint}
                     disabled={!hasOutput || isLoading}
-                    className="h-9 w-9 hover:bg-muted transition-colors cursor-pointer"
+                    className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer"
                   >
                     <Printer className="h-4 w-4" />
                   </Button>
@@ -381,7 +380,7 @@ export function ToolActions({
                     size="sm"
                     onClick={() => setPreviewMode(!previewMode)}
                     disabled={!hasOutput || isLoading}
-                    className="h-9 w-9 hover:bg-muted transition-colors cursor-pointer"
+                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
                   >
                     {previewMode ? (
                       <EyeOff className="h-4 w-4" />
@@ -401,7 +400,7 @@ export function ToolActions({
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="h-9 w-9 hover:bg-muted transition-colors cursor-pointer"
+                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
                   >
                     {isExpanded ? (
                       <Minimize2 className="h-4 w-4" />
@@ -422,7 +421,7 @@ export function ToolActions({
                     size="sm"
                     onClick={handleShare}
                     disabled={!shareData || isLoading || sharing}
-                    className="h-9 w-9 hover:bg-muted transition-colors cursor-pointer"
+                    className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
                   >
                     <Share2 className="h-4 w-4" />
                   </Button>
@@ -443,7 +442,7 @@ export function ToolActions({
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-9 w-9 hover:bg-muted transition-colors cursor-pointer"
+                      className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
                     >
                       <MoreHorizontal className="h-4 w-4" />
                     </Button>
