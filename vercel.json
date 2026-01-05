@@ -1,0 +1,6 @@
+{
+  "buildCommand": "pnpm --filter dev-converter build",
+  "outputDirectory": "apps/dev-converter/.next",
+  "installCommand": "pnpm install",
+  "framework": "nextjs"
+}
