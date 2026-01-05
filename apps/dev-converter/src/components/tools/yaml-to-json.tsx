@@ -4,7 +4,7 @@ import { ToolLayout } from "@/components/tool/tool-layout"
 import { CollapsibleJsonViewer } from "@/components/tool/collapsible-json-viewer"
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
 import { useToolState } from "@/hooks/use-tool-state"
-import yaml from "js-yaml"
+import { yamlToJson } from "@/lib/utils/json-utils"
 
 const YamlToJsonTool = () => {
   const {
@@ -33,23 +33,15 @@ const YamlToJsonTool = () => {
 
     setStatus("loading")
 
-    try {
-      // Parse YAML input
-      const yamlData = yaml.load(input)
-      
-      // Convert to formatted JSON
-      const jsonOutput = JSON.stringify(yamlData, null, 2)
+    const result = yamlToJson(input)
 
-      setOutput(jsonOutput)
+    if (result.success && result.data) {
+      setOutput(result.data)
       setStatus("success")
       setStatusMessage("YAML converted to JSON successfully")
-    } catch (error) {
+    } else {
       setStatus("error")
-      if (error instanceof Error) {
-        setStatusMessage(`Invalid YAML: ${error.message}`)
-      } else {
-        setStatusMessage("Failed to convert YAML to JSON")
-      }
+      setStatusMessage(result.error || "Failed to convert YAML to JSON")
       setOutput("")
     }
   }

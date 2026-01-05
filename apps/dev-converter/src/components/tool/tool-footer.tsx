@@ -83,8 +83,8 @@ export function ToolFooter({
                     <CardTitle className="text-lg font-semibold">{example.title}</CardTitle>
                     {onExampleClick && (
                       <Button
-                        variant="outline"
-                        size="sm"
+                       variant="secondary"
+                         size="sm"
                         onClick={() => handleExampleClick(example.input)}
                         className="h-9 px-4 font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
                       >

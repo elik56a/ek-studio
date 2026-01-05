@@ -4,7 +4,7 @@ import { ToolLayout } from "@/components/tool/tool-layout"
 import { CollapsibleJsonViewer } from "@/components/tool/collapsible-json-viewer"
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
 import { useToolState } from "@/hooks/use-tool-state"
-import Papa from "papaparse"
+import { csvToJson } from "@/lib/utils/json-utils"
 
 const CsvToJsonTool = () => {
   const {
@@ -33,39 +33,17 @@ const CsvToJsonTool = () => {
 
     setStatus("loading")
 
-    try {
-      // Parse CSV input
-      const result = Papa.parse(input, {
-        header: true,
-        skipEmptyLines: true,
-        dynamicTyping: true, // Automatically convert numbers and booleans
-        transformHeader: (header) => header.trim(),
-      })
+    const result = csvToJson(input)
 
-      if (result.errors.length > 0) {
-        const errorMessages = result.errors
-          .map(err => `Row ${err.row}: ${err.message}`)
-          .join(", ")
-        throw new Error(errorMessages)
-      }
-
-      if (!result.data || result.data.length === 0) {
-        throw new Error("No data found in CSV")
-      }
-
-      // Convert to formatted JSON
-      const jsonOutput = JSON.stringify(result.data, null, 2)
-
-      setOutput(jsonOutput)
+    if (result.success && result.data) {
+      setOutput(result.data)
       setStatus("success")
-      setStatusMessage(`CSV converted to JSON successfully (${result.data.length} rows)`)
-    } catch (error) {
+      setStatusMessage(
+        `CSV converted to JSON successfully (${result.metadata?.rowCount || 0} rows)`
+      )
+    } else {
       setStatus("error")
-      if (error instanceof Error) {
-        setStatusMessage(`Invalid CSV: ${error.message}`)
-      } else {
-        setStatusMessage("Failed to convert CSV to JSON")
-      }
+      setStatusMessage(`Invalid CSV: ${result.error}`)
       setOutput("")
     }
   }

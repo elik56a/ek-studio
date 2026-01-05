@@ -3,7 +3,7 @@
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
 import { useToolState } from "@/hooks/use-tool-state"
-import Papa from "papaparse"
+import { jsonToCsv } from "@/lib/utils/json-utils"
 
 const JsonToCsvTool = () => {
   const {
@@ -32,45 +32,17 @@ const JsonToCsvTool = () => {
 
     setStatus("loading")
 
-    try {
-      // Parse JSON input
-      const jsonData = JSON.parse(input)
-      
-      // Ensure data is an array
-      let dataArray: any[]
-      if (Array.isArray(jsonData)) {
-        dataArray = jsonData
-      } else if (typeof jsonData === "object" && jsonData !== null) {
-        // If it's a single object, wrap it in an array
-        dataArray = [jsonData]
-      } else {
-        throw new Error("JSON must be an array or object")
-      }
+    const result = jsonToCsv(input)
 
-      if (dataArray.length === 0) {
-        throw new Error("JSON array is empty")
-      }
-
-      // Convert to CSV using PapaParse
-      const csvOutput = Papa.unparse(dataArray, {
-        header: true,
-        skipEmptyLines: true,
-      })
-
-      setOutput(csvOutput)
+    if (result.success && result.data) {
+      setOutput(result.data)
       setStatus("success")
-      setStatusMessage(`JSON converted to CSV successfully (${dataArray.length} rows)`)
-    } catch (error) {
+      setStatusMessage(
+        `JSON converted to CSV successfully (${result.metadata?.rowCount || 0} rows)`
+      )
+    } else {
       setStatus("error")
-      if (error instanceof Error) {
-        setStatusMessage(
-          error.message.includes("JSON")
-            ? error.message
-            : `Invalid JSON: ${error.message}`
-        )
-      } else {
-        setStatusMessage("Failed to convert JSON to CSV")
-      }
+      setStatusMessage(result.error || "Failed to convert JSON to CSV")
       setOutput("")
     }
   }

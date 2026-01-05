@@ -4,6 +4,7 @@ import { ToolLayout } from "@/components/tool/tool-layout"
 import { CollapsibleJsonViewer } from "@/components/tool/collapsible-json-viewer"
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
 import { useToolState } from "@/hooks/use-tool-state"
+import { formatJson as formatJsonUtil } from "@/lib/utils/json-utils"
 
 const JsonFormatterTool = () => {
   const {
@@ -32,16 +33,15 @@ const JsonFormatterTool = () => {
 
     setStatus("loading")
 
-    try {
-      const parsed = JSON.parse(input)
-      const formatted = JSON.stringify(parsed, null, 2)
+    const result = formatJsonUtil(input)
 
-      setOutput(formatted)
+    if (result.success && result.data) {
+      setOutput(result.data)
       setStatus("success")
       setStatusMessage("JSON formatted successfully")
-    } catch (error) {
+    } else {
       setStatus("error")
-      setStatusMessage(error instanceof Error ? error.message : "Invalid JSON")
+      setStatusMessage(result.error || "Invalid JSON")
       setOutput("")
     }
   }

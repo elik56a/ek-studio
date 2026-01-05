@@ -3,7 +3,7 @@
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
 import { useToolState } from "@/hooks/use-tool-state"
-import yaml from "js-yaml"
+import { jsonToYaml } from "@/lib/utils/json-utils"
 
 const JsonToYamlTool = () => {
   const {
@@ -32,31 +32,15 @@ const JsonToYamlTool = () => {
 
     setStatus("loading")
 
-    try {
-      // Parse JSON input
-      const jsonData = JSON.parse(input)
-      
-      // Convert to YAML
-      const yamlOutput = yaml.dump(jsonData, {
-        indent: 2,
-        lineWidth: -1, // Don't wrap lines
-        noRefs: true, // Don't use anchors/references
-      })
+    const result = jsonToYaml(input)
 
-      setOutput(yamlOutput)
+    if (result.success && result.data) {
+      setOutput(result.data)
       setStatus("success")
       setStatusMessage("JSON converted to YAML successfully")
-    } catch (error) {
+    } else {
       setStatus("error")
-      if (error instanceof Error) {
-        setStatusMessage(
-          error.message.includes("JSON")
-            ? error.message
-            : `Invalid JSON: ${error.message}`
-        )
-      } else {
-        setStatusMessage("Failed to convert JSON to YAML")
-      }
+      setStatusMessage(result.error || "Failed to convert JSON to YAML")
       setOutput("")
     }
   }

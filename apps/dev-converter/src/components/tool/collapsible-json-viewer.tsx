@@ -1,9 +1,9 @@
 "use client"
 
 import { useState, useMemo, useCallback } from "react"
-import { ChevronRight, ChevronsDown, ChevronsRight } from "lucide-react"
-import { Button } from "@ek-studio/ui"
+import { ChevronRight, ChevronsDown, ChevronsRight, FileJson, List } from "lucide-react"
 import { cn } from "@ek-studio/ui"
+import { ButtonGroup } from "@/components/common/button-group"
 
 interface CollapsibleJsonViewerProps {
   value: string
@@ -28,6 +28,7 @@ export function CollapsibleJsonViewer({
 }: CollapsibleJsonViewerProps) {
   const [collapsedNodes, setCollapsedNodes] = useState<NodeState>({})
   const [globalCollapsed, setGlobalCollapsed] = useState(false)
+  const [viewMode, setViewMode] = useState<"tree" | "pretty">("tree")
 
   // Parse the input value (supports JSON and YAML-like structures)
   const parsedData = useMemo(() => {
@@ -290,33 +291,43 @@ export function CollapsibleJsonViewer({
     <div className={cn("w-full h-full min-h-[250px] sm:min-h-[300px] max-h-[600px] flex flex-col", className)}>
       {/* JSON Tree View with Controls */}
       <div className="flex-1 overflow-auto bg-muted/30 border border-border/50 rounded-lg flex flex-col">
-        {/* Collapse/Expand All Controls - Inside the container */}
-        <div className="flex items-center gap-2 px-4 py-2 border-b border-border/50 bg-background/50 sticky top-0 z-10">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={expandAll}
-            disabled={!globalCollapsed && Object.keys(collapsedNodes).length === 0}
-            className="h-7 text-xs"
-          >
-            <ChevronsDown className="h-3 w-3 mr-1" />
-            Expand All
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={collapseAll}
-            disabled={globalCollapsed}
-            className="h-7 text-xs"
-          >
-            <ChevronsRight className="h-3 w-3 mr-1" />
-            Collapse All
-          </Button>
+        {/* Controls - Inside the container */}
+        <div className="flex items-center gap-3 px-4 py-2 border-b border-border/50 bg-background/50 sticky top-0 z-10">
+          {/* View Mode Toggle */}
+          <ButtonGroup
+            options={[
+              { value: "tree", label: "Tree", icon: <List className="h-3 w-3" /> },
+              { value: "pretty", label: "Pretty", icon: <FileJson className="h-3 w-3" /> },
+            ]}
+            value={viewMode}
+            onChange={(mode) => setViewMode(mode as "tree" | "pretty")}
+          />
+
+          {/* Collapse/Expand Controls */}
+          {viewMode === "tree" && (
+            <ButtonGroup
+              options={[
+                { value: "expand", label: "Expand All", icon: <ChevronsDown className="h-3 w-3" /> },
+                { value: "collapse", label: "Collapse All", icon: <ChevronsRight className="h-3 w-3" /> },
+              ]}
+              value={globalCollapsed ? "collapse" : "expand"}
+              onChange={(action) => {
+                if (action === "expand") expandAll()
+                else collapseAll()
+              }}
+            />
+          )}
         </div>
 
         {/* JSON Content */}
         <div className="flex-1 overflow-auto p-4 font-mono text-xs sm:text-sm">
-          {renderValue(parsedData, "root")}
+          {viewMode === "pretty" ? (
+            <pre className="whitespace-pre-wrap break-words">
+              {JSON.stringify(parsedData, null, 2)}
+            </pre>
+          ) : (
+            renderValue(parsedData, "root")
+          )}
         </div>
       </div>
     </div>
