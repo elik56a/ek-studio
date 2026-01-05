@@ -2,8 +2,7 @@
 
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { CollapsibleJsonViewer } from "@/components/tool/collapsible-json-viewer"
-import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
-import { useToolState } from "@/hooks/use-tool-state"
+import { useToolConverter } from "@/hooks/use-tool-converter"
 import { formatJson as formatJsonUtil } from "@/lib/utils/json-utils"
 
 const JsonFormatterTool = () => {
@@ -11,50 +10,17 @@ const JsonFormatterTool = () => {
     input,
     setInput,
     output,
-    setOutput,
     status,
-    setStatus,
     statusMessage,
-    setStatusMessage,
-    handleClear,
     handleCopy,
+    handleClear,
     toolSlug,
     tool,
     relatedTools,
-  } = useToolState()
-
-  const formatJson = () => {
-    if (!input.trim()) {
-      setOutput("")
-      setStatus("idle")
-      setStatusMessage("")
-      return
-    }
-
-    setStatus("loading")
-
-    const result = formatJsonUtil(input)
-
-    if (result.success && result.data) {
-      setOutput(result.data)
-      setStatus("success")
-      setStatusMessage("JSON formatted successfully")
-    } else {
-      setStatus("error")
-      setStatusMessage(result.error || "Invalid JSON")
-      setOutput("")
-    }
-  }
-
-  const handleExampleClick = (exampleInput: string) => {
-    setInput(exampleInput)
-    formatJson()
-  }
-
-  useKeyboardShortcuts({
-    onConvert: formatJson,
-    onCopy: handleCopy,
-    onClear: handleClear,
+    convert,
+    handleExampleClick,
+  } = useToolConverter({
+    convertFn: formatJsonUtil,
   })
 
   if (!tool) {
@@ -84,7 +50,7 @@ const JsonFormatterTool = () => {
         ),
       }}
       toolActionsProps={{
-        onConvert: formatJson,
+        onConvert: convert,
         onCopy: handleCopy,
         onClear: handleClear,
         toolSlug: toolSlug,

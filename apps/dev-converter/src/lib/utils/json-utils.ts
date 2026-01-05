@@ -5,6 +5,7 @@ export interface ConversionResult<T = any> {
   success: boolean
   data?: T
   error?: string
+  message?: string
   metadata?: Record<string, any>
 }
 
@@ -53,6 +54,7 @@ export function csvToJson(csvInput: string): ConversionResult<string> {
     return {
       success: true,
       data: jsonOutput,
+      message: `CSV converted to JSON successfully (${result.data.length} rows)`,
       metadata: {
         rowCount: result.data.length,
       },
@@ -85,6 +87,7 @@ export function formatJson(jsonInput: string): ConversionResult<string> {
     return {
       success: true,
       data: formatted,
+      message: "JSON formatted successfully",
     }
   } catch (error) {
     return {
@@ -141,6 +144,7 @@ export function jsonToCsv(jsonInput: string): ConversionResult<string> {
     return {
       success: true,
       data: csvOutput,
+      message: `JSON converted to CSV successfully (${dataArray.length} rows)`,
       metadata: {
         rowCount: dataArray.length,
       },
@@ -182,6 +186,7 @@ export function jsonToYaml(jsonInput: string): ConversionResult<string> {
     return {
       success: true,
       data: yamlOutput,
+      message: "JSON converted to YAML successfully",
     }
   } catch (error) {
     return {
@@ -216,6 +221,7 @@ export function yamlToJson(yamlInput: string): ConversionResult<string> {
     return {
       success: true,
       data: jsonOutput,
+      message: "YAML converted to JSON successfully",
     }
   } catch (error) {
     return {

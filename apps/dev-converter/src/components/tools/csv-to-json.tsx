@@ -2,8 +2,7 @@
 
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { CollapsibleJsonViewer } from "@/components/tool/collapsible-json-viewer"
-import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
-import { useToolState } from "@/hooks/use-tool-state"
+import { useToolConverter } from "@/hooks/use-tool-converter"
 import { csvToJson } from "@/lib/utils/json-utils"
 
 const CsvToJsonTool = () => {
@@ -11,53 +10,17 @@ const CsvToJsonTool = () => {
     input,
     setInput,
     output,
-    setOutput,
     status,
-    setStatus,
     statusMessage,
-    setStatusMessage,
-    handleClear,
     handleCopy,
+    handleClear,
     toolSlug,
     tool,
     relatedTools,
-  } = useToolState()
-
-  const convertToJson = () => {
-    if (!input.trim()) {
-      setOutput("")
-      setStatus("idle")
-      setStatusMessage("")
-      return
-    }
-
-    setStatus("loading")
-
-    const result = csvToJson(input)
-
-    if (result.success && result.data) {
-      setOutput(result.data)
-      setStatus("success")
-      setStatusMessage(
-        `CSV converted to JSON successfully (${result.metadata?.rowCount || 0} rows)`
-      )
-    } else {
-      setStatus("error")
-      setStatusMessage(`Invalid CSV: ${result.error}`)
-      setOutput("")
-    }
-  }
-
-  const handleExampleClick = (exampleInput: string) => {
-    setInput(exampleInput)
-    // Trigger conversion after setting input
-    setTimeout(convertToJson, 0)
-  }
-
-  useKeyboardShortcuts({
-    onConvert: convertToJson,
-    onCopy: handleCopy,
-    onClear: handleClear,
+    convert,
+    handleExampleClick,
+  } = useToolConverter({
+    convertFn: csvToJson,
   })
 
   if (!tool) {
@@ -87,7 +50,7 @@ const CsvToJsonTool = () => {
         ),
       }}
       toolActionsProps={{
-        onConvert: convertToJson,
+        onConvert: convert,
         onCopy: handleCopy,
         onClear: handleClear,
         toolSlug: toolSlug,

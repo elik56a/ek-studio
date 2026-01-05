@@ -1,8 +1,7 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
-import { useToolState } from "@/hooks/use-tool-state"
+import { useToolConverter } from "@/hooks/use-tool-converter"
 import { jsonToYaml } from "@/lib/utils/json-utils"
 
 const JsonToYamlTool = () => {
@@ -10,51 +9,17 @@ const JsonToYamlTool = () => {
     input,
     setInput,
     output,
-    setOutput,
     status,
-    setStatus,
     statusMessage,
-    setStatusMessage,
-    handleClear,
     handleCopy,
+    handleClear,
     toolSlug,
     tool,
     relatedTools,
-  } = useToolState()
-
-  const convertToYaml = () => {
-    if (!input.trim()) {
-      setOutput("")
-      setStatus("idle")
-      setStatusMessage("")
-      return
-    }
-
-    setStatus("loading")
-
-    const result = jsonToYaml(input)
-
-    if (result.success && result.data) {
-      setOutput(result.data)
-      setStatus("success")
-      setStatusMessage("JSON converted to YAML successfully")
-    } else {
-      setStatus("error")
-      setStatusMessage(result.error || "Failed to convert JSON to YAML")
-      setOutput("")
-    }
-  }
-
-  const handleExampleClick = (exampleInput: string) => {
-    setInput(exampleInput)
-    // Trigger conversion after setting input
-    setTimeout(convertToYaml, 0)
-  }
-
-  useKeyboardShortcuts({
-    onConvert: convertToYaml,
-    onCopy: handleCopy,
-    onClear: handleClear,
+    convert,
+    handleExampleClick,
+  } = useToolConverter({
+    convertFn: jsonToYaml,
   })
 
   if (!tool) {
@@ -78,7 +43,7 @@ const JsonToYamlTool = () => {
         errorMessage: status === "error" ? statusMessage : undefined,
       }}
       toolActionsProps={{
-        onConvert: convertToYaml,
+        onConvert: convert,
         onCopy: handleCopy,
         onClear: handleClear,
         toolSlug: toolSlug,

@@ -1,8 +1,7 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
-import { useToolState } from "@/hooks/use-tool-state"
+import { useToolConverter } from "@/hooks/use-tool-converter"
 import { jsonToCsv } from "@/lib/utils/json-utils"
 
 const JsonToCsvTool = () => {
@@ -10,53 +9,17 @@ const JsonToCsvTool = () => {
     input,
     setInput,
     output,
-    setOutput,
     status,
-    setStatus,
     statusMessage,
-    setStatusMessage,
-    handleClear,
     handleCopy,
+    handleClear,
     toolSlug,
     tool,
     relatedTools,
-  } = useToolState()
-
-  const convertToCsv = () => {
-    if (!input.trim()) {
-      setOutput("")
-      setStatus("idle")
-      setStatusMessage("")
-      return
-    }
-
-    setStatus("loading")
-
-    const result = jsonToCsv(input)
-
-    if (result.success && result.data) {
-      setOutput(result.data)
-      setStatus("success")
-      setStatusMessage(
-        `JSON converted to CSV successfully (${result.metadata?.rowCount || 0} rows)`
-      )
-    } else {
-      setStatus("error")
-      setStatusMessage(result.error || "Failed to convert JSON to CSV")
-      setOutput("")
-    }
-  }
-
-  const handleExampleClick = (exampleInput: string) => {
-    setInput(exampleInput)
-    // Trigger conversion after setting input
-    setTimeout(convertToCsv, 0)
-  }
-
-  useKeyboardShortcuts({
-    onConvert: convertToCsv,
-    onCopy: handleCopy,
-    onClear: handleClear,
+    convert,
+    handleExampleClick,
+  } = useToolConverter({
+    convertFn: jsonToCsv,
   })
 
   if (!tool) {
@@ -80,7 +43,7 @@ const JsonToCsvTool = () => {
         errorMessage: status === "error" ? statusMessage : undefined,
       }}
       toolActionsProps={{
-        onConvert: convertToCsv,
+        onConvert: convert,
         onCopy: handleCopy,
         onClear: handleClear,
         toolSlug: toolSlug,
