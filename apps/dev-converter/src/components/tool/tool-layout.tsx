@@ -65,36 +65,6 @@ export function ToolLayout({
   const showGenerateButton = isGeneratorTool(tool)
   const toolbarWithActions = <ToolActions {...toolActionsProps} />
 
-  // Render status with ToolStatus as default
-  const renderStatus = () => {
-    if (!statusProps) return null
-
-    const { status, message, details, customDetailsRender } = statusProps
-
-    // Create default details if none provided and status is success with output
-    const defaultDetails =
-      details !== undefined ? (
-        details
-      ) : status === "success" && editorProps.outputValue ? (
-        <div className="flex items-center gap-2 text-xs">
-          <Badge variant="secondary">
-            {editorProps.outputValue.split("\n").length} lines
-          </Badge>
-          <Badge variant="secondary">
-            {editorProps.outputValue.length} characters
-          </Badge>
-        </div>
-      ) : undefined
-
-    // Use custom details render if provided, otherwise use default/provided details
-    const finalDetails = customDetailsRender
-      ? customDetailsRender(defaultDetails)
-      : defaultDetails
-
-    return (
-      <ToolStatus status={status} message={message} details={finalDetails} />
-    )
-  }
 
   return (
     <div className={cn("gradient-bg min-h-screen w-full", className)}>
@@ -113,9 +83,9 @@ export function ToolLayout({
           className="glass border-0 shadow-glow p-3 sm:p-4 md:p-8 overflow-hidden scroll-mt-20"
         >
           <div className="space-y-4 sm:space-y-8">
-            {/* Actions Toolbar with Tool Switcher - All on same level */}
+            {/* Actions Toolbar with Tool Switcher */}
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4 w-full">
-              {/* Tool Controls - Left (or empty space) */}
+              {/* Tool Controls - Left */}
               {toolControls !== null && (
                 <div className="flex justify-start lg:w-auto lg:min-w-[200px]">
                   {toolControls !== undefined
@@ -156,10 +126,8 @@ export function ToolLayout({
                 </div>
               )}
 
-              {/* Action Toolbar - Right */}
-              <div className="flex justify-end lg:w-auto lg:min-w-[200px]">
-                {toolbarWithActions}
-              </div>
+              {/* Spacer for alignment when no generate button */}
+              {!showGenerateButton && <div className="hidden lg:block lg:flex-1" />}
             </div>
 
             {/* Editor Panel - Enhanced spacing */}
@@ -167,6 +135,7 @@ export function ToolLayout({
               <EditorPanel
                 {...editorProps}
                 hasError={statusProps?.status === "error"}
+                outputActions={toolbarWithActions}
                 className="space-y-4 sm:space-y-8"
               />
             </div>

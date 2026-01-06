@@ -28,6 +28,7 @@ interface EditorPanelProps {
   customOutputComponent?: React.ReactNode
   showSwapButton?: boolean
   onSwap?: () => void
+  outputActions?: React.ReactNode
 }
 
 export function EditorPanel({
@@ -45,6 +46,7 @@ export function EditorPanel({
   customOutputComponent,
   showSwapButton = false,
   onSwap,
+  outputActions,
 }: EditorPanelProps) {
   const showInput = inputValue !== undefined && onInputChange !== undefined
 
@@ -59,7 +61,7 @@ export function EditorPanel({
         {/* Input Panel - Only show if inputValue is provided */}
         {showInput && (
           <Card className="glass border-0 shadow-glow flex flex-col h-full transition-all duration-200">
-            <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6 border-b border-border/30">
+            <CardHeader className="pb-2 px-4 sm:px-6 border-b border-border/30">
               <div className="flex items-center justify-between gap-2">
                 <CardTitle className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
                   {inputLabel}
@@ -76,13 +78,19 @@ export function EditorPanel({
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="flex-1 p-3 sm:p-6 pt-0">
+            {/* Spacer to match output toolbar height */}
+            {outputActions && (
+              <div className="px-4 sm:px-6 py-2">
+                <div className="h-[32px]" />
+              </div>
+            )}
+            <CardContent className="flex-1 p-3 sm:p-6 pt-3 sm:pt-4">
               <Textarea
                 value={inputValue}
                 onChange={e => onInputChange(e.target.value)}
                 placeholder={inputPlaceholder}
                 autoFocus
-                className="w-full h-full min-h-[250px] sm:min-h-[300px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
+                className="w-full h-full min-h-[100px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
               />
             </CardContent>
           </Card>
@@ -113,7 +121,8 @@ export function EditorPanel({
 
         {/* Output Panel */}
         <Card className="glass border-0 shadow-glow flex flex-col h-full">
-          <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6 border-b border-border/30">
+          <CardHeader className="pb-2 px-4 sm:px-6 border-b border-border/30">
+            {/* Title Row */}
             <div className="flex items-center justify-between gap-2">
               <CardTitle className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
                 {outputLabel}
@@ -123,16 +132,24 @@ export function EditorPanel({
                   Output
                 </span>
                 {outputValue && !hasError && (
-                  <span className="text-xs text-muted-foreground hidden sm:inline font-medium">
+                  <span className="text-xs text-muted-foreground font-medium">
                     {outputValue.length} chars
                   </span>
                 )}
               </div>
             </div>
           </CardHeader>
-          <CardContent className="flex-1 p-3 sm:p-6 pt-0">
+          {/* Action Toolbar - Below divider */}
+          {outputActions && (
+            <div className="px-4 sm:px-6">
+              <div className="flex items-center justify-end gap-2">
+                {outputActions}
+              </div>
+            </div>
+          )}
+          <CardContent className="flex-1 p-3 sm:p-6 pt-3 sm:pt-4">
             {hasError && errorMessage ? (
-              <div className="w-full h-full min-h-[250px] sm:min-h-[300px] flex items-center justify-center bg-red-50/50 dark:bg-red-950/10 border border-red-200 dark:border-red-800 rounded-lg p-4 sm:p-6">
+              <div className="w-full h-full min-h-[100px] flex items-center justify-center bg-red-50/50 dark:bg-red-950/10 border border-red-200 dark:border-red-800 rounded-lg p-4 sm:p-6">
                 <div className="text-center space-y-3 sm:space-y-4 max-w-md">
                   <div className="flex justify-center">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-red-100 dark:bg-red-950/50 flex items-center justify-center">
@@ -156,7 +173,7 @@ export function EditorPanel({
                 value={outputValue}
                 readOnly
                 placeholder={outputPlaceholder}
-                className="w-full h-full min-h-[250px] sm:min-h-[300px] resize-none font-mono text-xs sm:text-sm bg-muted/30 border-border/50 cursor-default"
+                className="w-full h-full min-h-[100px] resize-none font-mono text-xs sm:text-sm bg-muted/30 border-border/50 cursor-default"
               />
             )}
           </CardContent>
