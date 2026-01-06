@@ -2,7 +2,7 @@ import { categories } from "@/lib/tools/categories"
 import { getAllTools } from "@/lib/tools/registry"
 
 export default function sitemap() {
-  const baseUrl = "https://devconverter.com"
+  const baseUrl = "https://devconverter.dev"
   const tools = getAllTools()
 
   const routes = [
