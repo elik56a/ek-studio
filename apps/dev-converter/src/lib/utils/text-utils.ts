@@ -126,3 +126,67 @@ export function convertCase(
     }
   }
 }
+
+/**
+ * Diff result interface
+ */
+export interface DiffResult {
+  changes: Array<{
+    value: string
+    added?: boolean
+    removed?: boolean
+  }>
+  addedLines: number
+  removedLines: number
+  unchangedLines: number
+}
+
+/**
+ * Compare two texts and return differences
+ * @param text1 - The original text
+ * @param text2 - The modified text
+ * @returns ConversionResult with diff information
+ */
+export function compareDiff(
+  text1: string,
+  text2: string
+): ConversionResult<DiffResult> {
+  try {
+    // Dynamic import to avoid bundling issues
+    const Diff = require("diff")
+    const changes = Diff.diffLines(text1, text2)
+
+    let addedLines = 0
+    let removedLines = 0
+    let unchangedLines = 0
+
+    changes.forEach((change: any) => {
+      const lineCount = change.value
+        .split("\n")
+        .filter((line: string) => line !== "").length
+
+      if (change.added) {
+        addedLines += lineCount
+      } else if (change.removed) {
+        removedLines += lineCount
+      } else {
+        unchangedLines += lineCount
+      }
+    })
+
+    return {
+      success: true,
+      data: {
+        changes,
+        addedLines,
+        removedLines,
+        unchangedLines,
+      },
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Failed to compare texts",
+    }
+  }
+}

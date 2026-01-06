@@ -1,5 +1,6 @@
 import { ComingSoonPlaceholder } from "@/components/coming-soon-placeholder"
 import CaseConverterTool from "@/components/tools/case-converter"
+import TextDiffChecker from "@/components/tools/text-diff-checker"
 
 import { Tool } from "../types"
 
@@ -76,33 +77,81 @@ export const textTools: Tool[] = [
   {
     id: "diff-checker",
     slug: "diff-checker",
-    name: "Diff Checker",
-    description: "Compare two texts side-by-side and highlight differences",
+    name: "Text Diff Checker",
+    description:
+      "Compare two texts side-by-side and highlight differences line by line",
     category: "text",
     type: "converter",
-    keywords: ["diff", "compare", "difference", "text"],
+    keywords: ["diff", "compare", "difference", "text", "merge", "changes"],
     metadata: {
-      title: "Diff Checker - Compare Text Differences Online",
+      title: "Text Diff Checker - Compare Text Differences Online",
       description:
-        "Free online diff checker. Compare two texts side-by-side and highlight differences with detailed analysis.",
+        "Free online text diff checker. Compare two texts side-by-side and highlight differences with detailed line-by-line analysis.",
       keywords: [
         "diff checker",
         "text compare",
         "difference checker",
         "text diff",
+        "compare texts",
       ],
     },
-    examples: [],
-    faq: [],
+    examples: [
+      {
+        title: "Simple text comparison",
+        input:
+          "Hello World\nThis is line 2\nThis is line 3|||Hello World\nThis is line 2 modified\nThis is line 3",
+        description: "Compare two similar texts with minor changes",
+      },
+      {
+        title: "Code comparison",
+        input:
+          "function hello() {\n  console.log('Hello');\n}|||function hello() {\n  console.log('Hello World');\n  return true;\n}",
+        description: "Compare code snippets to see modifications",
+      },
+      {
+        title: "Document versions",
+        input:
+          "Version 1.0\nFeature A\nFeature B|||Version 2.0\nFeature A\nFeature B\nFeature C",
+        description: "Compare different versions of a document",
+      },
+    ],
+    faq: [
+      {
+        question: "How does the diff checker work?",
+        answer:
+          "The diff checker compares two texts line by line and highlights additions (green), deletions (red), and unchanged lines. It uses a standard diff algorithm to identify changes.",
+      },
+      {
+        question: "Can I compare code files?",
+        answer:
+          "Yes! The diff checker works great for comparing code snippets, configuration files, or any text-based content. It preserves formatting and indentation.",
+      },
+      {
+        question: "What do the colors mean?",
+        answer:
+          "Green lines with a '+' icon indicate additions (present in Text 2 but not Text 1). Red lines with a '-' icon indicate deletions (present in Text 1 but not Text 2). Gray lines with a checkmark are unchanged.",
+      },
+      {
+        question: "Is this useful for version control?",
+        answer:
+          "Absolutely! This tool is similar to git diff and can help you review changes between different versions of files, documents, or code.",
+      },
+    ],
     relatedTools: ["case-converter", "regex-tester"],
     ui: {
       inputPlaceholder: "Enter first text to compare...",
       outputPlaceholder: "Differences will be highlighted here...",
-      inputLabel: "Text 1",
+      inputLabel: "Original Text",
       outputLabel: "Comparison Result",
-      convertLabel: "Compare",
+      convertLabel: "Compare Texts",
     },
-    component: ComingSoonPlaceholder,
+    switcher: {
+      enabled: true,
+      mode: "category",
+      showAllLink: true,
+      preserveInput: false,
+    },
+    component: TextDiffChecker,
   },
   {
     id: "regex-tester",

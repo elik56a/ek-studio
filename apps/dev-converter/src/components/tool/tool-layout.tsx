@@ -65,7 +65,6 @@ export function ToolLayout({
   const showGenerateButton = isGeneratorTool(tool)
   const toolbarWithActions = <ToolActions {...toolActionsProps} />
 
-
   return (
     <div className={cn("gradient-bg min-h-screen w-full", className)}>
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
@@ -126,8 +125,15 @@ export function ToolLayout({
                 </div>
               )}
 
+              {/* Right Spacer - Matches left side width for perfect centering */}
+              {showGenerateButton && toolControls !== null && (
+                <div className="hidden lg:block lg:w-auto lg:min-w-[200px]" />
+              )}
+
               {/* Spacer for alignment when no generate button */}
-              {!showGenerateButton && <div className="hidden lg:block lg:flex-1" />}
+              {!showGenerateButton && (
+                <div className="hidden lg:block lg:flex-1" />
+              )}
             </div>
 
             {/* Editor Panel - Enhanced spacing */}
