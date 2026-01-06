@@ -60,12 +60,7 @@ export const jsonDataTools: Tool[] = [
       outputLabel: "Formatted JSON",
       convertLabel: "Format JSON",
     },
-    switcher: {
-      enabled: true,
-      mode: "category",
-      showAllLink: true,
-      preserveInput: true,
-    },
+
     component: JsonFormatterTool,
   },
   {
@@ -131,12 +126,7 @@ export const jsonDataTools: Tool[] = [
       outputLabel: "YAML Output",
       convertLabel: "Convert to YAML",
     },
-    switcher: {
-      enabled: true,
-      mode: "category",
-      showAllLink: true,
-      preserveInput: true,
-    },
+
     component: JsonToYamlTool,
   },
   {
@@ -202,12 +192,7 @@ export const jsonDataTools: Tool[] = [
       outputLabel: "JSON Output",
       convertLabel: "Convert to JSON",
     },
-    switcher: {
-      enabled: true,
-      mode: "category",
-      showAllLink: true,
-      preserveInput: true,
-    },
+
     component: YamlToJsonTool,
   },
   {
@@ -274,12 +259,7 @@ export const jsonDataTools: Tool[] = [
       outputLabel: "CSV Output",
       convertLabel: "Convert to CSV",
     },
-    switcher: {
-      enabled: true,
-      mode: "category",
-      showAllLink: true,
-      preserveInput: true,
-    },
+
     component: JsonToCsvTool,
   },
   {
@@ -345,12 +325,6 @@ export const jsonDataTools: Tool[] = [
       inputLabel: "CSV Input",
       outputLabel: "JSON Output",
       convertLabel: "Convert to JSON",
-    },
-    switcher: {
-      enabled: true,
-      mode: "category",
-      showAllLink: true,
-      preserveInput: true,
     },
     component: CsvToJsonTool,
   },

@@ -1,5 +1,6 @@
 import { ComingSoonPlaceholder } from "@/components/coming-soon-placeholder"
 import ColorConverterTool from "@/components/tools/color-converter"
+import MimeTypeLookupTool from "@/components/tools/mime-type-lookup"
 
 import { Tool } from "../types"
 
@@ -8,15 +9,32 @@ export const utilityTools: Tool[] = [
     id: "color-converter",
     slug: "color-converter",
     name: "Color Converter",
-    description: "Convert colors between HEX, RGB, HSL, and RGBA formats with live preview",
+    description:
+      "Convert colors between HEX, RGB, HSL, and RGBA formats with live preview",
     category: "utility",
     type: "converter",
-    keywords: ["color", "hex", "rgb", "hsl", "rgba", "hsla", "convert", "picker"],
+    keywords: [
+      "color",
+      "hex",
+      "rgb",
+      "hsl",
+      "rgba",
+      "hsla",
+      "convert",
+      "picker",
+    ],
     metadata: {
       title: "Color Converter - Convert HEX, RGB, HSL Colors Online",
       description:
         "Free online color converter. Convert colors between HEX, RGB, HSL, RGBA, and HSLA formats with visual color preview.",
-      keywords: ["color converter", "hex to rgb", "rgb to hex", "hsl to rgb", "color picker", "rgba converter"],
+      keywords: [
+        "color converter",
+        "hex to rgb",
+        "rgb to hex",
+        "hsl to rgb",
+        "color picker",
+        "rgba converter",
+      ],
     },
     examples: [
       {
@@ -69,17 +87,12 @@ export const utilityTools: Tool[] = [
     ],
     relatedTools: ["hash-generator", "base64-encode-decode"],
     ui: {
-      inputPlaceholder: "Enter color value (e.g., #FF5733, rgb(255, 87, 51), hsl(9, 100%, 60%))...",
+      inputPlaceholder:
+        "Enter color value (e.g., #FF5733, rgb(255, 87, 51), hsl(9, 100%, 60%))...",
       outputPlaceholder: "Converted color values will appear here...",
       inputLabel: "Color Input",
       outputLabel: "Color Output",
       convertLabel: "Convert Color",
-    },
-    switcher: {
-      enabled: true,
-      mode: "category",
-      showAllLink: true,
-      preserveInput: true,
     },
     component: ColorConverterTool,
   },
@@ -87,31 +100,80 @@ export const utilityTools: Tool[] = [
     id: "mime-type-lookup",
     slug: "mime-type-lookup",
     name: "MIME Type Lookup",
-    description: "Find MIME types for file extensions with search suggestions",
+    description:
+      "Find MIME types and content types for file extensions instantly",
     category: "utility",
     type: "converter",
-    keywords: ["mime", "type", "extension", "file", "lookup"],
+    keywords: ["mime", "type", "extension", "file", "lookup", "content-type"],
     metadata: {
       title: "MIME Type Lookup - Find MIME Types for File Extensions",
       description:
-        "Free online MIME type lookup tool. Find MIME types for file extensions with search suggestions and detailed information.",
+        "Free online MIME type lookup tool. Find MIME types and content types for file extensions with detailed information.",
       keywords: [
         "mime type lookup",
         "file extension",
         "content type",
         "mime database",
+        "file type",
       ],
     },
-    examples: [],
-    faq: [],
-    relatedTools: ["hash-generator", "base64-encode-decode"],
+    examples: [
+      {
+        title: "PDF Document",
+        input: ".pdf",
+        description: "Look up MIME type for PDF files",
+      },
+      {
+        title: "JPEG Image",
+        input: "jpg",
+        description: "Find MIME type for JPEG images (without dot)",
+      },
+      {
+        title: "JavaScript File",
+        input: ".js",
+        description: "Get MIME type for JavaScript files",
+      },
+      {
+        title: "MP4 Video",
+        input: ".mp4",
+        description: "Look up MIME type for MP4 video files",
+      },
+      {
+        title: "JSON Data",
+        input: "json",
+        description: "Find MIME type for JSON files",
+      },
+    ],
+    faq: [
+      {
+        question: "What is a MIME type?",
+        answer:
+          "MIME (Multipurpose Internet Mail Extensions) type is a standard way to indicate the nature and format of a file. It's used by web servers and browsers to determine how to handle different file types.",
+      },
+      {
+        question: "Do I need to include the dot in the extension?",
+        answer:
+          "No, you can enter the extension with or without the dot. Both '.pdf' and 'pdf' will work correctly.",
+      },
+      {
+        question: "What file types are supported?",
+        answer:
+          "The tool includes a comprehensive database of common file types including images (jpg, png, gif), documents (pdf, docx), videos (mp4, avi), audio (mp3, wav), archives (zip, rar), programming files (js, py, java), and many more.",
+      },
+      {
+        question: "How do I use MIME types in my code?",
+        answer:
+          "MIME types are commonly used in HTTP headers (Content-Type), HTML forms (accept attribute), and when serving files from web servers. For example, a PDF file should be served with 'Content-Type: application/pdf'.",
+      },
+    ],
+    relatedTools: ["hash-generator", "base64-encode-decode", "color-converter"],
     ui: {
-      inputPlaceholder: "Enter file extension (e.g., .pdf, .jpg)...",
+      inputPlaceholder: "Enter file extension (e.g., .pdf, jpg, .mp4)...",
       outputPlaceholder: "MIME type information will appear here...",
       inputLabel: "File Extension",
-      outputLabel: "MIME Type",
+      outputLabel: "MIME Type Information",
       convertLabel: "Lookup",
     },
-    component: ComingSoonPlaceholder,
+    component: MimeTypeLookupTool,
   },
 ]

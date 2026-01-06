@@ -24,7 +24,7 @@ export function convertColor(input: string): ConversionResult<string> {
 
   try {
     const formats = parseColor(trimmed)
-    
+
     // Format output with all color formats
     const output = `HEX:  ${formats.hex}
 RGB:  ${formats.rgb}
@@ -52,16 +52,20 @@ function parseColor(input: string): ColorFormats {
   const hexMatch = input.match(/^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)
   if (hexMatch) {
     const hex = hexMatch[1]
-    const fullHex = hex.length === 3 
-      ? hex.split('').map(c => c + c).join('') 
-      : hex
-    
+    const fullHex =
+      hex.length === 3
+        ? hex
+            .split("")
+            .map(c => c + c)
+            .join("")
+        : hex
+
     const r = parseInt(fullHex.substring(0, 2), 16)
     const g = parseInt(fullHex.substring(2, 4), 16)
     const b = parseInt(fullHex.substring(4, 6), 16)
-    
+
     const hsl = rgbToHsl(r, g, b)
-    
+
     return {
       hex: `#${fullHex.toUpperCase()}`,
       rgb: `rgb(${r}, ${g}, ${b})`,
@@ -72,20 +76,22 @@ function parseColor(input: string): ColorFormats {
   }
 
   // RGB/RGBA format
-  const rgbMatch = input.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/)
+  const rgbMatch = input.match(
+    /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/
+  )
   if (rgbMatch) {
     const r = parseInt(rgbMatch[1])
     const g = parseInt(rgbMatch[2])
     const b = parseInt(rgbMatch[3])
     const a = rgbMatch[4] ? parseFloat(rgbMatch[4]) : 1
-    
+
     if (r > 255 || g > 255 || b > 255) {
       throw new Error("RGB values must be between 0 and 255")
     }
-    
+
     const hex = rgbToHex(r, g, b)
     const hsl = rgbToHsl(r, g, b)
-    
+
     return {
       hex: `#${hex}`,
       rgb: `rgb(${r}, ${g}, ${b})`,
@@ -96,20 +102,22 @@ function parseColor(input: string): ColorFormats {
   }
 
   // HSL/HSLA format
-  const hslMatch = input.match(/hsla?\((\d+),\s*(\d+)%?,\s*(\d+)%?(?:,\s*([\d.]+))?\)/)
+  const hslMatch = input.match(
+    /hsla?\((\d+),\s*(\d+)%?,\s*(\d+)%?(?:,\s*([\d.]+))?\)/
+  )
   if (hslMatch) {
     const h = parseInt(hslMatch[1])
     const s = parseInt(hslMatch[2])
     const l = parseInt(hslMatch[3])
     const a = hslMatch[4] ? parseFloat(hslMatch[4]) : 1
-    
+
     if (h > 360 || s > 100 || l > 100) {
       throw new Error("HSL values must be: H(0-360), S(0-100), L(0-100)")
     }
-    
+
     const rgb = hslToRgb(h, s, l)
     const hex = rgbToHex(rgb.r, rgb.g, rgb.b)
-    
+
     return {
       hex: `#${hex}`,
       rgb: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`,
@@ -119,7 +127,9 @@ function parseColor(input: string): ColorFormats {
     }
   }
 
-  throw new Error("Invalid color format. Use HEX (#FF5733), RGB (rgb(255, 87, 51)), or HSL (hsl(9, 100%, 60%))")
+  throw new Error(
+    "Invalid color format. Use HEX (#FF5733), RGB (rgb(255, 87, 51)), or HSL (hsl(9, 100%, 60%))"
+  )
 }
 
 /**
@@ -127,8 +137,8 @@ function parseColor(input: string): ColorFormats {
  */
 function rgbToHex(r: number, g: number, b: number): string {
   return [r, g, b]
-    .map(x => x.toString(16).padStart(2, '0'))
-    .join('')
+    .map(x => x.toString(16).padStart(2, "0"))
+    .join("")
     .toUpperCase()
 }
 

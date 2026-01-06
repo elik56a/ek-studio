@@ -54,13 +54,13 @@ export function ColorOutputDisplay({
           aria-label={`Color preview: ${colorPreview}. Click to open color picker`}
           role="button"
           tabIndex={0}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === "Enter" || e.key === " ") {
               handleColorPickerClick()
             }
           }}
         />
-        
+
         {/* Hidden color input */}
         <input
           ref={colorInputRef}

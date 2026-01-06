@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@ek-studio/ui": "workspace:*",
+    "@vercel/analytics": "^1.6.1",
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",
     "diff": "^8.0.2",
