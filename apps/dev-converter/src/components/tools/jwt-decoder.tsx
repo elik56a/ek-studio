@@ -28,7 +28,6 @@ const JWTDecoderTool = () => {
 
   return (
     <ToolLayout
-      onConvert={convert}
       tool={tool}
       headerProps={{
         title: tool.name,

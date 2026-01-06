@@ -1,7 +1,9 @@
 import { useCallback } from "react"
 
+import { useDebounce } from "@/hooks/use-debounce"
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
 import { useToolState } from "@/hooks/use-tool-state"
+import { isConverterTool } from "@/lib/tools/tool-utils"
 import { ConversionResult } from "@/lib/utils/json-utils"
 
 interface UseToolOptions {
@@ -17,17 +19,9 @@ interface UseToolOptions {
   generateFn?: () =>
     | ConversionResult<string>
     | Promise<ConversionResult<string>>
-  /**
-   * Optional custom success message override. If not provided, uses result.message
-   */
-  successMessage?: string | ((metadata?: Record<string, any>) => string)
 }
 
-export function useTool({
-  convertFn,
-  generateFn,
-  successMessage,
-}: UseToolOptions) {
+export function useTool({ convertFn, generateFn }: UseToolOptions) {
   const toolState = useToolState()
   const {
     input,
@@ -37,7 +31,11 @@ export function useTool({
     setStatusMessage,
     handleClear,
     handleCopy,
+    tool,
   } = toolState
+
+  // Check if this is a converter tool (auto-convert enabled)
+  const shouldAutoConvert = isConverterTool(tool) && convertFn
 
   const convert = useCallback(async () => {
     if (!convertFn) return
@@ -59,17 +57,7 @@ export function useTool({
       if (result.success && result.data) {
         setOutput(result.data)
         setStatus("success")
-
-        // Set success message - priority: custom override > result.message > fallback
-        if (typeof successMessage === "function") {
-          setStatusMessage(successMessage(result.metadata))
-        } else if (successMessage) {
-          setStatusMessage(successMessage)
-        } else if (result.message) {
-          setStatusMessage(result.message)
-        } else {
-          setStatusMessage("Conversion successful")
-        }
+        setStatusMessage("Conversion successful")
       } else {
         setStatus("error")
         setStatusMessage(result.error || "Conversion failed")
@@ -82,7 +70,7 @@ export function useTool({
       )
       setOutput("")
     }
-  }, [input, convertFn, successMessage, setOutput, setStatus, setStatusMessage])
+  }, [input, convertFn, setOutput, setStatus, setStatusMessage])
 
   const generate = useCallback(async () => {
     if (!generateFn) return
@@ -96,17 +84,7 @@ export function useTool({
       if (result.success && result.data) {
         setOutput(result.data)
         setStatus("success")
-
-        // Set success message - priority: custom override > result.message > fallback
-        if (typeof successMessage === "function") {
-          setStatusMessage(successMessage(result.metadata))
-        } else if (successMessage) {
-          setStatusMessage(successMessage)
-        } else if (result.message) {
-          setStatusMessage(result.message)
-        } else {
-          setStatusMessage("Generation successful")
-        }
+        setStatusMessage("Generation successful")
       } else {
         setStatus("error")
         setStatusMessage(result.error || "Generation failed")
@@ -119,7 +97,7 @@ export function useTool({
       )
       setOutput("")
     }
-  }, [generateFn, successMessage, setOutput, setStatus, setStatusMessage])
+  }, [generateFn, setOutput, setStatus, setStatusMessage])
 
   const handleExampleClick = useCallback(
     async (exampleInput: string) => {
@@ -130,26 +108,6 @@ export function useTool({
       setTimeout(async () => {
         try {
           const result = await convertFn(exampleInput)
-
-          if (result.success && result.data) {
-            setOutput(result.data)
-            setStatus("success")
-
-            // Set success message - priority: custom override > result.message > fallback
-            if (typeof successMessage === "function") {
-              setStatusMessage(successMessage(result.metadata))
-            } else if (successMessage) {
-              setStatusMessage(successMessage)
-            } else if (result.message) {
-              setStatusMessage(result.message)
-            } else {
-              setStatusMessage("Conversion successful")
-            }
-          } else {
-            setStatus("error")
-            setStatusMessage(result.error || "Conversion failed")
-            setOutput("")
-          }
         } catch (error) {
           setStatus("error")
           setStatusMessage(
@@ -159,14 +117,7 @@ export function useTool({
         }
       }, 0)
     },
-    [
-      convertFn,
-      successMessage,
-      setInput,
-      setOutput,
-      setStatus,
-      setStatusMessage,
-    ]
+    [convertFn, setInput, setOutput, setStatus, setStatusMessage]
   )
 
   const handleSwap = useCallback(() => {
@@ -175,6 +126,22 @@ export function useTool({
     setInput(toolState.output)
     setOutput(temp)
   }, [toolState.input, toolState.output, setInput, setOutput])
+
+  // Auto-convert with debounce for converter tools
+  useDebounce(
+    () => {
+      if (shouldAutoConvert && input.trim()) {
+        convert()
+      } else if (shouldAutoConvert && !input.trim()) {
+        // Clear output when input is empty
+        setOutput("")
+        setStatus("idle")
+        setStatusMessage("")
+      }
+    },
+    100,
+    [input, shouldAutoConvert]
+  )
 
   // Setup keyboard shortcuts
   useKeyboardShortcuts({
@@ -191,6 +158,3 @@ export function useTool({
     handleSwap,
   }
 }
-
-// Keep backward compatibility
-export const useToolConverter = useTool

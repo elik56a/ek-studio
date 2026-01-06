@@ -12,6 +12,7 @@ export const securityTools: Tool[] = [
     name: "JWT Decoder",
     description: "Decode JWT tokens to view header, payload, and signature",
     category: "security",
+    type: "converter",
     keywords: ["jwt", "decode", "token", "json web token"],
     metadata: {
       title: "JWT Decoder - Decode JSON Web Tokens Online",
@@ -76,6 +77,7 @@ export const securityTools: Tool[] = [
     name: "Hash Generator",
     description: "Generate MD5, SHA-256, SHA-384, and SHA-512 hashes from text",
     category: "security",
+    type: "converter",
     keywords: ["hash", "md5", "sha256", "sha384", "sha512", "checksum"],
     metadata: {
       title:
@@ -145,6 +147,7 @@ export const securityTools: Tool[] = [
     name: "UUID v4 Generator",
     description: "Generate random UUID v4 identifiers for your applications",
     category: "security",
+    type: "generator",
     keywords: ["uuid", "guid", "unique id", "random", "identifier"],
     metadata: {
       title: "UUID v4 Generator - Generate Random UUIDs Online",
@@ -210,6 +213,7 @@ export const securityTools: Tool[] = [
     description:
       "Generate secure random passwords with customizable length and character types",
     category: "security",
+    type: "generator",
     keywords: ["password", "generator", "random", "secure", "strong password"],
     metadata: {
       title: "Password Generator - Create Secure Random Passwords Online",

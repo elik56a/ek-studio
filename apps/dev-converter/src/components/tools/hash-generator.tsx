@@ -44,7 +44,7 @@ const HashGeneratorTool = () => {
     <Select
       options={algorithmOptions}
       value={algorithm}
-      onChange={(value) => setAlgorithm(value as HashAlgorithm)}
+      onChange={value => setAlgorithm(value as HashAlgorithm)}
       align="left"
       size="sm"
     />
@@ -52,7 +52,6 @@ const HashGeneratorTool = () => {
 
   return (
     <ToolLayout
-      onConvert={convert}
       tool={tool}
       headerProps={{
         title: tool.name,

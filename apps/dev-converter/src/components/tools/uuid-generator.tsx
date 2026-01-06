@@ -54,7 +54,7 @@ const UUIDGeneratorTool = () => {
 
   return (
     <ToolLayout
-      onConvert={convert}
+      onGenerate={generate}
       tool={tool}
       headerProps={{
         title: tool.name,

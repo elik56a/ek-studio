@@ -3,6 +3,7 @@ import { cn } from "@ek-studio/ui"
 import { Button } from "@ek-studio/ui"
 import { Zap } from "lucide-react"
 
+import { isGeneratorTool } from "@/lib/tools/tool-utils"
 import { Tool } from "@/lib/tools/types"
 
 import { EditorPanel } from "./editor-panel"
@@ -14,7 +15,7 @@ import { ToolSwitcher } from "./tool-switcher"
 
 interface ToolLayoutProps {
   tool: Tool
-  onConvert: () => void
+  onGenerate?: () => void
   headerProps?: {
     title: string
     description: string
@@ -58,10 +59,10 @@ export function ToolLayout({
   statusProps,
   toolControls,
   tool,
-  onConvert,
+  onGenerate,
   className,
 }: ToolLayoutProps) {
-  // Create the toolbar with ToolActions (just the action buttons, not the convert button)
+  const showGenerateButton = isGeneratorTool(tool)
   const toolbarWithActions = <ToolActions {...toolActionsProps} />
 
   // Render status with ToolStatus as default
@@ -128,30 +129,32 @@ export function ToolLayout({
                 </div>
               )}
 
-              {/* Main Action Button - Center */}
-              <div className="flex justify-center lg:flex-1">
-                <Button
-                  onClick={onConvert}
-                  disabled={toolActionsProps.isLoading}
-                  size="lg"
-                  className="relative w-full sm:w-auto sm:min-w-[240px] h-14 sm:h-16 text-base sm:text-lg font-bold shadow-glow hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-[1.02] active:scale-[0.98] rounded-2xl border-0 overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                  {toolActionsProps.isLoading ? (
-                    <div className="flex items-center gap-3 relative z-10">
-                      <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-3 border-current border-t-transparent" />
-                      <span>Processing...</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-3 relative z-10">
-                      <Zap className="h-5 w-5 sm:h-6 sm:w-6 drop-shadow-sm" />
-                      <span className="drop-shadow-sm">
-                        {toolActionsProps.convertLabel}
-                      </span>
-                    </div>
-                  )}
-                </Button>
-              </div>
+              {/* Main Generate Button - Center (only for generator tools) */}
+              {showGenerateButton && onGenerate && (
+                <div className="flex justify-center lg:flex-1">
+                  <Button
+                    onClick={onGenerate}
+                    disabled={toolActionsProps.isLoading}
+                    size="lg"
+                    className="relative w-full sm:w-auto sm:min-w-[240px] h-14 sm:h-16 text-base sm:text-lg font-bold shadow-glow hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-[1.02] active:scale-[0.98] rounded-2xl border-0 overflow-hidden group"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                    {toolActionsProps.isLoading ? (
+                      <div className="flex items-center gap-3 relative z-10">
+                        <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-3 border-current border-t-transparent" />
+                        <span>Processing...</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-3 relative z-10">
+                        <Zap className="h-5 w-5 sm:h-6 sm:w-6 drop-shadow-sm" />
+                        <span className="drop-shadow-sm">
+                          {toolActionsProps.convertLabel}
+                        </span>
+                      </div>
+                    )}
+                  </Button>
+                </div>
+              )}
 
               {/* Action Toolbar - Right */}
               <div className="flex justify-end lg:w-auto lg:min-w-[200px]">

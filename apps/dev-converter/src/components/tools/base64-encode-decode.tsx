@@ -36,7 +36,6 @@ const Base64EncodeDecodeTool = () => {
 
   return (
     <ToolLayout
-      onConvert={convert}
       tool={tool}
       headerProps={{
         title: tool.name,

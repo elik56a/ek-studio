@@ -9,6 +9,7 @@ export const utilityTools: Tool[] = [
     name: "Color Converter",
     description: "Convert colors between HEX, RGB, and HSL formats",
     category: "text",
+    type: "converter",
     keywords: ["color", "hex", "rgb", "hsl", "convert"],
     metadata: {
       title: "Color Converter - Convert HEX, RGB, HSL Colors Online",
@@ -34,6 +35,7 @@ export const utilityTools: Tool[] = [
     name: "MIME Type Lookup",
     description: "Find MIME types for file extensions with search suggestions",
     category: "utility",
+    type: "converter",
     keywords: ["mime", "type", "extension", "file", "lookup"],
     metadata: {
       title: "MIME Type Lookup - Find MIME Types for File Extensions",

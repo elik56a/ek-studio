@@ -56,6 +56,7 @@ export interface Tool {
   ui: ToolUI
   component: React.ComponentType
   switcher?: ToolSwitcherConfig
+  type: "converter" | "generator"
 }
 
 export interface Category {

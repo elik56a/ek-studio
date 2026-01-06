@@ -9,6 +9,7 @@ export const timeTools: Tool[] = [
     name: "Unix Timestamp Converter",
     description: "Convert between Unix timestamps and human-readable dates",
     category: "time",
+    type: "converter",
     keywords: ["unix", "timestamp", "date", "time", "convert"],
     metadata: {
       title: "Unix Timestamp Converter - Convert Unix Time Online",

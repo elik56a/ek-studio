@@ -107,7 +107,7 @@ const PasswordGeneratorTool = () => {
 
   return (
     <ToolLayout
-      onConvert={convert}
+      onGenerate={generate}
       tool={tool}
       headerProps={{
         title: tool.name,

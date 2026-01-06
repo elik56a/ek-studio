@@ -14,6 +14,7 @@ export const jsonDataTools: Tool[] = [
     description:
       "Format, validate, and beautify JSON data with error highlighting",
     category: "json-data",
+    type: "converter",
     keywords: ["json", "format", "validate", "prettify", "minify"],
     metadata: {
       title: "JSON Formatter & Validator - Format and Validate JSON Online",
@@ -73,6 +74,7 @@ export const jsonDataTools: Tool[] = [
     name: "JSON to YAML Converter",
     description: "Convert JSON data to YAML format with proper indentation",
     category: "json-data",
+    type: "converter",
     keywords: ["json", "yaml", "convert", "transform"],
     metadata: {
       title: "JSON to YAML Converter - Convert JSON to YAML Online",
@@ -143,6 +145,7 @@ export const jsonDataTools: Tool[] = [
     name: "YAML to JSON Converter",
     description: "Convert YAML data to JSON format with proper formatting",
     category: "json-data",
+    type: "converter",
     keywords: ["yaml", "json", "convert", "transform"],
     metadata: {
       title: "YAML to JSON Converter - Convert YAML to JSON Online",
@@ -213,6 +216,7 @@ export const jsonDataTools: Tool[] = [
     name: "JSON to CSV Converter",
     description: "Convert JSON data to CSV format for spreadsheet applications",
     category: "json-data",
+    type: "converter",
     keywords: ["json", "csv", "convert", "spreadsheet"],
     metadata: {
       title: "JSON to CSV Converter - Convert JSON to CSV Online",
@@ -285,6 +289,7 @@ export const jsonDataTools: Tool[] = [
     description:
       "Convert CSV data to JSON format with automatic header detection",
     category: "json-data",
+    type: "converter",
     keywords: ["csv", "json", "convert", "spreadsheet"],
     metadata: {
       title: "CSV to JSON Converter - Convert CSV to JSON Online",

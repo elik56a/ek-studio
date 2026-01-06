@@ -12,6 +12,7 @@ export const encodingTools: Tool[] = [
     name: "Base64 Encoder & Decoder",
     description: "Encode text to Base64 or decode Base64 back to text",
     category: "encoding",
+    type: "converter",
     keywords: ["base64", "encode", "decode", "binary"],
     metadata: {
       title: "Base64 Encoder & Decoder - Encode and Decode Base64 Online",
@@ -80,6 +81,7 @@ export const encodingTools: Tool[] = [
     name: "URL Encoder & Decoder",
     description: "Encode URLs for safe transmission or decode URL-encoded text",
     category: "encoding",
+    type: "converter",
     keywords: ["url", "encode", "decode", "percent"],
     metadata: {
       title: "URL Encoder & Decoder - Encode and Decode URLs Online",
@@ -150,6 +152,7 @@ export const encodingTools: Tool[] = [
     description:
       "Escape HTML characters for safe display or unescape HTML entities",
     category: "encoding",
+    type: "converter",
     keywords: ["html", "escape", "unescape", "entities"],
     metadata: {
       title: "HTML Escape & Unescape - Escape HTML Characters Online",
@@ -218,6 +221,7 @@ export const encodingTools: Tool[] = [
     name: "JSON Escape & Unescape",
     description: "Escape text for JSON strings or unescape JSON-encoded text",
     category: "encoding",
+    type: "converter",
     keywords: ["json", "escape", "unescape", "string"],
     metadata: {
       title: "JSON Escape & Unescape - Escape JSON Strings Online",

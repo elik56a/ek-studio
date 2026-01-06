@@ -11,6 +11,7 @@ export const textTools: Tool[] = [
     description:
       "Convert text to different cases: camelCase, PascalCase, snake_case, and more",
     category: "text",
+    type: "converter",
     keywords: ["case", "convert", "camel", "pascal", "snake", "kebab"],
     metadata: {
       title: "Case Converter - Convert Text Cases Online",
@@ -78,6 +79,7 @@ export const textTools: Tool[] = [
     name: "Diff Checker",
     description: "Compare two texts side-by-side and highlight differences",
     category: "text",
+    type: "converter",
     keywords: ["diff", "compare", "difference", "text"],
     metadata: {
       title: "Diff Checker - Compare Text Differences Online",
@@ -109,6 +111,7 @@ export const textTools: Tool[] = [
     description:
       "Test regular expressions with live matching and group extraction",
     category: "text",
+    type: "converter",
     keywords: ["regex", "regexp", "pattern", "match", "test"],
     metadata: {
       title: "Regex Tester - Test Regular Expressions Online",
@@ -139,6 +142,7 @@ export const textTools: Tool[] = [
     name: "Markdown ↔ HTML Converter",
     description: "Convert between Markdown and HTML formats with split view",
     category: "text",
+    type: "converter",
     keywords: ["markdown", "html", "convert", "md"],
     metadata: {
       title: "Markdown HTML Converter - Convert Markdown to HTML Online",

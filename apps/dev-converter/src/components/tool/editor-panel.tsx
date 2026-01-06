@@ -59,17 +59,17 @@ export function EditorPanel({
         {/* Input Panel - Only show if inputValue is provided */}
         {showInput && (
           <Card className="glass border-0 shadow-glow flex flex-col h-full transition-all duration-200">
-            <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6">
+            <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6 border-b border-border/30">
               <div className="flex items-center justify-between gap-2">
-                <CardTitle className="text-base sm:text-lg font-semibold text-foreground">
+                <CardTitle className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
                   {inputLabel}
                 </CardTitle>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs bg-secondary/80 text-secondary-foreground px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-medium">
+                  <span className="text-xs bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-semibold uppercase tracking-wide">
                     Input
                   </span>
                   {inputValue && (
-                    <span className="text-xs text-muted-foreground hidden sm:inline">
+                    <span className="text-xs text-muted-foreground hidden sm:inline font-medium">
                       {inputValue.length} chars
                     </span>
                   )}
@@ -81,6 +81,7 @@ export function EditorPanel({
                 value={inputValue}
                 onChange={e => onInputChange(e.target.value)}
                 placeholder={inputPlaceholder}
+                autoFocus
                 className="w-full h-full min-h-[250px] sm:min-h-[300px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
               />
             </CardContent>
@@ -112,17 +113,17 @@ export function EditorPanel({
 
         {/* Output Panel */}
         <Card className="glass border-0 shadow-glow flex flex-col h-full">
-          <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6">
+          <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6 border-b border-border/30">
             <div className="flex items-center justify-between gap-2">
-              <CardTitle className="text-base sm:text-lg font-semibold text-foreground">
+              <CardTitle className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
                 {outputLabel}
               </CardTitle>
               <div className="flex items-center gap-2">
-                <span className="text-xs bg-primary/90 text-primary-foreground px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-medium">
+                <span className="text-xs bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-semibold uppercase tracking-wide">
                   Output
                 </span>
                 {outputValue && !hasError && (
-                  <span className="text-xs text-muted-foreground hidden sm:inline">
+                  <span className="text-xs text-muted-foreground hidden sm:inline font-medium">
                     {outputValue.length} chars
                   </span>
                 )}
