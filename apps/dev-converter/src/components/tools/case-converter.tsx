@@ -1,11 +1,35 @@
 "use client"
 
-import { CollapsibleJsonViewer } from "@/components/tool/collapsible-json-viewer"
+import { useState } from "react"
+
+import { Select, SelectOption } from "@/components/common/select"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { formatJson as formatJsonUtil } from "@/lib/utils/json-utils"
+import { TextCaseType, convertCase } from "@/lib/utils/text-utils"
 
-const JsonFormatterTool = () => {
+const caseOptions: SelectOption[] = [
+  { value: "camelCase", label: "camelCase", description: "helloWorld" },
+  { value: "PascalCase", label: "PascalCase", description: "HelloWorld" },
+  { value: "snake_case", label: "snake_case", description: "hello_world" },
+  { value: "kebab-case", label: "kebab-case", description: "hello-world" },
+  {
+    value: "CONSTANT_CASE",
+    label: "CONSTANT_CASE",
+    description: "HELLO_WORLD",
+  },
+  { value: "Title Case", label: "Title Case", description: "Hello World" },
+  {
+    value: "Sentence case",
+    label: "Sentence case",
+    description: "Hello world",
+  },
+  { value: "lowercase", label: "lowercase", description: "hello world" },
+  { value: "UPPERCASE", label: "UPPERCASE", description: "HELLO WORLD" },
+]
+
+const CaseConverterTool = () => {
+  const [selectedCase, setSelectedCase] = useState<TextCaseType>("camelCase")
+
   const {
     input,
     setInput,
@@ -20,12 +44,27 @@ const JsonFormatterTool = () => {
     convert,
     handleExampleClick,
   } = useTool({
-    convertFn: formatJsonUtil,
+    convertFn: (text: string) => convertCase(text, selectedCase),
   })
 
   if (!tool) {
     return <div>Tool not found</div>
   }
+
+  const handleCaseChange = (value: string) => {
+    setSelectedCase(value as TextCaseType)
+    convert()
+  }
+
+  const caseControls = (
+    <Select
+      options={caseOptions}
+      value={selectedCase}
+      onChange={handleCaseChange}
+      align="left"
+      size="sm"
+    />
+  )
 
   return (
     <ToolLayout
@@ -44,12 +83,6 @@ const JsonFormatterTool = () => {
         inputLabel: tool.ui.inputLabel,
         outputLabel: tool.ui.outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
-        customOutputComponent: (
-          <CollapsibleJsonViewer
-            value={output}
-            placeholder={tool.ui.outputPlaceholder}
-          />
-        ),
       }}
       toolActionsProps={{
         onCopy: handleCopy,
@@ -71,8 +104,9 @@ const JsonFormatterTool = () => {
         relatedTools,
         onExampleClick: handleExampleClick,
       }}
+      toolControls={caseControls}
     />
   )
 }
 
-export default JsonFormatterTool
+export default CaseConverterTool

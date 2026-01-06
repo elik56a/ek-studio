@@ -1,7 +1,7 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useToolConverter } from "@/hooks/use-tool-converter"
+import { useTool } from "@/hooks/use-tool"
 import { base64Convert, detectBase64 } from "@/lib/utils/encoding-utils"
 
 const Base64EncodeDecodeTool = () => {
@@ -19,7 +19,7 @@ const Base64EncodeDecodeTool = () => {
     relatedTools,
     convert,
     handleExampleClick,
-  } = useToolConverter({
+  } = useTool({
     convertFn: base64Convert,
   })
 
@@ -28,12 +28,16 @@ const Base64EncodeDecodeTool = () => {
   }
 
   // Dynamic button label based on input detection
-  const convertLabel = !input.trim() 
-    ? tool.ui.convertLabel 
-    : detectBase64(input) ? "Decode" : "Encode"
+  const convertLabel = !input.trim()
+    ? tool.ui.convertLabel
+    : detectBase64(input)
+      ? "Decode"
+      : "Encode"
 
   return (
     <ToolLayout
+      onConvert={convert}
+      tool={tool}
       headerProps={{
         title: tool.name,
         description: tool.description,
@@ -51,7 +55,6 @@ const Base64EncodeDecodeTool = () => {
         onSwap: handleSwap,
       }}
       toolActionsProps={{
-        onConvert: convert,
         onCopy: handleCopy,
         onClear: handleClear,
         toolSlug: toolSlug,
@@ -60,7 +63,6 @@ const Base64EncodeDecodeTool = () => {
         hasOutput: !!output,
         convertLabel: convertLabel,
         toolName: tool.name,
-        tool: tool,
       }}
       statusProps={{
         status: status,

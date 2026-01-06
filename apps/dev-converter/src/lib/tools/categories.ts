@@ -1,4 +1,13 @@
-import { Database, Lock, Shield, FileText, Clock, Palette, LucideIcon } from "lucide-react"
+import {
+  Clock,
+  Database,
+  FileText,
+  Lock,
+  LucideIcon,
+  Palette,
+  Shield,
+} from "lucide-react"
+
 import { Category } from "./types"
 
 export interface CategoryConfig {
@@ -40,7 +49,12 @@ export const categoryConfigs: CategoryConfig[] = [
     name: "Security & Crypto",
     description: "JWT, hashing, and security tools",
     icon: Shield,
-    tools: ["jwt-decoder", "hash-generator", "uuid-generator"],
+    tools: [
+      "jwt-decoder",
+      "hash-generator",
+      "uuid-generator",
+      "password-generator",
+    ],
   },
   {
     id: "text",
@@ -90,12 +104,16 @@ export const getCategoryByToolId = (toolId: string): Category | undefined => {
 }
 
 // Helper function to get category config by ID
-export const getCategoryConfigById = (id: string): CategoryConfig | undefined => {
+export const getCategoryConfigById = (
+  id: string
+): CategoryConfig | undefined => {
   return categoryConfigs.find(cat => cat.id === id)
 }
 
 // Helper function to get category config by tool ID
-export const getCategoryConfigByToolId = (toolId: string): CategoryConfig | undefined => {
+export const getCategoryConfigByToolId = (
+  toolId: string
+): CategoryConfig | undefined => {
   return categoryConfigs.find(cat => cat.tools.includes(toolId))
 }
 

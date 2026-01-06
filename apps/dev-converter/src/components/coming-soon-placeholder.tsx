@@ -1,16 +1,16 @@
 "use client"
 
-import { Clock, Sparkles, Wrench } from "lucide-react"
 import { Card, CardContent } from "@ek-studio/ui"
+import { Clock, Sparkles, Wrench } from "lucide-react"
 
 interface ComingSoonPlaceholderProps {
   toolName?: string
   description?: string
 }
 
-export function ComingSoonPlaceholder({ 
-  toolName = "This Tool", 
-  description = "This amazing tool is under development" 
+export function ComingSoonPlaceholder({
+  toolName = "This Tool",
+  description = "This amazing tool is under development",
 }: ComingSoonPlaceholderProps) {
   return (
     <div className="min-h-[60vh] flex items-center justify-center p-8">
@@ -37,9 +37,7 @@ export function ComingSoonPlaceholder({
             <h3 className="text-xl font-semibold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
               Coming Soon
             </h3>
-            <p className="text-muted-foreground">
-              {description}
-            </p>
+            <p className="text-muted-foreground">{description}</p>
             <div className="text-sm text-muted-foreground/80">
               We're working hard to bring you {toolName.toLowerCase()}!
             </div>
@@ -52,7 +50,7 @@ export function ComingSoonPlaceholder({
               <span>85%</span>
             </div>
             <div className="w-full bg-muted/30 rounded-full h-1.5">
-              <div 
+              <div
                 className="h-full bg-gradient-to-r from-primary to-accent rounded-full animate-pulse"
                 style={{ width: "85%" }}
               />

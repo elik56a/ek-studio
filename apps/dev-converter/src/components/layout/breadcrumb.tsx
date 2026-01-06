@@ -17,7 +17,11 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
     <nav
       className={`flex items-center space-x-1 text-sm text-muted-foreground ${className}`}
     >
-      <Link href="/" className="flex items-center hover:text-foreground">
+      <Link
+        href="/"
+        className="flex items-center hover:text-foreground"
+        aria-label="Home"
+      >
         <Home className="h-4 w-4" />
       </Link>
 

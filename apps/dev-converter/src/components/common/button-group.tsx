@@ -25,7 +25,12 @@ export function ButtonGroup({
   size = "sm",
 }: ButtonGroupProps) {
   return (
-    <div className={cn("inline-flex rounded-lg border border-border/50 bg-background/50", className)}>
+    <div
+      className={cn(
+        "inline-flex rounded-lg border border-border/50 bg-background/50",
+        className
+      )}
+    >
       {options.map((option, index) => (
         <Button
           key={option.value}

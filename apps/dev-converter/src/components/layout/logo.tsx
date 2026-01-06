@@ -1,6 +1,7 @@
-import { Code2, Zap } from "lucide-react"
-import Link from "next/link"
 import { cn } from "@ek-studio/ui"
+import { Code2, Zap } from "lucide-react"
+
+import Link from "next/link"
 
 interface LogoProps {
   variant?: "default" | "compact" | "icon-only"
@@ -54,13 +55,22 @@ export function Logo({
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent rounded-xl blur-sm opacity-50" />
             <div className="relative bg-gradient-to-br from-primary to-accent p-2 rounded-xl shadow-lg">
-              <Code2 className={cn(sizes.icon, "text-primary-foreground")} strokeWidth={2.5} />
+              <Code2
+                className={cn(sizes.icon, "text-primary-foreground")}
+                strokeWidth={2.5}
+              />
             </div>
-            <Zap 
+            <Zap
               className={cn(
                 "absolute -bottom-1 -right-1 text-accent drop-shadow-lg",
-                size === "sm" ? "h-3 w-3" : size === "md" ? "h-4 w-4" : size === "lg" ? "h-5 w-5" : "h-6 w-6"
-              )} 
+                size === "sm"
+                  ? "h-3 w-3"
+                  : size === "md"
+                    ? "h-4 w-4"
+                    : size === "lg"
+                      ? "h-5 w-5"
+                      : "h-6 w-6"
+              )}
               fill="currentColor"
             />
           </div>
@@ -68,14 +78,21 @@ export function Logo({
           {/* Text */}
           {variant === "default" && (
             <div className="flex flex-col">
-              <span className={cn(
-                sizes.text,
-                "font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
-              )}>
+              <span
+                className={cn(
+                  sizes.text,
+                  "font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
+                )}
+              >
                 DevConverter
               </span>
               {showTagline && (
-                <span className={cn(sizes.tagline, "text-muted-foreground font-medium -mt-1")}>
+                <span
+                  className={cn(
+                    sizes.tagline,
+                    "text-muted-foreground font-medium -mt-1"
+                  )}
+                >
                   Tools That Work
                 </span>
               )}
@@ -83,10 +100,12 @@ export function Logo({
           )}
 
           {variant === "compact" && (
-            <span className={cn(
-              sizes.text,
-              "font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
-            )}>
+            <span
+              className={cn(
+                sizes.text,
+                "font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
+              )}
+            >
               DC
             </span>
           )}
@@ -97,13 +116,22 @@ export function Logo({
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent rounded-xl blur-sm opacity-50" />
           <div className="relative bg-gradient-to-br from-primary to-accent p-2 rounded-xl shadow-lg">
-            <Code2 className={cn(sizes.icon, "text-primary-foreground")} strokeWidth={2.5} />
+            <Code2
+              className={cn(sizes.icon, "text-primary-foreground")}
+              strokeWidth={2.5}
+            />
           </div>
-          <Zap 
+          <Zap
             className={cn(
               "absolute -bottom-1 -right-1 text-accent drop-shadow-lg",
-              size === "sm" ? "h-3 w-3" : size === "md" ? "h-4 w-4" : size === "lg" ? "h-5 w-5" : "h-6 w-6"
-            )} 
+              size === "sm"
+                ? "h-3 w-3"
+                : size === "md"
+                  ? "h-4 w-4"
+                  : size === "lg"
+                    ? "h-5 w-5"
+                    : "h-6 w-6"
+            )}
             fill="currentColor"
           />
         </div>
@@ -113,8 +141,8 @@ export function Logo({
 
   if (href) {
     return (
-      <Link 
-        href={href} 
+      <Link
+        href={href}
         className={cn(
           "inline-flex items-center transition-all duration-300 hover:scale-105 active:scale-95",
           className

@@ -1,15 +1,20 @@
 "use client"
 
+import { Button } from "@ek-studio/ui"
 import { ChevronDown } from "lucide-react"
-import Link from "next/link"
-import { useRouter, usePathname } from "next/navigation"
+
 import { useMemo, useState } from "react"
 
-import { Button } from "@ek-studio/ui"
+import { usePathname, useRouter } from "next/navigation"
+
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownSeparator,
+} from "@/components/common/dropdown"
 import { getCategoryByToolId } from "@/lib/tools/categories"
-import { getToolById, getToolsByCategory, getToolBySlug } from "@/lib/tools/registry"
+import { getToolById, getToolsByCategory } from "@/lib/tools/registry"
 import { Tool } from "@/lib/tools/types"
-import { Dropdown, DropdownItem, DropdownSeparator } from "@/components/common/dropdown"
 
 interface ToolSwitcherProps {
   currentTool: Tool
@@ -17,7 +22,11 @@ interface ToolSwitcherProps {
   className?: string
 }
 
-export function ToolSwitcher({ currentTool, hasInput = false, className }: ToolSwitcherProps) {
+export function ToolSwitcher({
+  currentTool,
+  hasInput = false,
+  className,
+}: ToolSwitcherProps) {
   const router = useRouter()
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
@@ -32,11 +41,12 @@ export function ToolSwitcher({ currentTool, hasInput = false, className }: ToolS
     let toolList: Tool[] = []
     let cat = getCategoryByToolId(currentTool.id)
 
-    if (config.mode === 'custom') {
+    if (config.mode === "custom") {
       if (config.groups) {
         // Flatten grouped tools
-        toolList = config.groups.flatMap(group => 
-          group.tools.map(id => getToolById(id)).filter(Boolean) as Tool[]
+        toolList = config.groups.flatMap(
+          group =>
+            group.tools.map(id => getToolById(id)).filter(Boolean) as Tool[]
         )
       } else if (config.customTools) {
         toolList = config.customTools
@@ -52,7 +62,9 @@ export function ToolSwitcher({ currentTool, hasInput = false, className }: ToolS
 
     // Remove current tool and ensure uniqueness
     toolList = toolList.filter(t => t.id !== currentTool.id)
-    const uniqueTools = Array.from(new Map(toolList.map(t => [t.id, t])).values())
+    const uniqueTools = Array.from(
+      new Map(toolList.map(t => [t.id, t])).values()
+    )
 
     return { tools: uniqueTools, category: cat }
   }, [currentTool, config])
@@ -66,7 +78,7 @@ export function ToolSwitcher({ currentTool, hasInput = false, className }: ToolS
         return
       }
     }
-    
+
     router.push(`/${toolSlug}`)
     setIsOpen(false)
   }
@@ -75,7 +87,8 @@ export function ToolSwitcher({ currentTool, hasInput = false, className }: ToolS
     return pathname === `/${toolSlug}`
   }
 
-  const isActiveCategoryPage = category && pathname === `/categories/${category.id}`
+  const isActiveCategoryPage =
+    category && pathname === `/categories/${category.id}`
 
   if (tools.length === 0) {
     return null
@@ -98,7 +111,9 @@ export function ToolSwitcher({ currentTool, hasInput = false, className }: ToolS
       <span className="sm:hidden font-medium text-sm text-foreground">
         Switch Tool
       </span>
-      <ChevronDown className={`h-4 w-4 text-muted-foreground group-hover:text-primary transition-all ${isOpen ? 'rotate-180' : ''}`} />
+      <ChevronDown
+        className={`h-4 w-4 text-muted-foreground group-hover:text-primary transition-all ${isOpen ? "rotate-180" : ""}`}
+      />
     </Button>
   )
 
@@ -116,7 +131,7 @@ export function ToolSwitcher({ currentTool, hasInput = false, className }: ToolS
           <DropdownItem
             href={`/categories/${category.id}`}
             onClick={() => setIsOpen(false)}
-            className={isActiveCategoryPage ? 'bg-primary/10 text-primary' : ''}
+            className={isActiveCategoryPage ? "bg-primary/10 text-primary" : ""}
             icon={
               CategoryIcon ? (
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
@@ -127,7 +142,7 @@ export function ToolSwitcher({ currentTool, hasInput = false, className }: ToolS
             title="View All"
             description={`${category.tools.length} tools`}
           />
-          
+
           <DropdownSeparator />
         </>
       )}
@@ -135,13 +150,15 @@ export function ToolSwitcher({ currentTool, hasInput = false, className }: ToolS
       {/* Tools List */}
       {tools.map(tool => {
         const isToolActive = isActiveTool(tool.slug)
-        
+
         return (
           <DropdownItem
             key={tool.id}
             onClick={() => handleToolSwitch(tool.slug)}
             title={tool.name}
-            className={isToolActive ? 'bg-primary/10 text-primary font-medium' : ''}
+            className={
+              isToolActive ? "bg-primary/10 text-primary font-medium" : ""
+            }
           />
         )
       })}

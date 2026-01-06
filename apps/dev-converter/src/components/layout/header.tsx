@@ -1,19 +1,19 @@
 "use client"
 
-import { Menu, Search, X, ChevronDown } from "lucide-react"
+import { Button, Input } from "@ek-studio/ui"
+import { ChevronDown, Menu, Search, X } from "lucide-react"
 
 import { useState } from "react"
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { Logo } from "@/components/layout/logo"
-import { ThemeToggle } from "@/components/core/theme-toggle"
-import { Button, Input } from "@ek-studio/ui"
-import { categories } from "@/lib/tools/categories"
-import { searchTools, getToolBySlug } from "@/lib/tools/registry"
 import { CategoryDropdown } from "@/components/common/category-dropdown"
 import { DropdownItem } from "@/components/common/dropdown"
+import { ThemeToggle } from "@/components/core/theme-toggle"
+import { Logo } from "@/components/layout/logo"
+import { categories } from "@/lib/tools/categories"
+import { getToolBySlug, searchTools } from "@/lib/tools/registry"
 
 export function Header() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -38,17 +38,20 @@ export function Header() {
   const isActiveToolInCategory = (categoryId: string) => {
     const category = categories.find(c => c.id === categoryId)
     if (!category) return false
-    
+
     // Extract slug from pathname (e.g., /json-formatter -> json-formatter)
-    const slug = pathname.split('/').filter(Boolean)[0]
+    const slug = pathname.split("/").filter(Boolean)[0]
     const tool = getToolBySlug(slug)
-    
+
     return tool && category.tools.includes(tool.id)
   }
 
   // Check if category or any of its tools is active
   const isCategoryActive = (categoryId: string) => {
-    return pathname === `/categories/${categoryId}` || isActiveToolInCategory(categoryId)
+    return (
+      pathname === `/categories/${categoryId}` ||
+      isActiveToolInCategory(categoryId)
+    )
   }
 
   return (
@@ -84,15 +87,17 @@ export function Header() {
               <div className="absolute top-full mt-2 w-full border rounded-xl shadow-2xl z-[100] overflow-hidden bg-background backdrop-blur-xl">
                 <div className="p-2 space-y-0.5 max-h-[400px] overflow-y-auto">
                   {searchResults.length > 0 ? (
-                    searchResults.slice(0, 5).map(tool => (
-                      <DropdownItem
-                        key={tool.id}
-                        href={`/${tool.slug}`}
-                        onClick={() => setShowSearch(false)}
-                        title={tool.name}
-                        description={tool.description}
-                      />
-                    ))
+                    searchResults
+                      .slice(0, 5)
+                      .map(tool => (
+                        <DropdownItem
+                          key={tool.id}
+                          href={`/${tool.slug}`}
+                          onClick={() => setShowSearch(false)}
+                          title={tool.name}
+                          description={tool.description}
+                        />
+                      ))
                   ) : (
                     <div className="px-4 py-6 text-center">
                       <div className="text-muted-foreground text-sm">
@@ -111,13 +116,17 @@ export function Header() {
           <ThemeToggle />
 
           {/* Mobile Menu Button */}
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="lg:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </Button>
         </div>
       </div>
@@ -169,48 +178,58 @@ export function Header() {
                 const IconComponent = category.icon
                 const isActive = isCategoryActive(category.id)
                 const isOpen = openDropdown === category.id
-                const isActiveCategoryPage = pathname === `/categories/${category.id}`
-                const isActiveTool = (toolSlug: string) => pathname === `/${toolSlug}`
-                
+                const isActiveCategoryPage =
+                  pathname === `/categories/${category.id}`
+                const isActiveTool = (toolSlug: string) =>
+                  pathname === `/${toolSlug}`
+
                 return (
                   <div key={category.id} className="space-y-1">
                     <button
-                      onClick={() => setOpenDropdown(isOpen ? null : category.id)}
+                      onClick={() =>
+                        setOpenDropdown(isOpen ? null : category.id)
+                      }
                       className={`w-full text-left text-sm font-medium transition-colors hover:text-primary py-2 px-3 rounded-md hover:bg-primary/5 flex items-center justify-between ${
-                        isActive ? 'text-primary bg-primary/5' : ''
+                        isActive ? "text-primary bg-primary/5" : ""
                       }`}
                     >
                       <span className="flex items-center gap-2">
                         <IconComponent className="w-4 h-4" />
                         {category.name}
                       </span>
-                      <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                      />
                     </button>
-                    
+
                     {isOpen && (
                       <div className="ml-4 space-y-1 border-l-2 border-primary/20 pl-3">
                         <Link
                           href={`/categories/${category.id}`}
                           className={`block text-sm py-2 px-3 rounded-md transition-colors hover:text-primary hover:bg-primary/5 ${
-                            isActiveCategoryPage ? 'text-primary bg-primary/5 font-medium' : ''
+                            isActiveCategoryPage
+                              ? "text-primary bg-primary/5 font-medium"
+                              : ""
                           }`}
                           onClick={() => setMobileMenuOpen(false)}
                         >
                           View All ({category.tools.length})
                         </Link>
-                        
+
                         {category.tools.map(toolId => {
                           const tool = getToolBySlug(toolId)
                           if (!tool) return null
-                          
+
                           const isToolActive = isActiveTool(tool.slug)
-                          
+
                           return (
                             <Link
                               key={tool.id}
                               href={`/${tool.slug}`}
                               className={`block text-sm py-2 px-3 rounded-md transition-colors hover:text-primary hover:bg-primary/5 ${
-                                isToolActive ? 'text-primary bg-primary/5 font-medium' : ''
+                                isToolActive
+                                  ? "text-primary bg-primary/5 font-medium"
+                                  : ""
                               }`}
                               onClick={() => setMobileMenuOpen(false)}
                             >

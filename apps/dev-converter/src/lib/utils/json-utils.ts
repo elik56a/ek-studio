@@ -1,5 +1,5 @@
-import Papa from "papaparse"
 import yaml from "js-yaml"
+import Papa from "papaparse"
 
 export interface ConversionResult<T = any> {
   success: boolean
@@ -28,7 +28,7 @@ export function csvToJson(csvInput: string): ConversionResult<string> {
       header: true,
       skipEmptyLines: true,
       dynamicTyping: true, // Automatically convert numbers and booleans
-      transformHeader: (header) => header.trim(),
+      transformHeader: header => header.trim(),
     })
 
     if (result.errors.length > 0) {
@@ -62,7 +62,10 @@ export function csvToJson(csvInput: string): ConversionResult<string> {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Failed to convert CSV to JSON",
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to convert CSV to JSON",
     }
   }
 }
@@ -113,7 +116,7 @@ export function jsonToCsv(jsonInput: string): ConversionResult<string> {
   try {
     // Parse JSON input
     const jsonData = JSON.parse(jsonInput)
-    
+
     // Ensure data is an array
     let dataArray: any[]
     if (Array.isArray(jsonData)) {
@@ -152,9 +155,12 @@ export function jsonToCsv(jsonInput: string): ConversionResult<string> {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error 
-        ? (error.message.includes("JSON") ? error.message : `Invalid JSON: ${error.message}`)
-        : "Failed to convert JSON to CSV",
+      error:
+        error instanceof Error
+          ? error.message.includes("JSON")
+            ? error.message
+            : `Invalid JSON: ${error.message}`
+          : "Failed to convert JSON to CSV",
     }
   }
 }
@@ -175,7 +181,7 @@ export function jsonToYaml(jsonInput: string): ConversionResult<string> {
   try {
     // Parse JSON input
     const jsonData = JSON.parse(jsonInput)
-    
+
     // Convert to YAML
     const yamlOutput = yaml.dump(jsonData, {
       indent: 2,
@@ -191,9 +197,12 @@ export function jsonToYaml(jsonInput: string): ConversionResult<string> {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error 
-        ? (error.message.includes("JSON") ? error.message : `Invalid JSON: ${error.message}`)
-        : "Failed to convert JSON to YAML",
+      error:
+        error instanceof Error
+          ? error.message.includes("JSON")
+            ? error.message
+            : `Invalid JSON: ${error.message}`
+          : "Failed to convert JSON to YAML",
     }
   }
 }
@@ -214,7 +223,7 @@ export function yamlToJson(yamlInput: string): ConversionResult<string> {
   try {
     // Parse YAML input
     const yamlData = yaml.load(yamlInput)
-    
+
     // Convert to formatted JSON
     const jsonOutput = JSON.stringify(yamlData, null, 2)
 
@@ -226,7 +235,10 @@ export function yamlToJson(yamlInput: string): ConversionResult<string> {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? `Invalid YAML: ${error.message}` : "Failed to convert YAML to JSON",
+      error:
+        error instanceof Error
+          ? `Invalid YAML: ${error.message}`
+          : "Failed to convert YAML to JSON",
     }
   }
 }

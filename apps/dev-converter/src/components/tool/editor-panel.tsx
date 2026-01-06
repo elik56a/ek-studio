@@ -1,17 +1,27 @@
-import { AlertCircle, ArrowLeftRight } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, Textarea, Button } from "@ek-studio/ui"
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Textarea,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@ek-studio/ui"
 import { cn } from "@ek-studio/ui"
+import { AlertCircle, ArrowLeftRight } from "lucide-react"
 
 interface EditorPanelProps {
-  inputValue: string
+  inputValue?: string
   outputValue: string
-  onInputChange: (value: string) => void
+  onInputChange?: (value: string) => void
   inputPlaceholder?: string
   outputPlaceholder?: string
   inputLabel?: string
   outputLabel?: string
   className?: string
-  toolbar?: React.ReactNode
   status?: React.ReactNode
   hasError?: boolean
   errorMessage?: string
@@ -29,7 +39,6 @@ export function EditorPanel({
   inputLabel = "Input",
   outputLabel = "Output",
   className,
-  toolbar,
   status,
   hasError = false,
   errorMessage,
@@ -37,49 +46,67 @@ export function EditorPanel({
   showSwapButton = false,
   onSwap,
 }: EditorPanelProps) {
+  const showInput = inputValue !== undefined && onInputChange !== undefined
+
   return (
     <div className={cn("space-y-4 sm:space-y-8", className)}>
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-8 relative">
-        {/* Input Panel */}
-        <Card className="glass border-0 shadow-glow flex flex-col h-full transition-all duration-200">
-          <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6">
-            <div className="flex items-center justify-between gap-2">
-              <CardTitle className="text-base sm:text-lg font-semibold text-foreground">
-                {inputLabel}
-              </CardTitle>
-              <div className="flex items-center gap-2">
-                <span className="text-xs bg-secondary/80 text-secondary-foreground px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-medium">
-                  Input
-                </span>
-                {inputValue && (
-                  <span className="text-xs text-muted-foreground hidden sm:inline">
-                    {inputValue.length} chars
+      <div
+        className={cn(
+          "grid gap-4 sm:gap-8 relative",
+          showInput ? "grid-cols-1 xl:grid-cols-2" : "grid-cols-1"
+        )}
+      >
+        {/* Input Panel - Only show if inputValue is provided */}
+        {showInput && (
+          <Card className="glass border-0 shadow-glow flex flex-col h-full transition-all duration-200">
+            <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6">
+              <div className="flex items-center justify-between gap-2">
+                <CardTitle className="text-base sm:text-lg font-semibold text-foreground">
+                  {inputLabel}
+                </CardTitle>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs bg-secondary/80 text-secondary-foreground px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-medium">
+                    Input
                   </span>
-                )}
+                  {inputValue && (
+                    <span className="text-xs text-muted-foreground hidden sm:inline">
+                      {inputValue.length} chars
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          </CardHeader>
-          <CardContent className="flex-1 p-3 sm:p-6 pt-0">
-            <Textarea
-              value={inputValue}
-              onChange={e => onInputChange(e.target.value)}
-              placeholder={inputPlaceholder}
-              className="w-full h-full min-h-[250px] sm:min-h-[300px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
-            />
-          </CardContent>
-        </Card>
+            </CardHeader>
+            <CardContent className="flex-1 p-3 sm:p-6 pt-0">
+              <Textarea
+                value={inputValue}
+                onChange={e => onInputChange(e.target.value)}
+                placeholder={inputPlaceholder}
+                className="w-full h-full min-h-[250px] sm:min-h-[300px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
+              />
+            </CardContent>
+          </Card>
+        )}
 
-        {/* Swap Button - Floating between panels */}
-        {showSwapButton && onSwap && (
+        {/* Swap Button - Floating between panels - Only show if input panel exists */}
+        {showInput && showSwapButton && onSwap && inputValue && outputValue && (
           <div className="hidden xl:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-            <Button
-              onClick={onSwap}
-              size="icon"
-              className="h-12 w-12 rounded-full shadow-glow bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-110 transition-all duration-300 border-2 border-background"
-              title="Swap input and output"
-            >
-              <ArrowLeftRight className="h-5 w-5" />
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    onClick={onSwap}
+                    size="icon"
+                    className="h-12 w-12 rounded-full shadow-glow bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-110 transition-all duration-300 border-2 border-background"
+                    aria-label="Swap input and output"
+                  >
+                    <ArrowLeftRight className="h-5 w-5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Swap input and output</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         )}
 
@@ -112,7 +139,9 @@ export function EditorPanel({
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-base sm:text-lg font-semibold text-red-900 dark:text-red-300">Error</h3>
+                    <h3 className="text-base sm:text-lg font-semibold text-red-900 dark:text-red-300">
+                      Error
+                    </h3>
                     <p className="text-xs sm:text-sm text-red-700 dark:text-red-400 font-mono break-words">
                       {errorMessage}
                     </p>

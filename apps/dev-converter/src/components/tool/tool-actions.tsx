@@ -1,4 +1,16 @@
 import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  Separator,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@ek-studio/ui"
+import {
   Copy,
   Download,
   FileText,
@@ -10,26 +22,12 @@ import {
   Share2,
 } from "lucide-react"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 
 import { useToast } from "@/components/core/toast-provider"
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  Separator,
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@ek-studio/ui"
 import { createShareUrl } from "@/lib/share"
 
-interface ToolActionsProps {
-  onConvert: () => void
+export interface ToolActionsProps {
   onCopy: () => void
   onClear: () => void
   toolSlug: string
@@ -42,24 +40,19 @@ interface ToolActionsProps {
   outputValue?: string
   inputValue?: string
   toolName?: string
-  showConvertButton?: boolean
 }
 
 export function ToolActions({
-  onConvert,
   onCopy,
   onClear,
   toolSlug,
   shareData,
   isLoading = false,
   hasOutput = false,
-  convertLabel = "Convert",
   className,
   showToasts = true,
   outputValue = "",
-  inputValue = "",
   toolName = "Tool",
-  showConvertButton = true,
 }: ToolActionsProps) {
   const [sharing, setSharing] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
@@ -76,14 +69,17 @@ export function ToolActions({
       setIsExpanded(isCurrentlyFullscreen)
     }
 
-    document.addEventListener('fullscreenchange', handleFullscreenChange)
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange)
-    document.addEventListener('msfullscreenchange', handleFullscreenChange)
+    document.addEventListener("fullscreenchange", handleFullscreenChange)
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange)
+    document.addEventListener("msfullscreenchange", handleFullscreenChange)
 
     return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange)
-      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
-      document.removeEventListener('msfullscreenchange', handleFullscreenChange)
+      document.removeEventListener("fullscreenchange", handleFullscreenChange)
+      document.removeEventListener(
+        "webkitfullscreenchange",
+        handleFullscreenChange
+      )
+      document.removeEventListener("msfullscreenchange", handleFullscreenChange)
     }
   }, [])
 
@@ -106,7 +102,6 @@ export function ToolActions({
         } else if ((elem as any).msRequestFullscreen) {
           await (elem as any).msRequestFullscreen()
         }
-      
       } else {
         // Exit fullscreen
         if (document.exitFullscreen) {
@@ -116,10 +111,9 @@ export function ToolActions({
         } else if ((document as any).msExitFullscreen) {
           await (document as any).msExitFullscreen()
         }
-     
       }
     } catch (error) {
-      console.error('Fullscreen error:', error)
+      console.error("Fullscreen error:", error)
       if (showToasts) {
         addToast("Fullscreen not supported", "error")
       }
@@ -155,7 +149,7 @@ export function ToolActions({
         }
       }
     } catch (error) {
-     console.log(error)
+      console.log(error)
     }
     setSharing(false)
   }
@@ -240,10 +234,11 @@ export function ToolActions({
     }
   }
 
-
   return (
     <TooltipProvider>
-      <div className={`flex items-center bg-background border rounded-lg shadow-sm p-1 gap-1 overflow-x-auto ${className}`}>
+      <div
+        className={`flex items-center bg-background border rounded-lg shadow-sm p-1 gap-1 overflow-x-auto ${className}`}
+      >
         {/* Primary Actions */}
         <div className="flex items-center gap-1">
           <Tooltip>
@@ -369,9 +364,7 @@ export function ToolActions({
                 <Share2 className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
-              {sharing ? "Sharing..." : "Share"}
-            </TooltipContent>
+            <TooltipContent>{sharing ? "Sharing..." : "Share"}</TooltipContent>
           </Tooltip>
         </div>
 

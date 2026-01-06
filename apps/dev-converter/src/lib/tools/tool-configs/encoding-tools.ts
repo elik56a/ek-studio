@@ -1,7 +1,8 @@
 import Base64EncodeDecodeTool from "@/components/tools/base64-encode-decode"
-import UrlEncodeDecodeTool from "@/components/tools/url-encode-decode"
 import HtmlEscapeUnescapeTool from "@/components/tools/html-escape-unescape"
 import JsonEscapeUnescapeTool from "@/components/tools/json-escape-unescape"
+import UrlEncodeDecodeTool from "@/components/tools/url-encode-decode"
+
 import { Tool } from "../types"
 
 export const encodingTools: Tool[] = [
@@ -125,7 +126,8 @@ export const encodingTools: Tool[] = [
           "Characters that need encoding include spaces, special characters like &, =, ?, #, and non-ASCII characters. Reserved characters like : / ? # [ ] @ are also encoded when not used for their reserved purpose.",
       },
       {
-        question: "What's the difference between encodeURI and encodeURIComponent?",
+        question:
+          "What's the difference between encodeURI and encodeURIComponent?",
         answer:
           "This tool uses encodeURIComponent, which encodes all special characters including those reserved for URLs (like :, /, ?). encodeURI only encodes characters that are not valid in URLs.",
       },
@@ -249,7 +251,7 @@ export const encodingTools: Tool[] = [
       {
         question: "What is JSON escaping?",
         answer:
-          "JSON escaping converts special characters like quotes, backslashes, and control characters into escape sequences (\\n, \\t, \\\", \\\\) so they can be safely included in JSON strings.",
+          'JSON escaping converts special characters like quotes, backslashes, and control characters into escape sequences (\\n, \\t, \\", \\\\) so they can be safely included in JSON strings.',
       },
       {
         question: "When do I need to escape for JSON?",

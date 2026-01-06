@@ -1,9 +1,9 @@
 "use client"
 
+import { Button } from "@ek-studio/ui"
 import { Monitor, Moon, Sun } from "lucide-react"
 
 import { useTheme } from "@/components/core/theme-provider"
-import { Button } from "@ek-studio/ui"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()

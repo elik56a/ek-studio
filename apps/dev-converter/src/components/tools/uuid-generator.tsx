@@ -1,31 +1,56 @@
 "use client"
 
-import { CollapsibleJsonViewer } from "@/components/tool/collapsible-json-viewer"
+import { Input, Label } from "@ek-studio/ui"
+
+import { useState } from "react"
+
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { formatJson as formatJsonUtil } from "@/lib/utils/json-utils"
+import { generateUUIDs } from "@/lib/utils/security-utils"
 
-const JsonFormatterTool = () => {
+const UUIDGeneratorTool = () => {
+  const [count, setCount] = useState(1)
+
   const {
-    input,
-    setInput,
     output,
     status,
     statusMessage,
     handleCopy,
     handleClear,
+    generate,
     toolSlug,
     tool,
     relatedTools,
-    convert,
-    handleExampleClick,
   } = useTool({
-    convertFn: formatJsonUtil,
+    generateFn: () => generateUUIDs(count),
   })
 
   if (!tool) {
     return <div>Tool not found</div>
   }
+
+  const handleExampleClick = () => {
+    generate()
+  }
+
+  const toolControls = (
+    <div className="flex items-center gap-2">
+      <Label htmlFor="uuid-count" className="text-sm whitespace-nowrap">
+        Count:
+      </Label>
+      <Input
+        id="uuid-count"
+        type="number"
+        min="1"
+        max="100"
+        value={count}
+        onChange={e =>
+          setCount(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))
+        }
+        className="w-[100px]"
+      />
+    </div>
+  )
 
   return (
     <ToolLayout
@@ -36,26 +61,16 @@ const JsonFormatterTool = () => {
         description: tool.description,
       }}
       editorProps={{
-        inputValue: input,
         outputValue: output,
-        onInputChange: setInput,
-        inputPlaceholder: tool.ui.inputPlaceholder,
         outputPlaceholder: tool.ui.outputPlaceholder,
-        inputLabel: tool.ui.inputLabel,
         outputLabel: tool.ui.outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
-        customOutputComponent: (
-          <CollapsibleJsonViewer
-            value={output}
-            placeholder={tool.ui.outputPlaceholder}
-          />
-        ),
       }}
       toolActionsProps={{
         onCopy: handleCopy,
         onClear: handleClear,
         toolSlug: toolSlug,
-        shareData: { input, output },
+        shareData: { output },
         isLoading: status === "loading",
         hasOutput: !!output,
         convertLabel: tool.ui.convertLabel,
@@ -71,8 +86,9 @@ const JsonFormatterTool = () => {
         relatedTools,
         onExampleClick: handleExampleClick,
       }}
+      toolControls={toolControls}
     />
   )
 }
 
-export default JsonFormatterTool
+export default UUIDGeneratorTool

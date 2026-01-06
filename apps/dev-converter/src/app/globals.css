@@ -54,53 +54,53 @@
   /* Modern gradient background */
   --background: oklch(0.99 0.005 264);
   --foreground: oklch(0.15 0.02 264);
-  
+
   /* Card with subtle elevation */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.15 0.02 264);
-  
+
   /* Popover */
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0.02 264);
-  
+
   /* Smooth violet primary */
   --primary: oklch(0.63 0.25 293);
   --primary-foreground: oklch(0.98 0.01 293);
-  
+
   /* Soft secondary */
   --secondary: oklch(0.96 0.01 264);
   --secondary-foreground: oklch(0.25 0.02 264);
-  
+
   /* Muted with warmth */
   --muted: oklch(0.95 0.01 264);
   --muted-foreground: oklch(0.45 0.02 264);
-  
+
   /* Sky blue accent */
-  --accent: oklch(0.70 0.15 230);
+  --accent: oklch(0.7 0.15 230);
   --accent-foreground: oklch(0.98 0.01 230);
-  
+
   /* Modern destructive */
   --destructive: oklch(0.6 0.2 15);
   --destructive-foreground: oklch(0.98 0.01 15);
-  
+
   /* Subtle borders */
   --border: oklch(0.9 0.01 264);
   --input: oklch(0.9 0.01 264);
   --ring: oklch(0.63 0.25 293);
-  
+
   /* Vibrant chart colors */
-  --chart-1: oklch(0.70 0.15 230);
+  --chart-1: oklch(0.7 0.15 230);
   --chart-2: oklch(0.6 0.18 200);
   --chart-3: oklch(0.63 0.25 293);
   --chart-4: oklch(0.7 0.15 120);
   --chart-5: oklch(0.65 0.2 60);
-  
+
   /* Sidebar */
   --sidebar: oklch(0.98 0.005 264);
   --sidebar-foreground: oklch(0.15 0.02 264);
   --sidebar-primary: oklch(0.63 0.25 293);
   --sidebar-primary-foreground: oklch(0.98 0.01 293);
-  --sidebar-accent: oklch(0.70 0.15 230);
+  --sidebar-accent: oklch(0.7 0.15 230);
   --sidebar-accent-foreground: oklch(0.98 0.01 230);
   --sidebar-border: oklch(0.9 0.01 264);
   --sidebar-ring: oklch(0.63 0.25 293);
@@ -110,42 +110,42 @@
   /* Dark mode with better contrast */
   --background: oklch(0.12 0.015 264);
   --foreground: oklch(0.95 0.01 264);
-  
+
   --card: oklch(0.18 0.02 264);
   --card-foreground: oklch(0.95 0.01 264);
-  
+
   --popover: oklch(0.18 0.02 264);
   --popover-foreground: oklch(0.95 0.01 264);
-  
+
   /* Brighter violet for dark mode */
-  --primary: oklch(0.70 0.25 293);
+  --primary: oklch(0.7 0.25 293);
   --primary-foreground: oklch(0.12 0.01 293);
-  
+
   --secondary: oklch(0.22 0.02 264);
-  --secondary-foreground: oklch(0.90 0.01 264);
-  
-  --muted: oklch(0.20 0.02 264);
+  --secondary-foreground: oklch(0.9 0.01 264);
+
+  --muted: oklch(0.2 0.02 264);
   --muted-foreground: oklch(0.65 0.01 264);
-  
+
   /* Brighter sky blue for dark mode */
   --accent: oklch(0.75 0.18 230);
   --accent-foreground: oklch(0.12 0.01 230);
-  
+
   --destructive: oklch(0.7 0.25 15);
   --destructive-foreground: oklch(0.95 0.01 15);
-  
+
   --border: oklch(0.25 0.02 264);
   --input: oklch(0.25 0.02 264);
-  --ring: oklch(0.70 0.25 293);
-  
+  --ring: oklch(0.7 0.25 293);
+
   --sidebar: oklch(0.15 0.015 264);
   --sidebar-foreground: oklch(0.95 0.01 264);
-  --sidebar-primary: oklch(0.70 0.25 293);
+  --sidebar-primary: oklch(0.7 0.25 293);
   --sidebar-primary-foreground: oklch(0.12 0.01 293);
   --sidebar-accent: oklch(0.75 0.18 230);
   --sidebar-accent-foreground: oklch(0.12 0.01 230);
   --sidebar-border: oklch(0.25 0.02 264);
-  --sidebar-ring: oklch(0.70 0.25 293);
+  --sidebar-ring: oklch(0.7 0.25 293);
 }
 
 @layer base {
@@ -155,7 +155,7 @@
   body {
     @apply bg-background text-foreground;
   }
-  
+
   /* Remove ALL outlines from interactive elements */
   *,
   *:focus,
@@ -172,7 +172,7 @@
   [type="reset"] {
     outline: none !important;
   }
-  
+
   /* Remove outline and box-shadow on focus for all interactive elements */
   button:focus,
   button:focus-visible,
@@ -195,7 +195,7 @@
     outline: none !important;
     box-shadow: none !important;
   }
-  
+
   /* Ensure all interactive elements have cursor pointer */
   button,
   [role="button"],
@@ -209,7 +209,7 @@
   [tabindex]:not([tabindex="-1"]) {
     cursor: pointer;
   }
-  
+
   /* Exception for disabled elements */
   button:disabled,
   [role="button"]:disabled,
@@ -223,17 +223,21 @@
 
 /* Custom gradient backgrounds */
 .gradient-bg {
-  background: linear-gradient(135deg, 
-    oklch(0.99 0.005 264) 0%, 
-    oklch(0.97 0.01 280) 50%, 
-    oklch(0.99 0.005 300) 100%);
+  background: linear-gradient(
+    135deg,
+    oklch(0.99 0.005 264) 0%,
+    oklch(0.97 0.01 280) 50%,
+    oklch(0.99 0.005 300) 100%
+  );
 }
 
 .dark .gradient-bg {
-  background: linear-gradient(135deg, 
-    oklch(0.12 0.015 264) 0%, 
-    oklch(0.14 0.025 280) 50%, 
-    oklch(0.12 0.015 300) 100%);
+  background: linear-gradient(
+    135deg,
+    oklch(0.12 0.015 264) 0%,
+    oklch(0.14 0.025 280) 50%,
+    oklch(0.12 0.015 300) 100%
+  );
 }
 
 /* Glassmorphism effect */
@@ -246,26 +250,29 @@
 .dark .glass {
   background: oklch(0.18 0.02 264 / 0.9);
   backdrop-filter: blur(12px);
-  border: 1px solid oklch(0.30 0.03 264 / 0.4);
+  border: 1px solid oklch(0.3 0.03 264 / 0.4);
 }
 
 /* Enhanced shadows */
 .shadow-glow {
-  box-shadow: 
+  box-shadow:
     0 1px 3px oklch(0.63 0.25 293 / 0.1),
     0 4px 12px oklch(0.63 0.25 293 / 0.05),
     0 0 0 1px oklch(0.9 0.01 264);
 }
 
 .dark .shadow-glow {
-  box-shadow: 
+  box-shadow:
     0 1px 3px oklch(0 0 0 / 0.4),
     0 4px 12px oklch(0 0 0 / 0.3),
-    0 0 0 1px oklch(0.30 0.03 264 / 0.5),
-    0 0 20px oklch(0.70 0.25 293 / 0.05);
+    0 0 0 1px oklch(0.3 0.03 264 / 0.5),
+    0 0 20px oklch(0.7 0.25 293 / 0.05);
 }
 
 /* Smooth animations */
 * {
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }

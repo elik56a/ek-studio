@@ -1,6 +1,12 @@
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@ek-studio/ui"
 import { ExternalLink, HelpCircle, Lightbulb, Settings } from "lucide-react"
-
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@ek-studio/ui"
 
 interface Example {
   title: string

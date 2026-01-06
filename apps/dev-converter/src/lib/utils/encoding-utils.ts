@@ -8,7 +8,9 @@ import { ConversionResult } from "./json-utils"
 export function detectBase64(input: string): boolean {
   if (!input.trim()) return false
   const trimmedInput = input.trim()
-  return /^[A-Za-z0-9+/]*={0,2}$/.test(trimmedInput) && trimmedInput.length % 4 === 0
+  return (
+    /^[A-Za-z0-9+/]*={0,2}$/.test(trimmedInput) && trimmedInput.length % 4 === 0
+  )
 }
 
 /**
@@ -57,7 +59,7 @@ export function base64Convert(input: string): ConversionResult<string> {
   try {
     // Detect if input is Base64 (decode) or plain text (encode)
     const isBase64 = detectBase64(input)
-    
+
     if (isBase64) {
       try {
         // Try to decode
@@ -109,7 +111,7 @@ export function urlEncodeDecode(input: string): ConversionResult<string> {
   try {
     // Detect if input is URL-encoded (contains % followed by hex digits)
     const isEncoded = detectUrlEncoded(input)
-    
+
     if (isEncoded) {
       try {
         // Try to decode
@@ -145,7 +147,6 @@ export function urlEncodeDecode(input: string): ConversionResult<string> {
   }
 }
 
-
 /**
  * Escapes HTML or unescapes HTML entities (auto-detects)
  * @param input - The HTML to escape or HTML entities to unescape
@@ -161,13 +162,13 @@ export function htmlEscapeUnescape(input: string): ConversionResult<string> {
 
   try {
     const isEscaped = detectHtmlEscaped(input)
-    
+
     if (isEscaped) {
       // Unescape HTML entities
-      const textarea = document.createElement('textarea')
+      const textarea = document.createElement("textarea")
       textarea.innerHTML = input
       const unescaped = textarea.value
-      
+
       return {
         success: true,
         data: unescaped,
@@ -176,12 +177,12 @@ export function htmlEscapeUnescape(input: string): ConversionResult<string> {
     } else {
       // Escape HTML
       const escaped = input
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;')
-      
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;")
+
       return {
         success: true,
         data: escaped,
@@ -211,7 +212,7 @@ export function jsonEscapeUnescape(input: string): ConversionResult<string> {
 
   try {
     const isEscaped = detectJsonEscaped(input)
-    
+
     if (isEscaped) {
       // Unescape JSON string
       try {
@@ -227,14 +228,17 @@ export function jsonEscapeUnescape(input: string): ConversionResult<string> {
         const unescaped = JSON.parse(input)
         return {
           success: true,
-          data: typeof unescaped === 'string' ? unescaped : JSON.stringify(unescaped),
+          data:
+            typeof unescaped === "string"
+              ? unescaped
+              : JSON.stringify(unescaped),
           message: "JSON unescaped successfully",
         }
       }
     } else {
       // Escape for JSON
       const escaped = JSON.stringify(input).slice(1, -1) // Remove surrounding quotes
-      
+
       return {
         success: true,
         data: escaped,

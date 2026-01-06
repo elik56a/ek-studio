@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
-import { Footer } from "@/components/layout/footer"
-import { Header } from "@/components/layout/header"
 import { ThemeProvider } from "@/components/core/theme-provider"
 import { ToastProvider } from "@/components/core/toast-provider"
+import { Footer } from "@/components/layout/footer"
+import { Header } from "@/components/layout/header"
 
 import "./globals.css"
 
@@ -70,9 +70,7 @@ export default function RootLayout({
         <ThemeProvider>
           <ToastProvider>
             <Header />
-            <main className="flex-1">
-              {children}
-            </main>
+            <main className="flex-1">{children}</main>
             <Footer />
           </ToastProvider>
         </ThemeProvider>

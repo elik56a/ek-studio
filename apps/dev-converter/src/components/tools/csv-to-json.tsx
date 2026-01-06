@@ -1,8 +1,8 @@
 "use client"
 
-import { ToolLayout } from "@/components/tool/tool-layout"
 import { CollapsibleJsonViewer } from "@/components/tool/collapsible-json-viewer"
-import { useToolConverter } from "@/hooks/use-tool-converter"
+import { ToolLayout } from "@/components/tool/tool-layout"
+import { useTool } from "@/hooks/use-tool"
 import { csvToJson } from "@/lib/utils/json-utils"
 
 const CsvToJsonTool = () => {
@@ -19,7 +19,7 @@ const CsvToJsonTool = () => {
     relatedTools,
     convert,
     handleExampleClick,
-  } = useToolConverter({
+  } = useTool({
     convertFn: csvToJson,
   })
 
@@ -29,6 +29,8 @@ const CsvToJsonTool = () => {
 
   return (
     <ToolLayout
+      onConvert={convert}
+      tool={tool}
       headerProps={{
         title: tool.name,
         description: tool.description,
@@ -50,7 +52,6 @@ const CsvToJsonTool = () => {
         ),
       }}
       toolActionsProps={{
-        onConvert: convert,
         onCopy: handleCopy,
         onClear: handleClear,
         toolSlug: toolSlug,
@@ -59,7 +60,6 @@ const CsvToJsonTool = () => {
         hasOutput: !!output,
         convertLabel: tool.ui.convertLabel,
         toolName: tool.name,
-        tool: tool,
       }}
       statusProps={{
         status: status,

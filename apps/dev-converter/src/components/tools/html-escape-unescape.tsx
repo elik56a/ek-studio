@@ -1,8 +1,11 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useToolConverter } from "@/hooks/use-tool-converter"
-import { htmlEscapeUnescape, detectHtmlEscaped } from "@/lib/utils/encoding-utils"
+import { useTool } from "@/hooks/use-tool"
+import {
+  detectHtmlEscaped,
+  htmlEscapeUnescape,
+} from "@/lib/utils/encoding-utils"
 
 const HtmlEscapeUnescapeTool = () => {
   const {
@@ -19,7 +22,7 @@ const HtmlEscapeUnescapeTool = () => {
     relatedTools,
     convert,
     handleExampleClick,
-  } = useToolConverter({
+  } = useTool({
     convertFn: htmlEscapeUnescape,
   })
 
@@ -28,12 +31,16 @@ const HtmlEscapeUnescapeTool = () => {
   }
 
   // Dynamic button label based on input detection
-  const convertLabel = !input.trim() 
-    ? tool.ui.convertLabel 
-    : detectHtmlEscaped(input) ? "Unescape" : "Escape"
+  const convertLabel = !input.trim()
+    ? tool.ui.convertLabel
+    : detectHtmlEscaped(input)
+      ? "Unescape"
+      : "Escape"
 
   return (
     <ToolLayout
+      onConvert={convert}
+      tool={tool}
       headerProps={{
         title: tool.name,
         description: tool.description,
@@ -51,7 +58,6 @@ const HtmlEscapeUnescapeTool = () => {
         onSwap: handleSwap,
       }}
       toolActionsProps={{
-        onConvert: convert,
         onCopy: handleCopy,
         onClear: handleClear,
         toolSlug: toolSlug,
@@ -60,7 +66,6 @@ const HtmlEscapeUnescapeTool = () => {
         hasOutput: !!output,
         convertLabel: convertLabel,
         toolName: tool.name,
-        tool: tool,
       }}
       statusProps={{
         status: status,

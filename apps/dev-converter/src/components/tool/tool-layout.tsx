@@ -1,25 +1,28 @@
 import { Badge, Card } from "@ek-studio/ui"
 import { cn } from "@ek-studio/ui"
-import { Zap } from "lucide-react"
 import { Button } from "@ek-studio/ui"
+import { Zap } from "lucide-react"
+
+import { Tool } from "@/lib/tools/types"
 
 import { EditorPanel } from "./editor-panel"
-import { ToolActions } from "./tool-actions"
+import { ToolActions, ToolActionsProps } from "./tool-actions"
 import { ToolFooter } from "./tool-footer"
 import { ToolHeader } from "./tool-header"
 import { ToolStatus } from "./tool-status"
 import { ToolSwitcher } from "./tool-switcher"
-import { Tool } from "@/lib/tools/types"
 
 interface ToolLayoutProps {
+  tool: Tool
+  onConvert: () => void
   headerProps?: {
     title: string
     description: string
   }
   editorProps: {
-    inputValue: string
+    inputValue?: string
     outputValue: string
-    onInputChange: (value: string) => void
+    onInputChange?: (value: string) => void
     inputPlaceholder?: string
     outputPlaceholder?: string
     inputLabel?: string
@@ -36,26 +39,14 @@ interface ToolLayoutProps {
     onExampleClick?: (input: string) => void
     settings?: React.ReactNode
   }
-  // New props for automatic ToolActions
-  toolActionsProps: {
-    onConvert: () => void
-    onCopy: () => void
-    onClear: () => void
-    toolSlug: string
-    shareData: any
-    isLoading?: boolean
-    hasOutput?: boolean
-    convertLabel?: string
-    toolName?: string
-    tool?: Tool  // Add tool here
-  }
-  // Status props for ToolStatus integration
+  toolActionsProps: ToolActionsProps
   statusProps?: {
     status: "idle" | "loading" | "success" | "error" | "info"
     message?: string
     details?: React.ReactNode // If provided, overrides default details
     customDetailsRender?: (defaultDetails: React.ReactNode) => React.ReactNode
   }
+  toolControls?: React.ReactNode | null
   className?: string
 }
 
@@ -65,25 +56,13 @@ export function ToolLayout({
   footerProps,
   toolActionsProps,
   statusProps,
+  toolControls,
+  tool,
+  onConvert,
   className,
 }: ToolLayoutProps) {
   // Create the toolbar with ToolActions (just the action buttons, not the convert button)
-  const toolbarWithActions = (
-    <ToolActions
-      onConvert={toolActionsProps.onConvert}
-      onCopy={toolActionsProps.onCopy}
-      onClear={toolActionsProps.onClear}
-      toolSlug={toolActionsProps.toolSlug}
-      shareData={toolActionsProps.shareData}
-      isLoading={toolActionsProps.isLoading}
-      hasOutput={toolActionsProps.hasOutput}
-      convertLabel={toolActionsProps.convertLabel}
-      outputValue={editorProps.outputValue}
-      inputValue={editorProps.inputValue}
-      toolName={toolActionsProps.toolName || headerProps?.title}
-      showConvertButton={false}
-    />
-  )
+  const toolbarWithActions = <ToolActions {...toolActionsProps} />
 
   // Render status with ToolStatus as default
   const renderStatus = () => {
@@ -128,24 +107,31 @@ export function ToolLayout({
         )}
 
         {/* Main Tool Section - Enhanced with glassmorphism */}
-        <Card id="editor-section" className="glass border-0 shadow-glow p-3 sm:p-4 md:p-8 overflow-hidden scroll-mt-20">
+        <Card
+          id="editor-section"
+          className="glass border-0 shadow-glow p-3 sm:p-4 md:p-8 overflow-hidden scroll-mt-20"
+        >
           <div className="space-y-4 sm:space-y-8">
             {/* Actions Toolbar with Tool Switcher - All on same level */}
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4 w-full">
-              {/* Tool Switcher - Left (or empty space) */}
-              <div className="flex justify-start lg:w-auto lg:min-w-[200px]">
-                {toolActionsProps.tool && (
-                  <ToolSwitcher 
-                    currentTool={toolActionsProps.tool}
-                    hasInput={!!editorProps.inputValue}
-                  />
-                )}
-              </div>
-              
+              {/* Tool Controls - Left (or empty space) */}
+              {toolControls !== null && (
+                <div className="flex justify-start lg:w-auto lg:min-w-[200px]">
+                  {toolControls !== undefined
+                    ? toolControls
+                    : tool && (
+                        <ToolSwitcher
+                          currentTool={tool}
+                          hasInput={!!editorProps.inputValue}
+                        />
+                      )}
+                </div>
+              )}
+
               {/* Main Action Button - Center */}
               <div className="flex justify-center lg:flex-1">
                 <Button
-                  onClick={toolActionsProps.onConvert}
+                  onClick={onConvert}
                   disabled={toolActionsProps.isLoading}
                   size="lg"
                   className="relative w-full sm:w-auto sm:min-w-[240px] h-14 sm:h-16 text-base sm:text-lg font-bold shadow-glow hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-[1.02] active:scale-[0.98] rounded-2xl border-0 overflow-hidden group"
@@ -159,7 +145,9 @@ export function ToolLayout({
                   ) : (
                     <div className="flex items-center gap-3 relative z-10">
                       <Zap className="h-5 w-5 sm:h-6 sm:w-6 drop-shadow-sm" />
-                      <span className="drop-shadow-sm">{toolActionsProps.convertLabel}</span>
+                      <span className="drop-shadow-sm">
+                        {toolActionsProps.convertLabel}
+                      </span>
                     </div>
                   )}
                 </Button>
@@ -173,7 +161,7 @@ export function ToolLayout({
 
             {/* Editor Panel - Enhanced spacing */}
             <div>
-              <EditorPanel 
+              <EditorPanel
                 {...editorProps}
                 hasError={statusProps?.status === "error"}
                 className="space-y-4 sm:space-y-8"
@@ -183,7 +171,9 @@ export function ToolLayout({
         </Card>
 
         {/* Footer Section - Separate card for better organization */}
-        {(footerProps.examples?.length || footerProps.faqs?.length || footerProps.relatedTools?.length) && (
+        {(footerProps.examples?.length ||
+          footerProps.faqs?.length ||
+          footerProps.relatedTools?.length) && (
           <Card className="glass border-0 shadow-glow p-4 sm:p-6 md:p-8">
             <ToolFooter {...footerProps} />
           </Card>

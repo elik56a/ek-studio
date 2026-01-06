@@ -35,7 +35,7 @@ export interface ToolSwitcherGroup {
 
 export interface ToolSwitcherConfig {
   enabled: boolean
-  mode?: 'category' | 'custom'
+  mode?: "category" | "custom"
   customTools?: string[]
   groups?: ToolSwitcherGroup[]
   showAllLink?: boolean
@@ -50,7 +50,7 @@ export interface Tool {
   category: string
   keywords: string[]
   metadata: ToolMetadata
-  examples: ToolExample[]
+  examples?: ToolExample[]
   faq: ToolFAQ[]
   relatedTools?: string[] // tool IDs
   ui: ToolUI

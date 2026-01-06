@@ -1,10 +1,12 @@
+import {
+  encodingTools,
+  jsonDataTools,
+  securityTools,
+  textTools,
+  timeTools,
+  utilityTools,
+} from "./tool-configs"
 import { Tool } from "./types"
-import { jsonDataTools } from "./tool-configs/json-data-tools"
-import { encodingTools } from "./tool-configs/encoding-tools"
-import { securityTools } from "./tool-configs/security-tools"
-import { textTools } from "./tool-configs/text-tools"
-import { timeTools } from "./tool-configs/time-tools"
-import { utilityTools } from "./tool-configs/utility-tools"
 
 export const tools: Tool[] = [
   ...jsonDataTools,

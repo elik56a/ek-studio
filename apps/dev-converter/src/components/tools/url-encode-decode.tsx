@@ -1,8 +1,8 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useToolConverter } from "@/hooks/use-tool-converter"
-import { urlEncodeDecode, detectUrlEncoded } from "@/lib/utils/encoding-utils"
+import { useTool } from "@/hooks/use-tool"
+import { detectUrlEncoded, urlEncodeDecode } from "@/lib/utils/encoding-utils"
 
 const UrlEncodeDecodeTool = () => {
   const {
@@ -19,7 +19,7 @@ const UrlEncodeDecodeTool = () => {
     relatedTools,
     convert,
     handleExampleClick,
-  } = useToolConverter({
+  } = useTool({
     convertFn: urlEncodeDecode,
   })
 
@@ -28,12 +28,16 @@ const UrlEncodeDecodeTool = () => {
   }
 
   // Dynamic button label based on input detection
-  const convertLabel = !input.trim() 
-    ? tool.ui.convertLabel 
-    : detectUrlEncoded(input) ? "Decode" : "Encode"
+  const convertLabel = !input.trim()
+    ? tool.ui.convertLabel
+    : detectUrlEncoded(input)
+      ? "Decode"
+      : "Encode"
 
   return (
     <ToolLayout
+      onConvert={convert}
+      tool={tool}
       headerProps={{
         title: tool.name,
         description: tool.description,
@@ -51,7 +55,6 @@ const UrlEncodeDecodeTool = () => {
         onSwap: handleSwap,
       }}
       toolActionsProps={{
-        onConvert: convert,
         onCopy: handleCopy,
         onClear: handleClear,
         toolSlug: toolSlug,
@@ -60,7 +63,6 @@ const UrlEncodeDecodeTool = () => {
         hasOutput: !!output,
         convertLabel: convertLabel,
         toolName: tool.name,
-        tool: tool,
       }}
       statusProps={{
         status: status,

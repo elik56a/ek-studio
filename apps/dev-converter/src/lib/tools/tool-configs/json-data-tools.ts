@@ -1,8 +1,9 @@
+import CsvToJsonTool from "@/components/tools/csv-to-json"
 import JsonFormatterTool from "@/components/tools/json-formatter"
+import JsonToCsvTool from "@/components/tools/json-to-csv"
 import JsonToYamlTool from "@/components/tools/json-to-yaml"
 import YamlToJsonTool from "@/components/tools/yaml-to-json"
-import JsonToCsvTool from "@/components/tools/json-to-csv"
-import CsvToJsonTool from "@/components/tools/csv-to-json"
+
 import { Tool } from "../types"
 
 export const jsonDataTools: Tool[] = [
@@ -60,7 +61,7 @@ export const jsonDataTools: Tool[] = [
     },
     switcher: {
       enabled: true,
-      mode: 'category',
+      mode: "category",
       showAllLink: true,
       preserveInput: true,
     },
@@ -92,12 +93,14 @@ export const jsonDataTools: Tool[] = [
       },
       {
         title: "Nested structure",
-        input: '{"user":{"name":"Alice","email":"alice@example.com","settings":{"theme":"dark","notifications":true}}}',
+        input:
+          '{"user":{"name":"Alice","email":"alice@example.com","settings":{"theme":"dark","notifications":true}}}',
         description: "Convert nested JSON with multiple levels",
       },
       {
         title: "Array of objects",
-        input: '[{"id":1,"name":"Product A","price":29.99},{"id":2,"name":"Product B","price":49.99}]',
+        input:
+          '[{"id":1,"name":"Product A","price":29.99},{"id":2,"name":"Product B","price":49.99}]',
         description: "Convert JSON array to YAML list",
       },
     ],
@@ -128,7 +131,7 @@ export const jsonDataTools: Tool[] = [
     },
     switcher: {
       enabled: true,
-      mode: 'category',
+      mode: "category",
       showAllLink: true,
       preserveInput: true,
     },
@@ -160,12 +163,14 @@ export const jsonDataTools: Tool[] = [
       },
       {
         title: "Nested YAML structure",
-        input: "user:\n  name: Alice\n  email: alice@example.com\n  settings:\n    theme: dark\n    notifications: true",
+        input:
+          "user:\n  name: Alice\n  email: alice@example.com\n  settings:\n    theme: dark\n    notifications: true",
         description: "Convert nested YAML with multiple levels",
       },
       {
         title: "YAML list",
-        input: "- id: 1\n  name: Product A\n  price: 29.99\n- id: 2\n  name: Product B\n  price: 49.99",
+        input:
+          "- id: 1\n  name: Product A\n  price: 29.99\n- id: 2\n  name: Product B\n  price: 49.99",
         description: "Convert YAML list to JSON array",
       },
     ],
@@ -196,7 +201,7 @@ export const jsonDataTools: Tool[] = [
     },
     switcher: {
       enabled: true,
-      mode: 'category',
+      mode: "category",
       showAllLink: true,
       preserveInput: true,
     },
@@ -223,17 +228,20 @@ export const jsonDataTools: Tool[] = [
     examples: [
       {
         title: "Array of objects",
-        input: '[{"name":"John","age":30,"city":"New York"},{"name":"Alice","age":25,"city":"London"},{"name":"Bob","age":35,"city":"Paris"}]',
+        input:
+          '[{"name":"John","age":30,"city":"New York"},{"name":"Alice","age":25,"city":"London"},{"name":"Bob","age":35,"city":"Paris"}]',
         description: "Convert JSON array to CSV with headers",
       },
       {
         title: "Product data",
-        input: '[{"id":1,"product":"Laptop","price":999.99,"stock":15},{"id":2,"product":"Mouse","price":29.99,"stock":50}]',
+        input:
+          '[{"id":1,"product":"Laptop","price":999.99,"stock":15},{"id":2,"product":"Mouse","price":29.99,"stock":50}]',
         description: "Convert product data to CSV format",
       },
       {
         title: "Single object",
-        input: '{"name":"John Doe","email":"john@example.com","role":"Developer"}',
+        input:
+          '{"name":"John Doe","email":"john@example.com","role":"Developer"}',
         description: "Convert a single JSON object to CSV",
       },
     ],
@@ -264,7 +272,7 @@ export const jsonDataTools: Tool[] = [
     },
     switcher: {
       enabled: true,
-      mode: 'category',
+      mode: "category",
       showAllLink: true,
       preserveInput: true,
     },
@@ -297,12 +305,14 @@ export const jsonDataTools: Tool[] = [
       },
       {
         title: "Product data",
-        input: "id,product,price,stock\n1,Laptop,999.99,15\n2,Mouse,29.99,50\n3,Keyboard,79.99,30",
+        input:
+          "id,product,price,stock\n1,Laptop,999.99,15\n2,Mouse,29.99,50\n3,Keyboard,79.99,30",
         description: "Convert product CSV to JSON",
       },
       {
         title: "Contact list",
-        input: "name,email,phone\nJohn Doe,john@example.com,555-0100\nJane Smith,jane@example.com,555-0101",
+        input:
+          "name,email,phone\nJohn Doe,john@example.com,555-0100\nJane Smith,jane@example.com,555-0101",
         description: "Convert contact CSV to JSON",
       },
     ],
@@ -332,8 +342,8 @@ export const jsonDataTools: Tool[] = [
       convertLabel: "Convert to JSON",
     },
     switcher: {
-       enabled: true,
-      mode: 'category',
+      enabled: true,
+      mode: "category",
       showAllLink: true,
       preserveInput: true,
     },

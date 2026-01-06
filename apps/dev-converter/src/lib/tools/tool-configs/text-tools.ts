@@ -1,4 +1,6 @@
 import { ComingSoonPlaceholder } from "@/components/coming-soon-placeholder"
+import CaseConverterTool from "@/components/tools/case-converter"
+
 import { Tool } from "../types"
 
 export const textTools: Tool[] = [
@@ -21,8 +23,45 @@ export const textTools: Tool[] = [
         "text converter",
       ],
     },
-    examples: [],
-    faq: [],
+    examples: [
+      {
+        title: "Convert to camelCase",
+        input: "hello world example",
+        description: "Convert text to camelCase format",
+      },
+      {
+        title: "Convert to snake_case",
+        input: "HelloWorldExample",
+        description: "Convert PascalCase to snake_case",
+      },
+      {
+        title: "Convert to kebab-case",
+        input: "my_variable_name",
+        description: "Convert snake_case to kebab-case",
+      },
+    ],
+    faq: [
+      {
+        question: "What is camelCase?",
+        answer:
+          "camelCase is a naming convention where the first word is lowercase and subsequent words start with uppercase letters, with no spaces or separators (e.g., myVariableName).",
+      },
+      {
+        question: "When should I use snake_case?",
+        answer:
+          "snake_case is commonly used in Python, Ruby, and database column names. Words are lowercase and separated by underscores (e.g., my_variable_name).",
+      },
+      {
+        question: "What's the difference between PascalCase and camelCase?",
+        answer:
+          "PascalCase (also called UpperCamelCase) starts with an uppercase letter, while camelCase starts with a lowercase letter. PascalCase is often used for class names.",
+      },
+      {
+        question: "What is CONSTANT_CASE?",
+        answer:
+          "CONSTANT_CASE uses all uppercase letters with underscores separating words. It's commonly used for constants in many programming languages (e.g., MAX_VALUE).",
+      },
+    ],
     relatedTools: ["diff-checker", "regex-tester"],
     ui: {
       inputPlaceholder: "Enter text to convert case...",
@@ -31,7 +70,7 @@ export const textTools: Tool[] = [
       outputLabel: "Converted Text",
       convertLabel: "Convert Case",
     },
-    component: ComingSoonPlaceholder,
+    component: CaseConverterTool,
   },
   {
     id: "diff-checker",

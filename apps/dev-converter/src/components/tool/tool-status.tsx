@@ -1,7 +1,6 @@
-import { AlertCircle, CheckCircle2, Info, Loader2 } from "lucide-react"
-
 import { Badge } from "@ek-studio/ui"
 import { cn } from "@ek-studio/ui"
+import { AlertCircle, CheckCircle2, Info, Loader2 } from "lucide-react"
 
 interface ToolStatusProps {
   status: "idle" | "loading" | "success" | "error" | "info"
@@ -27,22 +26,26 @@ export function ToolStatus({
     loading: {
       icon: <Loader2 className="h-4 w-4 animate-spin" />,
       variant: "secondary" as const,
-      className: "text-blue-600 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-950/50 dark:border-blue-800",
+      className:
+        "text-blue-600 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-950/50 dark:border-blue-800",
     },
     success: {
       icon: <CheckCircle2 className="h-4 w-4" />,
       variant: "default" as const,
-      className: "text-green-600 bg-green-50 border-green-200 dark:text-green-400 dark:bg-green-950/50 dark:border-green-800",
+      className:
+        "text-green-600 bg-green-50 border-green-200 dark:text-green-400 dark:bg-green-950/50 dark:border-green-800",
     },
     error: {
       icon: <AlertCircle className="h-4 w-4" />,
       variant: "destructive" as const,
-      className: "text-red-600 bg-red-50 border-red-200 dark:text-red-400 dark:bg-red-950/50 dark:border-red-800",
+      className:
+        "text-red-600 bg-red-50 border-red-200 dark:text-red-400 dark:bg-red-950/50 dark:border-red-800",
     },
     info: {
       icon: <Info className="h-4 w-4" />,
       variant: "secondary" as const,
-      className: "text-blue-600 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-950/50 dark:border-blue-800",
+      className:
+        "text-blue-600 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-950/50 dark:border-blue-800",
     },
   }
 
@@ -61,11 +64,7 @@ export function ToolStatus({
         {config.icon}
         {message && <span>{message}</span>}
       </Badge>
-      {details && (
-        <div className="flex items-center gap-2">
-          {details}
-        </div>
-      )}
+      {details && <div className="flex items-center gap-2">{details}</div>}
     </div>
   )
 }

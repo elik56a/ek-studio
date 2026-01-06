@@ -1,9 +1,3 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { ArrowRight, Clock, Star, Users } from "lucide-react"
-
-import { Breadcrumb } from "@/components/layout/breadcrumb"
 import {
   Badge,
   Button,
@@ -13,6 +7,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@ek-studio/ui"
+import { ArrowRight, Clock, Star, Users } from "lucide-react"
+
+import type { Metadata } from "next"
+import Link from "next/link"
+import { notFound } from "next/navigation"
+
+import { Breadcrumb } from "@/components/layout/breadcrumb"
 import { generateCategoryMetadata } from "@/lib/metadata"
 import { getCategoryById } from "@/lib/tools/categories"
 import { getToolsByCategory } from "@/lib/tools/registry"
@@ -61,7 +62,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const toolsWithMeta = tools.map((tool, index) => ({
     ...tool,
     popularity: Math.floor(Math.random() * 1000000) + 100000,
-    lastUpdated: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
+    lastUpdated: new Date(
+      Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
+    ),
     rating: 4.2 + Math.random() * 0.8,
   }))
 
@@ -85,11 +88,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               </p>
             </div>
           </div>
-            
+
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 pt-2 sm:pt-4">
             <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
               <Users className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span>{tools.length} {tools.length === 1 ? "tool" : "tools"}</span>
+              <span>
+                {tools.length} {tools.length === 1 ? "tool" : "tools"}
+              </span>
             </div>
             <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
               <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-500" />
@@ -106,12 +111,18 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         {tools.length > 0 ? (
           <div className="space-y-6 sm:space-y-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
-              <h2 className="text-xl sm:text-2xl font-semibold">Available Tools</h2>
-              <Button variant="outline" size="sm" className="text-xs sm:text-sm">
+              <h2 className="text-xl sm:text-2xl font-semibold">
+                Available Tools
+              </h2>
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-xs sm:text-sm"
+              >
                 Sort by popularity
               </Button>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {toolsWithMeta.map((tool, index) => (
                 <Link key={tool.id} href={`/${tool.slug}`}>
@@ -122,7 +133,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                           {tool.name}
                         </CardTitle>
                         {index < 3 && (
-                          <Badge variant="secondary" className="text-xs bg-accent/10 text-accent border-accent/20 flex-shrink-0">
+                          <Badge
+                            variant="secondary"
+                            className="text-xs bg-accent/10 text-accent border-accent/20 flex-shrink-0"
+                          >
                             Popular
                           </Badge>
                         )}
@@ -131,12 +145,16 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         {tool.description}
                       </CardDescription>
                     </CardHeader>
-                    
+
                     <CardContent className="pt-0 space-y-3 sm:space-y-4">
                       {/* Keywords */}
                       <div className="flex flex-wrap gap-1.5 sm:gap-2">
                         {tool.keywords.slice(0, 3).map(keyword => (
-                          <Badge key={keyword} variant="outline" className="text-xs">
+                          <Badge
+                            key={keyword}
+                            variant="outline"
+                            className="text-xs"
+                          >
                             {keyword}
                           </Badge>
                         ))}
@@ -146,19 +164,21 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                           </Badge>
                         )}
                       </div>
-                      
+
                       {/* Stats */}
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
                         <div className="flex items-center gap-1">
                           <Users className="w-3 h-3" />
-                          <span>{(tool.popularity / 1000).toFixed(0)}k users</span>
+                          <span>
+                            {(tool.popularity / 1000).toFixed(0)}k users
+                          </span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Star className="w-3 h-3 text-yellow-500" />
                           <span>{tool.rating.toFixed(1)}</span>
                         </div>
                       </div>
-                      
+
                       {/* CTA */}
                       <div className="flex items-center justify-between pt-2">
                         <span className="text-xs sm:text-sm font-medium text-primary group-hover:text-accent transition-colors">
@@ -179,7 +199,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </div>
             <h3 className="text-lg sm:text-xl font-semibold">Coming Soon</h3>
             <p className="text-sm sm:text-base text-muted-foreground max-w-md mx-auto">
-              We're working hard to bring you amazing tools in this category. 
+              We're working hard to bring you amazing tools in this category.
               Check back soon for updates!
             </p>
             <Button asChild className="mt-4">

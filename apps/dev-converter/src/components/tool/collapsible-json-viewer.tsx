@@ -1,8 +1,16 @@
 "use client"
 
-import { useState, useMemo, useCallback } from "react"
-import { ChevronRight, ChevronsDown, ChevronsRight, FileJson, List } from "lucide-react"
 import { cn } from "@ek-studio/ui"
+import {
+  ChevronRight,
+  ChevronsDown,
+  ChevronsRight,
+  FileJson,
+  List,
+} from "lucide-react"
+
+import { useCallback, useMemo, useState } from "react"
+
 import { ButtonGroup } from "@/components/common/button-group"
 
 interface CollapsibleJsonViewerProps {
@@ -145,7 +153,9 @@ export function CollapsibleJsonViewer({
 
       // Null
       if (val === null) {
-        return <span className="text-purple-600 dark:text-purple-400">null</span>
+        return (
+          <span className="text-purple-600 dark:text-purple-400">null</span>
+        )
       }
 
       // Boolean
@@ -187,7 +197,9 @@ export function CollapsibleJsonViewer({
               onClick={() => toggleNode(path)}
               className="inline-flex items-center gap-1 hover:bg-accent/50 rounded px-1 -ml-1 transition-colors"
             >
-              <span className={`transition-transform duration-150 ${isCollapsed ? "" : "rotate-90"}`}>
+              <span
+                className={`transition-transform duration-150 ${isCollapsed ? "" : "rotate-90"}`}
+              >
                 <ChevronRight className="h-3 w-3 text-muted-foreground" />
               </span>
               <span className="text-muted-foreground">
@@ -197,7 +209,9 @@ export function CollapsibleJsonViewer({
 
             <div
               className={`ml-4 border-l-2 border-border/50 pl-3 mt-1 overflow-hidden transition-all duration-150 ${
-                isCollapsed ? "max-h-0 opacity-0" : "max-h-[10000px] opacity-100"
+                isCollapsed
+                  ? "max-h-0 opacity-0"
+                  : "max-h-[10000px] opacity-100"
               }`}
             >
               {val.map((item, index) => (
@@ -224,17 +238,23 @@ export function CollapsibleJsonViewer({
               onClick={() => toggleNode(path)}
               className="inline-flex items-center gap-1 hover:bg-accent/50 rounded px-1 -ml-1 transition-colors"
             >
-              <span className={`transition-transform duration-150 ${isCollapsed ? "" : "rotate-90"}`}>
+              <span
+                className={`transition-transform duration-150 ${isCollapsed ? "" : "rotate-90"}`}
+              >
                 <ChevronRight className="h-3 w-3 text-muted-foreground" />
               </span>
               <span className="text-muted-foreground">
-                {"{"}{keys.length} {keys.length === 1 ? "key" : "keys"}{"}"}
+                {"{"}
+                {keys.length} {keys.length === 1 ? "key" : "keys"}
+                {"}"}
               </span>
             </button>
 
             <div
               className={`ml-4 border-l-2 border-border/50 pl-3 mt-1 overflow-hidden transition-all duration-150 ${
-                isCollapsed ? "max-h-0 opacity-0" : "max-h-[10000px] opacity-100"
+                isCollapsed
+                  ? "max-h-0 opacity-0"
+                  : "max-h-[10000px] opacity-100"
               }`}
             >
               {keys.map(key => (
@@ -288,7 +308,12 @@ export function CollapsibleJsonViewer({
   }
 
   return (
-    <div className={cn("w-full h-full min-h-[250px] sm:min-h-[300px] max-h-[600px] flex flex-col", className)}>
+    <div
+      className={cn(
+        "w-full h-full min-h-[250px] sm:min-h-[300px] max-h-[600px] flex flex-col",
+        className
+      )}
+    >
       {/* JSON Tree View with Controls */}
       <div className="flex-1 overflow-auto bg-muted/30 border border-border/50 rounded-lg flex flex-col">
         {/* Controls - Inside the container */}
@@ -296,22 +321,38 @@ export function CollapsibleJsonViewer({
           {/* View Mode Toggle */}
           <ButtonGroup
             options={[
-              { value: "tree", label: "Tree", icon: <List className="h-3 w-3" /> },
-              { value: "pretty", label: "Pretty", icon: <FileJson className="h-3 w-3" /> },
+              {
+                value: "tree",
+                label: "Tree",
+                icon: <List className="h-3 w-3" />,
+              },
+              {
+                value: "pretty",
+                label: "Pretty",
+                icon: <FileJson className="h-3 w-3" />,
+              },
             ]}
             value={viewMode}
-            onChange={(mode) => setViewMode(mode as "tree" | "pretty")}
+            onChange={mode => setViewMode(mode as "tree" | "pretty")}
           />
 
           {/* Collapse/Expand Controls */}
           {viewMode === "tree" && (
             <ButtonGroup
               options={[
-                { value: "expand", label: "Expand All", icon: <ChevronsDown className="h-3 w-3" /> },
-                { value: "collapse", label: "Collapse All", icon: <ChevronsRight className="h-3 w-3" /> },
+                {
+                  value: "expand",
+                  label: "Expand All",
+                  icon: <ChevronsDown className="h-3 w-3" />,
+                },
+                {
+                  value: "collapse",
+                  label: "Collapse All",
+                  icon: <ChevronsRight className="h-3 w-3" />,
+                },
               ]}
               value={globalCollapsed ? "collapse" : "expand"}
-              onChange={(action) => {
+              onChange={action => {
                 if (action === "expand") expandAll()
                 else collapseAll()
               }}

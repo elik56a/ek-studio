@@ -1,7 +1,7 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useToolConverter } from "@/hooks/use-tool-converter"
+import { useTool } from "@/hooks/use-tool"
 import { jsonToCsv } from "@/lib/utils/json-utils"
 
 const JsonToCsvTool = () => {
@@ -18,7 +18,7 @@ const JsonToCsvTool = () => {
     relatedTools,
     convert,
     handleExampleClick,
-  } = useToolConverter({
+  } = useTool({
     convertFn: jsonToCsv,
   })
 
@@ -28,6 +28,8 @@ const JsonToCsvTool = () => {
 
   return (
     <ToolLayout
+      onConvert={convert}
+      tool={tool}
       headerProps={{
         title: tool.name,
         description: tool.description,
@@ -43,7 +45,6 @@ const JsonToCsvTool = () => {
         errorMessage: status === "error" ? statusMessage : undefined,
       }}
       toolActionsProps={{
-        onConvert: convert,
         onCopy: handleCopy,
         onClear: handleClear,
         toolSlug: toolSlug,
@@ -52,7 +53,6 @@ const JsonToCsvTool = () => {
         hasOutput: !!output,
         convertLabel: tool.ui.convertLabel,
         toolName: tool.name,
-        tool: tool,
       }}
       statusProps={{
         status: status,

@@ -1,11 +1,10 @@
 "use client"
 
-import { CollapsibleJsonViewer } from "@/components/tool/collapsible-json-viewer"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { formatJson as formatJsonUtil } from "@/lib/utils/json-utils"
+import { decodeJWT } from "@/lib/utils/security-utils"
 
-const JsonFormatterTool = () => {
+const JWTDecoderTool = () => {
   const {
     input,
     setInput,
@@ -20,7 +19,7 @@ const JsonFormatterTool = () => {
     convert,
     handleExampleClick,
   } = useTool({
-    convertFn: formatJsonUtil,
+    convertFn: decodeJWT,
   })
 
   if (!tool) {
@@ -44,12 +43,6 @@ const JsonFormatterTool = () => {
         inputLabel: tool.ui.inputLabel,
         outputLabel: tool.ui.outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
-        customOutputComponent: (
-          <CollapsibleJsonViewer
-            value={output}
-            placeholder={tool.ui.outputPlaceholder}
-          />
-        ),
       }}
       toolActionsProps={{
         onCopy: handleCopy,
@@ -75,4 +68,4 @@ const JsonFormatterTool = () => {
   )
 }
 
-export default JsonFormatterTool
+export default JWTDecoderTool
