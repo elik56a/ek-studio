@@ -249,6 +249,7 @@ export function ToolActions({
                 onClick={handleCopy}
                 disabled={!hasOutput || isLoading}
                 className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0"
+                aria-label="Copy output"
               >
                 <Copy className="h-4 w-4" />
               </Button>
@@ -264,6 +265,7 @@ export function ToolActions({
                 onClick={handleClear}
                 disabled={isLoading}
                 className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0"
+                aria-label="Clear all"
               >
                 <RotateCcw className="h-4 w-4" />
               </Button>
@@ -283,7 +285,7 @@ export function ToolActions({
                 size="sm"
                 disabled={!hasOutput || isLoading}
                 className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer flex-shrink-0"
-                title="Download output"
+                aria-label="Download output"
               >
                 <Download className="h-4 w-4" />
               </Button>
@@ -316,6 +318,7 @@ export function ToolActions({
                 onClick={handlePrint}
                 disabled={!hasOutput || isLoading}
                 className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer flex-shrink-0"
+                aria-label="Print output"
               >
                 <Printer className="h-4 w-4" />
               </Button>
@@ -335,6 +338,7 @@ export function ToolActions({
                 size="sm"
                 onClick={handleExpand}
                 className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0 hidden sm:flex"
+                aria-label={isExpanded ? "Exit fullscreen" : "Enter fullscreen"}
               >
                 {isExpanded ? (
                   <Minimize2 className="h-4 w-4" />
@@ -356,6 +360,7 @@ export function ToolActions({
                 onClick={handleShare}
                 disabled={!shareData || isLoading || sharing}
                 className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0"
+                aria-label={sharing ? "Sharing..." : "Share"}
               >
                 <Share2 className="h-4 w-4" />
               </Button>
@@ -373,7 +378,7 @@ export function ToolActions({
               variant="ghost"
               size="sm"
               className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0"
-              title="More actions"
+              aria-label="More actions"
             >
               <MoreHorizontal className="h-4 w-4" />
             </Button>
