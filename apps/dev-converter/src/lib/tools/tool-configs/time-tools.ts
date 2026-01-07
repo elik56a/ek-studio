@@ -1,4 +1,3 @@
-import { ComingSoonPlaceholder } from "@/components/custom/coming-soon-placeholder"
 import UnixTimestampConverter from "@/components/tools/unix-timestamp-converter"
 
 import { Tool } from "../types"
@@ -27,47 +26,53 @@ export const timeTools: Tool[] = [
     },
     examples: [
       {
-        title: "Unix timestamp example",
+        title: "Unix timestamp example (seconds)",
         input: "1704672000",
         description:
-          "Convert a Unix timestamp to human-readable date (Jan 8, 2024)",
+          "Convert a Unix timestamp in seconds to a readable date (UTC-based)",
       },
       {
         title: "Milliseconds timestamp",
         input: "1609459200000",
-        description: "Convert timestamp in milliseconds (Jan 1, 2021)",
+        description:
+          "Convert a Unix timestamp in milliseconds to a readable date (Jan 1, 2021)",
       },
       {
-        title: "ISO date string",
+        title: "ISO date string to timestamp",
         input: "2023-06-15T14:30:00Z",
-        description: "Convert ISO date to Unix timestamp",
+        description: "Convert an ISO 8601 date string into a Unix timestamp",
       },
       {
-        title: "Human-readable date",
+        title: "Human-readable date to timestamp",
         input: "December 25, 2022",
-        description: "Convert natural date format to timestamp",
+        description: "Convert a natural language date into a Unix timestamp",
       },
     ],
     faq: [
       {
-        question: "What is a Unix timestamp?",
+        question: "What is a Unix timestamp (epoch time)?",
         answer:
-          "A Unix timestamp is the number of seconds that have elapsed since January 1, 1970 (midnight UTC/GMT), also known as the Unix epoch. It's a standard way to represent time in computing.",
+          "A Unix timestamp (also called epoch time) is the number of seconds that have passed since January 1, 1970 at 00:00:00 UTC. It is widely used in programming, databases, APIs, and logging systems to represent time consistently.",
       },
       {
-        question: "Can I use milliseconds?",
+        question: "What is the difference between seconds and milliseconds timestamps?",
         answer:
-          "Yes! The tool automatically detects whether your timestamp is in seconds or milliseconds. Timestamps with more than 10 digits are treated as milliseconds.",
+          "Unix timestamps can be stored in seconds (10 digits) or milliseconds (13 digits). This tool automatically detects which format you're using and converts it correctly without needing manual selection.",
       },
       {
-        question: "What date formats are supported?",
+        question: "How do I convert a Unix timestamp to a human-readable date?",
         answer:
-          "The tool supports various formats including ISO 8601 (2024-01-08T00:00:00Z), natural language (January 8, 2024), and standard formats (01/08/2024). It uses JavaScript's Date parser for maximum compatibility.",
+          "Paste your timestamp (in seconds or milliseconds) into the input, and the converter will instantly return the readable date and time. You can also view the result in different timezones for easier debugging.",
       },
       {
-        question: "What is relative time?",
+        question: "Can I convert a date back into a Unix timestamp?",
         answer:
-          "Relative time shows how long ago (or how far in the future) a timestamp is from the current moment, like '2 days ago' or '3 hours from now'.",
+          "Yes. You can paste ISO 8601 dates (like 2024-01-08T00:00:00Z), common formats (01/08/2024), or natural language dates (January 8, 2024), and the tool will generate the equivalent Unix timestamp.",
+      },
+      {
+        question: "Why is timezone support important when converting timestamps?",
+        answer:
+          "Unix timestamps are always based on UTC, but humans often work in local timezones. Timezone conversion helps prevent mistakes when debugging logs, scheduling jobs, or comparing timestamps across systems and regions.",
       },
     ],
     relatedTools: ["hash-generator", "uuid-generator"],

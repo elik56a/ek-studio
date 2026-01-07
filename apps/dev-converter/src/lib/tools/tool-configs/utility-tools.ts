@@ -65,24 +65,29 @@ export const utilityTools: Tool[] = [
     ],
     faq: [
       {
-        question: "What color formats are supported?",
+        question: "What is a color converter tool used for?",
         answer:
-          "The tool supports HEX (#FF5733 or #F80), RGB (rgb(255, 87, 51)), RGBA (rgba(255, 87, 51, 0.8)), HSL (hsl(9, 100%, 60%)), and HSLA (hsla(9, 100%, 60%, 0.8)) formats.",
+          "A color converter helps you convert color values between formats like HEX, RGB, RGBA, HSL, and HSLA. It's commonly used by designers and developers for web design, CSS styling, UI theming, and design system consistency.",
       },
       {
-        question: "What is the difference between RGB and HSL?",
+        question: "What color formats does this converter support?",
         answer:
-          "RGB (Red, Green, Blue) uses color channels from 0-255. HSL (Hue, Saturation, Lightness) is more intuitive: Hue (0-360°) represents the color, Saturation (0-100%) is color intensity, and Lightness (0-100%) is brightness.",
+          "This tool supports HEX (#FF5733 or #F80), RGB (rgb(255, 87, 51)), RGBA (rgba(255, 87, 51, 0.8)), HSL (hsl(9, 100%, 60%)), and HSLA (hsla(9, 100%, 60%, 0.8)).",
       },
       {
-        question: "Can I use 3-digit HEX codes?",
+        question: "How do I convert HEX to RGB or HSL?",
         answer:
-          "Yes! Short HEX codes like #F80 are automatically expanded to #FF8800. Each digit is doubled to create the full 6-digit code.",
+          "Simply paste a HEX code (like #FF5733) into the input field. The tool instantly outputs the equivalent RGB, RGBA, HSL, and HSLA values, along with a live preview so you can visually confirm the color.",
       },
       {
-        question: "What does the alpha channel do?",
+        question: "Can I convert 3-digit HEX shorthand (like #F80)?",
         answer:
-          "The alpha channel in RGBA and HSLA controls transparency, ranging from 0 (fully transparent) to 1 (fully opaque). For example, rgba(255, 0, 0, 0.5) is 50% transparent red.",
+          "Yes. The tool automatically expands shorthand HEX codes such as #F80 into the full 6-digit HEX format (#FF8800) and converts them into all supported formats.",
+      },
+      {
+        question: "What is the alpha channel in RGBA and HSLA?",
+        answer:
+          "The alpha channel controls transparency and ranges from 0 (fully transparent) to 1 (fully opaque). For example, rgba(255, 87, 51, 0.5) produces a semi-transparent version of the same color.",
       },
     ],
     relatedTools: ["hash-generator", "base64-encode-decode"],
@@ -146,24 +151,29 @@ export const utilityTools: Tool[] = [
     ],
     faq: [
       {
-        question: "What is a MIME type?",
+        question: "What is a MIME type and why does it matter?",
         answer:
-          "MIME (Multipurpose Internet Mail Extensions) type is a standard way to indicate the nature and format of a file. It's used by web servers and browsers to determine how to handle different file types.",
+          "A MIME type (Multipurpose Internet Mail Extensions) tells browsers and servers what kind of file is being transferred. It helps determine how the file should be displayed or handled — for example, whether it should open as an image, download as a file, or be interpreted as JSON data.",
       },
       {
-        question: "Do I need to include the dot in the extension?",
+        question: "How do I find the MIME type for a file extension?",
         answer:
-          "No, you can enter the extension with or without the dot. Both '.pdf' and 'pdf' will work correctly.",
+          "Enter a file extension such as .pdf, png, mp4, or json, and the tool will instantly show the correct MIME type (Content-Type) used in HTTP headers, uploads, and APIs.",
       },
       {
-        question: "What file types are supported?",
+        question: "Do I need to include the dot (.) in the extension?",
         answer:
-          "The tool includes a comprehensive database of common file types including images (jpg, png, gif), documents (pdf, docx), videos (mp4, avi), audio (mp3, wav), archives (zip, rar), programming files (js, py, java), and many more.",
+          "No. You can enter extensions with or without the dot. Both 'pdf' and '.pdf' work and return the same MIME type result.",
       },
       {
-        question: "How do I use MIME types in my code?",
+        question: "How do I use MIME types in HTTP headers or uploads?",
         answer:
-          "MIME types are commonly used in HTTP headers (Content-Type), HTML forms (accept attribute), and when serving files from web servers. For example, a PDF file should be served with 'Content-Type: application/pdf'.",
+          "MIME types are typically set in the Content-Type header when serving files or sending API requests. For example, PDFs use 'application/pdf' and JSON uses 'application/json'. Correct MIME types prevent file handling issues and improve browser compatibility.",
+      },
+      {
+        question: "What happens if I use the wrong MIME type?",
+        answer:
+          "Using the wrong MIME type can cause files to break, display incorrectly, or be blocked by browsers. For example, serving JavaScript with the wrong Content-Type can trigger security warnings or prevent scripts from executing properly.",
       },
     ],
     relatedTools: ["hash-generator", "base64-encode-decode", "color-converter"],

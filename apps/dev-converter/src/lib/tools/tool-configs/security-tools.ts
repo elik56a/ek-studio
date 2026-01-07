@@ -38,27 +38,46 @@ export const securityTools: Tool[] = [
           "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MjEiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJyb2xlcyI6WyJ1c2VyIiwiYWRtaW4iXSwiZXhwIjoxNzM2MjA4MDAwfQ.signature",
         description: "Decode a JWT with user claims and roles",
       },
+      {
+        title: "Decode JWT and check expiration (exp)",
+        input:
+          "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxMDAxIiwiZXhwIjoxNzM2MjA4MDAwfQ.signature",
+        description:
+          "Decode a JWT and inspect the exp (expiration) timestamp claim",
+      },
+      {
+        title: "Decode JWT to inspect issuer (iss) and audience (aud)",
+        input:
+          "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoLmV4YW1wbGUuY29tIiwiYXVkIjoiYXBpLmV4YW1wbGUuY29tIn0.signature",
+        description:
+          "Decode a JWT to verify issuer and audience values in the payload",
+      },
     ],
     faq: [
       {
-        question: "What is a JWT token?",
+        question: "What is a JWT token and how does it work?",
         answer:
-          "JWT (JSON Web Token) is a compact, URL-safe means of representing claims to be transferred between two parties. It consists of three parts: header, payload, and signature, separated by dots.",
+          "JWT (JSON Web Token) is a compact token format used for authentication and authorization. It contains three parts: a Base64-encoded header, payload (claims), and a signature used to verify integrity.",
+      },
+      {
+        question: "How do I decode a JWT token online?",
+        answer:
+          "Paste your JWT token into the input field and click Decode JWT. The tool instantly shows the decoded header, payload, and signature so you can inspect claims like exp, iss, sub, and roles.",
+      },
+      {
+        question: "Can this tool verify a JWT signature?",
+        answer:
+          "No. This tool only decodes the token contents. Verifying signatures requires the correct secret/public key and must be done server-side to ensure authenticity.",
+      },
+      {
+        question: "Why is my JWT not decoding correctly?",
+        answer:
+          "JWT tokens must contain three dot-separated parts: header.payload.signature. If the token is missing a part or uses invalid Base64URL encoding, decoding will fail.",
       },
       {
         question: "Is it safe to decode JWT tokens online?",
         answer:
-          "This tool only decodes the token locally in your browser - no data is sent to any server. However, never paste production tokens containing sensitive information into any online tool.",
-      },
-      {
-        question: "Can this tool verify JWT signatures?",
-        answer:
-          "No, this tool only decodes the token to view its contents. Signature verification requires the secret key and should be done on your server.",
-      },
-      {
-        question: "Why can't I decode my JWT?",
-        answer:
-          "Make sure your JWT has three parts separated by dots (header.payload.signature) and uses valid Base64 encoding. Some tokens may use URL-safe Base64 encoding.",
+          "This tool decodes tokens locally in your browser and does not send data to a server. Still, avoid pasting real production tokens that contain sensitive information into any online tool.",
       },
     ],
     relatedTools: ["hash-generator", "base64-encode-decode"],
@@ -108,27 +127,38 @@ export const securityTools: Tool[] = [
         input: '{"userId":123,"action":"login","timestamp":1704537600}',
         description: "Create a hash of JSON data for integrity checking",
       },
+      {
+        title: "Hash an API key or token",
+        input: "sk_live_51JxExampleSecretKey123",
+        description:
+          "Generate a SHA-256 hash of a token to safely compare values without storing raw text",
+      },
     ],
     faq: [
       {
-        question: "What is a hash function?",
+        question: "What is a hash function and what is it used for?",
         answer:
-          "A hash function is a one-way cryptographic algorithm that converts input data of any size into a fixed-size string of characters. The same input always produces the same hash, but it's computationally infeasible to reverse the process.",
+          "A hash function converts input data into a fixed-length output string. Hashes are used for data integrity checks, file verification, digital signatures, and detecting changes in content.",
       },
       {
-        question: "Which hash algorithm should I use?",
+        question: "Which hashing algorithm should I use (MD5 vs SHA-256)?",
         answer:
-          "For security purposes, use SHA-256 or SHA-512. MD5 and SHA-1 are considered weak for cryptographic purposes but can still be used for checksums. SHA-256 is the most commonly used for modern applications.",
+          "Use SHA-256 or SHA-512 for modern security and integrity purposes. MD5 is fast and useful for checksums but is not secure for cryptographic applications due to known collisions.",
       },
       {
-        question: "Can I use these hashes for password storage?",
+        question: "Can I use these hashes to store passwords securely?",
         answer:
-          "No! Never store passwords using simple hashes. Use proper password hashing algorithms like bcrypt, Argon2, or PBKDF2 which include salting and key stretching. These hashes are for data integrity, not password security.",
+          "No. Do not store passwords using basic hashes like SHA-256. Use password hashing algorithms such as bcrypt, Argon2, or PBKDF2 which include salting and key stretching.",
       },
       {
-        question: "What are hashes used for?",
+        question: "What is the difference between hashing and encryption?",
         answer:
-          "Hashes are used for data integrity verification, file checksums, digital signatures, blockchain, and as part of authentication systems. They ensure data hasn't been tampered with during transmission or storage.",
+          "Hashing is one-way (you cannot reverse it), while encryption is reversible with a key. Hashing is used for integrity and verification, while encryption is used to protect confidential data.",
+      },
+      {
+        question: "What is a checksum and how is it related to hashes?",
+        answer:
+          "A checksum is a hash value used to verify that data has not changed. You can compare two checksums to confirm that files or messages are identical and untampered.",
       },
     ],
     relatedTools: ["jwt-decoder", "uuid-generator", "base64-encode-decode"],
@@ -173,27 +203,44 @@ export const securityTools: Tool[] = [
           "550e8400-e29b-41d4-a716-446655440000\n6ba7b810-9dad-11d1-80b4-00c04fd430c8\n6ba7b811-9dad-11d1-80b4-00c04fd430c8",
         description: "Generate multiple UUIDs at once for batch operations",
       },
+      {
+        title: "Generate UUIDs for API request tracing",
+        input:
+          "req-550e8400-e29b-41d4-a716-446655440000\nreq-6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        description:
+          "Generate UUIDs to use as request IDs for debugging and log correlation",
+      },
+      {
+        title: "UUID as database primary key",
+        input: "d9428888-122b-11e1-b85c-61cd3cbb3210",
+        description: "Use UUID v4 identifiers as globally unique database keys",
+      },
     ],
     faq: [
       {
-        question: "What is a UUID?",
+        question: "What is a UUID and why is it used?",
         answer:
-          "UUID (Universally Unique Identifier) is a 128-bit number used to uniquely identify information in computer systems. UUID v4 uses random numbers to generate identifiers with extremely low probability of collision.",
+          "A UUID (Universally Unique Identifier) is a 128-bit identifier used to uniquely identify data across systems. UUIDs are commonly used for database IDs, API request IDs, and distributed systems.",
       },
       {
-        question: "Are UUIDs truly unique?",
+        question: "Is UUID v4 random and safe to use?",
         answer:
-          "While not mathematically guaranteed, UUID v4 has such a large number space (2^122 possible values) that the probability of generating duplicate UUIDs is negligibly small - approximately 1 in 5.3 billion billion billion.",
+          "Yes. UUID v4 is generated using random values with an extremely low chance of collision. It is safe for most applications requiring unique identifiers.",
       },
       {
-        question: "When should I use UUIDs?",
+        question: "Should I use UUIDs as primary keys in databases?",
         answer:
-          "Use UUIDs for distributed systems, database primary keys, API request IDs, session identifiers, or any scenario where you need globally unique identifiers without central coordination.",
+          "UUIDs are great for distributed databases and public IDs because they’re hard to guess. However, they may impact index performance compared to sequential integers. Many systems still use UUIDs successfully with proper indexing.",
       },
       {
-        question: "What's the difference between UUID and GUID?",
+        question: "What is the difference between UUID and GUID?",
         answer:
-          "GUID (Globally Unique Identifier) is Microsoft's implementation of the UUID standard. They are essentially the same thing, with GUID being the term used in Microsoft technologies.",
+          "GUID is the Microsoft term for UUID. They follow the same standard and format, and are effectively the same type of identifier.",
+      },
+      {
+        question: "When should I use UUIDs instead of incremental IDs?",
+        answer:
+          "Use UUIDs when you need globally unique IDs across multiple services, want to avoid exposing sequential IDs publicly, or need offline ID generation without database coordination.",
       },
     ],
     relatedTools: ["hash-generator", "jwt-decoder"],
@@ -227,31 +274,56 @@ export const securityTools: Tool[] = [
         "password creator",
       ],
     },
+    examples: [
+      {
+        title: "Generate a 16-character strong password",
+        input: "Length: 16, Uppercase: Yes, Numbers: Yes, Symbols: Yes",
+        description: "Generate a strong password for email or social accounts",
+      },
+      {
+        title: "Generate a password without symbols",
+        input: "Length: 14, Uppercase: Yes, Numbers: Yes, Symbols: No",
+        description:
+          "Generate a password for systems that block special characters",
+      },
+      {
+        title: "Generate a high-security password (24 characters)",
+        input: "Length: 24, Uppercase: Yes, Numbers: Yes, Symbols: Yes",
+        description:
+          "Generate a long password recommended for banking and admin accounts",
+      },
+      {
+        title: "Generate a memorable strong password",
+        input: "Length: 18, Uppercase: Yes, Numbers: Yes, Symbols: No",
+        description:
+          "Generate a longer password that is easier to type while still strong",
+      },
+    ],
     faq: [
       {
-        question: "How secure are the generated passwords?",
+        question: "How secure are the passwords generated by this tool?",
         answer:
-          "The passwords are generated using the browser's crypto.getRandomValues() API, which provides cryptographically secure random numbers. This ensures high-quality randomness suitable for security-sensitive applications.",
+          "Passwords are generated using the browser’s crypto.getRandomValues() API, which produces cryptographically secure randomness suitable for generating strong passwords.",
       },
       {
-        question: "What makes a strong password?",
+        question: "What is considered a strong password in 2026?",
         answer:
-          "A strong password should be at least 12-16 characters long and include a mix of uppercase letters, lowercase letters, numbers, and symbols. Avoid using dictionary words, personal information, or common patterns.",
+          "A strong password should be at least 16 characters long and contain uppercase and lowercase letters, numbers, and symbols. Longer passwords (20+ characters) are recommended for sensitive accounts like email and banking.",
       },
       {
-        question: "Should I use symbols in my password?",
+        question: "Should I include symbols in my password?",
         answer:
-          "Yes, including symbols significantly increases password strength by expanding the character set. However, some systems may not accept certain symbols, so adjust based on your requirements.",
-      },
-      {
-        question: "How long should my password be?",
-        answer:
-          "For most accounts, 16 characters is recommended. For highly sensitive accounts (banking, email), consider 20+ characters. The longer the password, the more secure it is against brute-force attacks.",
+          "Yes. Symbols increase password strength by expanding the character set. However, some systems reject symbols, so you may need to disable them depending on the site or system.",
       },
       {
         question: "Is it safe to generate passwords online?",
         answer:
-          "This tool generates passwords entirely in your browser using client-side JavaScript. No passwords are sent to any server or stored anywhere. However, for maximum security, consider using a dedicated password manager.",
+          "This tool generates passwords locally in your browser and does not send data to any server. For maximum security and storage, a password manager is still recommended.",
+      },
+      {
+        question: "How often should I change my password?",
+        answer:
+          "Only change passwords when there is a suspected breach or if your password is weak. Modern best practice is to use long unique passwords and enable multi-factor authentication rather than frequent forced rotation.",
       },
     ],
     relatedTools: ["hash-generator", "uuid-generator", "jwt-decoder"],
