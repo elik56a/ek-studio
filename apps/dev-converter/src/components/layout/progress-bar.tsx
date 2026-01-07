@@ -2,7 +2,7 @@
 
 import NProgress from "nprogress"
 
-import { useEffect } from "react"
+import { useEffect, Suspense } from "react"
 
 import { usePathname, useSearchParams } from "next/navigation"
 
@@ -12,7 +12,7 @@ NProgress.configure({
   minimum: 0.1,
 })
 
-export function ProgressBar() {
+function ProgressBarContent() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -21,4 +21,12 @@ export function ProgressBar() {
   }, [pathname, searchParams])
 
   return null
+}
+
+export function ProgressBar() {
+  return (
+    <Suspense fallback={null}>
+      <ProgressBarContent />
+    </Suspense>
+  )
 }
