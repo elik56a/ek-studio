@@ -74,7 +74,7 @@ export const metadata: Metadata = {
       "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more.",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "DevConverter - Free Online Developer Tools",
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
     title: "DevConverter - Free Online Developer Tools",
     description:
       "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more.",
-    images: ["/opengraph-image.png"],
+    images: ["/opengraph-image"],
     creator: "@devconverter",
   },
   robots: {
