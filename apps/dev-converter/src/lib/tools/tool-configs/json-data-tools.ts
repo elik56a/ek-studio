@@ -41,8 +41,7 @@ export const jsonDataTools: Tool[] = [
       },
       {
         title: "Minify JSON for performance",
-        input:
-          '{\n  "name": "John",\n  "age": 30,\n  "city": "New York"\n}',
+        input: '{\n  "name": "John",\n  "age": 30,\n  "city": "New York"\n}',
         description:
           "Convert formatted JSON into a compact minified version to reduce payload size",
       },
@@ -75,7 +74,8 @@ export const jsonDataTools: Tool[] = [
           "Your JSON formatting happens locally in your browser, meaning your data is not uploaded to a server. However, avoid pasting private or confidential data if you're unsure about your environment or security policies.",
       },
       {
-        question: "What’s the difference between JSON beautifier and JSON validator?",
+        question:
+          "What’s the difference between JSON beautifier and JSON validator?",
         answer:
           "A JSON beautifier improves readability by adding indentation and spacing. A JSON validator checks that the JSON syntax is correct and can be parsed without errors. This tool supports both formatting and validation.",
       },
@@ -213,8 +213,7 @@ export const jsonDataTools: Tool[] = [
       },
       {
         title: "Convert YAML config to JSON",
-        input:
-          "server:\n  host: localhost\n  port: 8080\n  enabled: true",
+        input: "server:\n  host: localhost\n  port: 8080\n  enabled: true",
         description:
           "Convert YAML configuration format into JSON for programmatic usage",
       },
@@ -401,7 +400,7 @@ export const jsonDataTools: Tool[] = [
       {
         question: "Can this converter handle commas inside CSV values?",
         answer:
-          "Yes, as long as the values are properly quoted (e.g., \"New York, USA\"). The parser supports standard CSV formatting rules.",
+          'Yes, as long as the values are properly quoted (e.g., "New York, USA"). The parser supports standard CSV formatting rules.',
       },
       {
         question: "What if my CSV contains empty rows or missing values?",

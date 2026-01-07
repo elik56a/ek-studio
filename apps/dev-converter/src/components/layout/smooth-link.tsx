@@ -1,9 +1,11 @@
 "use client"
 
+import NProgress from "nprogress"
+
+import { ComponentProps, MouseEvent, useTransition } from "react"
+
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import NProgress from "nprogress"
-import { ComponentProps, MouseEvent, useTransition } from "react"
 
 type SmoothLinkProps = ComponentProps<typeof Link>
 

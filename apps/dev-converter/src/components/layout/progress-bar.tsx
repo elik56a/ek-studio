@@ -1,7 +1,9 @@
 "use client"
 
-import { useEffect } from "react"
 import NProgress from "nprogress"
+
+import { useEffect } from "react"
+
 import { usePathname, useSearchParams } from "next/navigation"
 
 NProgress.configure({

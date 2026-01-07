@@ -55,7 +55,8 @@ export const timeTools: Tool[] = [
           "A Unix timestamp (also called epoch time) is the number of seconds that have passed since January 1, 1970 at 00:00:00 UTC. It is widely used in programming, databases, APIs, and logging systems to represent time consistently.",
       },
       {
-        question: "What is the difference between seconds and milliseconds timestamps?",
+        question:
+          "What is the difference between seconds and milliseconds timestamps?",
         answer:
           "Unix timestamps can be stored in seconds (10 digits) or milliseconds (13 digits). This tool automatically detects which format you're using and converts it correctly without needing manual selection.",
       },
@@ -70,7 +71,8 @@ export const timeTools: Tool[] = [
           "Yes. You can paste ISO 8601 dates (like 2024-01-08T00:00:00Z), common formats (01/08/2024), or natural language dates (January 8, 2024), and the tool will generate the equivalent Unix timestamp.",
       },
       {
-        question: "Why is timezone support important when converting timestamps?",
+        question:
+          "Why is timezone support important when converting timestamps?",
         answer:
           "Unix timestamps are always based on UTC, but humans often work in local timezones. Timezone conversion helps prevent mistakes when debugging logs, scheduling jobs, or comparing timestamps across systems and regions.",
       },

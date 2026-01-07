@@ -1,3 +1,6 @@
+import { marked } from "marked"
+import TurndownService from "turndown"
+
 export interface ConversionResult<T = any> {
   success: boolean
   data?: T
@@ -190,9 +193,6 @@ export function compareDiff(
     }
   }
 }
-
-import { marked } from "marked"
-import TurndownService from "turndown"
 
 export type ConversionMode = "markdown-to-html" | "html-to-markdown"
 

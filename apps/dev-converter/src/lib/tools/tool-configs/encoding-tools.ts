@@ -284,9 +284,8 @@ export const encodingTools: Tool[] = [
       },
       {
         title: "Escape multiline JSON message",
-        input: "Line 1\nLine 2\nLine 3 with \"quotes\"",
-        description:
-          "Escape multiline text safely to store inside JSON fields",
+        input: 'Line 1\nLine 2\nLine 3 with "quotes"',
+        description: "Escape multiline text safely to store inside JSON fields",
       },
     ],
     faq: [
@@ -303,7 +302,7 @@ export const encodingTools: Tool[] = [
       {
         question: "How do I unescape JSON-encoded text?",
         answer:
-          "Paste the escaped string (for example containing \\n or \\\" ) into the tool and click Escape/Unescape. It will decode escape sequences back into readable text immediately.",
+          'Paste the escaped string (for example containing \\n or \\" ) into the tool and click Escape/Unescape. It will decode escape sequences back into readable text immediately.',
       },
       {
         question: "Which characters are commonly escaped in JSON?",
@@ -312,7 +311,7 @@ export const encodingTools: Tool[] = [
       },
       {
         question: "Is JSON escaping the same as JSON stringification?",
-       answer:
+        answer:
           "Not exactly. JSON escaping prepares raw text to fit safely inside a JSON string. JSON.stringify converts full objects and strings into valid JSON format. This tool focuses on escaping and unescaping raw text for JSON strings.",
       },
     ],

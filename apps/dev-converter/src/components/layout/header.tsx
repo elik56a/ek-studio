@@ -8,10 +8,10 @@ import { useState } from "react"
 import { usePathname } from "next/navigation"
 
 import { CategoryDropdown } from "@/components/common/category-dropdown"
-import { SmoothLink } from "@/components/layout/smooth-link"
 import { DropdownItem } from "@/components/common/dropdown"
 import { ThemeToggle } from "@/components/core/theme-toggle"
 import { Logo } from "@/components/layout/logo"
+import { SmoothLink } from "@/components/layout/smooth-link"
 import { categories } from "@/lib/tools/categories"
 import { getToolBySlug, searchTools } from "@/lib/tools/registry"
 

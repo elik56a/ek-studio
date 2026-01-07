@@ -213,8 +213,7 @@ export const textTools: Tool[] = [
       },
       {
         title: "Capture groups (first + last name)",
-        input:
-          "/^(\\w+)\\s(\\w+)$/\n\nJohn Doe\nAlice Smith\nSingleName",
+        input: "/^(\\w+)\\s(\\w+)$/\n\nJohn Doe\nAlice Smith\nSingleName",
         description:
           "Test capture groups and preview extracted group values per match",
       },
@@ -301,13 +300,11 @@ export const textTools: Tool[] = [
         title: "Convert Markdown links and images",
         input:
           "Check this out: [OpenAI](https://openai.com)\n\n![Logo](https://example.com/logo.png)",
-        description:
-          "Convert Markdown links and images into valid HTML tags",
+        description: "Convert Markdown links and images into valid HTML tags",
       },
       {
         title: "Convert Markdown tables",
-        input:
-          "| Name | Age |\n|------|-----|\n| John | 30 |\n| Alice | 25 |",
+        input: "| Name | Age |\n|------|-----|\n| John | 30 |\n| Alice | 25 |",
         description:
           "Convert Markdown tables into HTML table markup automatically",
       },

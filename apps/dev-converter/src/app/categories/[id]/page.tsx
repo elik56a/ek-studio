@@ -145,8 +145,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         )}
                       </div>
 
-
-
                       {/* CTA */}
                       <div className="flex items-center justify-between pt-2">
                         <span className="text-xs sm:text-sm font-medium text-primary group-hover:text-accent transition-colors">
