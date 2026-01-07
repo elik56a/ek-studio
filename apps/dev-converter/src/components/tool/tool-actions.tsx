@@ -277,21 +277,17 @@ export function ToolActions({
         {/* Download Actions - Hidden on very small screens */}
         <div className="hidden sm:flex items-center gap-1">
           <DropdownMenu>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    disabled={!hasOutput || isLoading}
-                    className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer flex-shrink-0"
-                  >
-                    <Download className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-              </TooltipTrigger>
-              <TooltipContent>Download output</TooltipContent>
-            </Tooltip>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={!hasOutput || isLoading}
+                className="h-9 w-9 hover:bg-accent/10 hover:text-accent transition-colors cursor-pointer flex-shrink-0"
+                title="Download output"
+              >
+                <Download className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
             <DropdownMenuContent align="center" className="w-48">
               <DropdownMenuItem onClick={() => handleDownload("txt")}>
                 <FileText className="h-4 w-4 mr-2" />
@@ -372,20 +368,16 @@ export function ToolActions({
 
         {/* More Actions */}
         <DropdownMenu>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0"
-                >
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-            </TooltipTrigger>
-            <TooltipContent>More actions</TooltipContent>
-          </Tooltip>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-9 w-9 hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer flex-shrink-0"
+              title="More actions"
+            >
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
             {/* Mobile-only download options */}
             <div className="sm:hidden">
