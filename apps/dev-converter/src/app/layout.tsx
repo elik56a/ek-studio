@@ -4,7 +4,6 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import { ClarityAnalytics } from "@/components/analytics/clarity"
-import { GoogleAdsense } from "@/components/analytics/google-adsense"
 import { ThemeProvider } from "@/components/core/theme-provider"
 import { ToastProvider } from "@/components/core/toast-provider"
 import { Footer } from "@/components/layout/footer"
@@ -74,6 +73,9 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/manifest.webmanifest",
+  other: {
+    "google-adsense-account": "ca-pub-4255869777678191",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -139,7 +141,6 @@ export default function RootLayout({
             <Footer />
           </ToastProvider>
         </ThemeProvider>
-        <GoogleAdsense />
         <ClarityAnalytics />
         <Analytics />
         <SpeedInsights />
