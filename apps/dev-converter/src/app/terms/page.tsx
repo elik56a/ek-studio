@@ -1,6 +1,7 @@
-import type { Metadata } from "next"
 import { Card, CardContent, CardHeader, CardTitle } from "@ek-studio/ui"
-import { FileText, Scale, Shield, AlertCircle } from "lucide-react"
+import { AlertCircle, FileText, Scale, Shield } from "lucide-react"
+
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -134,13 +135,18 @@ export default function TermsPage() {
               </p>
               <ul className="space-y-2 list-disc list-inside">
                 <li>Warranties of merchantability or fitness for a purpose</li>
-                <li>Warranties that the service will be uninterrupted or error-free</li>
-                <li>Warranties regarding the accuracy or reliability of results</li>
+                <li>
+                  Warranties that the service will be uninterrupted or
+                  error-free
+                </li>
+                <li>
+                  Warranties regarding the accuracy or reliability of results
+                </li>
               </ul>
               <p className="leading-relaxed">
                 While we strive to provide accurate and reliable tools, we do
-                not guarantee that the results will be error-free or suitable for
-                your specific needs. Always verify critical outputs.
+                not guarantee that the results will be error-free or suitable
+                for your specific needs. Always verify critical outputs.
               </p>
             </CardContent>
           </Card>
@@ -151,9 +157,9 @@ export default function TermsPage() {
             </CardHeader>
             <CardContent className="space-y-4 text-muted-foreground">
               <p className="leading-relaxed">
-                To the maximum extent permitted by law, DevConverter shall not be
-                liable for any indirect, incidental, special, consequential, or
-                punitive damages, or any loss of profits or revenues, whether
+                To the maximum extent permitted by law, DevConverter shall not
+                be liable for any indirect, incidental, special, consequential,
+                or punitive damages, or any loss of profits or revenues, whether
                 incurred directly or indirectly, or any loss of data, use,
                 goodwill, or other intangible losses resulting from:
               </p>
@@ -205,8 +211,8 @@ export default function TermsPage() {
             </CardHeader>
             <CardContent className="space-y-4 text-muted-foreground">
               <p className="leading-relaxed">
-                We reserve the right to modify or replace these Terms at any time
-                at our sole discretion. If a revision is material, we will
+                We reserve the right to modify or replace these Terms at any
+                time at our sole discretion. If a revision is material, we will
                 provide at least 30 days' notice prior to any new terms taking
                 effect.
               </p>
@@ -236,8 +242,8 @@ export default function TermsPage() {
             </CardHeader>
             <CardContent className="space-y-4 text-muted-foreground">
               <p className="leading-relaxed">
-                If you have any questions about these Terms, please contact us at
-                legal@devconverter.dev
+                If you have any questions about these Terms, please contact us
+                at legal@devconverter.dev
               </p>
             </CardContent>
           </Card>

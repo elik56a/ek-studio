@@ -65,7 +65,12 @@ export function ToolLayout({
   const showGenerateButton = isGeneratorTool(tool)
 
   return (
-    <div className={cn("gradient-bg min-h-screen w-full animate-in fade-in duration-300", className)}>
+    <div
+      className={cn(
+        "gradient-bg min-h-screen w-full animate-in fade-in duration-300",
+        className
+      )}
+    >
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
         {/* Header Section - No card, just text */}
         {headerProps && (

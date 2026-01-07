@@ -3,7 +3,7 @@ import type { NextConfig } from "next"
 const nextConfig: NextConfig = {
   // Performance optimizations
   reactStrictMode: true,
-  
+
   // Optimize images
   images: {
     formats: ["image/avif", "image/webp"],
@@ -28,7 +28,12 @@ const nextConfig: NextConfig = {
 
   // Experimental features for better performance
   experimental: {
-    optimizePackageImports: ["@ek-studio/ui", "lucide-react", "@vercel/analytics", "@vercel/speed-insights"],
+    optimizePackageImports: [
+      "@ek-studio/ui",
+      "lucide-react",
+      "@vercel/analytics",
+      "@vercel/speed-insights",
+    ],
     optimizeCss: true,
   },
 
@@ -87,7 +92,7 @@ const nextConfig: NextConfig = {
 
   // Optimize output
   output: "standalone",
-  
+
   // Reduce bundle size
   modularizeImports: {
     "lucide-react": {

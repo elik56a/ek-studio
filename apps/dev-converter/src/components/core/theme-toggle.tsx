@@ -15,17 +15,18 @@ export function ThemeToggle() {
   }
 
   const Icon = theme === "light" ? Sun : theme === "dark" ? Moon : Monitor
-  
-  const themeLabel = theme === "light" 
-    ? "Switch to dark mode" 
-    : theme === "dark" 
-    ? "Switch to system theme" 
-    : "Switch to light mode"
+
+  const themeLabel =
+    theme === "light"
+      ? "Switch to dark mode"
+      : theme === "dark"
+        ? "Switch to system theme"
+        : "Switch to light mode"
 
   return (
-    <Button 
-      variant="ghost" 
-      size="sm" 
+    <Button
+      variant="ghost"
+      size="sm"
       onClick={toggleTheme}
       aria-label={themeLabel}
       title={themeLabel}

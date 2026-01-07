@@ -13,7 +13,6 @@ export function WebVitals() {
     if (process.env.NODE_ENV === "production") {
       // You can send to your analytics service here
       // Example: analytics.track('web-vitals', metric)
-      
       // Vercel Analytics automatically tracks these
       // but you can add custom tracking here if needed
     }

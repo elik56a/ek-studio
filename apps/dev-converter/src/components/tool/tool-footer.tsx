@@ -1,5 +1,12 @@
 import { Button } from "@ek-studio/ui"
-import { ArrowRight, HelpCircle, Lightbulb, Settings, Sparkles } from "lucide-react"
+import {
+  ArrowRight,
+  HelpCircle,
+  Lightbulb,
+  Settings,
+  Sparkles,
+} from "lucide-react"
+
 import Link from "next/link"
 
 import { FAQ } from "@/components/common/faq"
@@ -55,7 +62,11 @@ export function ToolFooter({
     }, 100)
   }
 
-  const hasContent = examples.length > 0 || faqs.length > 0 || relatedTools.length > 0 || settings
+  const hasContent =
+    examples.length > 0 ||
+    faqs.length > 0 ||
+    relatedTools.length > 0 ||
+    settings
 
   if (!hasContent) return null
 

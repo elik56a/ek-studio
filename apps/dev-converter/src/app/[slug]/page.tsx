@@ -2,7 +2,10 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
 import { Breadcrumb } from "@/components/layout/breadcrumb"
-import { generateStructuredData, generateToolMetadata } from "@/lib/ seo/metadata"
+import {
+  generateStructuredData,
+  generateToolMetadata,
+} from "@/lib/ seo/metadata"
 import { getCategoryByToolId } from "@/lib/tools/categories"
 import { getToolBySlug } from "@/lib/tools/registry"
 

@@ -1,15 +1,16 @@
-import type { Metadata } from "next"
 import { Card, CardContent, CardHeader, CardTitle } from "@ek-studio/ui"
 import {
   Code2,
+  Globe,
   Heart,
   Lock,
+  Shield,
   Sparkles,
   Users,
   Zap,
-  Globe,
-  Shield,
 } from "lucide-react"
+
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -149,9 +150,7 @@ export default function AboutPage() {
                 <div className="text-3xl sm:text-4xl font-bold text-primary mb-1">
                   100%
                 </div>
-                <div className="text-sm text-muted-foreground">
-                  Client-Side
-                </div>
+                <div className="text-sm text-muted-foreground">Client-Side</div>
               </div>
             </div>
           </CardContent>

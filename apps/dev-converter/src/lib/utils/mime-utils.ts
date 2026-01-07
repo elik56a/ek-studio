@@ -432,9 +432,11 @@ const mimeDatabase: MimeTypeInfo[] = [
  * @param input - File extension or search term
  * @returns ConversionResult with MIME type information or error
  */
-export function lookupMimeType(input: string): ConversionResult<MimeTypeInfo[]> {
+export function lookupMimeType(
+  input: string
+): ConversionResult<MimeTypeInfo[]> {
   const trimmed = input.trim()
-  
+
   // Return empty array for empty input
   if (!trimmed) {
     return {
@@ -444,13 +446,13 @@ export function lookupMimeType(input: string): ConversionResult<MimeTypeInfo[]> 
   }
 
   const lowercaseInput = trimmed.toLowerCase()
-  
+
   // First, try exact extension match (with or without dot)
   let extension = lowercaseInput
   if (!extension.startsWith(".")) {
     extension = "." + extension
   }
-  
+
   const exactMatch = mimeDatabase.find(item => item.extension === extension)
   if (exactMatch) {
     return {

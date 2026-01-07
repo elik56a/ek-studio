@@ -152,22 +152,22 @@
   * {
     @apply border-border;
   }
-  
+
   /* Prevent flash of wrong theme - CSS only solution */
   html {
     color-scheme: light;
   }
-  
+
   html.dark {
     color-scheme: dark;
   }
-  
+
   @media (prefers-color-scheme: dark) {
     html:not(.light) {
       color-scheme: dark;
     }
   }
-  
+
   body {
     @apply bg-background text-foreground;
   }
@@ -360,7 +360,8 @@ img {
 
 /* Animated gradient for hero text */
 @keyframes gradient {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -375,7 +376,8 @@ img {
 
 /* Floating animation for background elements */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) translateX(0) rotate(0deg);
     opacity: 0.15;
   }

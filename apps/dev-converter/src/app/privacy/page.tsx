@@ -1,6 +1,7 @@
-import type { Metadata } from "next"
 import { Card, CardContent, CardHeader, CardTitle } from "@ek-studio/ui"
-import { Shield, Lock, Eye, Database, Cookie, Globe } from "lucide-react"
+import { Cookie, Database, Eye, Globe, Lock, Shield } from "lucide-react"
+
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -249,9 +250,7 @@ export default function PrivacyPage() {
           <Card className="glass border-0 bg-gradient-to-br from-primary/5 to-accent/5">
             <CardContent className="pt-6 text-center space-y-3">
               <Shield className="w-12 h-12 text-primary mx-auto" />
-              <h3 className="text-xl font-semibold">
-                Privacy is Our Priority
-              </h3>
+              <h3 className="text-xl font-semibold">Privacy is Our Priority</h3>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 If you have any questions or concerns about our privacy
                 practices, we're here to help. Contact us at

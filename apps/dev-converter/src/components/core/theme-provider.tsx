@@ -25,12 +25,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">(() => {
     if (typeof window === "undefined") return "light"
-    
+
     const stored = localStorage.getItem("theme") as Theme
     const currentTheme = stored || "system"
-    
+
     if (currentTheme === "system") {
-      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light"
     }
     return currentTheme
   })
@@ -48,9 +50,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const root = window.document.documentElement
     root.classList.remove("light", "dark")
 
-    const effectiveTheme = theme === "system"
-      ? window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-      : theme
+    const effectiveTheme =
+      theme === "system"
+        ? window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light"
+        : theme
 
     root.classList.add(effectiveTheme)
     setResolvedTheme(effectiveTheme)

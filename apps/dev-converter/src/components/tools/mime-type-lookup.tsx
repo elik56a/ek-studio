@@ -3,8 +3,8 @@
 import { MimeTypeDisplay } from "@/components/custom/mime-type-display"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { lookupMimeType, MimeTypeInfo } from "@/lib/utils/mime-utils"
 import { ConversionResult } from "@/lib/utils/json-utils"
+import { MimeTypeInfo, lookupMimeType } from "@/lib/utils/mime-utils"
 
 const MimeTypeLookupTool = () => {
   const {
@@ -22,7 +22,7 @@ const MimeTypeLookupTool = () => {
   } = useTool({
     convertFn: async (input: string): Promise<ConversionResult<string>> => {
       const result = lookupMimeType(input)
-      
+
       // Convert array result to string for the tool system
       if (result.success && result.data) {
         // Store the array in a JSON string
@@ -31,7 +31,7 @@ const MimeTypeLookupTool = () => {
           data: JSON.stringify(result.data),
         }
       }
-      
+
       return {
         success: true,
         data: "[]",
@@ -54,11 +54,15 @@ const MimeTypeLookupTool = () => {
   }
 
   // Format output for copy functionality
-  const formattedOutput = results.length > 0
-    ? results.map(item => 
-        `Extension:   ${item.extension}\nMIME Type:   ${item.mimeType}\nDescription: ${item.description}\nCategory:    ${item.category}`
-      ).join('\n\n---\n\n')
-    : ""
+  const formattedOutput =
+    results.length > 0
+      ? results
+          .map(
+            item =>
+              `Extension:   ${item.extension}\nMIME Type:   ${item.mimeType}\nDescription: ${item.description}\nCategory:    ${item.category}`
+          )
+          .join("\n\n---\n\n")
+      : ""
 
   return (
     <ToolLayout

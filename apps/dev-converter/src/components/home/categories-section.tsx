@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@ek-studio/ui"
 import { ArrowRight } from "lucide-react"
+
 import Link from "next/link"
 
 interface Category {

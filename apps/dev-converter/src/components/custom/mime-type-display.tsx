@@ -1,9 +1,11 @@
 "use client"
 
-import { useState } from "react"
 import { Badge, Button } from "@ek-studio/ui"
 import { Card } from "@ek-studio/ui"
-import { FileText, Copy, Check } from "lucide-react"
+import { Check, Copy, FileText } from "lucide-react"
+
+import { useState } from "react"
+
 import { MimeTypeInfo } from "@/lib/utils/mime-utils"
 
 interface MimeTypeDisplayProps {
@@ -13,17 +15,23 @@ interface MimeTypeDisplayProps {
 
 const categoryColors: Record<string, string> = {
   Image: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
-  Document: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
+  Document:
+    "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
   Text: "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20",
   Video: "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20",
   Audio: "bg-pink-500/10 text-pink-600 dark:text-pink-400 border-pink-500/20",
-  Archive: "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20",
-  Programming: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20",
+  Archive:
+    "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20",
+  Programming:
+    "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20",
   Font: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20",
   Other: "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/20",
 }
 
-export function MimeTypeDisplay({ results, placeholder = "MIME type information will appear here..." }: MimeTypeDisplayProps) {
+export function MimeTypeDisplay({
+  results,
+  placeholder = "MIME type information will appear here...",
+}: MimeTypeDisplayProps) {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
 
   const handleCopy = async (mimeType: string, index: number) => {
@@ -51,10 +59,10 @@ export function MimeTypeDisplay({ results, placeholder = "MIME type information 
     <div className="w-full max-h-[500px] overflow-y-auto space-y-2 pr-2">
       {results.length > 1 && (
         <div className="text-xs text-muted-foreground mb-2">
-          Found {results.length} result{results.length !== 1 ? 's' : ''}
+          Found {results.length} result{results.length !== 1 ? "s" : ""}
         </div>
       )}
-      
+
       {results.map((item, index) => (
         <Card
           key={`${item.extension}-${index}`}
@@ -67,16 +75,16 @@ export function MimeTypeDisplay({ results, placeholder = "MIME type information 
                 <code className="text-sm font-bold text-foreground bg-muted/50 px-1.5 py-0.5 rounded">
                   {item.extension}
                 </code>
-                <Badge className={`text-xs ${categoryColors[item.category] || categoryColors.Other}`}>
+                <Badge
+                  className={`text-xs ${categoryColors[item.category] || categoryColors.Other}`}
+                >
                   {item.category}
                 </Badge>
               </div>
             </div>
 
             {/* Description */}
-            <p className="text-xs text-muted-foreground">
-              {item.description}
-            </p>
+            <p className="text-xs text-muted-foreground">{item.description}</p>
 
             {/* MIME Type with Copy Button */}
             <div className="flex items-center gap-2">

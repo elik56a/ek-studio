@@ -1,4 +1,4 @@
-import { structuredData, orgStructuredData } from "@/lib/ seo/metadata"
+import { orgStructuredData, structuredData } from "@/lib/ seo/metadata"
 
 export function WebsiteStructuredData() {
   return (

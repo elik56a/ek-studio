@@ -20,8 +20,8 @@ import {
   Zap,
 } from "lucide-react"
 
-import Link from "next/link"
 import dynamic from "next/dynamic"
+import Link from "next/link"
 
 import { Logo } from "@/components/layout/logo"
 import { categories } from "@/lib/tools/categories"
@@ -107,9 +107,15 @@ export default function Home() {
               onClick={scrollToCategories}
               aria-label="Explore all developer tools"
             >
-              <Code2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" aria-hidden="true" />
+              <Code2
+                className="w-4 h-4 sm:w-5 sm:h-5 mr-2"
+                aria-hidden="true"
+              />
               <span>Explore Tools</span>
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" aria-hidden="true" />
+              <ArrowRight
+                className="w-4 h-4 sm:w-5 sm:h-5 ml-2"
+                aria-hidden="true"
+              />
             </Button>
             <Button
               variant="outline"
