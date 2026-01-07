@@ -1,9 +1,18 @@
 "use client"
 
-import type { Metadata } from "next"
-import { Card, CardContent, CardHeader, CardTitle, Input, Textarea, Button, Label } from "@ek-studio/ui"
-import { Mail, MessageSquare, Send, Github, Twitter, MapPin } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+  Textarea,
+  Button,
+  Label,
+} from "@ek-studio/ui"
+import { Mail, MessageSquare, Send, Github, Twitter } from "lucide-react"
 import { useState } from "react"
+import { FAQ } from "@/components/common/faq"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -35,6 +44,24 @@ export default function ContactPage() {
       [e.target.name]: e.target.value
     }))
   }
+
+  const faqItems = [
+    {
+      question: "How long does it take to get a response?",
+      answer:
+        "We aim to respond to all inquiries within 24-48 hours during business days. Complex technical questions may take a bit longer.",
+    },
+    {
+      question: "Can I request a new tool or feature?",
+      answer:
+        "Absolutely! We love hearing from our users. Send us your ideas and we'll consider them for future updates.",
+    },
+    {
+      question: "Do you offer enterprise support?",
+      answer:
+        "Yes! For enterprise inquiries, custom integrations, or white-label solutions, please email us at enterprise@devconverter.dev",
+    },
+  ]
 
   return (
     <div className="gradient-bg min-h-screen w-full">
@@ -264,34 +291,8 @@ export default function ContactPage() {
               Frequently Asked Questions
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div>
-              <h4 className="font-semibold mb-2">
-                How long does it take to get a response?
-              </h4>
-              <p className="text-sm text-muted-foreground">
-                We aim to respond to all inquiries within 24-48 hours during
-                business days. Complex technical questions may take a bit longer.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2">
-                Can I request a new tool or feature?
-              </h4>
-              <p className="text-sm text-muted-foreground">
-                Absolutely! We love hearing from our users. Send us your ideas
-                and we'll consider them for future updates.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2">
-                Do you offer enterprise support?
-              </h4>
-              <p className="text-sm text-muted-foreground">
-                Yes! For enterprise inquiries, custom integrations, or white-label
-                solutions, please email us at enterprise@devconverter.dev
-              </p>
-            </div>
+          <CardContent>
+            <FAQ items={faqItems} defaultOpen="item-0" />
           </CardContent>
         </Card>
       </div>

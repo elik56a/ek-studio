@@ -3,6 +3,8 @@ import { ExternalLink, HelpCircle, Lightbulb, Settings } from "lucide-react"
 
 import Link from "next/link"
 
+import { FAQ } from "@/components/common/faq"
+
 interface Example {
   title: string
   input: string
@@ -151,20 +153,11 @@ export function ToolFooter({
               Common questions and answers
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {faqs.map((faq, index) => (
-              <Card key={index} className="glass border-0 shadow-glow">
-                <CardContent className="p-6 space-y-3">
-                  <h4 className="text-lg font-semibold text-foreground">
-                    {faq.question}
-                  </h4>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <Card className="glass border-0 shadow-glow">
+            <CardContent className="p-6">
+              <FAQ items={faqs} defaultOpen="item-0" />
+            </CardContent>
+          </Card>
         </div>
       ),
     })
@@ -181,22 +174,29 @@ export function ToolFooter({
               Related Tools
             </h2>
             <p className="text-muted-foreground">
-              Explore more developer tools
+              You might also find these useful
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {relatedTools.map((tool, index) => (
-              <Link key={index} href={tool.href} className="block group">
-                <Card className="glass border-0 shadow-glow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
-                  <CardContent className="p-6 space-y-3">
-                    <h4 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+              <Link
+                key={index}
+                href={tool.href}
+                className="group block p-4 rounded-xl border border-border bg-background hover:border-primary/50 hover:shadow-md transition-all duration-200"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <ExternalLink className="w-4 h-4 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors truncate">
                       {tool.name}
                     </h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-xs text-muted-foreground line-clamp-2">
                       {tool.description}
                     </p>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </Link>
             ))}
           </div>
