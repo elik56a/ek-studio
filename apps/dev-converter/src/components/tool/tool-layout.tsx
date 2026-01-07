@@ -63,10 +63,9 @@ export function ToolLayout({
   className,
 }: ToolLayoutProps) {
   const showGenerateButton = isGeneratorTool(tool)
-  const toolbarWithActions = <ToolActions {...toolActionsProps} />
 
   return (
-    <div className={cn("gradient-bg min-h-screen w-full", className)}>
+    <div className={cn("gradient-bg min-h-screen w-full animate-in fade-in duration-300", className)}>
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
         {/* Header Section - No card, just text */}
         {headerProps && (
@@ -141,7 +140,7 @@ export function ToolLayout({
               <EditorPanel
                 {...editorProps}
                 hasError={statusProps?.status === "error"}
-                outputActions={toolbarWithActions}
+                outputActions={<ToolActions {...toolActionsProps} />}
                 className="space-y-4 sm:space-y-8"
               />
             </div>

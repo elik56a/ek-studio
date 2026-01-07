@@ -155,7 +155,7 @@ export function ToolActions({
   }
 
   const handleDownload = (format: "txt" | "json" | "csv" | "xml") => {
-    if (!hasOutput || !outputValue) {
+    if (!hasOutput || !outputValue || !outputValue.trim()) {
       if (showToasts) {
         addToast("No output to download", "error")
       }
@@ -201,7 +201,7 @@ export function ToolActions({
   }
 
   const handlePrint = () => {
-    if (!hasOutput || !outputValue) {
+    if (!hasOutput || !outputValue || !outputValue.trim()) {
       if (showToasts) {
         addToast("No output to print", "error")
       }

@@ -75,7 +75,7 @@ const TextDiffChecker = () => {
   const hasInput = !!(text1.trim() || text2.trim())
 
   return (
-    <div className="gradient-bg min-h-screen w-full">
+    <div className="gradient-bg min-h-screen w-full animate-in fade-in duration-300">
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
         {/* Header */}
         <ToolHeader title={tool.name} description={tool.description} />

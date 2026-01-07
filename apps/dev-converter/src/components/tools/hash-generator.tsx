@@ -76,6 +76,7 @@ const HashGeneratorTool = () => {
         hasOutput: !!output,
         convertLabel: tool.ui.convertLabel,
         toolName: tool.name,
+        outputValue: output,
       }}
       statusProps={{
         status: status,

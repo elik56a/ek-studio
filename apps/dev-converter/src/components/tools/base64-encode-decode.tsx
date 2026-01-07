@@ -62,6 +62,7 @@ const Base64EncodeDecodeTool = () => {
         hasOutput: !!output,
         convertLabel: convertLabel,
         toolName: tool.name,
+        outputValue: output,
       }}
       statusProps={{
         status: status,

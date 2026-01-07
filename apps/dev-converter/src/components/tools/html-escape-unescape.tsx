@@ -65,6 +65,7 @@ const HtmlEscapeUnescapeTool = () => {
         hasOutput: !!output,
         convertLabel: convertLabel,
         toolName: tool.name,
+        outputValue: output,
       }}
       statusProps={{
         status: status,

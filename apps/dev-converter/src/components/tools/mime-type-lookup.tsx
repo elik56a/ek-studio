@@ -92,6 +92,7 @@ const MimeTypeLookupTool = () => {
         hasOutput: results.length > 0,
         convertLabel: tool.ui.convertLabel,
         toolName: tool.name,
+        outputValue: formattedOutput,
       }}
       statusProps={{
         status: status,

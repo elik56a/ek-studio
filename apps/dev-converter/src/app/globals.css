@@ -157,10 +157,6 @@
   }
 
   /* Prevent layout shift by setting min-height */
-  html {
-    scroll-behavior: smooth;
-  }
-
   body {
     min-height: 100vh;
     min-height: 100dvh;
