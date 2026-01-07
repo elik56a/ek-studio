@@ -156,6 +156,16 @@
     @apply bg-background text-foreground;
   }
 
+  /* Prevent layout shift by setting min-height */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
   /* Remove ALL outlines from interactive elements */
   *,
   *:focus,
@@ -219,6 +229,18 @@
   select:disabled {
     cursor: not-allowed;
   }
+
+  /* Optimize font rendering */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Prevent FOUC (Flash of Unstyled Content) */
+  .gradient-bg {
+    contain: layout style paint;
+  }
 }
 
 /* Custom gradient backgrounds */
@@ -269,10 +291,57 @@
     0 0 20px oklch(0.7 0.25 293 / 0.05);
 }
 
-/* Smooth animations */
+/* Smooth animations - optimized for performance */
 * {
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
     color 0.2s ease;
+}
+
+/* GPU acceleration for animations */
+@media (prefers-reduced-motion: no-preference) {
+  .hover\:shadow-glow,
+  .hover\:-translate-y-1,
+  .group:hover {
+    will-change: transform;
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimize rendering performance */
+.glass,
+.shadow-glow {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Prevent layout shift for images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Optimize scrolling */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Content visibility for off-screen content */
+.container > * {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
 }

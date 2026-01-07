@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import { ThemeProvider } from "@/components/core/theme-provider"
 import { ToastProvider } from "@/components/core/toast-provider"
+import { WebVitals } from "@/components/core/web-vitals"
 import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
 
@@ -13,11 +14,15 @@ import "./globals.css"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 })
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 })
 
 export const metadata: Metadata = {
@@ -69,6 +74,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
+        <WebVitals />
         <ThemeProvider>
           <ToastProvider>
             <Header />
