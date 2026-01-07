@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import { ClarityAnalytics } from "@/components/analytics/clarity"
-import { ThemeProvider } from "@/components/core/theme-provider"
+  import { ThemeProvider } from "@/components/core/theme-provider"
 import { ToastProvider } from "@/components/core/toast-provider"
 import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
       "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more.",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "https://devconverter.dev/opengraph-image",
         width: 1200,
         height: 630,
         alt: "DevConverter - Free Online Developer Tools",
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
     title: "DevConverter - Free Online Developer Tools",
     description:
       "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more.",
-    images: ["/opengraph-image.png"],
+    images: ["https://devconverter.dev/opengraph-image"],
     creator: "@devconverter",
   },
   robots: {
