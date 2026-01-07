@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import { ClarityAnalytics } from "@/components/analytics/clarity"
+import { GoogleAdsense } from "@/components/analytics/google-adsense"
 import { ThemeProvider } from "@/components/core/theme-provider"
 import { ToastProvider } from "@/components/core/toast-provider"
 import { Footer } from "@/components/layout/footer"
@@ -138,6 +139,7 @@ export default function RootLayout({
             <Footer />
           </ToastProvider>
         </ThemeProvider>
+        <GoogleAdsense />
         <ClarityAnalytics />
         <Analytics />
         <SpeedInsights />
