@@ -1,5 +1,6 @@
 import { ComingSoonPlaceholder } from "@/components/custom/coming-soon-placeholder"
 import CaseConverterTool from "@/components/tools/case-converter"
+import MarkdownHtmlConverter from "@/components/tools/markdown-html-converter"
 import TextDiffChecker from "@/components/tools/text-diff-checker"
 
 import { Tool } from "../types"
@@ -346,6 +347,6 @@ export const textTools: Tool[] = [
       outputLabel: "Converted Output",
       convertLabel: "Convert",
     },
-    component: ComingSoonPlaceholder,
+    component: MarkdownHtmlConverter,
   },
 ]

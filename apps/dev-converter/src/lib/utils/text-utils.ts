@@ -190,3 +190,89 @@ export function compareDiff(
     }
   }
 }
+
+import { marked } from "marked"
+import TurndownService from "turndown"
+
+export type ConversionMode = "markdown-to-html" | "html-to-markdown"
+
+/**
+ * Format HTML with proper indentation
+ * @param html - The HTML string to format
+ * @returns Formatted HTML string
+ */
+function formatHtml(html: string): string {
+  let formatted = ""
+  let indent = 0
+  const tab = "  " // 2 spaces
+
+  // Remove extra whitespace and newlines
+  html = html.replace(/>\s+</g, "><").trim()
+
+  // Split by tags
+  const tokens = html.split(/(<[^>]+>)/g).filter(token => token.trim())
+
+  tokens.forEach(token => {
+    if (token.match(/^<\/\w/)) {
+      // Closing tag
+      indent = Math.max(0, indent - 1)
+      formatted += tab.repeat(indent) + token + "\n"
+    } else if (token.match(/^<\w[^>]*[^/]>$/)) {
+      // Opening tag (not self-closing)
+      formatted += tab.repeat(indent) + token + "\n"
+      indent++
+    } else if (token.match(/^<\w[^>]*\/>$/)) {
+      // Self-closing tag
+      formatted += tab.repeat(indent) + token + "\n"
+    } else if (token.trim()) {
+      // Text content
+      formatted += tab.repeat(indent) + token.trim() + "\n"
+    }
+  })
+
+  return formatted.trim()
+}
+
+/**
+ * Convert between Markdown and HTML formats
+ * @param text - The text to convert
+ * @param mode - The conversion mode (markdown-to-html or html-to-markdown)
+ * @returns ConversionResult with converted text or error
+ */
+export function convertMarkdownHtml(
+  text: string,
+  mode: ConversionMode
+): ConversionResult<string> {
+  if (!text.trim()) {
+    return {
+      success: false,
+      error: "Input is empty",
+    }
+  }
+
+  try {
+    let result: string
+
+    if (mode === "markdown-to-html") {
+      const rawHtml = marked(text) as string
+      result = formatHtml(rawHtml)
+    } else {
+      const turndownService = new TurndownService({
+        headingStyle: "atx",
+        codeBlockStyle: "fenced",
+      })
+      result = turndownService.turndown(text)
+    }
+
+    return {
+      success: true,
+      data: result,
+      message: `Converted ${mode === "markdown-to-html" ? "Markdown to HTML" : "HTML to Markdown"} successfully`,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Conversion failed",
+    }
+  }
+}
