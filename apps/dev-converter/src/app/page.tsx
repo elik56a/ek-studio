@@ -103,21 +103,23 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4">
             <Button
               size="lg"
-              className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 shadow-glow"
+              className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 shadow-glow bg-primary hover:bg-primary/90"
               onClick={scrollToCategories}
+              aria-label="Explore all developer tools"
             >
-              <Code2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-              Explore Tools
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+              <Code2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" aria-hidden="true" />
+              <span>Explore Tools</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" aria-hidden="true" />
             </Button>
             <Button
               variant="outline"
               size="lg"
               className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6"
               onClick={scrollToPopular}
+              aria-label="View most popular developer tools"
             >
-              <Zap className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-              Popular Tools
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5 mr-2" aria-hidden="true" />
+              <span>Popular Tools</span>
             </Button>
           </div>
 
