@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev -p 4000",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start -p 4000",
     "lint": "eslint",
     "format": "prettier --write .",

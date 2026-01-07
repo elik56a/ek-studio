@@ -230,7 +230,7 @@
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
+    text-rendering: optimizeSpeed;
   }
 
   /* Prevent FOUC (Flash of Unstyled Content) */
@@ -287,12 +287,13 @@
     0 0 20px oklch(0.7 0.25 293 / 0.05);
 }
 
-/* Smooth animations - optimized for performance */
-* {
+/* Smooth animations - optimized for performance - ONLY for hover states */
+.hover\:shadow-glow,
+.hover\:-translate-y-1,
+.group:hover {
   transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 /* GPU acceleration for animations */
@@ -321,7 +322,6 @@
 .shadow-glow {
   transform: translateZ(0);
   backface-visibility: hidden;
-  perspective: 1000px;
 }
 
 /* Prevent layout shift for images */
