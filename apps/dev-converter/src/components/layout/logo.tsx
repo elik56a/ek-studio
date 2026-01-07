@@ -1,7 +1,7 @@
 import { cn } from "@ek-studio/ui"
 import { Code2, Zap } from "lucide-react"
 
-import Link from "next/link"
+import { SmoothLink } from "@/components/layout/smooth-link"
 
 interface LogoProps {
   variant?: "default" | "compact" | "icon-only"
@@ -141,7 +141,7 @@ export function Logo({
 
   if (href) {
     return (
-      <Link
+      <SmoothLink
         href={href}
         className={cn(
           "inline-flex items-center transition-all duration-300 hover:scale-105 active:scale-95",
@@ -149,7 +149,7 @@ export function Logo({
         )}
       >
         <LogoContent />
-      </Link>
+      </SmoothLink>
     )
   }
 

@@ -21,9 +21,9 @@ import {
 } from "lucide-react"
 
 import dynamic from "next/dynamic"
-import Link from "next/link"
 
 import { Logo } from "@/components/layout/logo"
+import { SmoothLink } from "@/components/layout/smooth-link"
 import { categories } from "@/lib/tools/categories"
 
 // Lazy load below-the-fold sections
@@ -176,7 +176,7 @@ export default function Home() {
               {popularTools.map((tool, index) => {
                 const IconComponent = tool.icon
                 return (
-                  <Link key={tool.slug} href={`/${tool.slug}`}>
+                  <SmoothLink key={tool.slug} href={`/${tool.slug}`}>
                     <Card className="group hover:shadow-glow transition-all duration-300 hover:-translate-y-1 glass border-0">
                       <CardHeader className="pb-3 sm:pb-4">
                         <div className="flex items-center justify-between">
@@ -189,7 +189,7 @@ export default function Home() {
                         </CardTitle>
                       </CardHeader>
                     </Card>
-                  </Link>
+                  </SmoothLink>
                 )
               })}
             </div>

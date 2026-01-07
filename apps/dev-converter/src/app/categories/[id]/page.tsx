@@ -10,10 +10,10 @@ import {
 import { ArrowRight, Clock, Star, Users } from "lucide-react"
 
 import type { Metadata } from "next"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 
 import { Breadcrumb } from "@/components/layout/breadcrumb"
+import { SmoothLink } from "@/components/layout/smooth-link"
 import { generateCategoryMetadata } from "@/lib/ seo/metadata"
 import { getCategoryById } from "@/lib/tools/categories"
 import { getToolsByCategory } from "@/lib/tools/registry"
@@ -113,7 +113,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {toolsWithMeta.map((tool, index) => (
-                <Link key={tool.id} href={`/${tool.slug}`}>
+                <SmoothLink key={tool.id} href={`/${tool.slug}`}>
                   <Card className="group h-full hover:shadow-glow transition-all duration-300 hover:-translate-y-1 glass border-0">
                     <CardHeader className="pb-3 sm:pb-4">
                       <div className="flex items-start justify-between mb-2 gap-2">
@@ -156,7 +156,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                       </div>
                     </CardContent>
                   </Card>
-                </Link>
+                </SmoothLink>
               ))}
             </div>
           </div>
@@ -171,10 +171,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               Check back soon for updates!
             </p>
             <Button asChild className="mt-4">
-              <Link href="/">
+              <SmoothLink href="/">
                 Explore Other Categories
                 <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
+              </SmoothLink>
             </Button>
           </div>
         )}

@@ -9,7 +9,8 @@ import {
 import { HelpCircle, MessageCircle } from "lucide-react"
 
 import type { Metadata } from "next"
-import Link from "next/link"
+
+import { SmoothLink } from "@/components/layout/smooth-link"
 
 export const metadata: Metadata = {
   title: "FAQ - Frequently Asked Questions",
@@ -171,12 +172,12 @@ export default function FAQPage() {
               Can't find the answer you're looking for? Feel free to reach out
               to us directly.
             </p>
-            <Link
+            <SmoothLink
               href="/contact"
               className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
             >
               Contact Us
-            </Link>
+            </SmoothLink>
           </CardContent>
         </Card>
       </div>

@@ -1,6 +1,6 @@
 import { ChevronRight, Home } from "lucide-react"
 
-import Link from "next/link"
+import { SmoothLink } from "@/components/layout/smooth-link"
 
 interface BreadcrumbItem {
   label: string
@@ -17,21 +17,21 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
     <nav
       className={`flex items-center space-x-1 text-sm text-muted-foreground ${className}`}
     >
-      <Link
+      <SmoothLink
         href="/"
         className="flex items-center hover:text-foreground"
         aria-label="Home"
       >
         <Home className="h-4 w-4" />
-      </Link>
+      </SmoothLink>
 
       {items.map((item, index) => (
         <div key={index} className="flex items-center space-x-1">
           <ChevronRight className="h-4 w-4" />
           {item.href ? (
-            <Link href={item.href} className="hover:text-foreground">
+            <SmoothLink href={item.href} className="hover:text-foreground">
               {item.label}
-            </Link>
+            </SmoothLink>
           ) : (
             <span className="text-foreground">{item.label}</span>
           )}

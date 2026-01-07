@@ -4,9 +4,9 @@ import { ChevronDown } from "lucide-react"
 
 import { useState } from "react"
 
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 
+import { SmoothLink } from "@/components/layout/smooth-link"
 import { getToolBySlug } from "@/lib/tools/registry"
 import { Category } from "@/lib/tools/types"
 
@@ -41,7 +41,7 @@ export function CategoryDropdown({
   }
 
   const trigger = (
-    <Link
+    <SmoothLink
       href={`/categories/${category.id}`}
       className={`px-3 py-2 rounded-md transition-colors hover:text-primary hover:bg-primary/5 flex items-center gap-1 whitespace-nowrap ${
         isActive ? "text-primary" : ""
@@ -52,7 +52,7 @@ export function CategoryDropdown({
       {isActive && variant === "header" && (
         <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"></span>
       )}
-    </Link>
+    </SmoothLink>
   )
 
   return (

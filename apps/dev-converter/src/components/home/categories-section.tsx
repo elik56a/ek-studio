@@ -8,7 +8,7 @@ import {
 } from "@ek-studio/ui"
 import { ArrowRight } from "lucide-react"
 
-import Link from "next/link"
+import { SmoothLink } from "@/components/layout/smooth-link"
 
 interface Category {
   id: string
@@ -37,7 +37,7 @@ export default function CategoriesSection({
           {categories.map(category => {
             const IconComponent = category.icon
             return (
-              <Link key={category.id} href={`/categories/${category.id}`}>
+              <SmoothLink key={category.id} href={`/categories/${category.id}`}>
                 <Card className="group h-full hover:shadow-glow transition-all duration-300 hover:-translate-y-1 glass border-0">
                   <CardHeader className="pb-3 sm:pb-4">
                     <div className="flex items-center gap-3 mb-2">
@@ -77,7 +77,7 @@ export default function CategoriesSection({
                     </div>
                   </CardContent>
                 </Card>
-              </Link>
+              </SmoothLink>
             )
           })}
         </div>

@@ -5,10 +5,10 @@ import { ChevronDown, Menu, Search, X } from "lucide-react"
 
 import { useState } from "react"
 
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { CategoryDropdown } from "@/components/common/category-dropdown"
+import { SmoothLink } from "@/components/layout/smooth-link"
 import { DropdownItem } from "@/components/common/dropdown"
 import { ThemeToggle } from "@/components/core/theme-toggle"
 import { Logo } from "@/components/layout/logo"
@@ -204,7 +204,7 @@ export function Header() {
 
                     {isOpen && (
                       <div className="ml-4 space-y-1 border-l-2 border-primary/20 pl-3">
-                        <Link
+                        <SmoothLink
                           href={`/categories/${category.id}`}
                           className={`block text-sm py-2 px-3 rounded-md transition-colors hover:text-primary hover:bg-primary/5 ${
                             isActiveCategoryPage
@@ -214,7 +214,7 @@ export function Header() {
                           onClick={() => setMobileMenuOpen(false)}
                         >
                           View All ({category.tools.length})
-                        </Link>
+                        </SmoothLink>
 
                         {category.tools.map(toolId => {
                           const tool = getToolBySlug(toolId)
@@ -223,7 +223,7 @@ export function Header() {
                           const isToolActive = isActiveTool(tool.slug)
 
                           return (
-                            <Link
+                            <SmoothLink
                               key={tool.id}
                               href={`/${tool.slug}`}
                               className={`block text-sm py-2 px-3 rounded-md transition-colors hover:text-primary hover:bg-primary/5 ${
@@ -234,7 +234,7 @@ export function Header() {
                               onClick={() => setMobileMenuOpen(false)}
                             >
                               {tool.name}
-                            </Link>
+                            </SmoothLink>
                           )
                         })}
                       </div>

@@ -7,9 +7,8 @@ import {
   Sparkles,
 } from "lucide-react"
 
-import Link from "next/link"
-
 import { FAQ } from "@/components/common/faq"
+import { SmoothLink } from "@/components/layout/smooth-link"
 
 interface Example {
   title: string
@@ -189,7 +188,7 @@ export function ToolFooter({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {relatedTools.map((tool, index) => (
-              <Link
+              <SmoothLink
                 key={index}
                 href={tool.href}
                 className="group block p-4 rounded-xl border border-border bg-card hover:border-emerald-500/30 hover:shadow-lg transition-all duration-200"
@@ -205,7 +204,7 @@ export function ToolFooter({
                     {tool.description}
                   </p>
                 </div>
-              </Link>
+              </SmoothLink>
             ))}
           </div>
         </section>

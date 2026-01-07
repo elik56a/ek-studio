@@ -12,8 +12,12 @@ export function SmoothLink({ href, onClick, ...props }: SmoothLinkProps) {
   const [isPending, startTransition] = useTransition()
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    // Only handle internal links
-    if (typeof href === "string" && href.startsWith("/")) {
+    // Only handle internal links and if not opening in new tab
+    const isInternalLink = typeof href === "string" && href.startsWith("/")
+    const isModifiedClick = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey
+    const isNewTab = e.currentTarget.target === "_blank"
+
+    if (isInternalLink && !isModifiedClick && !isNewTab) {
       e.preventDefault()
 
       // Call original onClick if provided
@@ -30,7 +34,7 @@ export function SmoothLink({ href, onClick, ...props }: SmoothLinkProps) {
         router.push(href)
       })
     } else {
-      // For external links, just call onClick
+      // For external links, modified clicks, or new tabs, use default behavior
       onClick?.(e)
     }
   }
