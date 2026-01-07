@@ -6,16 +6,23 @@ import {
   timeTools,
   utilityTools,
 } from "./tool-configs"
+import { getToolComponent } from "./component-loader"
 import { Tool } from "./types"
 
-export const tools: Tool[] = [
+// Add components dynamically to avoid circular dependencies
+const toolsWithComponents: Tool[] = [
   ...jsonDataTools,
   ...encodingTools,
   ...securityTools,
   ...textTools,
   ...timeTools,
   ...utilityTools,
-]
+].map(tool => ({
+  ...tool,
+  component: getToolComponent(tool.id) || undefined,
+}))
+
+export const tools: Tool[] = toolsWithComponents
 
 export const getToolBySlug = (slug: string): Tool | undefined => {
   return tools.find(tool => tool.slug === slug)

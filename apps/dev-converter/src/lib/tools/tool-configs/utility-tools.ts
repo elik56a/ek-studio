@@ -1,6 +1,3 @@
-import { ComingSoonPlaceholder } from "@/components/custom/coming-soon-placeholder"
-import ColorConverterTool from "@/components/tools/color-converter"
-import MimeTypeLookupTool from "@/components/tools/mime-type-lookup"
 
 import { Tool } from "../types"
 
@@ -99,7 +96,6 @@ export const utilityTools: Tool[] = [
       outputLabel: "Color Output",
       convertLabel: "Convert Color",
     },
-    component: ColorConverterTool,
   },
   {
     id: "mime-type-lookup",
@@ -184,6 +180,5 @@ export const utilityTools: Tool[] = [
       outputLabel: "MIME Type Information",
       convertLabel: "Lookup",
     },
-    component: MimeTypeLookupTool,
   },
 ]

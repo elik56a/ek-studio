@@ -1,4 +1,3 @@
-import UnixTimestampConverter from "@/components/tools/unix-timestamp-converter"
 
 import { Tool } from "../types"
 
@@ -92,6 +91,5 @@ export const timeTools: Tool[] = [
       showAllLink: true,
       preserveInput: true,
     },
-    component: UnixTimestampConverter,
   },
 ]

@@ -1,8 +1,3 @@
-import HashGeneratorTool from "@/components/tools/hash-generator"
-import JWTDecoderTool from "@/components/tools/jwt-decoder"
-import PasswordGeneratorTool from "@/components/tools/password-generator"
-import UUIDGeneratorTool from "@/components/tools/uuid-generator"
-
 import { Tool } from "../types"
 
 export const securityTools: Tool[] = [
@@ -88,7 +83,6 @@ export const securityTools: Tool[] = [
       outputLabel: "Decoded JWT",
       convertLabel: "Decode JWT",
     },
-    component: JWTDecoderTool,
   },
   {
     id: "hash-generator",
@@ -169,7 +163,6 @@ export const securityTools: Tool[] = [
       outputLabel: "Hash Output",
       convertLabel: "Generate Hashes",
     },
-    component: HashGeneratorTool,
   },
   {
     id: "uuid-generator",
@@ -251,7 +244,6 @@ export const securityTools: Tool[] = [
       outputLabel: "Generated UUIDs",
       convertLabel: "Generate UUIDs",
     },
-    component: UUIDGeneratorTool,
   },
   {
     id: "password-generator",
@@ -334,6 +326,5 @@ export const securityTools: Tool[] = [
       outputLabel: "Generated Password",
       convertLabel: "Generate Password",
     },
-    component: PasswordGeneratorTool,
   },
 ]

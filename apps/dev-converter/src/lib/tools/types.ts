@@ -54,7 +54,7 @@ export interface Tool {
   faq: ToolFAQ[]
   relatedTools?: string[] // tool IDs
   ui: ToolUI
-  component: React.ComponentType
+  component?: React.ComponentType // Optional, loaded dynamically
   switcher?: ToolSwitcherConfig
   type: "converter" | "generator"
 }

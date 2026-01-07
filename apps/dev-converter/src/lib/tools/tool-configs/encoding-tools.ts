@@ -1,7 +1,3 @@
-import Base64EncodeDecodeTool from "@/components/tools/base64-encode-decode"
-import HtmlEscapeUnescapeTool from "@/components/tools/html-escape-unescape"
-import JsonEscapeUnescapeTool from "@/components/tools/json-escape-unescape"
-import UrlEncodeDecodeTool from "@/components/tools/url-encode-decode"
 
 import { Tool } from "../types"
 
@@ -84,7 +80,6 @@ export const encodingTools: Tool[] = [
       convertLabel: "Encode/Decode",
       showSwapButton: true,
     },
-    component: Base64EncodeDecodeTool,
   },
   {
     id: "url-encode-decode",
@@ -164,7 +159,6 @@ export const encodingTools: Tool[] = [
       convertLabel: "Encode/Decode",
       showSwapButton: true,
     },
-    component: UrlEncodeDecodeTool,
   },
   {
     id: "html-escape-unescape",
@@ -245,7 +239,6 @@ export const encodingTools: Tool[] = [
       convertLabel: "Escape/Unescape",
       showSwapButton: true,
     },
-    component: HtmlEscapeUnescapeTool,
   },
   {
     id: "json-escape-unescape",
@@ -324,6 +317,5 @@ export const encodingTools: Tool[] = [
       convertLabel: "Escape/Unescape",
       showSwapButton: true,
     },
-    component: JsonEscapeUnescapeTool,
   },
 ]

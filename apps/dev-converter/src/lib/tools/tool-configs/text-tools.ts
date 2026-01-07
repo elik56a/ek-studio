@@ -1,7 +1,4 @@
 import { ComingSoonPlaceholder } from "@/components/custom/coming-soon-placeholder"
-import CaseConverterTool from "@/components/tools/case-converter"
-import MarkdownHtmlConverter from "@/components/tools/markdown-html-converter"
-import TextDiffChecker from "@/components/tools/text-diff-checker"
 
 import { Tool } from "../types"
 
@@ -83,7 +80,6 @@ export const textTools: Tool[] = [
       outputLabel: "Converted Text",
       convertLabel: "Convert Case",
     },
-    component: CaseConverterTool,
   },
   {
     id: "diff-checker",
@@ -174,7 +170,6 @@ export const textTools: Tool[] = [
       showAllLink: true,
       preserveInput: false,
     },
-    component: TextDiffChecker,
   },
   {
     id: "regex-tester",
@@ -260,7 +255,6 @@ export const textTools: Tool[] = [
       outputLabel: "Match Results",
       convertLabel: "Test Regex",
     },
-    component: ComingSoonPlaceholder,
   },
   {
     id: "markdown-html-converter",
@@ -344,6 +338,5 @@ export const textTools: Tool[] = [
       outputLabel: "Converted Output",
       convertLabel: "Convert",
     },
-    component: MarkdownHtmlConverter,
   },
 ]

@@ -1,8 +1,3 @@
-import CsvToJsonTool from "@/components/tools/csv-to-json"
-import JsonFormatterTool from "@/components/tools/json-formatter"
-import JsonToCsvTool from "@/components/tools/json-to-csv"
-import JsonToYamlTool from "@/components/tools/json-to-yaml"
-import YamlToJsonTool from "@/components/tools/yaml-to-json"
 
 import { Tool } from "../types"
 
@@ -89,7 +84,6 @@ export const jsonDataTools: Tool[] = [
       convertLabel: "Format JSON",
     },
 
-    component: JsonFormatterTool,
   },
   {
     id: "json-to-yaml",
@@ -172,7 +166,6 @@ export const jsonDataTools: Tool[] = [
       convertLabel: "Convert to YAML",
     },
 
-    component: JsonToYamlTool,
   },
   {
     id: "yaml-to-json",
@@ -254,7 +247,6 @@ export const jsonDataTools: Tool[] = [
       convertLabel: "Convert to JSON",
     },
 
-    component: YamlToJsonTool,
   },
   {
     id: "json-to-csv",
@@ -338,7 +330,6 @@ export const jsonDataTools: Tool[] = [
       convertLabel: "Convert to CSV",
     },
 
-    component: JsonToCsvTool,
   },
   {
     id: "csv-to-json",
@@ -421,6 +412,5 @@ export const jsonDataTools: Tool[] = [
       outputLabel: "JSON Output",
       convertLabel: "Convert to JSON",
     },
-    component: CsvToJsonTool,
   },
 ]
