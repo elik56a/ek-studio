@@ -152,6 +152,22 @@
   * {
     @apply border-border;
   }
+  
+  /* Prevent flash of wrong theme - CSS only solution */
+  html {
+    color-scheme: light;
+  }
+  
+  html.dark {
+    color-scheme: dark;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    html:not(.light) {
+      color-scheme: dark;
+    }
+  }
+  
   body {
     @apply bg-background text-foreground;
   }

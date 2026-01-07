@@ -13,30 +13,60 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("system")
-  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light")
+  // Initialize from localStorage if available, otherwise use system
+  const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "system"
+    try {
+      return (localStorage.getItem("theme") as Theme) || "system"
+    } catch {
+      return "system"
+    }
+  })
 
-  useEffect(() => {
+  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">(() => {
+    if (typeof window === "undefined") return "light"
+    
     const stored = localStorage.getItem("theme") as Theme
-    if (stored) setTheme(stored)
-  }, [])
+    const currentTheme = stored || "system"
+    
+    if (currentTheme === "system") {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+    }
+    return currentTheme
+  })
+
+  const setTheme = (newTheme: Theme) => {
+    setThemeState(newTheme)
+    try {
+      localStorage.setItem("theme", newTheme)
+    } catch {
+      // Ignore localStorage errors
+    }
+  }
 
   useEffect(() => {
-    localStorage.setItem("theme", theme)
-
     const root = window.document.documentElement
     root.classList.remove("light", "dark")
 
+    const effectiveTheme = theme === "system"
+      ? window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+      : theme
+
+    root.classList.add(effectiveTheme)
+    setResolvedTheme(effectiveTheme)
+
+    // Listen for system theme changes
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light"
-      root.classList.add(systemTheme)
-      setResolvedTheme(systemTheme)
-    } else {
-      root.classList.add(theme)
-      setResolvedTheme(theme)
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+      const handleChange = (e: MediaQueryListEvent) => {
+        const newTheme = e.matches ? "dark" : "light"
+        root.classList.remove("light", "dark")
+        root.classList.add(newTheme)
+        setResolvedTheme(newTheme)
+      }
+
+      mediaQuery.addEventListener("change", handleChange)
+      return () => mediaQuery.removeEventListener("change", handleChange)
     }
   }, [theme])
 
