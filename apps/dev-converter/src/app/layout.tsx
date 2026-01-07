@@ -8,6 +8,7 @@ import { ToastProvider } from "@/components/core/toast-provider"
 import { WebVitals } from "@/components/core/web-vitals"
 import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
+import { WebsiteStructuredData, OrganizationStructuredData } from "@/components/seo/structured-data"
 
 import "./globals.css"
 
@@ -39,10 +40,27 @@ export const metadata: Metadata = {
     "jwt decoder",
     "online tools",
     "free tools",
+    "web developer",
+    "programming tools",
+    "code formatter",
+    "text converter",
   ],
   authors: [{ name: "DevConverter" }],
   creator: "DevConverter",
+  publisher: "DevConverter",
   metadataBase: new URL("https://devconverter.dev"),
+  alternates: {
+    canonical: "https://devconverter.dev",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+    shortcut: [{ url: "/favicon.svg" }],
+  },
+  manifest: "/manifest.webmanifest",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -51,16 +69,36 @@ export const metadata: Metadata = {
     title: "DevConverter - Free Online Developer Tools",
     description:
       "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more.",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DevConverter - Free Online Developer Tools",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "DevConverter - Free Online Developer Tools",
     description:
       "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more.",
+    images: ["/opengraph-image.png"],
+    creator: "@devconverter",
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "your-google-verification-code", // Replace with actual verification code
   },
 }
 
@@ -71,6 +109,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <WebsiteStructuredData />
+        <OrganizationStructuredData />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >

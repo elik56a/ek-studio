@@ -2,11 +2,19 @@ import { MetadataRoute } from "next"
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: ["/api/", "/_next/"],
-    },
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/admin/", "/_next/"],
+      },
+      {
+        userAgent: "Googlebot",
+        allow: "/",
+        disallow: ["/api/", "/admin/"],
+      },
+    ],
     sitemap: "https://devconverter.dev/sitemap.xml",
+    host: "https://devconverter.dev",
   }
 }

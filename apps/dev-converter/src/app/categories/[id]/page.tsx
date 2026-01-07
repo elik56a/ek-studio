@@ -14,7 +14,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 
 import { Breadcrumb } from "@/components/layout/breadcrumb"
-import { generateCategoryMetadata } from "@/lib/metadata"
+import { generateCategoryMetadata } from "@/lib/ seo/metadata"
 import { getCategoryById } from "@/lib/tools/categories"
 import { getToolsByCategory } from "@/lib/tools/registry"
 
