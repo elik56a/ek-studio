@@ -1,4 +1,4 @@
-import { ComingSoonPlaceholder } from "@/components/coming-soon-placeholder"
+import { ComingSoonPlaceholder } from "@/components/custom/coming-soon-placeholder"
 import UnixTimestampConverter from "@/components/tools/unix-timestamp-converter"
 
 import { Tool } from "../types"

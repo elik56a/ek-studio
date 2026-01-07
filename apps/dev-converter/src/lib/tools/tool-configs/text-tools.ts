@@ -1,4 +1,4 @@
-import { ComingSoonPlaceholder } from "@/components/coming-soon-placeholder"
+import { ComingSoonPlaceholder } from "@/components/custom/coming-soon-placeholder"
 import CaseConverterTool from "@/components/tools/case-converter"
 import TextDiffChecker from "@/components/tools/text-diff-checker"
 

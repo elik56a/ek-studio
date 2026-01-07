@@ -122,7 +122,13 @@ export const orgStructuredData = {
     "@type": "Organization",
     name: "DevConverter",
     url: "https://devconverter.dev",
-    logo: "https://devconverter.dev/icon-512.png",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://devconverter.dev/icon",
+      width: "32",
+      height: "32",
+    },
+    image: "https://devconverter.dev/opengraph-image",
     description:
       "Providing free online developer tools for JSON formatting, Base64 encoding, JWT decoding, and more.",
     sameAs: [
