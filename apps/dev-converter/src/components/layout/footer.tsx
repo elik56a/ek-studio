@@ -3,6 +3,7 @@ import { Github, Linkedin, Mail } from "lucide-react"
 import Link from "next/link"
 
 import { Logo } from "@/components/layout/logo"
+import { SmoothLink } from "@/components/layout/smooth-link"
 import { siteConfig } from "@/config/site"
 
 export function Footer() {
@@ -51,36 +52,36 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 sm:space-y-3 text-sm">
               <li>
-                <Link
+                <SmoothLink
                   href="/json-formatter"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   JSON Formatter
-                </Link>
+                </SmoothLink>
               </li>
               <li>
-                <Link
+                <SmoothLink
                   href="/base64-encode-decode"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Base64 Encoder
-                </Link>
+                </SmoothLink>
               </li>
               <li>
-                <Link
+                <SmoothLink
                   href="/jwt-decoder"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   JWT Decoder
-                </Link>
+                </SmoothLink>
               </li>
               <li>
-                <Link
+                <SmoothLink
                   href="/hash-generator"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Hash Generator
-                </Link>
+                </SmoothLink>
               </li>
             </ul>
           </div>
@@ -91,36 +92,36 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 sm:space-y-3 text-sm">
               <li>
-                <Link
+                <SmoothLink
                   href="/categories/json-data"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   JSON & Data
-                </Link>
+                </SmoothLink>
               </li>
               <li>
-                <Link
+                <SmoothLink
                   href="/categories/encoding"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Encoding & Decoding
-                </Link>
+                </SmoothLink>
               </li>
               <li>
-                <Link
+                <SmoothLink
                   href="/categories/security"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Security & Crypto
-                </Link>
+                </SmoothLink>
               </li>
               <li>
-                <Link
+                <SmoothLink
                   href="/categories/text"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Text Utilities
-                </Link>
+                </SmoothLink>
               </li>
             </ul>
           </div>
@@ -131,36 +132,44 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 sm:space-y-3 text-sm">
               <li>
-                <Link
+                <SmoothLink
                   href="/about"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   About Us
-                </Link>
+                </SmoothLink>
               </li>
               <li>
-                <Link
+                <SmoothLink
+                  href="/faq"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  FAQ
+                </SmoothLink>
+              </li>
+              <li>
+                <SmoothLink
                   href="/privacy"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Privacy Policy
-                </Link>
+                </SmoothLink>
               </li>
               <li>
-                <Link
+                <SmoothLink
                   href="/terms"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Terms of Service
-                </Link>
+                </SmoothLink>
               </li>
               <li>
-                <Link
+                <SmoothLink
                   href="/contact"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Contact
-                </Link>
+                </SmoothLink>
               </li>
             </ul>
           </div>

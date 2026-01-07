@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/core/theme-provider"
 import { ToastProvider } from "@/components/core/toast-provider"
 import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
+import { ProgressBar } from "@/components/layout/progress-bar"
 import {
   OrganizationStructuredData,
   WebsiteStructuredData,
@@ -115,6 +116,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <ToastProvider>
+            <ProgressBar />
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />

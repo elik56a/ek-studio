@@ -111,18 +111,7 @@ export default function AboutPage() {
         {/* Stats Section */}
         <Card className="glass border-0 max-w-4xl mx-auto">
           <CardContent className="pt-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-              <div className="text-center">
-                <div className="flex items-center justify-center mb-2">
-                  <Users className="w-6 h-6 text-primary" />
-                </div>
-                <div className="text-3xl sm:text-4xl font-bold text-primary mb-1">
-                  10M+
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  Active Users
-                </div>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-2xl mx-auto">
               <div className="text-center">
                 <div className="flex items-center justify-center mb-2">
                   <Code2 className="w-6 h-6 text-primary" />
@@ -133,15 +122,6 @@ export default function AboutPage() {
                 <div className="text-sm text-muted-foreground">
                   Developer Tools
                 </div>
-              </div>
-              <div className="text-center">
-                <div className="flex items-center justify-center mb-2">
-                  <Globe className="w-6 h-6 text-primary" />
-                </div>
-                <div className="text-3xl sm:text-4xl font-bold text-primary mb-1">
-                  180+
-                </div>
-                <div className="text-sm text-muted-foreground">Countries</div>
               </div>
               <div className="text-center">
                 <div className="flex items-center justify-center mb-2">
@@ -176,10 +156,10 @@ export default function AboutPage() {
                 more tools.
               </p>
               <p className="leading-relaxed">
-                Today, DevConverter serves over 10 million developers worldwide,
-                processing billions of operations every month—all without ever
-                storing a single byte of user data. We're proud to be the
-                privacy-first choice for developers everywhere.
+                Today, DevConverter provides essential developer tools that run
+                entirely in your browser—all without ever storing a single byte
+                of user data. We're committed to being a privacy-first choice
+                for developers.
               </p>
             </CardContent>
           </Card>

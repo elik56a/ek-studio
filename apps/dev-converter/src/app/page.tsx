@@ -47,20 +47,17 @@ export default function Home() {
       name: "JSON Formatter",
       slug: "json-formatter",
       icon: Database,
-      users: "2.1M",
     },
     {
       name: "Base64 Encoder",
       slug: "base64-encode-decode",
       icon: Lock,
-      users: "1.8M",
     },
-    { name: "JWT Decoder", slug: "jwt-decoder", icon: FileText, users: "1.5M" },
+    { name: "JWT Decoder", slug: "jwt-decoder", icon: FileText },
     {
       name: "Hash Generator",
       slug: "hash-generator",
       icon: Hash,
-      users: "1.2M",
     },
   ]
 
@@ -83,10 +80,7 @@ export default function Home() {
             <div className="flex justify-center mb-4 sm:mb-6">
               <Logo size="xl" variant="default" showTagline={false} />
             </div>
-            <div className="flex items-center justify-center gap-2 text-xs sm:text-sm font-medium text-muted-foreground mb-3 sm:mb-4">
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
-              <span>Trusted by 10M+ developers worldwide</span>
-            </div>
+
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent px-4">
               Developer Tools
             </h1>
@@ -130,23 +124,7 @@ export default function Home() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 pt-6 sm:pt-8 max-w-2xl mx-auto px-4">
-            <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-primary">
-                20+
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground">
-                Tools
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-primary">
-                10M+
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground">
-                Users
-              </div>
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 pt-6 sm:pt-8 max-w-3xl mx-auto px-4">
             <div className="text-center">
               <div className="text-xl sm:text-2xl font-bold text-primary">
                 100%
@@ -157,10 +135,26 @@ export default function Home() {
             </div>
             <div className="text-center">
               <div className="text-xl sm:text-2xl font-bold text-primary">
+                Free
+              </div>
+              <div className="text-xs sm:text-sm text-muted-foreground">
+                Forever
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="text-xl sm:text-2xl font-bold text-primary">
                 0ms
               </div>
               <div className="text-xs sm:text-sm text-muted-foreground">
                 Server Delay
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="text-xl sm:text-2xl font-bold text-primary">
+                Open
+              </div>
+              <div className="text-xs sm:text-sm text-muted-foreground">
+                Source
               </div>
             </div>
           </div>
@@ -189,9 +183,6 @@ export default function Home() {
                           <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-accent/30 transition-all">
                             <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                           </div>
-                          <Badge variant="secondary" className="text-xs">
-                            {tool.users} users
-                          </Badge>
                         </div>
                         <CardTitle className="text-base sm:text-lg transition-colors">
                           {tool.name}

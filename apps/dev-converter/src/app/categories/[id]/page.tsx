@@ -58,15 +58,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     { label: category.name },
   ]
 
-  // Mock popularity data - in real app this would come from analytics
-  const toolsWithMeta = tools.map((tool, index) => ({
-    ...tool,
-    popularity: Math.floor(Math.random() * 1000000) + 100000,
-    lastUpdated: new Date(
-      Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
-    ),
-    rating: 4.2 + Math.random() * 0.8,
-  }))
+  const toolsWithMeta = tools
 
   return (
     <div className="gradient-bg min-h-screen">
@@ -97,12 +89,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               </span>
             </div>
             <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
-              <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-500" />
-              <span>4.8 average rating</span>
-            </div>
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
               <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span>Updated daily</span>
+              <span>Updated regularly</span>
             </div>
           </div>
         </div>
@@ -132,14 +120,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         <CardTitle className="text-base sm:text-xl transition-colors leading-tight">
                           {tool.name}
                         </CardTitle>
-                        {index < 3 && (
-                          <Badge
-                            variant="secondary"
-                            className="text-xs bg-accent/10 text-accent border-accent/20 flex-shrink-0"
-                          >
-                            Popular
-                          </Badge>
-                        )}
                       </div>
                       <CardDescription className="text-xs sm:text-sm leading-relaxed">
                         {tool.description}
@@ -165,19 +145,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         )}
                       </div>
 
-                      {/* Stats */}
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Users className="w-3 h-3" />
-                          <span>
-                            {(tool.popularity / 1000).toFixed(0)}k users
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Star className="w-3 h-3 text-yellow-500" />
-                          <span>{tool.rating.toFixed(1)}</span>
-                        </div>
-                      </div>
+
 
                       {/* CTA */}
                       <div className="flex items-center justify-between pt-2">
