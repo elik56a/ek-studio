@@ -1,8 +1,9 @@
-import { Github, Mail, Twitter } from "lucide-react"
+import { Github, Linkedin, Mail } from "lucide-react"
 
 import Link from "next/link"
 
 import { Logo } from "@/components/layout/logo"
+import { siteConfig } from "@/config/site"
 
 export function Footer() {
   return (
@@ -17,21 +18,25 @@ export function Footer() {
             </p>
             <div className="flex items-center space-x-4">
               <Link
-                href="#"
+                href={siteConfig.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="GitHub"
               >
                 <Github className="w-5 h-5" />
               </Link>
               <Link
-                href="#"
+                href={siteConfig.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Twitter"
+                aria-label="LinkedIn"
               >
-                <Twitter className="w-5 h-5" />
+                <Linkedin className="w-5 h-5" />
               </Link>
               <Link
-                href="#"
+                href={`mailto:${siteConfig.links.email}`}
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Email"
               >
@@ -163,7 +168,7 @@ export function Footer() {
 
         <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
           <div className="text-sm text-muted-foreground">
-            © 2026 DevConverter. All rights reserved.
+            © 2026 {siteConfig.name}. All rights reserved.
           </div>
           <div className="text-sm text-muted-foreground">
             Made with ❤️ for developers worldwide

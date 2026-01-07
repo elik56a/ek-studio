@@ -13,6 +13,7 @@ import {
   OrganizationStructuredData,
   WebsiteStructuredData,
 } from "@/components/seo/structured-data"
+import { siteConfig } from "@/config/site"
 
 import "./globals.css"
 
@@ -36,27 +37,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "DevConverter - Free Online Developer Tools",
-    template: "%s | DevConverter",
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more. Fast, secure, client-side processing.",
-  keywords: [
-    "developer tools",
-    "json formatter",
-    "base64 encoder",
-    "jwt decoder",
-    "online tools",
-    "free tools",
-    "web developer",
-    "programming tools",
-    "code formatter",
-    "text converter",
-  ],
-  authors: [{ name: "DevConverter" }],
-  creator: "DevConverter",
-  publisher: "DevConverter",
-  metadataBase: new URL("https://devconverter.dev"),
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  metadataBase: new URL(siteConfig.url),
   icons: {
     icon: [
       { url: "/icon", sizes: "32x32", type: "image/png" },
@@ -80,17 +69,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://devconverter.dev",
-    siteName: "DevConverter",
-    title: "DevConverter - Free Online Developer Tools",
-    description:
-      "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more.",
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
     images: [
       {
-        url: "/opengraph-image",
+        url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "DevConverter - Free Online Developer Tools",
+        alt: siteConfig.title,
       },
     ],
   },
