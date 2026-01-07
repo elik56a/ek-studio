@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import { ThemeProvider } from "@/components/core/theme-provider"
 import { ToastProvider } from "@/components/core/toast-provider"
+import { PostHogProvider } from "@/components/posthog-provider"
 import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
 import { WebsiteStructuredData, OrganizationStructuredData } from "@/components/seo/structured-data"
@@ -130,13 +131,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <ThemeProvider>
-          <ToastProvider>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </ToastProvider>
-        </ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider>
+            <ToastProvider>
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </ToastProvider>
+          </ThemeProvider>
+        </PostHogProvider>
         <Analytics />
         <SpeedInsights />
       </body>
