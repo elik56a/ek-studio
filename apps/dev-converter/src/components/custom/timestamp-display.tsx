@@ -1,7 +1,9 @@
 "use client"
 
-import { cn } from "@ek-studio/ui"
-import { Calendar, Clock, Globe, Hash, Timer } from "lucide-react"
+import { Button, cn } from "@ek-studio/ui"
+import { Calendar, Check, Clock, Copy, Globe, Hash, Timer } from "lucide-react"
+
+import { useCopy } from "@/hooks/use-copy"
 
 interface TimestampDisplayProps {
   timestamp: number
@@ -20,6 +22,8 @@ export function TimestampDisplay({
   relative,
   className,
 }: TimestampDisplayProps) {
+  const { copy } = useCopy()
+
   const items = [
     {
       icon: Hash,
@@ -66,7 +70,7 @@ export function TimestampDisplay({
           <div
             key={index}
             className={cn(
-              "flex items-center gap-2 p-2 rounded-md border transition-colors hover:bg-muted/50",
+              "flex items-center gap-2 p-2 rounded-md border transition-colors hover:bg-muted/50 group",
               item.bgColor,
               "border-border/50"
             )}
@@ -80,9 +84,18 @@ export function TimestampDisplay({
             >
               {item.label}
             </span>
-            <span className="text-xs font-mono text-foreground/90 break-all">
+            <span className="text-xs font-mono text-foreground/90 break-all flex-1">
               {item.value}
             </span>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => copy(item.value)}
+              className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+              title={`Copy ${item.label}`}
+            >
+              <Copy className="h-3 w-3" />
+            </Button>
           </div>
         )
       })}
