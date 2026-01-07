@@ -40,7 +40,6 @@ export function generateToolMetadata(tool: Tool): Metadata {
   }
 }
 
-
 export function generateCategoryMetadata(
   categoryName: string,
   categoryDescription: string,
@@ -91,7 +90,6 @@ export function generateStructuredData(tool: Tool) {
     },
   }
 }
-
 
 export const structuredData = {
   "@context": "https://schema.org",

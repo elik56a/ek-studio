@@ -1,14 +1,18 @@
-import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
+import type { Metadata } from "next"
+import { Geist, Geist_Mono } from "next/font/google"
+
 import { ClarityAnalytics } from "@/components/analytics/clarity"
-  import { ThemeProvider } from "@/components/core/theme-provider"
+import { ThemeProvider } from "@/components/core/theme-provider"
 import { ToastProvider } from "@/components/core/toast-provider"
 import { Footer } from "@/components/layout/footer"
 import { Header } from "@/components/layout/header"
-import { WebsiteStructuredData, OrganizationStructuredData } from "@/components/seo/structured-data"
+import {
+  OrganizationStructuredData,
+  WebsiteStructuredData,
+} from "@/components/seo/structured-data"
 
 import "./globals.css"
 
@@ -55,11 +59,19 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://devconverter.dev"),
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", sizes: "32x32", type: "image/png" },
-      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
     ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/icon"],
+    other: [
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "192x192",
+        url: "/apple-icon",
+      },
+    ],
   },
   manifest: "/manifest.webmanifest",
   other: {
@@ -75,20 +87,19 @@ export const metadata: Metadata = {
       "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more.",
     images: [
       {
-        url: "https://devconverter.dev/opengraph-image",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "DevConverter - Free Online Developer Tools",
       },
     ],
   },
-
   twitter: {
     card: "summary_large_image",
     title: "DevConverter - Free Online Developer Tools",
     description:
       "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more.",
-    images: ["https://devconverter.dev/opengraph-image"],
+    images: ["/opengraph-image"],
     creator: "@devconverter",
   },
   robots: {
@@ -96,7 +107,6 @@ export const metadata: Metadata = {
     follow: true,
   },
 }
-
 
 export default function RootLayout({
   children,
