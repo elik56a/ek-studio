@@ -12,6 +12,13 @@ export interface ToolFAQ {
   answer: string
 }
 
+export interface ToolInfo {
+  description: string // What is this tool?
+  howToUse: string[] // Step-by-step instructions
+  useCases: string[] // Common use cases
+  features: string[] // Key features
+}
+
 export interface ToolMetadata {
   title: string
   description: string
@@ -57,6 +64,7 @@ export interface Tool {
   component?: React.ComponentType // Optional, loaded dynamically
   switcher?: ToolSwitcherConfig
   type: "converter" | "generator"
+  info?: ToolInfo
 }
 
 export interface Category {

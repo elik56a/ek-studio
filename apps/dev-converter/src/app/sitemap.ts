@@ -1,7 +1,9 @@
+import { BlogContentManager } from "@ek-studio/blog"
+
 import { categories } from "@/lib/tools/categories"
 import { getAllTools } from "@/lib/tools/registry"
-import { BlogContentManager } from '@ek-studio/blog'
-import { blogConfig } from '../config/blog.config'
+
+import { blogConfig } from "../config/blog.config"
 
 export default async function sitemap() {
   const baseUrl = "https://devconverter.dev"
@@ -71,7 +73,7 @@ export default async function sitemap() {
   // Add blog posts
   const contentManager = new BlogContentManager(blogConfig)
   const posts = await contentManager.getAllPosts()
-  
+
   posts.forEach(post => {
     routes.push({
       url: `${baseUrl}${blogConfig.basePath}/${post.slug}`,
@@ -83,7 +85,7 @@ export default async function sitemap() {
 
   // Add blog tag pages
   const tags = await contentManager.getAllTags()
-  
+
   tags.forEach(tag => {
     routes.push({
       url: `${baseUrl}${blogConfig.basePath}/tag/${tag}`,

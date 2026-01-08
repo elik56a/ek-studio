@@ -109,11 +109,19 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Critical preconnects for performance */}
-        <link rel="preconnect" href="https://va.vercel-scripts.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://va.vercel-scripts.com"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        
+
         {/* Structured data - non-blocking */}
         <WebsiteStructuredData />
         <OrganizationStructuredData />
@@ -131,7 +139,7 @@ export default function RootLayout({
             </Suspense>
           </ToastProvider>
         </ThemeProvider>
-        
+
         {/* Analytics - load after main content */}
         <Suspense fallback={null}>
           <ClarityAnalytics />

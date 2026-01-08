@@ -606,7 +606,7 @@ img {
   color: var(--foreground);
   border-left-width: 0.25rem;
   border-left-color: oklch(0.63 0.25 293);
-  quotes: "\201C""\201D""\2018""\2019";
+  quotes: "\201C" "\201D" "\2018" "\2019";
   margin-top: 1.6em;
   margin-bottom: 1.6em;
   padding-left: 1em;
@@ -708,7 +708,6 @@ img {
 .prose pre {
   position: relative;
 }
-
 
 /* Utility classes */
 .line-clamp-3 {

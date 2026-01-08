@@ -22,6 +22,34 @@ export const timeTools: Tool[] = [
         "timestamp to date",
       ],
     },
+    info: {
+      description:
+        "A Unix timestamp converter is a tool that converts between Unix time (also called epoch time) and human-readable date formats such as ISO 8601, local date strings, and timezone-adjusted time values. Unix timestamps represent the number of seconds (or milliseconds) since January 1, 1970 at 00:00:00 UTC, and are widely used in programming, APIs, databases, system logs, and distributed systems because they provide a consistent and timezone-independent way to represent time. This online Unix timestamp converter helps you instantly decode timestamps into readable dates, convert dates back into timestamps, and view results across different timezones. It is essential for debugging logs, verifying event timing, inspecting API payloads, and preventing timezone-related bugs.",
+      howToUse: [
+        "Paste a Unix timestamp (seconds or milliseconds) into the input field",
+        "Or paste a date/time value such as an ISO 8601 string or natural language date",
+        "Click Convert to generate the converted output instantly",
+        "View the readable date in UTC and optionally in your local timezone",
+        "Copy the output timestamp or formatted date for use in your application, logs, or API payload",
+      ],
+      useCases: [
+        "Debug Server Logs: Convert timestamps from logs into readable time to track incidents and errors",
+        "API Testing: Convert timestamp fields in API requests and responses to verify correct event timing",
+        "Database Queries: Convert stored Unix timestamps into human-readable date values for debugging or reporting",
+        "Timezone Troubleshooting: Compare UTC timestamps with local timezone values to prevent scheduling bugs",
+        "Job Scheduling: Convert human dates into Unix timestamps for cron jobs and scheduled tasks",
+        "Front-End Development: Convert timestamps from backend services into readable UI dates",
+      ],
+      features: [
+        "Two-Way Conversion: Convert Unix timestamps to dates and dates back to Unix timestamps",
+        "Seconds & Milliseconds Support: Automatically detects 10-digit vs 13-digit timestamps",
+        "Timezone Display: View results in UTC and different local timezones to avoid timezone confusion",
+        "ISO 8601 Support: Works with ISO strings like 2024-01-08T00:00:00Z",
+        "Natural Language Input: Accepts readable formats like 'December 25, 2022'",
+        "Instant Results: Fast conversion in the browser with no page reloads",
+        "Privacy Friendly: Conversion runs locally — no timestamps or dates are uploaded",
+      ],
+    },
     examples: [
       {
         title: "Unix timestamp example (seconds)",

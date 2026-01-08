@@ -7,9 +7,10 @@ import {
   Palette,
   Shield,
 } from "lucide-react"
+
 import {
-  jsonDataToolSlugs,
   encodingToolSlugs,
+  jsonDataToolSlugs,
   securityToolSlugs,
   textToolSlugs,
   timeToolSlugs,

@@ -63,7 +63,10 @@ export function TimestampDisplay({
   ]
 
   return (
-    <div className={cn("space-y-1.5", className)}>
+    <div className={cn("space-y-1.5 relative", className)}>
+      {/* Animated border glow */}
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 opacity-50 blur-lg -z-10 animate-pulse" />
+
       {items.map((item, index) => {
         const Icon = item.icon
         return (

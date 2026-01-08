@@ -10,6 +10,7 @@ import { EditorPanel } from "./editor-panel"
 import { ToolActions, ToolActionsProps } from "./tool-actions"
 import { ToolFooter } from "./tool-footer"
 import { ToolHeader } from "./tool-header"
+import { ToolInfo } from "./tool-info"
 import { ToolStatus } from "./tool-status"
 import { ToolSwitcher } from "./tool-switcher"
 
@@ -81,12 +82,18 @@ export function ToolLayout({
           />
         )}
 
-        {/* Main Tool Section - Enhanced with glassmorphism */}
-        <Card
-          id="editor-section"
-          className="glass border-0 shadow-glow p-3 sm:p-4 md:p-8 overflow-hidden scroll-mt-20"
-        >
-          <div className="space-y-4 sm:space-y-8">
+        {/* Main Tool Section - Enhanced with special styling */}
+        <Card className="relative overflow-hidden border-0 shadow-2xl bg-gradient-to-br from-card via-card to-primary/5 backdrop-blur-xl">
+          {/* Decorative gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+
+          {/* Animated border glow */}
+          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 opacity-50 blur-xl -z-10" />
+
+          <div
+            id="editor-section"
+            className="relative space-y-4 sm:space-y-8 p-3 sm:p-4 md:p-8 scroll-mt-20"
+          >
             {/* Actions Toolbar with Tool Switcher */}
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4 w-full">
               {/* Tool Controls - Left */}
@@ -152,6 +159,9 @@ export function ToolLayout({
             </div>
           </div>
         </Card>
+
+        {/* Info Section - Educational content */}
+        {tool.info && <ToolInfo info={tool.info} toolName={tool.name} />}
 
         {/* Footer Section - Separate card for better organization */}
         {(footerProps.examples?.length ||

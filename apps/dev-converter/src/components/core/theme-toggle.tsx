@@ -2,6 +2,7 @@
 
 import { Button } from "@ek-studio/ui"
 import { Monitor, Moon, Sun } from "lucide-react"
+
 import { useEffect, useState } from "react"
 
 import { useTheme } from "@/components/core/theme-provider"

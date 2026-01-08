@@ -23,6 +23,7 @@ JSON and YAML are both popular data serialization formats, but YAML offers bette
 - Documenting API responses
 
 **Who needs this:**
+
 - DevOps engineers managing Kubernetes configs
 - Developers working with Docker Compose
 - API developers documenting responses
@@ -31,6 +32,7 @@ JSON and YAML are both popular data serialization formats, but YAML offers bette
 ## JSON vs YAML: Key Differences
 
 ### JSON Example
+
 ```json
 {
   "name": "myapp",
@@ -47,6 +49,7 @@ JSON and YAML are both popular data serialization formats, but YAML offers bette
 ```
 
 ### YAML Equivalent
+
 ```yaml
 name: myapp
 version: 1.0.0
@@ -59,6 +62,7 @@ scripts:
 ```
 
 **Key differences:**
+
 - YAML uses indentation (no braces)
 - No quotes needed for most strings
 - More concise and readable
@@ -76,21 +80,21 @@ scripts:
 ### Method 2: Using Node.js
 
 ```javascript
-const yaml = require('js-yaml');
-const fs = require('fs');
+const yaml = require("js-yaml")
+const fs = require("fs")
 
 // Read JSON file
-const jsonData = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+const jsonData = JSON.parse(fs.readFileSync("config.json", "utf8"))
 
 // Convert to YAML
 const yamlData = yaml.dump(jsonData, {
   indent: 2,
   lineWidth: -1,
-  noRefs: true
-});
+  noRefs: true,
+})
 
 // Write YAML file
-fs.writeFileSync('config.yaml', yamlData, 'utf8');
+fs.writeFileSync("config.yaml", yamlData, "utf8")
 ```
 
 ### Method 3: Using Python
@@ -113,6 +117,7 @@ with open('config.yaml', 'w') as yaml_file:
 ### 1. Incorrect Indentation
 
 **❌ Wrong:**
+
 ```yaml
 services:
  web:
@@ -122,6 +127,7 @@ services:
 ```
 
 **✅ Correct:**
+
 ```yaml
 services:
   web:
@@ -179,7 +185,7 @@ parent:
 ```yaml
 # Database configuration
 database:
-  host: localhost  # Development server
+  host: localhost # Development server
   port: 5432
   name: myapp_dev
 ```
@@ -203,6 +209,7 @@ development:
 ### 4. Validate Your YAML
 
 Always validate after conversion:
+
 - Use [DevConverter YAML Validator](/tools/yaml-validator)
 - Check indentation carefully
 - Test with your target tool
@@ -226,7 +233,7 @@ Always validate after conversion:
 Converts to:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   web:
     image: nginx:latest
@@ -285,10 +292,13 @@ Use DevConverter's tool—it handles files up to 10MB and processes everything i
 ### Can I convert JSON arrays to YAML?
 
 Yes:
+
 ```json
 ["item1", "item2", "item3"]
 ```
+
 Becomes:
+
 ```yaml
 - item1
 - item2
@@ -298,6 +308,7 @@ Becomes:
 ### What about multiline strings?
 
 YAML handles them better:
+
 ```yaml
 description: |
   This is a multiline
@@ -316,6 +327,7 @@ YAML supports everything JSON does, plus comments, anchors, and better multiline
 ### Can I customize the YAML output format?
 
 Yes, in DevConverter you can adjust:
+
 - Indentation (2 or 4 spaces)
 - Quote style
 - Line width

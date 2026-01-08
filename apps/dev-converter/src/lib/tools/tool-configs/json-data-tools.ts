@@ -1,3 +1,9 @@
+import CsvToJsonTool from "@/components/tools/csv-to-json"
+import JsonFormatterTool from "@/components/tools/json-formatter"
+import JsonToCsvTool from "@/components/tools/json-to-csv"
+import JsonToYamlTool from "@/components/tools/json-to-yaml"
+import YamlToJsonTool from "@/components/tools/yaml-to-json"
+
 import { Tool } from "../types"
 
 export const jsonDataTools: Tool[] = [
@@ -22,6 +28,34 @@ export const jsonDataTools: Tool[] = [
         "json parser",
       ],
     },
+    info: {
+      description:
+        "A JSON formatter is a tool that transforms raw, unformatted JSON data into a clean, readable structure with proper indentation and line breaks. JSON (JavaScript Object Notation) is a lightweight data format used extensively in web development, APIs, and configuration files. When working with APIs or debugging applications, JSON data often comes in a compact, minified format that's difficult to read. A JSON formatter beautifies this data, making it easier to understand the structure, identify errors, and work with nested objects and arrays.",
+      howToUse: [
+        "Paste your JSON data into the input field on the left side",
+        "The tool automatically validates your JSON syntax in real-time",
+        "View the formatted output on the right side with proper indentation",
+        "Copy the formatted JSON using the copy button for use in your projects",
+        "Try the examples below to see how different JSON structures are formatted",
+      ],
+      useCases: [
+        "API Response Debugging: Format API responses to quickly understand the data structure and identify issues",
+        "Configuration Files: Beautify JSON config files for better readability and maintenance",
+        "Data Validation: Verify that your JSON syntax is correct before using it in production",
+        "Code Documentation: Create readable JSON examples for documentation and tutorials",
+        "Data Minification: Convert formatted JSON to compact format to reduce file size for production",
+        "Learning & Education: Understand JSON structure and hierarchy through visual formatting",
+      ],
+      features: [
+        "Real-time Validation: Instantly detect syntax errors with clear error messages",
+        "Syntax Highlighting: Color-coded output for better readability",
+        "Collapsible JSON Viewer: Expand and collapse nested objects and arrays",
+        "One-Click Copy: Quickly copy formatted JSON to your clipboard",
+        "Format & Minify: Switch between beautified and compact formats",
+        "Privacy First: All processing happens in your browser - no data is sent to servers",
+        "No Size Limits: Handle large JSON files without restrictions",
+      ],
+    },
     examples: [
       {
         title: "Basic JSON formatting",
@@ -41,7 +75,7 @@ export const jsonDataTools: Tool[] = [
       },
       {
         title: "Validate JSON with syntax errors",
-        input: '{"name":"John", age:30,"city":"New York"}',
+        input: '{"name":"John", "age":30,"city":"New York"}',
         description:
           "Detect invalid JSON syntax and highlight errors instantly",
       },
@@ -83,6 +117,7 @@ export const jsonDataTools: Tool[] = [
       convertLabel: "Format JSON",
     },
   },
+
   {
     id: "json-to-yaml",
     slug: "json-to-yaml",
@@ -100,6 +135,32 @@ export const jsonDataTools: Tool[] = [
         "yaml converter",
         "json converter",
         "data transformation",
+      ],
+    },
+    info: {
+      description:
+        "A JSON to YAML converter transforms JSON (JavaScript Object Notation) into YAML (YAML Ain’t Markup Language), making your data easier to read and edit manually. YAML is widely used in DevOps tools like Kubernetes, Docker Compose, CI/CD pipelines, and infrastructure configuration because it is clean, human-friendly, and supports nesting through indentation. This online JSON to YAML converter preserves your data structure and converts objects, arrays, numbers, strings, booleans, and null values into valid YAML syntax instantly.",
+      howToUse: [
+        "Paste your JSON data into the JSON input field",
+        "The tool automatically validates your JSON before converting",
+        "Click Convert to generate the YAML output",
+        "Copy the YAML result using the one-click copy button",
+        "Use the YAML output in configuration files such as Kubernetes, Docker, or CI pipelines",
+      ],
+      useCases: [
+        "DevOps Configuration: Convert JSON API payloads into YAML for Kubernetes manifests, Helm, or Docker Compose",
+        "Infrastructure as Code: Convert JSON-based config files into YAML for easier manual editing",
+        "CI/CD Pipelines: Convert JSON to YAML to use in GitHub Actions, GitLab CI, CircleCI, and other pipeline files",
+        "Documentation: Produce YAML examples for tutorials and technical documentation",
+        "Developer Workflow: Quickly transform JSON into YAML for tools that require YAML input",
+      ],
+      features: [
+        "Accurate Conversion: Preserves nesting, arrays, and object structure",
+        "Automatic JSON Validation: Prevents broken YAML output by validating syntax first",
+        "Clean YAML Formatting: Produces readable output with correct indentation",
+        "Fast & Free: Convert JSON to YAML instantly in your browser",
+        "Privacy Friendly: No uploads — conversion happens locally",
+        "Supports Complex JSON: Handles large and deeply nested JSON documents",
       ],
     },
     examples: [
@@ -164,6 +225,7 @@ export const jsonDataTools: Tool[] = [
       convertLabel: "Convert to YAML",
     },
   },
+
   {
     id: "yaml-to-json",
     slug: "yaml-to-json",
@@ -181,6 +243,32 @@ export const jsonDataTools: Tool[] = [
         "json converter",
         "yaml converter",
         "data transformation",
+      ],
+    },
+    info: {
+      description:
+        "A YAML to JSON converter transforms YAML configuration files into JSON format, making the data easier to process programmatically in APIs, frontend applications, and backend services. YAML is popular for DevOps and infrastructure configurations, but JSON is the most common format used for APIs, JavaScript applications, and structured data exchange. This online YAML to JSON converter parses YAML correctly, detects errors, and generates valid JSON that preserves the full structure of the original YAML file.",
+      howToUse: [
+        "Paste your YAML content into the YAML input field",
+        "Click Convert to generate JSON output instantly",
+        "If your YAML contains syntax issues, the tool will show errors",
+        "Copy the JSON output with the copy button",
+        "Use the JSON in your codebase, API calls, or validation workflows",
+      ],
+      useCases: [
+        "Convert Kubernetes YAML to JSON for automation scripts and validation tools",
+        "Transform YAML config files into JSON for JavaScript apps and APIs",
+        "Convert YAML templates into JSON for databases and structured storage",
+        "Debug YAML formatting issues by converting into strict JSON format",
+        "Migrate YAML-based configs into JSON schema-based systems",
+      ],
+      features: [
+        "YAML Parsing & Validation: Detects indentation issues and invalid YAML syntax",
+        "Accurate JSON Output: Preserves objects, arrays, scalars, and nesting",
+        "Clean Formatting: Outputs formatted JSON that is readable and structured",
+        "Fast Conversion: Instant conversion in your browser",
+        "Privacy Friendly: No server uploads — everything runs locally",
+        "Works With DevOps Configs: Great for Kubernetes, Helm, Docker Compose, and CI files",
       ],
     },
     examples: [
@@ -244,6 +332,7 @@ export const jsonDataTools: Tool[] = [
       convertLabel: "Convert to JSON",
     },
   },
+
   {
     id: "json-to-csv",
     slug: "json-to-csv",
@@ -261,6 +350,32 @@ export const jsonDataTools: Tool[] = [
         "csv converter",
         "json converter",
         "spreadsheet converter",
+      ],
+    },
+    info: {
+      description:
+        "A JSON to CSV converter transforms JSON data into CSV (Comma-Separated Values) format so you can open and analyze it in Excel, Google Sheets, and spreadsheet tools. JSON is great for APIs and structured programming, but CSV is ideal for tabular reporting, analytics, and exporting data into databases or BI tools. This tool converts JSON arrays and objects into a clean CSV table with headers, rows, and properly formatted values — perfect for reporting, dashboards, and data pipelines.",
+      howToUse: [
+        "Paste your JSON data (preferably an array of objects) into the input field",
+        "Click Convert to generate CSV output instantly",
+        "Review the CSV output and ensure headers match your expected columns",
+        "Copy or download the CSV output for Excel or Google Sheets",
+        "Use the CSV file in reporting, analytics, or importing workflows",
+      ],
+      useCases: [
+        "Export API Data: Convert API responses (JSON arrays) into CSV for reporting",
+        "Excel & Google Sheets: Import JSON into spreadsheets for analysis and filtering",
+        "Business Reports: Create CSV exports for stakeholders and dashboards",
+        "Database Imports: Convert JSON into CSV for bulk import into SQL or data warehouses",
+        "Data Cleaning: Flatten JSON structures into structured rows for preprocessing",
+      ],
+      features: [
+        "Automatic Header Detection: Generates CSV columns from JSON keys",
+        "Works With Arrays & Objects: Converts both JSON arrays and single objects",
+        "Fast Conversion: Convert JSON to CSV instantly in your browser",
+        "Spreadsheet Friendly Output: Compatible with Excel, Sheets, and BI tools",
+        "Supports Large Datasets: Works with big JSON arrays without server limits",
+        "Privacy First: No file uploads — conversion happens locally",
       ],
     },
     examples: [
@@ -326,6 +441,7 @@ export const jsonDataTools: Tool[] = [
       convertLabel: "Convert to CSV",
     },
   },
+
   {
     id: "csv-to-json",
     slug: "csv-to-json",
@@ -344,6 +460,32 @@ export const jsonDataTools: Tool[] = [
         "json converter",
         "csv converter",
         "data transformation",
+      ],
+    },
+    info: {
+      description:
+        "A CSV to JSON converter transforms spreadsheet-style CSV data into JSON format, making it easier to use in APIs, applications, databases, and JavaScript workflows. CSV is commonly used for exports, reports, and spreadsheets, but JSON is the standard structured format for web development and data exchange. This tool automatically detects headers in your CSV file, converts rows into JSON objects, and ensures clean output that can be used directly in code, REST APIs, and data storage systems.",
+      howToUse: [
+        "Paste your CSV content into the CSV input field",
+        "Ensure the first row contains headers (column names)",
+        "Click Convert to generate JSON output",
+        "Copy the JSON result and use it in your project",
+        "Optional: validate formatting and fix inconsistent rows if needed",
+      ],
+      useCases: [
+        "Convert Excel exports into JSON for APIs and web apps",
+        "Transform reports and analytics CSV files into structured JSON objects",
+        "Import spreadsheet data into a database via JSON APIs",
+        "Prepare datasets for frontend usage (tables, charts, dashboards)",
+        "Convert CSV user lists, products, inventory, or sales reports into JSON",
+      ],
+      features: [
+        "Automatic Header Mapping: Converts CSV headers into JSON keys",
+        "Type Detection: Converts numbers and booleans automatically when possible",
+        "Fast Conversion: Instant CSV to JSON transformation in your browser",
+        "Clean Structured Output: Generates readable JSON arrays for code usage",
+        "Handles Large CSV Files: Works without server restrictions",
+        "Privacy First: No uploads — parsing is done locally",
       ],
     },
     examples: [

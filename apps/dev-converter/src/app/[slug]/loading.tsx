@@ -13,7 +13,7 @@ export default function ToolLoading() {
           <div className="space-y-4 sm:space-y-8 animate-pulse">
             {/* Toolbar skeleton */}
             <div className="h-12 bg-muted/30 rounded-lg" />
-            
+
             {/* Editor skeleton */}
             <div className="grid gap-4 sm:gap-8 grid-cols-1 xl:grid-cols-2">
               <div className="h-[400px] bg-muted/20 rounded-lg" />

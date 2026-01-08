@@ -1,7 +1,8 @@
 "use client"
 
 import { FileUpload } from "@ek-studio/ui"
-import { useState, useCallback, useMemo } from "react"
+
+import { useCallback, useMemo, useState } from "react"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
@@ -23,15 +24,18 @@ const ImageToBase64Tool = () => {
     relatedTools,
     handleExampleClick,
   } = useTool({
-    convertFn: useCallback(async (fileKeyInput: string) => {
-      if (!selectedFile || !fileKeyInput) {
-        return {
-          success: false,
-          error: "Please select an image file",
+    convertFn: useCallback(
+      async (fileKeyInput: string) => {
+        if (!selectedFile || !fileKeyInput) {
+          return {
+            success: false,
+            error: "Please select an image file",
+          }
         }
-      }
-      return await imageToBase64(selectedFile)
-    }, [selectedFile]),
+        return await imageToBase64(selectedFile)
+      },
+      [selectedFile]
+    ),
     config: {
       disableAutoSave: true,
     },
@@ -41,12 +45,15 @@ const ImageToBase64Tool = () => {
     return <div>Tool not found</div>
   }
 
-  const handleFileSelect = useCallback((file: File) => {
-    setSelectedFile(file)
-    // Set a unique key to trigger conversion
-    const key = `${file.name}-${file.size}`
-    setInput(key)
-  }, [setInput])
+  const handleFileSelect = useCallback(
+    (file: File) => {
+      setSelectedFile(file)
+      // Set a unique key to trigger conversion
+      const key = `${file.name}-${file.size}`
+      setInput(key)
+    },
+    [setInput]
+  )
 
   const handleClear = useCallback(() => {
     setSelectedFile(null)
@@ -54,17 +61,20 @@ const ImageToBase64Tool = () => {
   }, [originalHandleClear])
 
   // Memoize the custom input component to prevent re-renders
-  const customInputComponent = useMemo(() => (
-    <FileUpload
-      onFileSelect={handleFileSelect}
-      onClear={handleClear}
-      selectedFile={selectedFile}
-      accept="image/*"
-      acceptLabel="JPG, PNG, GIF, WebP, SVG"
-      maxSize={10 * 1024 * 1024}
-      disabled={status === "loading"}
-    />
-  ), [handleFileSelect, handleClear, selectedFile, status])
+  const customInputComponent = useMemo(
+    () => (
+      <FileUpload
+        onFileSelect={handleFileSelect}
+        onClear={handleClear}
+        selectedFile={selectedFile}
+        accept="image/*"
+        acceptLabel="JPG, PNG, GIF, WebP, SVG"
+        maxSize={10 * 1024 * 1024}
+        disabled={status === "loading"}
+      />
+    ),
+    [handleFileSelect, handleClear, selectedFile, status]
+  )
 
   return (
     <ToolLayout

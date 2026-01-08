@@ -310,12 +310,17 @@ export function CollapsibleJsonViewer({
   return (
     <div
       className={cn(
-        "w-full h-full min-h-[250px] sm:min-h-[300px] max-h-[600px] flex flex-col",
+        "w-full h-full min-h-[250px] sm:min-h-[300px] max-h-[600px] flex flex-col relative",
         className
       )}
     >
+      {/* Animated border glow */}
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 opacity-50 blur-lg -z-10 animate-pulse" />
+
       {/* JSON Tree View with Controls */}
-      <div className="flex-1 overflow-auto bg-muted/30 border border-border/50 rounded-lg flex flex-col">
+      <div className="flex-1 overflow-auto bg-muted/30 border border-border/50 rounded-lg flex flex-col relative">
+        {/* Decorative gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none rounded-lg" />
         {/* Controls - Inside the container */}
         <div className="flex items-center gap-3 px-4 py-2 border-b border-border/50 bg-background/50 sticky top-0 z-10">
           {/* View Mode Toggle */}

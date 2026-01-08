@@ -22,6 +22,33 @@ export const encodingTools: Tool[] = [
         "embed image",
       ],
     },
+    info: {
+      description:
+        "An Image to Base64 converter allows you to encode image files (JPG, PNG, GIF, WebP, SVG and more) into a Base64 data URL that can be embedded directly into HTML, CSS, or JSON. Base64 encoding transforms binary image data into text, enabling you to include images inline without needing to host the file separately. This is especially useful for embedding icons, small graphics, email templates, or generating portable JSON payloads. The output includes the correct MIME type (for example, data:image/png;base64,...) so you can paste it instantly into <img>, CSS background-image, or API requests.",
+      howToUse: [
+        "Upload an image file using the image upload input",
+        "The tool will automatically convert your image into a Base64 data URL",
+        "Copy the Base64 output using the copy button",
+        "Paste the output into HTML, CSS, JSON, or wherever you need an inline image",
+        "Optional: Use the output as a data URL in an <img src='...'> tag or a CSS background property",
+      ],
+      useCases: [
+        "Embed Images in HTML: Insert Base64 images directly into <img src='...'> without separate image files",
+        "Inline CSS Backgrounds: Use Base64 in CSS to embed backgrounds and icons",
+        "Email Templates: Embed images in HTML emails where external images may be blocked",
+        "API Payloads: Send images inside JSON payloads for upload systems or OCR services",
+        "Offline Apps & PWA: Embed assets directly for offline support",
+        "Reduce Requests for Icons: Inline small images to reduce HTTP requests and improve performance",
+      ],
+      features: [
+        "Supports Common Formats: Convert JPG, PNG, GIF, WebP, and SVG images",
+        "Generates Data URLs: Output includes correct MIME type and Base64 prefix",
+        "Fast Local Conversion: Runs in your browser with instant output",
+        "One-Click Copy: Copy Base64 output to clipboard instantly",
+        "Privacy First: No server uploads — your images stay on your device",
+        "Optimized for Developers: Works perfectly for HTML, CSS, and JSON embedding workflows",
+      ],
+    },
     faq: [
       {
         question: "What is Base64 image encoding?",
@@ -63,6 +90,7 @@ export const encodingTools: Tool[] = [
       convertLabel: "Convert",
     },
   },
+
   {
     id: "base64-encode-decode",
     slug: "base64-encode-decode",
@@ -80,6 +108,33 @@ export const encodingTools: Tool[] = [
         "base64 decoder",
         "base64 converter",
         "binary encoding",
+      ],
+    },
+    info: {
+      description:
+        "A Base64 encoder and decoder is a tool that converts text or binary data into Base64 format and back again. Base64 is a binary-to-text encoding standard commonly used in web development, APIs, authentication headers, email attachments, and data transmission systems. Encoding ensures that binary or special characters can be safely transmitted through text-based formats like JSON, HTML, and HTTP headers. This tool helps you quickly encode plain text into Base64, decode Base64 back into readable text, and test tokens, payloads, or encoded values instantly.",
+      howToUse: [
+        "Paste your text or Base64 string into the input field",
+        "The tool automatically detects whether you want to encode or decode",
+        "Click Encode/Decode to run the conversion instantly",
+        "Copy the output result using the copy button",
+        "Use the encoded or decoded output in APIs, authentication headers, or applications",
+      ],
+      useCases: [
+        "Encode Text for APIs: Convert text into Base64 for safe transmission in JSON or HTTP headers",
+        "Decode Tokens: Decode Base64 tokens to inspect stored data or debug authentication payloads",
+        "Email Attachments: Encode binary data for email systems and MIME payloads",
+        "Basic Authentication: Encode username:password for HTTP Basic Auth headers",
+        "Store Data Safely: Encode configuration strings for environment variables and config files",
+        "Debug Encoding Errors: Quickly check whether a value is valid Base64 and decode it",
+      ],
+      features: [
+        "Two-Way Conversion: Encode text to Base64 and decode Base64 back to text",
+        "Auto Detection: Automatically detects Base64 vs plain text for easy workflow",
+        "Instant Results: Fast conversion in real time",
+        "One-Click Copy: Copy output instantly to clipboard",
+        "Safe for Developers: Perfect for debugging API payloads and authentication headers",
+        "Privacy Friendly: Runs locally in your browser — no data uploaded",
       ],
     },
     examples: [
@@ -142,6 +197,7 @@ export const encodingTools: Tool[] = [
       showSwapButton: true,
     },
   },
+
   {
     id: "url-encode-decode",
     slug: "url-encode-decode",
@@ -159,6 +215,33 @@ export const encodingTools: Tool[] = [
         "url decoder",
         "percent encoding",
         "uri encoding",
+      ],
+    },
+    info: {
+      description:
+        "A URL encoder and decoder converts unsafe characters in a URL into a valid, web-safe encoded format using percent encoding (also called URL encoding). This is essential when URLs contain spaces, symbols, query parameters, emojis, or non-English characters. Encoding ensures browsers, servers, analytics platforms, and search engines interpret the URL correctly. This tool also allows you to decode encoded URLs back into readable format, making it easy to debug encoded query strings, UTM parameters, API requests, and form submissions.",
+      howToUse: [
+        "Paste your URL or text into the input field",
+        "The tool automatically detects whether it should encode or decode",
+        "Click Encode/Decode to run the transformation",
+        "Copy the output URL using the copy button",
+        "Use the encoded URL in APIs, browsers, tracking links, or query parameters safely",
+      ],
+      useCases: [
+        "Encode Query Parameters: Encode spaces, symbols, and special characters in URLs",
+        "Decode Tracking URLs: Decode UTM links and analytics URLs to inspect their parameters",
+        "Form Submission Debugging: Encode form data safely for GET requests",
+        "API Request Encoding: Encode request parameters when building API URLs manually",
+        "International URLs: Convert Hebrew, Arabic, Chinese, and Unicode characters into valid URLs",
+        "Prevent Broken Links: Ensure URLs are valid and won’t break when shared or copied",
+      ],
+      features: [
+        "Encode & Decode Support: Convert URLs to encoded form and decode encoded URLs",
+        "Instant Output: Fast conversion directly in the browser",
+        "Handles Unicode: Supports non-English characters and emojis",
+        "Safe Encoding: Uses correct percent-encoding rules for query strings",
+        "One-Click Copy: Copy results easily",
+        "Privacy Friendly: No server storage — everything runs locally",
       ],
     },
     examples: [
@@ -221,6 +304,7 @@ export const encodingTools: Tool[] = [
       showSwapButton: true,
     },
   },
+
   {
     id: "html-escape-unescape",
     slug: "html-escape-unescape",
@@ -239,6 +323,32 @@ export const encodingTools: Tool[] = [
         "html unescape",
         "html entities",
         "html encoder",
+      ],
+    },
+    info: {
+      description:
+        "An HTML escape and unescape tool converts unsafe HTML characters into safe HTML entities (escaping) and also converts HTML entities back into normal readable text (unescaping). Escaping prevents browsers from interpreting user input as actual HTML markup, making it essential for security, displaying code examples, and preventing XSS (Cross-Site Scripting). Developers use HTML escaping when rendering untrusted input on web pages or when showing HTML snippets inside documentation, blogs, and tutorials.",
+      howToUse: [
+        "Paste your HTML text or entity-encoded content into the input field",
+        "Click Escape/Unescape to process the content",
+        "If the input contains raw HTML, it will be escaped into entities like &lt; and &amp;",
+        "If the input contains entities, it will be unescaped back into normal characters",
+        "Copy the result and use it safely in your web application or documentation",
+      ],
+      useCases: [
+        "Prevent XSS: Escape user input before rendering it as text in HTML pages",
+        "Show HTML Code Examples: Display HTML snippets in blogs or documentation without them being executed",
+        "Escape Dynamic Data: Encode variables safely before injecting them into HTML templates",
+        "Decode Entities: Convert HTML entities back to readable text when scraping or parsing content",
+        "Sanitize User-Generated Content: Prevent HTML injection in comments, messages, and forms",
+      ],
+      features: [
+        "Escape & Unescape Support: Convert HTML characters to entities and entities back to characters",
+        "Security Friendly: Helps prevent XSS attacks by escaping unsafe input",
+        "Instant Conversion: Fast tool for debugging and developer workflows",
+        "Supports All Common Entities: Handles <, >, &, quotes, apostrophes, and more",
+        "One-Click Copy: Copy the output instantly",
+        "Privacy First: Works locally in your browser without uploading data",
       ],
     },
     examples: [
@@ -301,6 +411,7 @@ export const encodingTools: Tool[] = [
       showSwapButton: true,
     },
   },
+
   {
     id: "json-escape-unescape",
     slug: "json-escape-unescape",
@@ -318,6 +429,32 @@ export const encodingTools: Tool[] = [
         "json unescape",
         "json encoder",
         "string escape",
+      ],
+    },
+    info: {
+      description:
+        'A JSON escape and unescape tool helps you safely encode raw text so it can be inserted into JSON strings without breaking JSON syntax. JSON strings must escape characters like quotes, backslashes, newlines, tabs, and other control characters using escape sequences such as \\n, \\t, \\", and \\\\. This tool converts raw text into JSON-safe escaped strings (escaping) and also converts escaped JSON strings back into readable text (unescaping). It is essential for API payloads, logs, configuration files, and debugging JSON parsing issues.',
+      howToUse: [
+        "Paste your text or JSON string into the input box",
+        "Click Escape/Unescape to process the input",
+        "If input contains raw quotes/newlines, it will escape them into JSON-safe sequences",
+        'If input contains escape sequences like \\n or \\", it will unescape back into readable text',
+        "Copy the output and use it safely in JSON payloads, APIs, or code",
+      ],
+      useCases: [
+        "Fix JSON Parse Errors: Escape problematic strings that break JSON format",
+        "Store User Text Safely: Encode user messages before inserting them into JSON fields",
+        "Debug API Payloads: Quickly inspect escaped JSON strings from API responses",
+        "Prepare Logs & Strings: Convert multi-line text into JSON-safe single-line strings",
+        "Escape Windows Paths: Convert backslashes into valid JSON strings",
+      ],
+      features: [
+        "Escape & Unescape Support: Converts raw text to JSON-safe format and decodes JSON strings back to text",
+        "Prevents Invalid JSON: Avoids broken payloads caused by quotes and control characters",
+        "Handles Common Escapes: Supports quotes, backslashes, newline, tab, carriage return, and more",
+        "Instant Conversion: Fast results without needing libraries or scripts",
+        "One-Click Copy: Copy output instantly for use in APIs and code",
+        "Privacy First: Everything runs locally in your browser",
       ],
     },
     examples: [

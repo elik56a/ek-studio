@@ -56,7 +56,10 @@ export function MimeTypeDisplay({
   }
 
   return (
-    <div className="w-full max-h-[500px] overflow-y-auto space-y-2 pr-2">
+    <div className="w-full max-h-[500px] overflow-y-auto space-y-2 pr-2 relative">
+      {/* Animated border glow */}
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 opacity-50 blur-lg -z-10 animate-pulse" />
+
       {results.length > 1 && (
         <div className="text-xs text-muted-foreground mb-2">
           Found {results.length} result{results.length !== 1 ? "s" : ""}

@@ -32,6 +32,34 @@ export const utilityTools: Tool[] = [
         "rgba converter",
       ],
     },
+    info: {
+      description:
+        "A color converter is a design and development tool that lets you convert colors between HEX, RGB, RGBA, HSL, and HSLA formats instantly. Color conversion is essential for web developers writing CSS, UI designers working with design systems, and product teams building consistent branding. Different platforms and tools use different color formats: HEX is common in design tools and CSS, RGB/RGBA is often used for dynamic styling and transparency, and HSL/HSLA is preferred for color manipulation like adjusting saturation or lightness. This online color converter supports all major formats, detects input automatically, and provides a live preview so you can visually confirm the converted color.",
+      howToUse: [
+        "Paste a color value into the input field (HEX, RGB, RGBA, HSL, or HSLA)",
+        "The tool automatically detects the input format and converts it",
+        "View the converted values across all supported formats instantly",
+        "Use the live preview to confirm the color visually",
+        "Copy the converted output and paste it into CSS, design tools, or your codebase",
+      ],
+      useCases: [
+        "HEX to RGB Conversion: Convert HEX codes like #FF5733 into rgb(255, 87, 51)",
+        "RGB to HEX Conversion: Convert rgb() values into HEX codes for CSS or design tools",
+        "HSL to HEX/RGB: Convert hsl() values when working with adjustable color themes",
+        "RGBA Transparency: Convert and preserve alpha values for semi-transparent UI elements",
+        "Design System Consistency: Ensure colors match between Figma, CSS, and component libraries",
+        "Web Development: Copy converted values directly into CSS, Tailwind configs, or theme files",
+      ],
+      features: [
+        "Supports Major Formats: HEX, RGB, RGBA, HSL, and HSLA conversion",
+        "Live Color Preview: Instantly preview the color visually for confirmation",
+        "Auto Format Detection: Paste any supported format and the tool converts automatically",
+        "Short HEX Support: Expands shorthand values like #F80 into full 6-digit HEX",
+        "Alpha Channel Support: Works with RGBA and HSLA transparency values",
+        "Developer Friendly Output: Perfect for CSS styling, UI theming, and design workflows",
+        "Privacy First: Runs entirely in your browser — no color input is uploaded",
+      ],
+    },
     examples: [
       {
         title: "HEX to RGB/HSL",
@@ -96,6 +124,7 @@ export const utilityTools: Tool[] = [
       convertLabel: "Convert Color",
     },
   },
+
   {
     id: "mime-type-lookup",
     slug: "mime-type-lookup",
@@ -115,6 +144,33 @@ export const utilityTools: Tool[] = [
         "content type",
         "mime database",
         "file type",
+      ],
+    },
+    info: {
+      description:
+        "A MIME type lookup tool helps you find the correct MIME type (also called Content-Type) for any file extension such as .pdf, .png, .jpg, .mp4, .json, .csv, and more. MIME types are critical in web development, APIs, uploads, browsers, and servers because they tell the browser how to handle a file — whether it should render as an image, display as text, download as a file, or be interpreted as JSON. Correct MIME types prevent broken file handling, ensure proper caching and security behavior, and reduce errors in uploads, CDN delivery, and HTTP responses. This online MIME type lookup instantly returns the standard MIME type for any extension with support for input with or without a dot.",
+      howToUse: [
+        "Enter a file extension into the input box (for example: pdf, .png, mp4, json)",
+        "Click Lookup to search the MIME type database",
+        "View the correct MIME type (Content-Type) for that file extension",
+        "Copy the MIME type value and use it in HTTP headers, APIs, uploads, or server configuration",
+        "Repeat for other extensions when building file handling systems or upload validation",
+      ],
+      useCases: [
+        "Set Correct Content-Type Headers: Use MIME types for HTTP responses and API endpoints",
+        "Fix Upload Issues: Validate MIME types during file uploads and input validation",
+        "CDN and Caching Configuration: Ensure proper MIME types for static file delivery",
+        "Backend Debugging: Debug issues where files download instead of render (or vice versa)",
+        "Frontend File Handling: Detect file type behavior in browsers and file viewers",
+        "Security and Compliance: Prevent serving executable content under wrong MIME types (MIME sniffing vulnerabilities)",
+      ],
+      features: [
+        "Instant MIME Lookup: Fast results for file extensions in one click",
+        "Supports Dot and No-Dot Input: Both 'pdf' and '.pdf' return correct results",
+        "Standard MIME Database: Uses common MIME type mappings used in browsers and servers",
+        "Perfect for Developers: Useful for APIs, file uploads, HTTP headers, and server configs",
+        "Accurate Content-Type Output: Helps prevent broken downloads and display issues",
+        "Privacy Friendly: No files uploaded — you only enter text extensions",
       ],
     },
     examples: [

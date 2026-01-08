@@ -44,7 +44,10 @@ export function ColorOutputDisplay({
   }
 
   return (
-    <div className="space-y-3 h-full">
+    <div className="space-y-3 h-full relative">
+      {/* Animated border glow */}
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 opacity-50 blur-lg -z-10 animate-pulse" />
+
       {/* Color Preview with Picker */}
       <div className="relative">
         <div

@@ -37,8 +37,8 @@ export function useTool({
   generateFn,
   config = {},
 }: UseToolOptions) {
-  const toolState = useToolState({ 
-    disableAutoSave: config.disableAutoSave ?? false 
+  const toolState = useToolState({
+    disableAutoSave: config.disableAutoSave ?? false,
   })
   const {
     input,

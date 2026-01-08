@@ -1,11 +1,6 @@
 "use client"
 
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardTitle,
-} from "@ek-studio/ui"
+import { Button, Card, CardHeader, CardTitle } from "@ek-studio/ui"
 import {
   ArrowRight,
   Code2,

@@ -56,32 +56,34 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 glass border-b backdrop-blur-xl bg-background/95">
-      <div className="px-4 flex h-16 items-center justify-between max-w-full">
-        <div className="flex items-center gap-6">
+      <div className="px-4 flex h-16 items-center max-w-full">
+        {/* Logo - Left */}
+        <div className="flex-shrink-0">
           <Logo size="sm" variant="default" href="/" />
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1 text-sm font-medium">
-            {categories.map(category => (
-              <CategoryDropdown
-                key={category.id}
-                category={category}
-                isActive={isCategoryActive(category.id)}
-                variant="header"
-              />
-            ))}
-            <SmoothLink
-              href="/blog"
-              className={`px-3 py-2 rounded-md transition-colors hover:text-primary hover:bg-primary/5 ${
-                pathname.startsWith('/blog') ? "text-primary bg-primary/5" : ""
-              }`}
-            >
-              Blog
-            </SmoothLink>
-          </nav>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-4">
+        {/* Desktop Navigation - Center */}
+        <nav className="hidden lg:flex items-center justify-center space-x-1 text-sm font-medium flex-1">
+          {categories.map(category => (
+            <CategoryDropdown
+              key={category.id}
+              category={category}
+              isActive={isCategoryActive(category.id)}
+              variant="header"
+            />
+          ))}
+          <SmoothLink
+            href="/blog"
+            className={`px-3 py-2 rounded-md transition-colors hover:text-primary hover:bg-primary/5 ${
+              pathname.startsWith("/blog") ? "text-primary bg-primary/5" : ""
+            }`}
+          >
+            Blog
+          </SmoothLink>
+        </nav>
+
+        {/* Search & Theme Toggle - Right */}
+        <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
           {/* Desktop Search */}
           <div className="relative hidden md:block">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
@@ -185,13 +187,15 @@ export function Header() {
               <SmoothLink
                 href="/blog"
                 className={`text-sm font-medium transition-colors hover:text-primary py-2 px-3 rounded-md hover:bg-primary/5 ${
-                  pathname.startsWith('/blog') ? "text-primary bg-primary/5" : ""
+                  pathname.startsWith("/blog")
+                    ? "text-primary bg-primary/5"
+                    : ""
                 }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Blog
               </SmoothLink>
-              
+
               {categories.map(category => {
                 const IconComponent = category.icon
                 const isActive = isCategoryActive(category.id)

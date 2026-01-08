@@ -1,5 +1,3 @@
-import { ComingSoonPlaceholder } from "@/components/custom/coming-soon-placeholder"
-
 import { Tool } from "../types"
 
 export const textTools: Tool[] = [
@@ -21,6 +19,33 @@ export const textTools: Tool[] = [
         "camelcase converter",
         "snake case converter",
         "text converter",
+      ],
+    },
+    info: {
+      description:
+        "A case converter is a text utility that transforms your text into different naming conventions such as camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, Title Case, and more. Developers and content creators use case conversion daily to standardize variable names, function names, API fields, file names, and URL slugs. Instead of manually editing capitalization and separators, this online case converter makes it instant and error-free. It helps ensure consistent naming conventions across codebases, databases, documentation, and SEO-friendly URLs.",
+      howToUse: [
+        "Paste or type your text into the input field",
+        "Select the desired case format (camelCase, snake_case, PascalCase, kebab-case, etc.)",
+        "The tool will instantly convert your text into the selected case",
+        "Copy the converted text using the copy button",
+        "Use the result in your code, database, API fields, file names, or URLs",
+      ],
+      useCases: [
+        "Convert variable names: Quickly turn plain text into camelCase for JavaScript variables",
+        "Convert database columns: Convert field names into snake_case for SQL schemas",
+        "Generate SEO slugs: Convert headings into kebab-case for clean URL paths",
+        "Rename files: Convert strings into file-system friendly formats like kebab-case",
+        "Standardize APIs: Convert object keys into consistent naming conventions",
+        "Refactor code: Convert old naming styles into new naming rules during migrations",
+      ],
+      features: [
+        "Supports Multiple Naming Styles: camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE and more",
+        "Instant Conversion: Convert text cases immediately without clicking extra buttons",
+        "Preserves Word Structure: Detects spaces, underscores, hyphens, and capitalization changes intelligently",
+        "Developer Friendly Output: Perfect formatting for code, databases, and APIs",
+        "One-Click Copy: Copy converted output instantly",
+        "Privacy First: Runs locally in your browser — no text is sent to servers",
       ],
     },
     examples: [
@@ -81,6 +106,7 @@ export const textTools: Tool[] = [
       convertLabel: "Convert Case",
     },
   },
+
   {
     id: "diff-checker",
     slug: "diff-checker",
@@ -100,6 +126,33 @@ export const textTools: Tool[] = [
         "difference checker",
         "text diff",
         "compare texts",
+      ],
+    },
+    info: {
+      description:
+        "A text diff checker is a tool that compares two versions of text and highlights the differences between them, including additions, deletions, and modified lines. It works similarly to git diff, but in a fast browser-based format. Developers, writers, QA engineers, and DevOps teams use diff tools to compare code changes, configuration files, documentation revisions, and content updates. This online diff checker helps you quickly identify exactly what changed between two texts, making reviews easier and preventing mistakes during deployments or edits.",
+      howToUse: [
+        "Paste the original text into the left input box",
+        "Paste the updated text into the right input box",
+        "Click Compare Texts to generate the diff output",
+        "Review highlighted additions, removals, and changed lines",
+        "Copy or export the results if needed for review or documentation",
+      ],
+      useCases: [
+        "Code Reviews: Compare code snippets to understand what changed between versions",
+        "Document Editing: Compare drafts and revisions of documentation, contracts, or articles",
+        "Config Validation: Compare .env and config files to spot incorrect settings before deployment",
+        "Debugging: Compare API responses or JSON outputs to detect unexpected differences",
+        "Copywriting: Compare landing page text changes for SEO and marketing experiments",
+        "Merge Conflicts: Understand differences between two blocks of text before merging manually",
+      ],
+      features: [
+        "Side-by-Side Comparison: Compare original and modified text in parallel view",
+        "Line-by-Line Highlighting: Shows added, removed, and changed lines clearly",
+        "Developer Friendly: Works with code, JSON, YAML, config files, and any text format",
+        "Fast and Accurate Diffing: Instant output for quick change detection",
+        "One-Click Copy: Copy results for reporting or documentation",
+        "Privacy First: Comparison happens locally in your browser — no uploads",
       ],
     },
     examples: [
@@ -171,6 +224,7 @@ export const textTools: Tool[] = [
       preserveInput: false,
     },
   },
+
   {
     id: "regex-tester",
     slug: "regex-tester",
@@ -189,6 +243,33 @@ export const textTools: Tool[] = [
         "regexp tester",
         "regular expression",
         "pattern matcher",
+      ],
+    },
+    info: {
+      description:
+        "A regex tester is an online tool that helps you test, debug, and validate regular expressions (regex) against real text input. Regular expressions are used for searching, matching, extracting, validating, and replacing text patterns in programming languages like JavaScript, Python, Java, PHP, and many more. This regex tester provides live matching, highlights results, shows captured groups, supports common regex flags like g, i, and m, and helps you quickly build correct patterns without wasting time. It’s essential for developers working with validation, parsing, scraping, data extraction, and text processing.",
+      howToUse: [
+        "Paste your regex pattern into the regex input field (including flags like /pattern/g)",
+        "Paste your test text in the text input area",
+        "Click Test Regex to run matching and preview results",
+        "View highlighted matches and capture groups in the output",
+        "Adjust the pattern or flags until the regex behaves as expected",
+      ],
+      useCases: [
+        "Validate User Input: Test patterns for email validation, phone validation, usernames, and passwords",
+        "Extract Data: Capture numbers, IDs, names, and fields from logs or text files",
+        "Debug Regex Bugs: Quickly understand why your regex isn’t matching or matches too much",
+        "Parse URLs: Match and extract domain names, query strings, and paths",
+        "Log Analysis: Extract values from server logs and structured messages",
+        "Replace and Cleanup: Build regexes used for search-and-replace in code editors and scripts",
+      ],
+      features: [
+        "Live Matching: Instantly see matches as you update the pattern or text",
+        "Capture Group Extraction: Preview group values for each match",
+        "Supports Regex Flags: Works with g, i, m and standard JavaScript-style syntax",
+        "Highlighting Output: Matches are visually highlighted for fast debugging",
+        "Developer Friendly: Great for JavaScript, TypeScript, and general regex testing",
+        "Privacy First: Runs locally in your browser — no text is uploaded",
       ],
     },
     examples: [
@@ -256,6 +337,7 @@ export const textTools: Tool[] = [
       convertLabel: "Test Regex",
     },
   },
+
   {
     id: "markdown-html-converter",
     slug: "markdown-html-converter",
@@ -273,6 +355,33 @@ export const textTools: Tool[] = [
         "html to markdown",
         "md converter",
         "markdown converter",
+      ],
+    },
+    info: {
+      description:
+        "A Markdown ↔ HTML converter transforms content between Markdown syntax and HTML markup. Markdown is widely used for documentation, README files, blogging platforms, and note-taking because it is easy to write and read. HTML is the standard format for web rendering and full layout control. This tool lets you instantly convert Markdown to HTML or HTML back to Markdown, making it useful for content migration, documentation workflows, blogging, CMS editing, and developer documentation. It supports common Markdown features such as headers, lists, links, images, code blocks, and tables.",
+      howToUse: [
+        "Paste Markdown or HTML into the input field",
+        "Select the conversion direction (Markdown → HTML or HTML → Markdown)",
+        "Click Convert to generate the output instantly",
+        "Review the converted output and verify formatting",
+        "Copy the result and use it in your docs, CMS, or web project",
+      ],
+      useCases: [
+        "Documentation: Convert Markdown docs into HTML for websites and portals",
+        "Content Migration: Convert HTML articles into Markdown for GitHub, Notion, or Markdown editors",
+        "Blogging: Convert Markdown drafts into HTML for publishing platforms",
+        "Markdown Editors: Generate HTML previews or embed HTML output into templates",
+        "Web Development: Convert Markdown input into HTML content for rendering",
+        "Clean Formatting: Convert messy HTML into simplified Markdown for easy editing",
+      ],
+      features: [
+        "Two-Way Conversion: Convert Markdown to HTML and HTML to Markdown",
+        "Supports Common Markdown: Headers, lists, links, bold, italic, images, code blocks, and tables",
+        "Clean Output Formatting: Produces readable HTML and markdown results",
+        "Split View Friendly: Ideal for preview workflows and live editing",
+        "One-Click Copy: Copy converted content instantly",
+        "Privacy First: Works locally in your browser without uploading text",
       ],
     },
     examples: [

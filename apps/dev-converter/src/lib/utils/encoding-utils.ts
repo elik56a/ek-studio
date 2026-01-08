@@ -259,7 +259,7 @@ export function jsonEscapeUnescape(input: string): ConversionResult<string> {
  * @returns Promise<ConversionResult<string>> with Base64 data URL or error
  */
 export function imageToBase64(file: File): Promise<ConversionResult<string>> {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     // Validate file type
     if (!file.type.startsWith("image/")) {
       resolve({

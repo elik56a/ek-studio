@@ -52,36 +52,36 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 sm:space-y-3 text-sm">
               <li>
-                <SmoothLink
+                <Link
                   href="/json-formatter"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   JSON Formatter
-                </SmoothLink>
+                </Link>
               </li>
               <li>
-                <SmoothLink
+                <Link
                   href="/base64-encode-decode"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Base64 Encoder
-                </SmoothLink>
+                </Link>
               </li>
               <li>
-                <SmoothLink
+                <Link
                   href="/jwt-decoder"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   JWT Decoder
-                </SmoothLink>
+                </Link>
               </li>
               <li>
-                <SmoothLink
+                <Link
                   href="/hash-generator"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Hash Generator
-                </SmoothLink>
+                </Link>
               </li>
             </ul>
           </div>
@@ -92,36 +92,36 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 sm:space-y-3 text-sm">
               <li>
-                <SmoothLink
+                <Link
                   href="/categories/json-data"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   JSON & Data
-                </SmoothLink>
+                </Link>
               </li>
               <li>
-                <SmoothLink
+                <Link
                   href="/categories/encoding"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Encoding & Decoding
-                </SmoothLink>
+                </Link>
               </li>
               <li>
-                <SmoothLink
+                <Link
                   href="/categories/security"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Security & Crypto
-                </SmoothLink>
+                </Link>
               </li>
               <li>
-                <SmoothLink
+                <Link
                   href="/categories/text"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Text Utilities
-                </SmoothLink>
+                </Link>
               </li>
             </ul>
           </div>
@@ -132,52 +132,52 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 sm:space-y-3 text-sm">
               <li>
-                <SmoothLink
+                <Link
                   href="/about"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   About Us
-                </SmoothLink>
+                </Link>
               </li>
               <li>
-                <SmoothLink
+                <Link
                   href="/blog"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Blog
-                </SmoothLink>
+                </Link>
               </li>
               <li>
-                <SmoothLink
+                <Link
                   href="/faq"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   FAQ
-                </SmoothLink>
+                </Link>
               </li>
               <li>
-                <SmoothLink
+                <Link
                   href="/privacy"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Privacy Policy
-                </SmoothLink>
+                </Link>
               </li>
               <li>
-                <SmoothLink
+                <Link
                   href="/terms"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Terms of Service
-                </SmoothLink>
+                </Link>
               </li>
               <li>
-                <SmoothLink
+                <Link
                   href="/contact"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Contact
-                </SmoothLink>
+                </Link>
               </li>
             </ul>
           </div>

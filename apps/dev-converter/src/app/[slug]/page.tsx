@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
-import { notFound } from "next/navigation"
 import dynamic from "next/dynamic"
+import { notFound } from "next/navigation"
 
 import { Breadcrumb } from "@/components/layout/breadcrumb"
 import {

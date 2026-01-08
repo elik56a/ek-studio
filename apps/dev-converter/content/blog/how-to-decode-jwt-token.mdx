@@ -18,6 +18,7 @@ image: "/images/blog/jwt-decode.svg"
 JWT (JSON Web Token) decoding is the process of extracting the payload data from a JWT without verifying its signature. This is useful when you need to quickly inspect token contents during development, debugging authentication issues, or understanding what data your API is receiving.
 
 **Who this guide is for:**
+
 - Developers debugging authentication flows
 - Backend engineers inspecting API tokens
 - Frontend developers working with JWT-based auth
@@ -48,22 +49,22 @@ header.payload.signature
 
 ```javascript
 function decodeJWT(token) {
-  const parts = token.split('.');
-  
+  const parts = token.split(".")
+
   if (parts.length !== 3) {
-    throw new Error('Invalid JWT format');
+    throw new Error("Invalid JWT format")
   }
-  
-  const header = JSON.parse(atob(parts[0]));
-  const payload = JSON.parse(atob(parts[1]));
-  
-  return { header, payload };
+
+  const header = JSON.parse(atob(parts[0]))
+  const payload = JSON.parse(atob(parts[1]))
+
+  return { header, payload }
 }
 
 // Example usage
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const decoded = decodeJWT(token);
-console.log(decoded.payload);
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+const decoded = decodeJWT(token)
+console.log(decoded.payload)
 ```
 
 ### Method 3: Using Python
@@ -74,14 +75,14 @@ import json
 
 def decode_jwt(token):
     parts = token.split('.')
-    
+
     if len(parts) != 3:
         raise ValueError('Invalid JWT format')
-    
+
     # Add padding if needed
     payload = parts[1]
     payload += '=' * (4 - len(payload) % 4)
-    
+
     decoded = base64.urlsafe_b64decode(payload)
     return json.loads(decoded)
 
@@ -96,20 +97,22 @@ print(payload)
 ### 1. Confusing Decoding with Verification
 
 **Mistake:** Thinking decoded = verified
+
 ```javascript
 // ❌ WRONG - This doesn't verify the signature!
-const decoded = decodeJWT(token);
-if (decoded.payload.role === 'admin') {
-  grantAccess(); // SECURITY RISK!
+const decoded = decodeJWT(token)
+if (decoded.payload.role === "admin") {
+  grantAccess() // SECURITY RISK!
 }
 ```
 
 **Correct approach:**
+
 ```javascript
 // ✅ CORRECT - Always verify before trusting
-const verified = jwt.verify(token, secretKey);
-if (verified.role === 'admin') {
-  grantAccess();
+const verified = jwt.verify(token, secretKey)
+if (verified.role === "admin") {
+  grantAccess()
 }
 ```
 
@@ -120,12 +123,14 @@ JWT uses base64url encoding which may need padding. Always add padding when deco
 ### 3. Exposing Sensitive Data in JWTs
 
 **Don't store:**
+
 - Passwords
 - Credit card numbers
 - Social security numbers
 - Private keys
 
 **Do store:**
+
 - User ID
 - Username
 - Roles/permissions
@@ -135,9 +140,9 @@ JWT uses base64url encoding which may need padding. Always add padding when deco
 
 ```javascript
 // ✅ Always check exp claim
-const decoded = decodeJWT(token);
+const decoded = decodeJWT(token)
 if (decoded.payload.exp < Date.now() / 1000) {
-  throw new Error('Token expired');
+  throw new Error("Token expired")
 }
 ```
 
@@ -151,7 +156,7 @@ Always transmit JWTs over HTTPS to prevent interception.
 
 ```javascript
 // Good: 15 minutes for access tokens
-const token = jwt.sign(payload, secret, { expiresIn: '15m' });
+const token = jwt.sign(payload, secret, { expiresIn: "15m" })
 ```
 
 ### 3. Store Tokens Securely
@@ -162,16 +167,16 @@ const token = jwt.sign(payload, secret, { expiresIn: '15m' });
 ### 4. Validate All Claims
 
 ```javascript
-const decoded = decodeJWT(token);
+const decoded = decodeJWT(token)
 
 // Check issuer
-if (decoded.payload.iss !== 'your-auth-server.com') {
-  throw new Error('Invalid issuer');
+if (decoded.payload.iss !== "your-auth-server.com") {
+  throw new Error("Invalid issuer")
 }
 
 // Check audience
-if (decoded.payload.aud !== 'your-app.com') {
-  throw new Error('Invalid audience');
+if (decoded.payload.aud !== "your-app.com") {
+  throw new Error("Invalid audience")
 }
 ```
 
@@ -200,6 +205,7 @@ echo 'eyJhbGc...' | cut -d'.' -f2 | base64 -d | jq
 ### Why does my decoded JWT look garbled?
 
 Make sure you're:
+
 1. Using base64url decoding (not regular base64)
 2. Adding proper padding (=) if needed
 3. Decoding the payload part (second segment)
@@ -211,6 +217,7 @@ Yes! Expiration only affects **verification**, not decoding. You can decode expi
 ### What should I do if my JWT has 4 or 5 parts?
 
 Standard JWTs have 3 parts. If yours has more, it might be:
+
 - A JWE (JSON Web Encryption) token
 - A malformed token
 - A custom token format
@@ -218,6 +225,7 @@ Standard JWTs have 3 parts. If yours has more, it might be:
 ### How can I decode JWTs in production safely?
 
 Use established libraries:
+
 - **Node.js**: `jsonwebtoken`, `jose`
 - **Python**: `PyJWT`
 - **Java**: `java-jwt`
@@ -228,6 +236,7 @@ Never roll your own JWT implementation in production.
 ### What information is in the JWT header?
 
 Typically:
+
 - `alg`: Signing algorithm (HS256, RS256, etc.)
 - `typ`: Token type (usually "JWT")
 - `kid`: Key ID (for key rotation)
@@ -236,10 +245,10 @@ Typically:
 
 ```javascript
 try {
-  const decoded = decodeJWT(token);
-  console.log(decoded);
+  const decoded = decodeJWT(token)
+  console.log(decoded)
 } catch (error) {
-  if (error.message.includes('Invalid JWT format')) {
+  if (error.message.includes("Invalid JWT format")) {
     // Handle malformed token
   } else {
     // Handle other errors

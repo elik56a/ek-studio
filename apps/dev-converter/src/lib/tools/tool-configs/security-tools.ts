@@ -20,6 +20,33 @@ export const securityTools: Tool[] = [
         "token decoder",
       ],
     },
+    info: {
+      description:
+        "A JWT decoder is a tool that allows you to decode JSON Web Tokens (JWTs) and inspect the token structure including the header, payload (claims), and signature. JWTs are widely used for authentication and authorization in modern web applications, APIs, and microservices. Because JWTs are Base64URL encoded, they are not directly readable until decoded. This online JWT decoder helps developers debug login flows, inspect user claims such as sub, userId, email, roles, and permissions, and verify important security fields like exp (expiration), iat (issued at), iss (issuer), and aud (audience). This tool is perfect for troubleshooting identity systems, OAuth providers, and API authentication tokens.",
+      howToUse: [
+        "Paste your JWT token into the JWT input field",
+        "Click Decode JWT to decode the token instantly",
+        "View the decoded header, payload (claims), and signature sections",
+        "Inspect important claims like exp, sub, iss, aud, and roles",
+        "Copy the decoded JSON output for debugging or documentation",
+      ],
+      useCases: [
+        "Debug Authentication Issues: Decode JWT tokens to understand why login or authorization is failing",
+        "Inspect Claims and Roles: View user permissions, roles, and identity data stored in the token payload",
+        "Validate Token Expiration: Check the exp claim to see whether a token is expired",
+        "Verify Issuer & Audience: Inspect iss and aud values when working with OAuth providers and SSO systems",
+        "API Testing: Decode bearer tokens from Postman requests to confirm token contents",
+        "Security Auditing: Review JWT headers for algorithm values like HS256 or RS256 to detect misconfigurations",
+      ],
+      features: [
+        "Instant JWT Decoding: Decode header, payload, and signature in real time",
+        "Readable JSON Output: Pretty formatted output for easier inspection",
+        "Supports JWT Standards: Works with common JWT structures and Base64URL encoding",
+        "Privacy Friendly: Runs locally in your browser — no token data is uploaded",
+        "Developer Friendly: Great for debugging auth systems, APIs, and identity providers",
+        "Claim Inspection: Helps you inspect exp, iss, aud, sub, iat, roles, and custom claims easily",
+      ],
+    },
     examples: [
       {
         title: "Decode JWT Token",
@@ -84,6 +111,7 @@ export const securityTools: Tool[] = [
       convertLabel: "Decode JWT",
     },
   },
+
   {
     id: "hash-generator",
     slug: "hash-generator",
@@ -103,6 +131,33 @@ export const securityTools: Tool[] = [
         "sha256 generator",
         "checksum generator",
         "sha512 hash",
+      ],
+    },
+    info: {
+      description:
+        "A hash generator is a tool that converts any text input into a fixed-length hash value using cryptographic hashing algorithms such as MD5, SHA-256, SHA-384, and SHA-512. Hashes are commonly used for file integrity verification, checksums, digital signatures, password storage systems, and detecting changes in data. Because hashing is one-way, the output cannot be reversed into the original input, which makes it useful for verifying data integrity and storing non-reversible fingerprints. This online hash generator lets you instantly generate hashes for any string, compare hash values, and validate that content has not been modified or corrupted.",
+      howToUse: [
+        "Enter or paste the text you want to hash into the input field",
+        "Click Generate Hashes to compute MD5, SHA-256, SHA-384, and SHA-512",
+        "View the generated hash outputs in the results section",
+        "Copy any hash value to use in verification, storage, or comparison",
+        "Use hashes to validate file integrity, API payloads, or stored credentials",
+      ],
+      useCases: [
+        "Checksum Verification: Generate hashes to confirm files or payloads are unchanged",
+        "Data Integrity: Detect changes in strings, configs, and API responses by comparing hashes",
+        "Token Fingerprinting: Store hashed versions of tokens instead of raw tokens for safer comparison",
+        "Generate Unique Identifiers: Create deterministic identifiers from consistent input text",
+        "Debug Hash Mismatches: Compare expected and actual hash values when debugging systems",
+        "Digital Signatures Prep: Generate message hashes used as inputs for signature algorithms",
+      ],
+      features: [
+        "Multiple Algorithms: Generate MD5, SHA-256, SHA-384, and SHA-512 at once",
+        "Instant Hashing: Real-time hashing output for fast developer workflows",
+        "Deterministic Results: Same input always produces the same hash output",
+        "One-Click Copy: Quickly copy hashes to clipboard",
+        "Privacy Friendly: Everything runs locally — no data is uploaded",
+        "Perfect for Security and DevOps: Useful for integrity checks, config validation, and debugging",
       ],
     },
     examples: [
@@ -164,6 +219,7 @@ export const securityTools: Tool[] = [
       convertLabel: "Generate Hashes",
     },
   },
+
   {
     id: "uuid-generator",
     slug: "uuid-generator",
@@ -182,6 +238,33 @@ export const securityTools: Tool[] = [
         "unique id generator",
         "random uuid",
         "uuid v4",
+      ],
+    },
+    info: {
+      description:
+        "A UUID v4 generator creates random universally unique identifiers (UUIDs) that can be used as IDs in databases, APIs, distributed systems, and application-level entities. UUID v4 is generated using random values and has an extremely low probability of collision, making it a reliable choice for globally unique identifiers. Developers use UUIDs for user IDs, request IDs, transaction IDs, trace identifiers, public references, and anything that must remain unique across multiple services. This online UUID generator creates valid RFC 4122 UUID v4 strings instantly and allows you to generate single or multiple UUIDs for batch operations.",
+      howToUse: [
+        "Click Generate UUIDs to create one or more random UUID v4 values",
+        "Copy the UUID output using the copy button",
+        "Use the UUIDs as unique IDs in your database, API, or application logic",
+        "Generate multiple UUIDs for batch insertion or data seeding",
+        "Use UUIDs for tracing, correlation IDs, and distributed logging systems",
+      ],
+      useCases: [
+        "Database Primary Keys: Use UUID v4 as globally unique identifiers for database rows",
+        "Public IDs: Use UUIDs as non-guessable public identifiers in URLs and APIs",
+        "Request Tracing: Generate request IDs for debugging and log correlation",
+        "Distributed Systems: Generate unique IDs without needing a central database sequence",
+        "Offline Generation: Create IDs client-side without needing network access",
+        "Testing & Seeding: Generate test data UUIDs for fixtures and integration tests",
+      ],
+      features: [
+        "RFC 4122 UUID v4 Format: Generates valid UUID v4 identifiers",
+        "Cryptographically Secure Randomness: Uses strong randomness for low collision probability",
+        "Batch Generation Support: Generate multiple UUIDs quickly",
+        "Instant Output: Fast and lightweight generator",
+        "One-Click Copy: Copy generated UUIDs easily",
+        "Privacy First: Runs fully in your browser — no data is sent to servers",
       ],
     },
     examples: [
@@ -245,6 +328,7 @@ export const securityTools: Tool[] = [
       convertLabel: "Generate UUIDs",
     },
   },
+
   {
     id: "password-generator",
     slug: "password-generator",
@@ -264,6 +348,33 @@ export const securityTools: Tool[] = [
         "secure password",
         "strong password generator",
         "password creator",
+      ],
+    },
+    info: {
+      description:
+        "A password generator is a security tool that creates strong, random passwords using cryptographically secure randomness. Strong passwords are critical for preventing account takeovers, brute-force attacks, credential stuffing, and unauthorized access. This online password generator allows you to generate secure passwords with customizable length and character rules, including uppercase letters, lowercase letters, numbers, and symbols. It is ideal for creating unique passwords for email accounts, banking, social networks, admin dashboards, and developer tools. Using long, random passwords is one of the simplest and most effective cybersecurity practices.",
+      howToUse: [
+        "Choose your password length (recommended: 16+ characters)",
+        "Enable or disable character types: uppercase, lowercase, numbers, symbols",
+        "Click Generate Password to generate a secure random password",
+        "Copy the generated password using the copy button",
+        "Store it safely in a password manager and use it in your account signup or security settings",
+      ],
+      useCases: [
+        "Create Strong Passwords for Email and Banking Accounts",
+        "Generate Random Passwords for Admin Dashboards and Dev Tools",
+        "Generate Unique Passwords to Prevent Credential Reuse",
+        "Create Secure Passwords for Team Tools and Shared Accounts (stored in a manager)",
+        "Generate Passwords That Match System Requirements (no symbols, specific length)",
+        "Improve Security Hygiene by replacing weak passwords with strong random ones",
+      ],
+      features: [
+        "Cryptographically Secure Randomness: Uses crypto.getRandomValues for strong entropy",
+        "Custom Length and Rules: Choose length and required character types",
+        "Strong Defaults: Designed for modern security requirements (16+ recommended)",
+        "Instant Generation: Generate secure passwords in one click",
+        "One-Click Copy: Copy generated passwords instantly",
+        "Privacy First: Password generation happens locally in your browser",
       ],
     },
     examples: [
