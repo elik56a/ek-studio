@@ -129,10 +129,7 @@ export function EditorPanel({
         )}
 
         {/* Output Panel */}
-        <Card className={cn(
-          "glass border-0 shadow-glow flex flex-col h-full transition-all duration-500",
-          isOutputAnimating && "output-glow-animation"
-        )}>
+        <Card className="glass border-0 shadow-glow flex flex-col h-full transition-all duration-500">
           <CardHeader className="pb-2 px-4 sm:px-6 border-b border-border/30">
             {/* Title Row */}
             <div className="flex items-center justify-between gap-2">
@@ -185,7 +182,10 @@ export function EditorPanel({
                 value={outputValue}
                 readOnly
                 placeholder={outputPlaceholder}
-                className="w-full h-full min-h-[100px] max-h-[400px] resize-none font-mono text-xs sm:text-sm bg-muted/30 border-border/50 cursor-default"
+                className={cn(
+                  "w-full h-full min-h-[100px] max-h-[400px] resize-none font-mono text-xs sm:text-sm bg-muted/30 border-border/50 cursor-default transition-all duration-500",
+                  isOutputAnimating && "output-glow-animation"
+                )}
                 suppressHydrationWarning
               />
             )}

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { BlogPost } from '../types';
 import rehypePrettyCode from 'rehype-pretty-code';
 import { CodeBlock } from './CodeBlock';
+import { ImageWithSkeleton } from './ImageWithSkeleton';
 
 export interface BlogPostContentProps {
   post: BlogPost;
@@ -27,10 +28,11 @@ export async function BlogPostContent({ post, components = {}, basePath = '/blog
         {/* Author and metadata */}
         <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
           {post.author.avatar && (
-            <img 
+            <ImageWithSkeleton
               src={post.author.avatar} 
               alt={post.author.name}
               className="h-14 w-14 rounded-full ring-2 ring-primary/20 shadow-md"
+              skeletonClassName="h-14 w-14 rounded-full"
             />
           )}
           <div className="flex flex-col gap-1.5">
@@ -97,6 +99,12 @@ export async function BlogPostContent({ post, components = {}, basePath = '/blog
           }}
           components={{
             pre: CodeBlock,
+            img: (props: any) => (
+              <ImageWithSkeleton
+                {...props}
+                skeletonClassName="h-64 w-full rounded-lg"
+              />
+            ),
             ...components,
           }}
         />

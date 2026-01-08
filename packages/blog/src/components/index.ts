@@ -11,3 +11,4 @@ export * from './BlogPagination';
 export * from './BlogTagList';
 export * from './BlogSearch';
 export * from './CodeBlock';
+export * from './ImageWithSkeleton';

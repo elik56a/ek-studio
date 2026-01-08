@@ -17,15 +17,15 @@ importers:
 
   apps/dev-converter:
     dependencies:
+      '@ek-studio/blog':
+        specifier: workspace:*
+        version: link:../../packages/blog
       '@ek-studio/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@microsoft/clarity':
         specifier: ^1.0.2
         version: 1.0.2
-      '@ek-studio/blog':
-        specifier: workspace:*
-        version: link:../../packages/blog
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@4.1.18)
@@ -141,6 +141,9 @@ importers:
 
   packages/blog:
     dependencies:
+      '@ek-studio/ui':
+        specifier: workspace:*
+        version: link:../ui
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
