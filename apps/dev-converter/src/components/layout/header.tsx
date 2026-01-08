@@ -56,14 +56,14 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 glass border-b backdrop-blur-xl bg-background/95">
-      <div className="px-4 flex h-16 items-center max-w-full">
+      <div className="px-4 flex h-16 items-center justify-between max-w-full">
         {/* Logo - Left */}
         <div className="flex-shrink-0">
           <Logo size="sm" variant="default" href="/" />
         </div>
 
         {/* Desktop Navigation - Center */}
-        <nav className="hidden lg:flex items-center justify-center space-x-1 text-sm font-medium flex-1">
+        <nav className="hidden lg:flex lg:flex-1 items-center justify-center space-x-1 text-sm font-medium">
           {categories.map(category => (
             <CategoryDropdown
               key={category.id}
@@ -184,18 +184,6 @@ export function Header() {
 
             {/* Mobile Navigation Links */}
             <nav className="flex flex-col space-y-2 pt-2">
-              <SmoothLink
-                href="/blog"
-                className={`text-sm font-medium transition-colors hover:text-primary py-2 px-3 rounded-md hover:bg-primary/5 ${
-                  pathname.startsWith("/blog")
-                    ? "text-primary bg-primary/5"
-                    : ""
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Blog
-              </SmoothLink>
-
               {categories.map(category => {
                 const IconComponent = category.icon
                 const isActive = isCategoryActive(category.id)
@@ -264,6 +252,17 @@ export function Header() {
                   </div>
                 )
               })}
+              <SmoothLink
+                href="/blog"
+                className={`text-sm font-medium transition-colors hover:text-primary py-2 px-3 rounded-md hover:bg-primary/5 ${
+                  pathname.startsWith("/blog")
+                    ? "text-primary bg-primary/5"
+                    : ""
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Blog
+              </SmoothLink>
             </nav>
           </div>
         </div>

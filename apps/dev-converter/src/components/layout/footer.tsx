@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Logo } from "@/components/layout/logo"
 import { SmoothLink } from "@/components/layout/smooth-link"
 import { siteConfig } from "@/config/site"
+import { categories } from "@/lib/tools/categories"
 
 export function Footer() {
   return (
@@ -91,38 +92,16 @@ export function Footer() {
               Categories
             </h4>
             <ul className="space-y-2 sm:space-y-3 text-sm">
-              <li>
-                <Link
-                  href="/categories/json-data"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  JSON & Data
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/categories/encoding"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Encoding & Decoding
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/categories/security"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Security & Crypto
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/categories/text"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Text Utilities
-                </Link>
-              </li>
+              {categories.map(category => (
+                <li key={category.id}>
+                  <Link
+                    href={`/categories/${category.id}`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

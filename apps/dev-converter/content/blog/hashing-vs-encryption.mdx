@@ -1,0 +1,362 @@
+---
+title: "Hashing vs Encryption: What's the Difference? (MD5, SHA-256, AES Explained)"
+description: "Learn the difference between hashing and encryption, when to use SHA-256, MD5, AES, and how to generate secure hashes for checksums, tokens, and passwords using DevConverter."
+date: "2026-01-09"
+author:
+  name: "DevConverter Team"
+  url: "https://devconverter.dev"
+tags:
+  - security
+  - cryptography
+  - hashing
+  - encryption
+  - sha256
+  - md5
+image: "/images/blog/hashing-vs-encryption.svg"
+---
+
+## Why Developers Confuse Hashing and Encryption (And Why It’s Dangerous)
+
+Many developers use the terms **hashing** and **encryption** as if they’re the same thing.
+
+They are **not**.
+
+Mixing them up can lead to:
+
+- storing passwords insecurely
+- leaking API tokens
+- broken authentication logic
+- weak file integrity checks
+- security vulnerabilities that attackers exploit instantly
+
+This guide explains:
+
+✅ what hashing is  
+✅ what encryption is  
+✅ the difference between them  
+✅ when to use each  
+✅ real examples in Node.js and Python  
+✅ common mistakes (especially MD5 and passwords)
+
+---
+
+## Hashing vs Encryption: The Core Difference
+
+### ✅ Hashing (One-way)
+
+Hashing transforms input data into a fixed-size output.
+
+- **One-way**
+- You **cannot** reverse a hash
+- Same input → same output
+- Used for verification, integrity, fingerprints
+
+Examples:
+
+- SHA-256
+- SHA-512
+- MD5 (not secure)
+- bcrypt, Argon2 (password hashing)
+
+---
+
+### ✅ Encryption (Two-way)
+
+Encryption transforms data into unreadable form **but can be reversed** with a key.
+
+- **Two-way**
+- Requires a key to decrypt
+- Used for protecting data in storage/transmission
+
+Examples:
+
+- AES (symmetric)
+- RSA (asymmetric)
+- ChaCha20
+
+---
+
+## Quick Comparison Table
+
+| Feature       | Hashing                         | Encryption                         |
+| ------------- | ------------------------------- | ---------------------------------- |
+| Reversible?   | ❌ No                           | ✅ Yes                             |
+| Key required? | ❌ No                           | ✅ Yes                             |
+| Output size   | Fixed                           | Variable                           |
+| Typical use   | Passwords, checksums, integrity | Secure storage, secrets, messaging |
+| Examples      | SHA-256, SHA-512, bcrypt        | AES, RSA                           |
+
+---
+
+## Hashing Explained (SHA-256, SHA-512, MD5)
+
+### What is a Hash?
+
+A hash is a fingerprint of data.
+
+If even **one character changes**, the hash changes completely.
+
+Example:
+
+Input:
+
+```
+hello
+```
+
+SHA-256 output:
+
+```
+2cf24dba5fb0a30e26e83b2ac5b9e29e...
+```
+
+If you hash:
+
+```
+Hello
+```
+
+You get a totally different hash.
+
+---
+
+### ✅ Use Hashing When You Need Integrity
+
+Hashing is perfect for:
+
+- verifying downloads
+- detecting file tampering
+- comparing tokens without storing the real token
+- signing (hashing is part of signing)
+
+---
+
+### ❌ MD5 Warning (Still Used, But Not Secure)
+
+MD5 is still used for:
+✅ checksums  
+✅ detecting accidental file corruption
+
+But MD5 should NOT be used for:
+❌ security  
+❌ authentication  
+❌ passwords  
+❌ crypto
+
+It has known **collisions**, meaning attackers can craft different data with the same MD5 hash.
+
+---
+
+## Encryption Explained (AES, RSA)
+
+Encryption is used when data must be recovered later.
+
+Examples:
+
+- storing sensitive data in DB
+- sending secure messages
+- encrypting config secrets
+- storing credit cards (with strict compliance)
+
+### AES Example (Node.js)
+
+```js
+import crypto from "crypto"
+
+const secretKey = crypto.randomBytes(32) // 256-bit
+const iv = crypto.randomBytes(16)
+
+const encrypt = text => {
+  const cipher = crypto.createCipheriv("aes-256-cbc", secretKey, iv)
+  let encrypted = cipher.update(text, "utf8", "hex")
+  encrypted += cipher.final("hex")
+  return encrypted
+}
+
+const decrypt = encryptedText => {
+  const decipher = crypto.createDecipheriv("aes-256-cbc", secretKey, iv)
+  let decrypted = decipher.update(encryptedText, "hex", "utf8")
+  decrypted += decipher.final("utf8")
+  return decrypted
+}
+
+const encrypted = encrypt("super secret")
+console.log(encrypted)
+console.log(decrypt(encrypted))
+```
+
+---
+
+## How Hashes Are Used in Real Apps
+
+### 1. File Integrity (Checksums)
+
+When you download a file, many sites provide a SHA-256 checksum.
+
+You hash the file and compare.
+
+If the hashes match → file is authentic.
+
+---
+
+### 2. Token Fingerprinting
+
+Instead of storing raw API keys, store a hash of them.
+
+When a user provides the token:
+
+✅ hash input  
+✅ compare hash  
+✅ never store the actual token
+
+---
+
+### 3. Digital Signatures (JWT, Certificates)
+
+Signing systems do something like:
+
+1. hash the payload
+2. encrypt/sign the hash
+3. verify hash integrity later
+
+JWT signatures are not encrypted — they are integrity checks.
+
+---
+
+## Hashing Passwords: The Biggest Mistake
+
+Many developers still do this:
+
+❌ **Bad:**
+
+```js
+const hashed = crypto.createHash("sha256").update(password).digest("hex")
+```
+
+This is **NOT secure for passwords** because:
+
+- SHA-256 is fast → easy for brute-force
+- no salting by default
+- vulnerable to rainbow tables and GPU cracking
+
+✅ **Correct approach:** use password hashing algorithms:
+
+- bcrypt
+- Argon2 (best modern choice)
+- PBKDF2
+
+Example (bcrypt):
+
+```js
+import bcrypt from "bcrypt"
+
+const hashPassword = async password => {
+  const saltRounds = 12
+  return bcrypt.hash(password, saltRounds)
+}
+
+const verifyPassword = async (password, hash) => {
+  return bcrypt.compare(password, hash)
+}
+```
+
+---
+
+## Common Mistakes Developers Make
+
+### 1. Using Base64 as Encryption
+
+Base64 is not encryption.
+
+It’s encoding.
+
+Anyone can decode it instantly.
+
+---
+
+### 2. Storing Passwords With SHA-256
+
+Never store passwords using plain SHA-256.
+
+Use bcrypt or Argon2.
+
+---
+
+### 3. Using MD5 for Security
+
+MD5 is only acceptable for **non-security** checksums.
+
+---
+
+### 4. Forgetting Key Rotation (Encryption)
+
+If you encrypt data, you must have:
+
+- secure key storage
+- rotation plan
+- backup keys
+- access policies
+
+---
+
+## Best Practices for Modern Cryptography
+
+### ✅ Use Hashing For
+
+- checksums
+- data fingerprints
+- token comparisons
+- password hashing (with bcrypt/Argon2)
+
+### ✅ Use Encryption For
+
+- secrets storage
+- user private data
+- payment-related content
+- communication systems
+
+---
+
+## Quick FAQ
+
+### Is hashing secure?
+
+Hashing is secure for integrity, but not for secrecy. If attackers know the input space (like short passwords), they can brute-force it.
+
+### Is encryption always secure?
+
+Only if:
+
+- keys are stored properly
+- algorithms are modern (AES-GCM)
+- IVs are random
+- you rotate keys when needed
+
+### Can I decode SHA-256?
+
+No. SHA-256 is one-way.
+
+### Can I decode AES?
+
+Yes, if you have the correct key and IV.
+
+---
+
+## Quick Summary
+
+- Hashing is one-way (verification and integrity)
+- Encryption is two-way (protecting secrets)
+- SHA-256 is great for checksums and fingerprints
+- MD5 is not secure for crypto usage
+- Never hash passwords with SHA-256 — use bcrypt or Argon2
+- Base64 is encoding, not encryption
+
+---
+
+## Try DevConverter Tools
+
+- 🔐 **Generate SHA-256 / SHA-512 / MD5 hashes:** [Hash Generator →](/hash-generator)
+- 🎫 **Inspect JWT token payload and claims:** [JWT Decoder →](/jwt-decoder)
+- 🔑 **Generate secure random passwords:** [Password Generator →](/password-generator)
+
+Fast, secure, and completely private — your data never leaves your browser.

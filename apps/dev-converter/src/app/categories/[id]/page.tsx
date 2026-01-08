@@ -67,30 +67,34 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
         {/* Hero Section */}
         <div className="text-center space-y-6 sm:space-y-8 pt-4 sm:pt-8">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0">
-              <IconComponent className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
+          <div className="flex flex-col items-center justify-center gap-4 sm:gap-5 mb-4 sm:mb-6">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20 flex items-center justify-center flex-shrink-0 shadow-lg">
+              <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
             </div>
-            <div className="text-center sm:text-left">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            <div className="text-center space-y-2">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                 {category.name}
               </h1>
-              <p className="text-muted-foreground text-base sm:text-lg mt-1">
+              <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl mx-auto">
                 {category.description}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 pt-2 sm:pt-4">
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
-              <Users className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span>
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 pt-2 sm:pt-4">
+            <div className="flex items-center gap-2 text-sm sm:text-base text-muted-foreground">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <Users className="w-4 h-4 text-primary" />
+              </div>
+              <span className="font-medium">
                 {tools.length} {tools.length === 1 ? "tool" : "tools"}
               </span>
             </div>
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
-              <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span>Updated regularly</span>
+            <div className="flex items-center gap-2 text-sm sm:text-base text-muted-foreground">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <Clock className="w-4 h-4 text-primary" />
+              </div>
+              <span className="font-medium">Updated regularly</span>
             </div>
           </div>
         </div>
@@ -98,59 +102,56 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         {/* Tools Grid */}
         {tools.length > 0 ? (
           <div className="space-y-6 sm:space-y-8">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
-              <h2 className="text-xl sm:text-2xl font-semibold">
-                Available Tools
-              </h2>
-              <Button
-                variant="outline"
-                size="sm"
-                className="text-xs sm:text-sm"
-              >
-                Sort by popularity
-              </Button>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 px-1">
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold">
+                  Available Tools
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Choose a tool to get started
+                </p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-7">
               {toolsWithMeta.map((tool, index) => (
                 <SmoothLink key={tool.id} href={`/${tool.slug}`}>
-                  <Card className="group h-full hover:shadow-glow transition-all duration-300 hover:-translate-y-1 glass border-0">
-                    <CardHeader className="pb-3 sm:pb-4">
-                      <div className="flex items-start justify-between mb-2 gap-2">
-                        <CardTitle className="text-base sm:text-xl transition-colors leading-tight">
+                  <Card className="group h-full transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1 glass border border-border/50 hover:border-primary/30 overflow-hidden">
+                    <CardHeader className="pb-4">
+                      <div className="flex items-start justify-between mb-3 gap-2">
+                        <CardTitle className="text-lg sm:text-xl group-hover:text-primary transition-colors duration-200 leading-tight">
                           {tool.name}
                         </CardTitle>
                       </div>
-                      <CardDescription className="text-xs sm:text-sm leading-relaxed">
+                      <CardDescription className="text-sm leading-relaxed min-h-[2.5rem]">
                         {tool.description}
                       </CardDescription>
                     </CardHeader>
 
-                    <CardContent className="pt-0 space-y-3 sm:space-y-4">
+                    <CardContent className="pt-0 space-y-4">
                       {/* Keywords */}
-                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                      <div className="flex flex-wrap gap-2 min-h-[2rem]">
                         {tool.keywords.slice(0, 3).map(keyword => (
                           <Badge
                             key={keyword}
-                            variant="outline"
-                            className="text-xs"
+                            className="text-xs bg-primary/10 text-primary hover:bg-primary/20 transition-colors duration-200"
                           >
                             {keyword}
                           </Badge>
                         ))}
                         {tool.keywords.length > 3 && (
-                          <Badge variant="outline" className="text-xs">
+                          <Badge className="text-xs bg-primary/10 text-primary hover:bg-primary/20 transition-colors duration-200">
                             +{tool.keywords.length - 3}
                           </Badge>
                         )}
                       </div>
 
                       {/* CTA */}
-                      <div className="flex items-center justify-between pt-2">
-                        <span className="text-xs sm:text-sm font-medium text-primary group-hover:text-accent transition-colors">
+                      <div className="flex items-center justify-between pt-2 border-t border-border/50">
+                        <span className="text-sm font-semibold text-primary group-hover:text-accent transition-colors duration-200">
                           Try it now
                         </span>
-                        <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:translate-x-1 transition-all" />
+                        <ArrowRight className="w-5 h-5 text-primary group-hover:translate-x-1 group-hover:text-accent transition-all duration-200" />
                       </div>
                     </CardContent>
                   </Card>

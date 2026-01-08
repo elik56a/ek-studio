@@ -38,14 +38,14 @@ export default function CategoriesSection({
             const IconComponent = category.icon
             return (
               <SmoothLink key={category.id} href={`/categories/${category.id}`}>
-                <Card className="group h-full hover:shadow-glow transition-all duration-300 hover:-translate-y-1 glass border-0">
+                <Card className="group h-full transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 hover:scale-[1.02] glass border-0 relative overflow-hidden">
                   <CardHeader className="pb-3 sm:pb-4">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center group-hover:from-primary/20 group-hover:to-accent/20 transition-all flex-shrink-0">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300 flex-shrink-0">
                         <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                       </div>
                       <div className="min-w-0">
-                        <CardTitle className="text-base sm:text-xl transition-colors">
+                        <CardTitle className="text-base sm:text-xl group-hover:text-primary transition-colors duration-300">
                           {category.name}
                         </CardTitle>
                         <CardDescription className="text-xs sm:text-sm">
@@ -59,23 +59,25 @@ export default function CategoriesSection({
                       {category.tools.slice(0, 3).map(toolId => (
                         <Badge
                           key={toolId}
-                          variant="outline"
-                          className="text-xs"
+                          className="text-xs bg-primary/10 text-primary hover:bg-primary/20 transition-colors duration-300"
                         >
                           {toolId.replace(/-/g, " ")}
                         </Badge>
                       ))}
                       {category.tools.length > 3 && (
-                        <Badge variant="secondary" className="text-xs">
+                        <Badge className="text-xs bg-primary/10 text-primary hover:bg-primary/20 transition-colors duration-300">
                           +{category.tools.length - 3} more
                         </Badge>
                       )}
                     </div>
-                    <div className="mt-3 sm:mt-4 flex items-center text-xs sm:text-sm text-muted-foreground transition-colors">
+                    <div className="mt-3 sm:mt-4 flex items-center text-xs sm:text-sm text-muted-foreground transition-colors duration-300">
                       <span>{category.tools.length} tools</span>
-                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-auto group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-auto group-hover:translate-x-2 transition-all duration-300" />
                     </div>
                   </CardContent>
+
+                  {/* Hover border effect */}
+                  <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-border transition-all duration-300 group-hover:ring-2 group-hover:ring-primary/30" />
                 </Card>
               </SmoothLink>
             )
