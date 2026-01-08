@@ -2,11 +2,16 @@
 
 import { useEffect, useState } from "react"
 
-export function useAutoSave<T>(key: string, value: T, delay = 1000) {
+export function useAutoSave<T>(
+  key: string,
+  value: T,
+  delay = 1000,
+  enabled = true
+) {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    if (!value) return
+    if (!value || !enabled) return
 
     setIsLoading(true)
     const timer = setTimeout(() => {
@@ -19,7 +24,7 @@ export function useAutoSave<T>(key: string, value: T, delay = 1000) {
     }, delay)
 
     return () => clearTimeout(timer)
-  }, [key, value, delay])
+  }, [key, value, delay, enabled])
 
   const loadSaved = (): T | null => {
     try {

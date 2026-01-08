@@ -1,0 +1,260 @@
+---
+title: "How to Decode JWT Tokens: Complete Guide for Developers"
+description: "Learn how to decode JWT tokens quickly and securely. Step-by-step guide with code examples, common mistakes, and best practices for handling JSON Web Tokens."
+date: "2025-01-08"
+author:
+  name: "DevConverter Team"
+  url: "https://devconverter.dev"
+tags:
+  - jwt
+  - authentication
+  - security
+  - json
+image: "/images/blog/jwt-decode.svg"
+---
+
+## What is JWT Decoding and Why Do You Need It?
+
+JWT (JSON Web Token) decoding is the process of extracting the payload data from a JWT without verifying its signature. This is useful when you need to quickly inspect token contents during development, debugging authentication issues, or understanding what data your API is receiving.
+
+**Who this guide is for:**
+- Developers debugging authentication flows
+- Backend engineers inspecting API tokens
+- Frontend developers working with JWT-based auth
+- Anyone needing to quickly view JWT contents
+
+## Understanding JWT Structure
+
+A JWT consists of three parts separated by dots (.):
+
+```
+header.payload.signature
+```
+
+- **Header**: Contains token type and signing algorithm
+- **Payload**: Contains the claims (user data)
+- **Signature**: Verifies the token hasn't been tampered with
+
+## Step-by-Step: How to Decode a JWT
+
+### Method 1: Using DevConverter (Fastest)
+
+1. Copy your JWT token
+2. Go to [DevConverter JWT Decoder](/jwt-decoder)
+3. Paste your token
+4. View the decoded header and payload instantly
+
+### Method 2: Using JavaScript/Node.js
+
+```javascript
+function decodeJWT(token) {
+  const parts = token.split('.');
+  
+  if (parts.length !== 3) {
+    throw new Error('Invalid JWT format');
+  }
+  
+  const header = JSON.parse(atob(parts[0]));
+  const payload = JSON.parse(atob(parts[1]));
+  
+  return { header, payload };
+}
+
+// Example usage
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const decoded = decodeJWT(token);
+console.log(decoded.payload);
+```
+
+### Method 3: Using Python
+
+```python
+import base64
+import json
+
+def decode_jwt(token):
+    parts = token.split('.')
+    
+    if len(parts) != 3:
+        raise ValueError('Invalid JWT format')
+    
+    # Add padding if needed
+    payload = parts[1]
+    payload += '=' * (4 - len(payload) % 4)
+    
+    decoded = base64.urlsafe_b64decode(payload)
+    return json.loads(decoded)
+
+# Example usage
+token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+payload = decode_jwt(token)
+print(payload)
+```
+
+## Common Mistakes to Avoid
+
+### 1. Confusing Decoding with Verification
+
+**Mistake:** Thinking decoded = verified
+```javascript
+// ❌ WRONG - This doesn't verify the signature!
+const decoded = decodeJWT(token);
+if (decoded.payload.role === 'admin') {
+  grantAccess(); // SECURITY RISK!
+}
+```
+
+**Correct approach:**
+```javascript
+// ✅ CORRECT - Always verify before trusting
+const verified = jwt.verify(token, secretKey);
+if (verified.role === 'admin') {
+  grantAccess();
+}
+```
+
+### 2. Forgetting Base64 Padding
+
+JWT uses base64url encoding which may need padding. Always add padding when decoding manually.
+
+### 3. Exposing Sensitive Data in JWTs
+
+**Don't store:**
+- Passwords
+- Credit card numbers
+- Social security numbers
+- Private keys
+
+**Do store:**
+- User ID
+- Username
+- Roles/permissions
+- Expiration time
+
+### 4. Not Checking Token Expiration
+
+```javascript
+// ✅ Always check exp claim
+const decoded = decodeJWT(token);
+if (decoded.payload.exp < Date.now() / 1000) {
+  throw new Error('Token expired');
+}
+```
+
+## Best Practices for Working with JWTs
+
+### 1. Use HTTPS Only
+
+Always transmit JWTs over HTTPS to prevent interception.
+
+### 2. Set Short Expiration Times
+
+```javascript
+// Good: 15 minutes for access tokens
+const token = jwt.sign(payload, secret, { expiresIn: '15m' });
+```
+
+### 3. Store Tokens Securely
+
+- **Frontend**: Use httpOnly cookies (not localStorage)
+- **Backend**: Never log tokens in production
+
+### 4. Validate All Claims
+
+```javascript
+const decoded = decodeJWT(token);
+
+// Check issuer
+if (decoded.payload.iss !== 'your-auth-server.com') {
+  throw new Error('Invalid issuer');
+}
+
+// Check audience
+if (decoded.payload.aud !== 'your-app.com') {
+  throw new Error('Invalid audience');
+}
+```
+
+## FAQ
+
+### Can I decode a JWT without the secret key?
+
+Yes! Decoding only requires base64 decoding. The secret key is only needed for **verification** (checking if the token is valid and hasn't been tampered with).
+
+### Is it safe to decode JWTs in the browser?
+
+Yes, decoding is safe because JWTs are not encrypted—they're just encoded. However, never trust decoded data without verification on the server.
+
+### What's the difference between decoding and verifying a JWT?
+
+- **Decoding**: Extracting the payload (no security check)
+- **Verifying**: Checking the signature to ensure the token is valid and unmodified
+
+### How do I decode a JWT in the command line?
+
+```bash
+# Using jq and base64
+echo 'eyJhbGc...' | cut -d'.' -f2 | base64 -d | jq
+```
+
+### Why does my decoded JWT look garbled?
+
+Make sure you're:
+1. Using base64url decoding (not regular base64)
+2. Adding proper padding (=) if needed
+3. Decoding the payload part (second segment)
+
+### Can expired JWTs still be decoded?
+
+Yes! Expiration only affects **verification**, not decoding. You can decode expired tokens to inspect their contents.
+
+### What should I do if my JWT has 4 or 5 parts?
+
+Standard JWTs have 3 parts. If yours has more, it might be:
+- A JWE (JSON Web Encryption) token
+- A malformed token
+- A custom token format
+
+### How can I decode JWTs in production safely?
+
+Use established libraries:
+- **Node.js**: `jsonwebtoken`, `jose`
+- **Python**: `PyJWT`
+- **Java**: `java-jwt`
+- **Go**: `golang-jwt`
+
+Never roll your own JWT implementation in production.
+
+### What information is in the JWT header?
+
+Typically:
+- `alg`: Signing algorithm (HS256, RS256, etc.)
+- `typ`: Token type (usually "JWT")
+- `kid`: Key ID (for key rotation)
+
+### How do I handle JWT decoding errors?
+
+```javascript
+try {
+  const decoded = decodeJWT(token);
+  console.log(decoded);
+} catch (error) {
+  if (error.message.includes('Invalid JWT format')) {
+    // Handle malformed token
+  } else {
+    // Handle other errors
+  }
+}
+```
+
+## Quick Summary
+
+- JWT decoding extracts payload data without verification
+- Use [DevConverter's JWT Decoder](/jwt-decoder) for instant, secure decoding
+- Never trust decoded data without server-side verification
+- Always check expiration and validate claims
+- Use HTTPS and store tokens securely
+
+**Ready to decode your JWT?** [Try DevConverter's free JWT Decoder tool →](/jwt-decoder)
+
+No installation, no sign-up, completely private—your tokens never leave your browser.

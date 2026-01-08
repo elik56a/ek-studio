@@ -108,11 +108,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Critical preconnects for performance */}
+        <link rel="preconnect" href="https://va.vercel-scripts.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        
+        {/* Structured data - non-blocking */}
         <WebsiteStructuredData />
         <OrganizationStructuredData />
-        {/* Preconnect to Vercel Analytics - saves 340ms on LCP */}
-        <link rel="preconnect" href="https://va.vercel-scripts.com" />
-        <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
@@ -120,17 +124,21 @@ export default function RootLayout({
         <ThemeProvider>
           <ToastProvider>
             <ProgressBar />
-            <Suspense fallback={null}>
-              <Header />
-            </Suspense>
+            <Header />
             <main className="flex-1">{children}</main>
-            <Footer />
+            <Suspense fallback={null}>
+              <Footer />
+            </Suspense>
           </ToastProvider>
         </ThemeProvider>
-        <ClarityAnalytics />
-        <GoogleAnalytics />
-        <Analytics />
-        <SpeedInsights />
+        
+        {/* Analytics - load after main content */}
+        <Suspense fallback={null}>
+          <ClarityAnalytics />
+          <GoogleAnalytics />
+          <Analytics />
+          <SpeedInsights />
+        </Suspense>
       </body>
     </html>
   )

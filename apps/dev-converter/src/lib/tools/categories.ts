@@ -7,7 +7,14 @@ import {
   Palette,
   Shield,
 } from "lucide-react"
-
+import {
+  jsonDataToolSlugs,
+  encodingToolSlugs,
+  securityToolSlugs,
+  textToolSlugs,
+  timeToolSlugs,
+  utilityToolSlugs,
+} from "./tool-configs"
 import { Category } from "./types"
 
 export interface CategoryConfig {
@@ -24,63 +31,42 @@ export const categoryConfigs: CategoryConfig[] = [
     name: "JSON & Data",
     description: "Convert and format JSON, YAML, CSV data",
     icon: Database,
-    tools: [
-      "json-formatter",
-      "json-to-yaml",
-      "yaml-to-json",
-      "json-to-csv",
-      "csv-to-json",
-    ],
+    tools: jsonDataToolSlugs,
   },
   {
     id: "encoding",
     name: "Encoding & Decoding",
     description: "Encode and decode various formats",
     icon: Lock,
-    tools: [
-      "base64-encode-decode",
-      "url-encode-decode",
-      "html-escape-unescape",
-      "json-escape-unescape",
-    ],
+    tools: encodingToolSlugs,
   },
   {
     id: "security",
     name: "Security & Crypto",
     description: "JWT, hashing, and security tools",
     icon: Shield,
-    tools: [
-      "jwt-decoder",
-      "hash-generator",
-      "uuid-generator",
-      "password-generator",
-    ],
+    tools: securityToolSlugs,
   },
   {
     id: "text",
     name: "Text Utilities",
     description: "Text manipulation and formatting",
     icon: FileText,
-    tools: [
-      "case-converter",
-      "diff-checker",
-      "regex-tester",
-      "markdown-html-converter",
-    ],
+    tools: textToolSlugs,
   },
   {
     id: "time",
     name: "Time & Date",
     description: "Time conversion and formatting",
     icon: Clock,
-    tools: ["unix-timestamp-converter"],
+    tools: timeToolSlugs,
   },
   {
     id: "utility",
     name: "Utilities",
     description: "General utility tools",
     icon: Palette,
-    tools: ["color-converter", "mime-type-lookup"],
+    tools: utilityToolSlugs,
   },
 ]
 

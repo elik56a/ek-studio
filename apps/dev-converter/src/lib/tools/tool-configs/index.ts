@@ -21,3 +21,11 @@ export const allTools: Tool[] = [
   ...timeTools,
   ...utilityTools,
 ]
+
+// Export tool slugs for category configuration
+export const jsonDataToolSlugs = jsonDataTools.map(tool => tool.slug)
+export const encodingToolSlugs = encodingTools.map(tool => tool.slug)
+export const securityToolSlugs = securityTools.map(tool => tool.slug)
+export const textToolSlugs = textTools.map(tool => tool.slug)
+export const timeToolSlugs = timeTools.map(tool => tool.slug)
+export const utilityToolSlugs = utilityTools.map(tool => tool.slug)

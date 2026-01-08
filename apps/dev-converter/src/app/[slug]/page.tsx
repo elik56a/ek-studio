@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
+import dynamic from "next/dynamic"
 
-import { ComingSoonPlaceholder } from "@/components/custom/coming-soon-placeholder"
 import { Breadcrumb } from "@/components/layout/breadcrumb"
 import {
   generateStructuredData,
@@ -9,6 +9,14 @@ import {
 } from "@/lib/ seo/metadata"
 import { getCategoryByToolId } from "@/lib/tools/categories"
 import { getToolBySlug } from "@/lib/tools/registry"
+
+const ComingSoonPlaceholder = dynamic(
+  () =>
+    import("@/components/custom/coming-soon-placeholder").then(
+      mod => mod.ComingSoonPlaceholder
+    ),
+  { ssr: true }
+)
 
 interface ToolPageProps {
   params: Promise<{ slug: string }>

@@ -30,6 +30,7 @@ interface ToolLayoutProps {
     outputLabel?: string
     errorMessage?: string
     customOutputComponent?: React.ReactNode
+    customInputComponent?: React.ReactNode
     showSwapButton?: boolean
     onSwap?: () => void
   }

@@ -1,0 +1,35 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="url(#gradient2)"/>
+  <defs>
+    <linearGradient id="gradient2" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f093fb"/>
+      <stop offset="100%" stop-color="#f5576c"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- JSON Side -->
+  <g transform="translate(100, 150)">
+    <rect x="0" y="0" width="400" height="300" rx="12" fill="white" fill-opacity="0.1" stroke="white" stroke-width="2"/>
+    <text x="200" y="40" font-family="system-ui" font-size="24" fill="white" text-anchor="middle" font-weight="bold">JSON</text>
+    <text x="30" y="100" font-family="monospace" font-size="16" fill="white">{</text>
+    <text x="50" y="130" font-family="monospace" font-size="16" fill="white">"name": "value",</text>
+    <text x="50" y="160" font-family="monospace" font-size="16" fill="white">"key": "data"</text>
+    <text x="30" y="190" font-family="monospace" font-size="16" fill="white">}</text>
+  </g>
+  
+  <!-- Arrow -->
+  <g transform="translate(560, 290)">
+    <path d="M0 0 L60 0 L60 -15 L90 15 L60 45 L60 30 L0 30 Z" fill="white"/>
+  </g>
+  
+  <!-- YAML Side -->
+  <g transform="translate(700, 150)">
+    <rect x="0" y="0" width="400" height="300" rx="12" fill="white" fill-opacity="0.15" stroke="white" stroke-width="2"/>
+    <text x="200" y="40" font-family="system-ui" font-size="24" fill="white" text-anchor="middle" font-weight="bold">YAML</text>
+    <text x="30" y="120" font-family="monospace" font-size="16" fill="white">name: value</text>
+    <text x="30" y="150" font-family="monospace" font-size="16" fill="white">key: data</text>
+  </g>
+  
+  <!-- Title -->
+  <text x="600" y="580" font-family="system-ui" font-size="48" fill="white" text-anchor="middle" font-weight="bold">JSON to YAML</text>
+</svg>

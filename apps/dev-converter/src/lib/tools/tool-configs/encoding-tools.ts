@@ -2,6 +2,68 @@ import { Tool } from "../types"
 
 export const encodingTools: Tool[] = [
   {
+    id: "image-to-base64",
+    slug: "image-to-base64",
+    name: "Image to Base64 Converter",
+    description:
+      "Convert images to Base64 data URLs for embedding in HTML, CSS, or JSON",
+    category: "encoding",
+    type: "converter",
+    keywords: ["image", "base64", "data url", "embed", "encode"],
+    metadata: {
+      title: "Image to Base64 Converter - Convert Images to Base64 Online",
+      description:
+        "Free online image to Base64 converter. Convert JPG, PNG, GIF, WebP, and SVG images to Base64 data URLs for embedding in HTML, CSS, or JSON.",
+      keywords: [
+        "image to base64",
+        "base64 image encoder",
+        "data url converter",
+        "image encoder",
+        "embed image",
+      ],
+    },
+    faq: [
+      {
+        question: "What is Base64 image encoding?",
+        answer:
+          "Base64 image encoding converts image binary data into a text string (data URL) that can be embedded directly in HTML, CSS, or JSON. This eliminates the need for separate image files and HTTP requests.",
+      },
+      {
+        question: "When should I use Base64 encoded images?",
+        answer:
+          "Use Base64 for small images like icons, logos, or inline graphics where reducing HTTP requests is beneficial. Avoid it for large images as Base64 increases file size by about 33% and can slow down page load times.",
+      },
+      {
+        question: "What image formats are supported?",
+        answer:
+          "This tool supports all common image formats including JPG, PNG, GIF, WebP, and SVG. The output is a data URL that includes the MIME type and Base64-encoded image data.",
+      },
+      {
+        question: "How do I use Base64 images in HTML?",
+        answer:
+          'Simply use the data URL in an img tag: <img src="data:image/png;base64,..." />. You can also use it in CSS backgrounds, JSON payloads, or anywhere a URL is accepted.',
+      },
+      {
+        question: "What is the maximum image size I can convert?",
+        answer:
+          "This tool supports images up to 10MB. However, for best performance, keep images under 100KB. Large Base64 strings can slow down page rendering and increase memory usage.",
+      },
+      {
+        question: "Does Base64 encoding reduce image quality?",
+        answer:
+          "No, Base64 encoding is lossless and preserves the original image quality. However, the encoded string is about 33% larger than the original file size due to the encoding format.",
+      },
+    ],
+    relatedTools: ["base64-encode-decode"],
+    ui: {
+      inputPlaceholder: "Upload an image file...",
+      outputPlaceholder: "Base64 data URL will appear here...",
+      inputLabel: "Image Upload",
+      outputLabel: "Base64 Output",
+      convertLabel: "Convert",
+    },
+  },
+  {
     id: "base64-encode-decode",
     slug: "base64-encode-decode",
     name: "Base64 Encoder & Decoder",

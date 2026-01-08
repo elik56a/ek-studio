@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   // Performance optimizations
   reactStrictMode: true,
 
+  // Transpile packages from monorepo
+  transpilePackages: ["@ek-studio/blog"],
+
   // Optimize images
   images: {
     formats: ["image/avif", "image/webp"],

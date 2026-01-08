@@ -1,0 +1,28 @@
+{
+  "name": "@ek-studio/blog",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "next": "^15.1.4",
+    "next-mdx-remote": "^5.0.0",
+    "react": "^19.0.0",
+    "reading-time": "^1.5.0",
+    "rehype-pretty-code": "^0.14.0",
+    "rss": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.6",
+    "@types/rss": "^0.0.32",
+    "typescript": "^5.7.3"
+  }
+}

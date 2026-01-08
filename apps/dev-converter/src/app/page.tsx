@@ -1,11 +1,8 @@
 "use client"
 
 import {
-  Badge,
   Button,
   Card,
-  CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@ek-studio/ui"
@@ -16,7 +13,6 @@ import {
   FileText,
   Hash,
   Lock,
-  Sparkles,
   Zap,
 } from "lucide-react"
 

@@ -141,6 +141,14 @@ export function Footer() {
               </li>
               <li>
                 <SmoothLink
+                  href="/blog"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Blog
+                </SmoothLink>
+              </li>
+              <li>
+                <SmoothLink
                   href="/faq"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >

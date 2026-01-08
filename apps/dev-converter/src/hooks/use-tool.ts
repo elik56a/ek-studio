@@ -6,6 +6,13 @@ import { useToolState } from "@/hooks/use-tool-state"
 import { isConverterTool } from "@/lib/tools/tool-utils"
 import { ConversionResult } from "@/lib/utils/json-utils"
 
+interface UseToolConfig {
+  /**
+   * Disable auto-save to local storage
+   */
+  disableAutoSave?: boolean
+}
+
 interface UseToolOptions {
   /**
    * The conversion function that takes input and returns a ConversionResult
@@ -19,10 +26,20 @@ interface UseToolOptions {
   generateFn?: () =>
     | ConversionResult<string>
     | Promise<ConversionResult<string>>
+  /**
+   * Configuration options for the tool
+   */
+  config?: UseToolConfig
 }
 
-export function useTool({ convertFn, generateFn }: UseToolOptions) {
-  const toolState = useToolState()
+export function useTool({
+  convertFn,
+  generateFn,
+  config = {},
+}: UseToolOptions) {
+  const toolState = useToolState({ 
+    disableAutoSave: config.disableAutoSave ?? false 
+  })
   const {
     input,
     setInput,

@@ -13,6 +13,8 @@ import {
 import { cn } from "@ek-studio/ui"
 import { AlertCircle, ArrowLeftRight } from "lucide-react"
 
+import { useOutputAnimation } from "@/hooks/use-output-animation"
+
 interface EditorPanelProps {
   inputValue?: string
   outputValue: string
@@ -26,6 +28,7 @@ interface EditorPanelProps {
   hasError?: boolean
   errorMessage?: string
   customOutputComponent?: React.ReactNode
+  customInputComponent?: React.ReactNode
   showSwapButton?: boolean
   onSwap?: () => void
   outputActions?: React.ReactNode
@@ -44,11 +47,13 @@ export function EditorPanel({
   hasError = false,
   errorMessage,
   customOutputComponent,
+  customInputComponent,
   showSwapButton = false,
   onSwap,
   outputActions,
 }: EditorPanelProps) {
   const showInput = inputValue !== undefined && onInputChange !== undefined
+  const isOutputAnimating = useOutputAnimation(outputValue)
 
   return (
     <div className={cn("space-y-4 sm:space-y-8", className)}>
@@ -85,13 +90,17 @@ export function EditorPanel({
               </div>
             )}
             <CardContent className="flex-1 p-3 sm:p-6 pt-3 sm:pt-4">
-              <Textarea
-                value={inputValue}
-                onChange={e => onInputChange(e.target.value)}
-                placeholder={inputPlaceholder}
-                autoFocus
-                className="w-full h-full min-h-[100px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
-              />
+              {customInputComponent ? (
+                customInputComponent
+              ) : (
+                <Textarea
+                  value={inputValue}
+                  onChange={e => onInputChange(e.target.value)}
+                  placeholder={inputPlaceholder}
+                  autoFocus
+                  className="w-full h-full min-h-[100px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
+                />
+              )}
             </CardContent>
           </Card>
         )}
@@ -120,7 +129,10 @@ export function EditorPanel({
         )}
 
         {/* Output Panel */}
-        <Card className="glass border-0 shadow-glow flex flex-col h-full">
+        <Card className={cn(
+          "glass border-0 shadow-glow flex flex-col h-full transition-all duration-500",
+          isOutputAnimating && "output-glow-animation"
+        )}>
           <CardHeader className="pb-2 px-4 sm:px-6 border-b border-border/30">
             {/* Title Row */}
             <div className="flex items-center justify-between gap-2">
@@ -173,7 +185,8 @@ export function EditorPanel({
                 value={outputValue}
                 readOnly
                 placeholder={outputPlaceholder}
-                className="w-full h-full min-h-[100px] resize-none font-mono text-xs sm:text-sm bg-muted/30 border-border/50 cursor-default"
+                className="w-full h-full min-h-[100px] max-h-[400px] resize-none font-mono text-xs sm:text-sm bg-muted/30 border-border/50 cursor-default"
+                suppressHydrationWarning
               />
             )}
           </CardContent>

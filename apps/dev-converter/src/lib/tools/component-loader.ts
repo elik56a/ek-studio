@@ -22,6 +22,10 @@ export const toolComponents: Record<string, ComponentType<any>> = {
   }),
 
   // Encoding Tools
+  "image-to-base64": dynamic(
+    () => import("@/components/tools/image-to-base64"),
+    { ssr: true }
+  ),
   "base64-encode-decode": dynamic(
     () => import("@/components/tools/base64-encode-decode"),
     { ssr: true }

@@ -70,6 +70,14 @@ export function Header() {
                 variant="header"
               />
             ))}
+            <SmoothLink
+              href="/blog"
+              className={`px-3 py-2 rounded-md transition-colors hover:text-primary hover:bg-primary/5 ${
+                pathname.startsWith('/blog') ? "text-primary bg-primary/5" : ""
+              }`}
+            >
+              Blog
+            </SmoothLink>
           </nav>
         </div>
 
@@ -174,6 +182,16 @@ export function Header() {
 
             {/* Mobile Navigation Links */}
             <nav className="flex flex-col space-y-2 pt-2">
+              <SmoothLink
+                href="/blog"
+                className={`text-sm font-medium transition-colors hover:text-primary py-2 px-3 rounded-md hover:bg-primary/5 ${
+                  pathname.startsWith('/blog') ? "text-primary bg-primary/5" : ""
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Blog
+              </SmoothLink>
+              
               {categories.map(category => {
                 const IconComponent = category.icon
                 const isActive = isCategoryActive(category.id)
