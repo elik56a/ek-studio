@@ -15,10 +15,10 @@ export function BlogTagList({ tags, basePath, currentTag }: BlogTagListProps) {
     <div className="flex flex-wrap gap-2">
       <Link 
         href={basePath}
-        className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+        className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
           !currentTag 
-            ? 'bg-blue-600 text-white dark:bg-blue-500' 
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
+            ? 'bg-primary text-primary-foreground shadow-md hover:shadow-lg' 
+            : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
         }`}
       >
         All Posts
@@ -27,10 +27,10 @@ export function BlogTagList({ tags, basePath, currentTag }: BlogTagListProps) {
         <Link
           key={tag}
           href={`${basePath}/tag/${tag}`}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+          className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
             currentTag === tag 
-              ? 'bg-blue-600 text-white dark:bg-blue-500' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
+              ? 'bg-primary text-primary-foreground shadow-md hover:shadow-lg' 
+              : 'bg-primary/10 text-primary hover:bg-primary/20'
           }`}
         >
           #{tag}

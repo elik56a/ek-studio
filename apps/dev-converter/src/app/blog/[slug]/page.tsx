@@ -64,7 +64,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       />
       
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <BlogPostContent post={post} />
+        <BlogPostContent post={post} basePath={blogConfig.basePath} />
       </div>
     </>
   );
