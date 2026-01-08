@@ -1,4 +1,3 @@
-
 import { Tool } from "../types"
 
 export const jsonDataTools: Tool[] = [
@@ -83,7 +82,6 @@ export const jsonDataTools: Tool[] = [
       outputLabel: "Formatted JSON",
       convertLabel: "Format JSON",
     },
-
   },
   {
     id: "json-to-yaml",
@@ -165,7 +163,6 @@ export const jsonDataTools: Tool[] = [
       outputLabel: "YAML Output",
       convertLabel: "Convert to YAML",
     },
-
   },
   {
     id: "yaml-to-json",
@@ -246,7 +243,6 @@ export const jsonDataTools: Tool[] = [
       outputLabel: "JSON Output",
       convertLabel: "Convert to JSON",
     },
-
   },
   {
     id: "json-to-csv",
@@ -329,7 +325,6 @@ export const jsonDataTools: Tool[] = [
       outputLabel: "CSV Output",
       convertLabel: "Convert to CSV",
     },
-
   },
   {
     id: "csv-to-json",

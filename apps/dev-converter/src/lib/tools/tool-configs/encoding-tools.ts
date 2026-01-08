@@ -1,4 +1,3 @@
-
 import { Tool } from "../types"
 
 export const encodingTools: Tool[] = [

@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ReactNode, useState, useEffect } from "react"
+
+import { ReactNode, useEffect, useState } from "react"
 
 export default function Template({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false)

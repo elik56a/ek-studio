@@ -1,11 +1,13 @@
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
-import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
 import { Suspense } from "react"
 
+import type { Metadata } from "next"
+import { Geist, Geist_Mono } from "next/font/google"
+
 import { ClarityAnalytics } from "@/components/analytics/clarity"
+import { GoogleAnalytics } from "@/components/analytics/google-analytics"
 import { ThemeProvider } from "@/components/core/theme-provider"
 import { ToastProvider } from "@/components/core/toast-provider"
 import { Footer } from "@/components/layout/footer"
@@ -126,6 +128,7 @@ export default function RootLayout({
           </ToastProvider>
         </ThemeProvider>
         <ClarityAnalytics />
+        <GoogleAnalytics />
         <Analytics />
         <SpeedInsights />
       </body>

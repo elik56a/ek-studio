@@ -10,11 +10,12 @@ import {
   Label,
   Textarea,
 } from "@ek-studio/ui"
-import { Github, Mail, MessageSquare, Send, Twitter } from "lucide-react"
+import { Github, Linkedin, Mail, MessageSquare, Send } from "lucide-react"
 
 import { useState } from "react"
 
 import { FAQ } from "@/components/common/faq"
+import { siteConfig } from "@/config/site"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -203,10 +204,10 @@ export default function ContactPage() {
                   <div>
                     <h4 className="font-semibold mb-1">Email</h4>
                     <a
-                      href="mailto:hello@devconverter.dev"
+                      href={`mailto:${siteConfig.links.email}`}
                       className="text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
-                      hello@devconverter.dev
+                      {siteConfig.links.email}
                     </a>
                   </div>
                 </div>
@@ -218,29 +219,29 @@ export default function ContactPage() {
                   <div>
                     <h4 className="font-semibold mb-1">GitHub</h4>
                     <a
-                      href="https://github.com/devconverter"
+                      href={siteConfig.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
-                      @devconverter
+                      View Repository
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0">
-                    <Twitter className="w-5 h-5 text-primary" />
+                    <Linkedin className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">Twitter</h4>
+                    <h4 className="font-semibold mb-1">LinkedIn</h4>
                     <a
-                      href="https://twitter.com/devconverter"
+                      href={siteConfig.links.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
-                      @devconverter
+                      Connect with us
                     </a>
                   </div>
                 </div>

@@ -2,7 +2,7 @@
 
 import NProgress from "nprogress"
 
-import { useEffect, Suspense } from "react"
+import { Suspense, useEffect } from "react"
 
 import { usePathname, useSearchParams } from "next/navigation"
 

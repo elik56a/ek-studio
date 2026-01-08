@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
-import { Breadcrumb } from "@/components/layout/breadcrumb"
 import { ComingSoonPlaceholder } from "@/components/custom/coming-soon-placeholder"
+import { Breadcrumb } from "@/components/layout/breadcrumb"
 import {
   generateStructuredData,
   generateToolMetadata,

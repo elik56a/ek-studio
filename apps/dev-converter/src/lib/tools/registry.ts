@@ -1,3 +1,4 @@
+import { getToolComponent } from "./component-loader"
 import {
   encodingTools,
   jsonDataTools,
@@ -6,7 +7,6 @@ import {
   timeTools,
   utilityTools,
 } from "./tool-configs"
-import { getToolComponent } from "./component-loader"
 import { Tool } from "./types"
 
 // Add components dynamically to avoid circular dependencies
