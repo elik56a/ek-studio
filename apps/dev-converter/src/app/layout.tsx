@@ -6,8 +6,8 @@ import { Suspense } from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
-import { ClarityAnalytics } from "@/components/analytics/clarity"
 import { GoogleAnalytics } from "@/components/analytics/google-analytics"
+import { HotjarAnalytics } from "@/components/analytics/hotjar"
 import { ThemeProvider } from "@/components/core/theme-provider"
 import { ToastProvider } from "@/components/core/toast-provider"
 import { Footer } from "@/components/layout/footer"
@@ -142,7 +142,7 @@ export default function RootLayout({
 
         {/* Analytics - load after main content */}
         <Suspense fallback={null}>
-          <ClarityAnalytics />
+          <HotjarAnalytics />
           <GoogleAnalytics />
           <Analytics />
           <SpeedInsights />

@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@ek-studio/ui": "workspace:*",
-    "@microsoft/clarity": "^1.0.2",
     "@ek-studio/blog": "workspace:*",
     "@tailwindcss/typography": "^0.5.19",
     "@types/nprogress": "^0.2.3",
