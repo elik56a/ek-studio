@@ -1,38 +1,19 @@
 "use client"
 
+import Hotjar from "@hotjar/browser"
 import { useEffect } from "react"
-
-declare global {
-  interface Window {
-    hj?: any
-    _hjSettings?: any
-  }
-}
 
 export function HotjarAnalytics() {
   useEffect(() => {
-    const hjid = process.env.NEXT_PUBLIC_HOTJAR_ID
+    const siteId = process.env.NEXT_PUBLIC_HOTJAR_ID
 
-    if (!hjid) {
+    if (!siteId) {
       return
     }
 
-    // Hotjar Tracking Code
-    const w = window as any
-    const d = document
-    const t = "https://static.hotjar.com/c/hotjar-"
-    const j = ".js?sv="
-    
-    w.hj = w.hj || function() {
-      (w.hj.q = w.hj.q || []).push(arguments)
-    }
-    w._hjSettings = { hjid: hjid, hjsv: 6 }
-    
-    const a = d.getElementsByTagName("head")[0]
-    const r = d.createElement("script")
-    r.async = true
-    r.src = t + w._hjSettings.hjid + j + w._hjSettings.hjsv
-    a.appendChild(r)
+    const hotjarVersion = 6
+
+    Hotjar.init(parseInt(siteId, 10), hotjarVersion)
   }, [])
 
   return null

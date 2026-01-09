@@ -15,6 +15,7 @@
   "dependencies": {
     "@ek-studio/ui": "workspace:*",
     "@ek-studio/blog": "workspace:*",
+    "@hotjar/browser": "^1.0.9",
     "@tailwindcss/typography": "^0.5.19",
     "@types/nprogress": "^0.2.3",
     "@vercel/analytics": "^1.6.1",
