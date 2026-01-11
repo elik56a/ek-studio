@@ -8,6 +8,8 @@ import {
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
+import { generateCollectionPageSchema } from "@/lib/seo/schema-generators"
+
 import { blogConfig } from "../../../../config/blog.config"
 
 /**
@@ -82,36 +84,53 @@ export default async function TagPage({
     notFound()
   }
 
+  // Generate CollectionPage schema for tag page
+  const collectionSchema = generateCollectionPageSchema({
+    title: `Posts tagged with "${tag}"`,
+    description: `Browse all blog posts tagged with ${tag}`,
+    url: `/blog/tag/${tag}`,
+    numberOfItems: posts.length,
+    keywords: [tag, "blog", "posts", "articles"],
+  })
+
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">
-          Posts tagged with <span className="text-primary">#{tag}</span>
-        </h1>
-        <p className="text-lg text-muted-foreground">
-          Found {posts.length} {posts.length === 1 ? "post" : "posts"}
-        </p>
-      </div>
+    <>
+      {/* CollectionPage Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
 
-      {/* Tag navigation */}
-      <div className="mb-8">
-        <BlogTagList
-          tags={allTags}
-          basePath={blogConfig.basePath}
-          currentTag={tag}
-        />
-      </div>
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-4">
+            Posts tagged with <span className="text-primary">#{tag}</span>
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            Found {posts.length} {posts.length === 1 ? "post" : "posts"}
+          </p>
+        </div>
 
-      {/* Posts grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.map(post => (
-          <BlogPostCard
-            key={post.slug}
-            post={post}
+        {/* Tag navigation */}
+        <div className="mb-8">
+          <BlogTagList
+            tags={allTags}
             basePath={blogConfig.basePath}
+            currentTag={tag}
           />
-        ))}
+        </div>
+
+        {/* Posts grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map(post => (
+            <BlogPostCard
+              key={post.slug}
+              post={post}
+              basePath={blogConfig.basePath}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

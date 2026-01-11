@@ -6,8 +6,11 @@ import type { Metadata } from "next"
 import { FAQ, FAQItem } from "@/components/common/faq"
 import { SmoothLink } from "@/components/layout/smooth-link"
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
-import { FAQSchema } from "@/components/seo/FAQSchema"
 import { generateStaticPageMetadata } from "@/lib/seo/metadata"
+import {
+  generateFAQQuestionsSchema,
+  generateStaticPageSchema,
+} from "@/lib/seo/schema-generators"
 
 export const metadata: Metadata = generateStaticPageMetadata({
   title: "FAQ - Frequently Asked Questions",
@@ -120,15 +123,37 @@ export default function FAQPage() {
   // Flatten all FAQ items for the schema
   const allFAQs = faqSections.flatMap(section => section.questions)
 
+  // Generate FAQPage schema with questions
+  const pageSchema = {
+    ...generateStaticPageSchema({
+      title: "FAQ - Frequently Asked Questions",
+      description:
+        "Find answers to common questions about DevConverter tools, privacy, features, and more.",
+      url: "/faq",
+      type: "FAQPage",
+      keywords: [
+        "faq",
+        "frequently asked questions",
+        "help",
+        "support",
+        "devconverter",
+      ],
+    }),
+    mainEntity: generateFAQQuestionsSchema(allFAQs),
+  }
+
   return (
     <>
+      {/* FAQPage Schema with Questions */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+
       {/* BreadcrumbList Schema */}
       <BreadcrumbSchema
         breadcrumbs={[{ name: "Home", url: "/" }, { name: "FAQ" }]}
       />
-
-      {/* FAQPage Schema */}
-      <FAQSchema faqs={allFAQs} />
 
       <div className="gradient-bg min-h-screen">
         <div className="container mx-auto px-4 py-12 sm:py-16 space-y-12">

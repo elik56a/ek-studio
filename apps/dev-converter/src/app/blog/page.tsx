@@ -6,6 +6,7 @@ import {
 } from "@ek-studio/blog"
 
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
+import { generateCollectionPageSchema } from "@/lib/seo/schema-generators"
 
 import { blogConfig } from "../../config/blog.config"
 
@@ -40,8 +41,30 @@ export default async function BlogPage({
   const page = parseInt(params.page || "1", 10)
   const { posts, pagination } = await contentManager.getPaginatedPosts(page)
 
+  // Generate CollectionPage schema for blog listing
+  const collectionSchema = generateCollectionPageSchema({
+    title: "DevConverter Blog - Developer Tools & Tutorials",
+    description:
+      "Tutorials, guides, and insights about developer tools, web development, and best practices",
+    url: "/blog",
+    numberOfItems: posts.length,
+    keywords: [
+      "blog",
+      "tutorials",
+      "developer tools",
+      "web development",
+      "guides",
+    ],
+  })
+
   return (
     <>
+      {/* CollectionPage Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+
       {/* BreadcrumbList Schema */}
       <BreadcrumbSchema
         breadcrumbs={[{ name: "Home", url: "/" }, { name: "Blog" }]}

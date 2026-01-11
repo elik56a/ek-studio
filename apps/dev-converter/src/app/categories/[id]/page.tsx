@@ -16,6 +16,7 @@ import { Breadcrumb } from "@/components/layout/breadcrumb"
 import { SmoothLink } from "@/components/layout/smooth-link"
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
 import { generateCategoryMetadata } from "@/lib/seo/metadata"
+import { generateCollectionPageSchema } from "@/lib/seo/schema-generators"
 import { getCategoryById } from "@/lib/tools/categories"
 import { getToolsByCategory } from "@/lib/tools/registry"
 
@@ -64,8 +65,28 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   const toolsWithMeta = tools
 
+  // Generate CollectionPage schema for category
+  const collectionSchema = generateCollectionPageSchema({
+    title: `${category.name} Tools - DevConverter`,
+    description: category.description,
+    url: `/categories/${category.id}`,
+    numberOfItems: tools.length,
+    keywords: [
+      category.name.toLowerCase(),
+      "tools",
+      "developer tools",
+      "free tools",
+    ],
+  })
+
   return (
     <>
+      {/* CollectionPage Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+
       {/* BreadcrumbList Schema */}
       <BreadcrumbSchema
         breadcrumbs={[

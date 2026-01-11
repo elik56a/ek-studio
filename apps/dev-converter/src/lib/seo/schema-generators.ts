@@ -117,26 +117,104 @@ export function generateBreadcrumbListSchema(
 }
 
 /**
- * Generates FAQPage schema with text sanitization
+ * Generates FAQ questions schema (mainEntity for FAQPage)
+ * This generates just the questions array, not the full page schema
+ * Use this within a FAQPage or as part of another page type
  */
-export function generateFAQPageSchema(faqs: ToolFAQ[]) {
+export function generateFAQQuestionsSchema(faqs: ToolFAQ[]) {
   // Don't generate schema if there are no FAQs
   if (!faqs || faqs.length === 0) {
     return null
   }
 
-  return {
+  return faqs.map(faq => ({
+    "@type": "Question",
+    name: sanitizeText(faq.question),
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: sanitizeText(faq.answer),
+    },
+  }))
+}
+
+/**
+ * Parameters for generating collection page schema
+ */
+export interface CollectionPageSchemaParams {
+  /** Collection title */
+  title: string
+  /** Collection description */
+  description: string
+  /** Page URL path (e.g., "/blog", "/blog/tag/javascript") */
+  url: string
+  /** Number of items in the collection */
+  numberOfItems?: number
+  /** Optional: Additional keywords */
+  keywords?: string[]
+}
+
+/**
+ * Generates CollectionPage schema for listing pages (blog, tags, categories)
+ * Used for pages that display a collection of items
+ *
+ * @example
+ * const schema = generateCollectionPageSchema({
+ *   title: "JavaScript Posts",
+ *   description: "All posts tagged with JavaScript",
+ *   url: "/blog/tag/javascript",
+ *   numberOfItems: 12,
+ * })
+ */
+export function generateCollectionPageSchema(
+  params: CollectionPageSchemaParams
+) {
+  const { title, description, url, numberOfItems, keywords } = params
+
+  const absoluteUrl = ensureAbsoluteUrl(url)
+  const schemaId = `${absoluteUrl}#collection`
+  const imageUrl = ensureAbsoluteUrl("/opengraph-image.png")
+
+  const schema: Record<string, any> = {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map(faq => ({
-      "@type": "Question",
-      name: sanitizeText(faq.question),
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: sanitizeText(faq.answer),
+    "@type": "CollectionPage",
+    "@id": schemaId,
+    name: sanitizeText(title),
+    description: sanitizeText(description),
+    url: absoluteUrl,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": absoluteUrl,
+    },
+    image: imageUrl,
+    inLanguage: "en",
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": siteConfig.url,
+      name: "DevConverter",
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "DevConverter",
+      url: siteConfig.url,
+      logo: {
+        "@type": "ImageObject",
+        url: imageUrl,
       },
-    })),
+    },
   }
+
+  // Add number of items if provided
+  if (numberOfItems !== undefined) {
+    schema.numberOfItems = numberOfItems
+  }
+
+  // Add keywords if provided
+  if (keywords && keywords.length > 0) {
+    schema.keywords = keywords.join(", ")
+  }
+
+  return schema
 }
 
 /**
