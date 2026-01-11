@@ -40,12 +40,41 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
   },
 
+  // Optimize fonts
+  optimizeFonts: true,
+
   // Turbopack configuration (Next.js 16+)
   turbopack: {},
+
+  // URL Canonicalization - Redirect www to non-www
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.(?<domain>.*)',
+          },
+        ],
+        destination: 'https://:domain/:path*',
+        permanent: true,
+      },
+    ]
+  },
 
   // Headers for better caching and security
   async headers() {
     return [
+      {
+        source: "/ads.txt",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "text/plain; charset=utf-8",
+          },
+        ],
+      },
       {
         source: "/:all*(svg|jpg|jpeg|png|gif|ico|webp|avif|woff|woff2)",
         headers: [

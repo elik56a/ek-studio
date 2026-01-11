@@ -1,4 +1,4 @@
-import { Button, Card, CardHeader, CardTitle } from "@ek-studio/ui"
+import { Card, CardHeader, CardTitle } from "@ek-studio/ui"
 import {
   ArrowRight,
   Code2,
@@ -171,6 +171,8 @@ export default function Home() {
 
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent px-4">
               Free Online Developer Tools
+              <br />
+              DevConverter
             </h1>
             <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-foreground/80">
               Fast, Private, and Always Free
@@ -179,6 +181,13 @@ export default function Home() {
               Professional developer tools for JSON formatting, Base64 encoding,
               JWT decoding, hash generation, and more. Everything runs in your
               browser—100% private, no signup required.
+            </p>
+            
+            {/* Keyword-rich paragraph for SEO */}
+            <p className="text-sm sm:text-base text-muted-foreground/90 max-w-2xl mx-auto leading-relaxed px-4 pt-2">
+              DevConverter provides essential tools including a <strong>JSON formatter</strong> and validator, 
+              <strong> Base64 encoder/decoder</strong>, <strong>JWT decoder</strong>, <strong>hash generator</strong> (MD5, SHA-1, SHA-256), 
+              URL encoder, text diff checker, and more. All tools are free, work offline, and process data locally in your browser.
             </p>
           </div>
 
