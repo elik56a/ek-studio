@@ -62,6 +62,10 @@ const nextConfig: NextConfig = {
 
   // Headers for better caching and security
   async headers() {
+    const oneYearInSeconds = 31536000
+    const oneYearFromNow = new Date()
+    oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1)
+    
     return [
       {
         source: "/ads.txt",
@@ -77,7 +81,11 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
+            value: `public, max-age=${oneYearInSeconds}, immutable`,
+          },
+          {
+            key: "Expires",
+            value: oneYearFromNow.toUTCString(),
           },
         ],
       },

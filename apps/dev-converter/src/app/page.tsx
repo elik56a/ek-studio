@@ -35,7 +35,7 @@ const FeaturesSection = dynamic(
 )
 
 export const metadata: Metadata = generateStaticPageMetadata({
-  title: "DevConverter - Free Developer Tools | JSON, Base64, JWT & More",
+  title: "DevConverter - Free Developer Tools",
   description:
     "Free online developer tools: JSON formatter, Base64 encoder, JWT decoder, hash generator. Fast, private, browser-based. No signup required.",
   url: "/",
