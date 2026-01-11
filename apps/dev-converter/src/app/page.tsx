@@ -259,8 +259,8 @@ export default function Home() {
                 including a <strong>JSON formatter</strong> and validator,
                 <strong> Base64 encoder/decoder</strong>,{" "}
                 <strong>JWT decoder</strong>, and{" "}
-                <strong>hash generator</strong> (MD5, SHA-1, SHA-256). All tools
-                work offline and process data locally in your browser for
+                <strong>hash generator</strong> (MD5, SHA-1, SHA-256). All DevConverter 
+                tools are free online tools that work offline and process data locally in your browser for
                 maximum privacy.
               </p>
             </div>
