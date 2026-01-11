@@ -457,7 +457,7 @@ interface BlogToolMapping {
 const blogToolMappings: BlogToolMapping[] = [
   {
     blogSlug: "base64-encode-decode-guide",
-    toolIds: ["base64-encode-decode", "image-to-base64"],
+    toolIds: ["base64-encode-decode", "file-to-base64"],
     anchorContext: "Try our Base64 encoder tool"
   },
   {

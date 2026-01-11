@@ -6,9 +6,9 @@ import { useCallback, useMemo, useState } from "react"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { imageToBase64 } from "@/lib/utils/encoding-utils"
+import { fileToBase64 } from "@/lib/utils/encoding-utils"
 
-const ImageToBase64Tool = () => {
+const FileToBase64Tool = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
   const {
@@ -29,10 +29,10 @@ const ImageToBase64Tool = () => {
         if (!selectedFile || !fileKeyInput) {
           return {
             success: false,
-            error: "Please select an image file",
+            error: "Please select a file",
           }
         }
-        return await imageToBase64(selectedFile)
+        return await fileToBase64(selectedFile)
       },
       [selectedFile]
     ),
@@ -67,8 +67,8 @@ const ImageToBase64Tool = () => {
         onFileSelect={handleFileSelect}
         onClear={handleClear}
         selectedFile={selectedFile}
-        accept="image/*"
-        acceptLabel="JPG, PNG, GIF, WebP, SVG"
+        accept="*/*"
+        acceptLabel="All file types supported"
         maxSize={10 * 1024 * 1024}
         disabled={status === "loading"}
       />
@@ -129,4 +129,4 @@ const ImageToBase64Tool = () => {
   )
 }
 
-export default ImageToBase64Tool
+export default FileToBase64Tool

@@ -2,21 +2,22 @@ import { Tool } from "../types"
 
 export const encodingTools: Tool[] = [
   {
-    id: "image-to-base64",
-    slug: "image-to-base64",
-    name: "Image to Base64 Converter",
+    id: "file-to-base64",
+    slug: "file-to-base64",
+    name: "File to Base64 Converter",
     description:
-      "Convert images to Base64 data URLs for embedding in HTML, CSS, or JSON",
+      "Convert files to Base64 data URLs for embedding in HTML, CSS, or JSON",
     category: "encoding",
     type: "converter",
-    keywords: ["image", "base64", "data url", "embed", "encode"],
+    keywords: ["file", "image", "base64", "data url", "embed", "encode"],
     metadata: {
-      title: "Image to Base64 Converter - Convert Images to Base64 Online",
+      title: "File to Base64 Converter - Convert Files to Base64 Online",
       description:
-        "Free online image to Base64 converter. Convert JPG, PNG, GIF, WebP, and SVG images to Base64 data URLs for embedding in HTML, CSS, or JSON.",
+        "Free online file to Base64 converter. Convert JPG, PNG, GIF, WebP, SVG and other files to Base64 data URLs for embedding in HTML, CSS, or JSON.",
       keywords: [
+        "file to base64",
         "image to base64",
-        "base64 image encoder",
+        "base64 file encoder",
         "data url converter",
         "image encoder",
         "embed image",
@@ -24,24 +25,24 @@ export const encodingTools: Tool[] = [
     },
     info: {
       description:
-        "An Image to Base64 converter allows you to encode image files (JPG, PNG, GIF, WebP, SVG and more) into a Base64 data URL that can be embedded directly into HTML, CSS, or JSON. Base64 encoding transforms binary image data into text, enabling you to include images inline without needing to host the file separately. This is especially useful for embedding icons, small graphics, email templates, or generating portable JSON payloads. The output includes the correct MIME type (for example, data:image/png;base64,...) so you can paste it instantly into <img>, CSS background-image, or API requests.",
+        "A File to Base64 converter allows you to encode files (JPG, PNG, GIF, WebP, SVG and more) into a Base64 data URL that can be embedded directly into HTML, CSS, or JSON. Base64 encoding transforms binary file data into text, enabling you to include files inline without needing to host the file separately. This is especially useful for embedding icons, small graphics, email templates, or generating portable JSON payloads. The output includes the correct MIME type (for example, data:image/png;base64,...) so you can paste it instantly into <img>, CSS background-image, or API requests.",
       howToUse: [
-        "Upload an image file using the image upload input",
-        "The tool will automatically convert your image into a Base64 data URL",
+        "Upload a file using the file upload input",
+        "The tool will automatically convert your file into a Base64 data URL",
         "Copy the Base64 output using the copy button",
-        "Paste the output into HTML, CSS, JSON, or wherever you need an inline image",
+        "Paste the output into HTML, CSS, JSON, or wherever you need an inline file",
         "Optional: Use the output as a data URL in an <img src='...'> tag or a CSS background property",
       ],
       useCases: [
-        "Embed Images in HTML: Insert Base64 images directly into <img src='...'> without separate image files",
+        "Embed Files in HTML: Insert Base64 files directly into <img src='...'> without separate file hosting",
         "Inline CSS Backgrounds: Use Base64 in CSS to embed backgrounds and icons",
-        "Email Templates: Embed images in HTML emails where external images may be blocked",
-        "API Payloads: Send images inside JSON payloads for upload systems or OCR services",
+        "Email Templates: Embed files in HTML emails where external files may be blocked",
+        "API Payloads: Send files inside JSON payloads for upload systems or OCR services",
         "Offline Apps & PWA: Embed assets directly for offline support",
-        "Reduce Requests for Icons: Inline small images to reduce HTTP requests and improve performance",
+        "Reduce Requests for Icons: Inline small files to reduce HTTP requests and improve performance",
       ],
       features: [
-        "Supports Common Formats: Convert JPG, PNG, GIF, WebP, and SVG images",
+        "Supports Common Formats: Convert JPG, PNG, GIF, WebP, SVG and other files",
         "Generates Data URLs: Output includes correct MIME type and Base64 prefix",
         "Fast Local Conversion: Runs in your browser with instant output",
         "One-Click Copy: Copy Base64 output to clipboard instantly",

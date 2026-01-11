@@ -254,27 +254,18 @@ export function jsonEscapeUnescape(input: string): ConversionResult<string> {
 }
 
 /**
- * Converts an image file to Base64 data URL
- * @param file - The image file to convert
+ * Converts a file to Base64 data URL
+ * @param file - The file to convert
  * @returns Promise<ConversionResult<string>> with Base64 data URL or error
  */
-export function imageToBase64(file: File): Promise<ConversionResult<string>> {
+export function fileToBase64(file: File): Promise<ConversionResult<string>> {
   return new Promise(resolve => {
-    // Validate file type
-    if (!file.type.startsWith("image/")) {
-      resolve({
-        success: false,
-        error: "Please select a valid image file",
-      })
-      return
-    }
-
     // Validate file size (max 10MB)
     const maxSize = 10 * 1024 * 1024 // 10MB
     if (file.size > maxSize) {
       resolve({
         success: false,
-        error: "Image size must be less than 10MB",
+        error: "File size must be less than 10MB",
       })
       return
     }
@@ -286,17 +277,27 @@ export function imageToBase64(file: File): Promise<ConversionResult<string>> {
       resolve({
         success: true,
         data: result,
-        message: `Image converted to Base64 successfully (${(file.size / 1024).toFixed(2)} KB)`,
+        message: `File converted to Base64 successfully (${(file.size / 1024).toFixed(2)} KB)`,
       })
     }
 
     reader.onerror = () => {
       resolve({
         success: false,
-        error: "Failed to read image file",
+        error: "Failed to read file",
       })
     }
 
     reader.readAsDataURL(file)
   })
+}
+
+/**
+ * Converts an image file to Base64 data URL
+ * @param file - The image file to convert
+ * @returns Promise<ConversionResult<string>> with Base64 data URL or error
+ * @deprecated Use fileToBase64 instead
+ */
+export function imageToBase64(file: File): Promise<ConversionResult<string>> {
+  return fileToBase64(file)
 }
