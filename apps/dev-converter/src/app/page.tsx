@@ -35,9 +35,9 @@ const FeaturesSection = dynamic(
 )
 
 export const metadata: Metadata = generateStaticPageMetadata({
-  title: "Free Online Developer Tools | JSON, Base64, JWT & More",
+  title: "DevConverter - Free Developer Tools | JSON, Base64, JWT & More",
   description:
-    "Free online developer tools for JSON formatting, Base64 encoding, JWT decoding, hash generation, and more. Lightning-fast, privacy-first tools that run entirely in your browser. No signup required.",
+    "Free online developer tools: JSON formatter, Base64 encoder, JWT decoder, hash generator. Fast, private, browser-based. No signup required.",
   url: "/",
   keywords: [
     "developer tools",
@@ -170,24 +170,10 @@ export default function Home() {
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent px-4">
-              Free Online Developer Tools
-              <br />
-              DevConverter
+              DevConverter: Free Online Developer Tools
             </h1>
-            <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-foreground/80">
-              Fast, Private, and Always Free
-            </p>
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
-              Professional developer tools for JSON formatting, Base64 encoding,
-              JWT decoding, hash generation, and more. Everything runs in your
-              browser—100% private, no signup required.
-            </p>
-            
-            {/* Keyword-rich paragraph for SEO */}
-            <p className="text-sm sm:text-base text-muted-foreground/90 max-w-2xl mx-auto leading-relaxed px-4 pt-2">
-              DevConverter provides essential tools including a <strong>JSON formatter</strong> and validator, 
-              <strong> Base64 encoder/decoder</strong>, <strong>JWT decoder</strong>, <strong>hash generator</strong> (MD5, SHA-1, SHA-256), 
-              URL encoder, text diff checker, and more. All tools are free, work offline, and process data locally in your browser.
+            <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto px-4">
+              Professional tools for JSON, Base64, JWT, hashing, and more. Fast, private, browser-based.
             </p>
           </div>
 
@@ -257,12 +243,14 @@ export default function Home() {
 
         {/* Popular Tools Section */}
         <section id="popular" className="space-y-6 sm:space-y-8 px-4">
-          <div className="text-center space-y-2">
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold">
               Most Popular Developer Tools
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground">
-              The essential tools developers use every day
+              DevConverter provides essential free online developer tools including a <strong>JSON formatter</strong> and validator, 
+              <strong> Base64 encoder/decoder</strong>, <strong>JWT decoder</strong>, and <strong>hash generator</strong> (MD5, SHA-1, SHA-256). 
+              All tools work offline and process data locally in your browser for maximum privacy.
             </p>
           </div>
 
@@ -293,6 +281,132 @@ export default function Home() {
 
         {/* Categories Grid */}
         <CategoriesSection categories={categories} />
+
+        {/* Why Choose DevConverter Section */}
+        <section className="space-y-6 sm:space-y-8 px-4">
+          <div className="container mx-auto max-w-6xl">
+            <div className="text-center space-y-3 mb-8 max-w-3xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                Why Developers Choose DevConverter
+              </h2>
+              <p className="text-sm sm:text-base text-muted-foreground">
+                Whether you're debugging APIs, encoding data, or validating tokens, our developer tools help you work faster. 
+                No installation needed—just open your browser and start using professional-grade tools instantly.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="glass border-0">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Lock className="w-5 h-5 text-primary" />
+                    Privacy First
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground pt-2">
+                    All processing happens locally in your browser. Your data never leaves your device. 
+                    Perfect for handling sensitive information like API keys and tokens.
+                  </p>
+                </CardHeader>
+              </Card>
+
+              <Card className="glass border-0">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Zap className="w-5 h-5 text-primary" />
+                    Lightning Fast
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground pt-2">
+                    No server round trips means instant results. Our tools handle large files 
+                    and complex operations without breaking a sweat.
+                  </p>
+                </CardHeader>
+              </Card>
+
+              <Card className="glass border-0">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Code2 className="w-5 h-5 text-primary" />
+                    Developer Friendly
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground pt-2">
+                    Clean interfaces with keyboard shortcuts, syntax highlighting, 
+                    error validation, and smart formatting for maximum efficiency.
+                  </p>
+                </CardHeader>
+              </Card>
+
+              <Card className="glass border-0">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <FileText className="w-5 h-5 text-primary" />
+                    Always Available
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground pt-2">
+                    Works offline once loaded. No account required, no paywalls, no limits. 
+                    Free forever with no hidden costs.
+                  </p>
+                </CardHeader>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Use Cases Section */}
+        <section className="space-y-6 sm:space-y-8 px-4">
+          <div className="container mx-auto max-w-4xl">
+            <div className="text-center space-y-3 mb-8 max-w-3xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                Common Developer Use Cases
+              </h2>
+              <p className="text-sm sm:text-base text-muted-foreground">
+                From API development to security tasks, DevConverter has the tools you need for everyday coding challenges. 
+                Format JSON responses, decode JWT tokens, encode credentials, and generate hash signatures—all in one place.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card className="glass border-0">
+                <CardHeader>
+                  <CardTitle className="text-base sm:text-lg">API Development</CardTitle>
+                  <p className="text-sm text-muted-foreground pt-2">
+                    Format JSON responses, decode JWT tokens, encode API credentials in Base64, 
+                    and generate hash signatures for webhooks.
+                  </p>
+                </CardHeader>
+              </Card>
+
+              <Card className="glass border-0">
+                <CardHeader>
+                  <CardTitle className="text-base sm:text-lg">Data Processing</CardTitle>
+                  <p className="text-sm text-muted-foreground pt-2">
+                    Convert between formats, encode/decode character sets, generate checksums, 
+                    and transform text for ETL pipelines.
+                  </p>
+                </CardHeader>
+              </Card>
+
+              <Card className="glass border-0">
+                <CardHeader>
+                  <CardTitle className="text-base sm:text-lg">Security & Crypto</CardTitle>
+                  <p className="text-sm text-muted-foreground pt-2">
+                    Generate secure hashes (MD5, SHA-256, SHA-512), create UUIDs, 
+                    and validate cryptographic signatures client-side.
+                  </p>
+                </CardHeader>
+              </Card>
+
+              <Card className="glass border-0">
+                <CardHeader>
+                  <CardTitle className="text-base sm:text-lg">Code Review</CardTitle>
+                  <p className="text-sm text-muted-foreground pt-2">
+                    Compare code changes, beautify minified code, validate syntax, 
+                    and decode error messages for faster debugging.
+                  </p>
+                </CardHeader>
+              </Card>
+            </div>
+          </div>
+        </section>
 
         {/* Features Section */}
         <FeaturesSection />
