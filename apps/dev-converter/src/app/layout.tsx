@@ -70,10 +70,11 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [
       {
-        url: siteConfig.ogImage,
+        url: `${siteConfig.url}/opengraph-image`,
         width: 1200,
         height: 630,
         alt: siteConfig.title,
+        type: "image/png",
       },
     ],
   },
@@ -82,7 +83,7 @@ export const metadata: Metadata = {
     title: "DevConverter - Free Online Developer Tools",
     description:
       "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more.",
-    images: ["/opengraph-image"],
+    images: [`${siteConfig.url}/opengraph-image`],
     creator: "@devconverter",
   },
   robots: {
