@@ -6,6 +6,9 @@ import {
 
 import { notFound } from "next/navigation"
 
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
+import { RelatedToolsLinks } from "@/components/internal-links/RelatedToolsLinks"
+import { getRelatedToolsForBlog } from "@/lib/seo/internal-linking"
 import { blogConfig } from "../../../config/blog.config"
 
 /**
@@ -69,6 +72,9 @@ export default async function BlogPostPage({
   const seoManager = new BlogSEOManager(blogConfig)
   const schema = seoManager.generateArticleSchema(post)
 
+  // Get related tools for this blog post
+  const relatedToolIds = getRelatedToolsForBlog(slug)
+
   return (
     <>
       {/* Add JSON-LD structured data for search engines */}
@@ -76,9 +82,29 @@ export default async function BlogPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
+      
+      {/* BreadcrumbList Schema */}
+      <BreadcrumbSchema
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Blog", url: "/blog" },
+          { name: post.title },
+        ]}
+      />
 
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <BlogPostContent post={post} basePath={blogConfig.basePath} />
+        
+        {/* Related Tools Section */}
+        {relatedToolIds.length > 0 && (
+          <div className="mt-12 pt-8 border-t">
+            <h2 className="text-2xl font-bold mb-4">Related Tools</h2>
+            <p className="text-muted-foreground mb-6">
+              Try these tools mentioned in this article:
+            </p>
+            <RelatedToolsLinks toolIds={relatedToolIds} context="content" />
+          </div>
+        )}
       </div>
     </>
   )

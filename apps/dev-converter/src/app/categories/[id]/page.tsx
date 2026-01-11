@@ -13,6 +13,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
 import { Breadcrumb } from "@/components/layout/breadcrumb"
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
 import { SmoothLink } from "@/components/layout/smooth-link"
 import { generateCategoryMetadata } from "@/lib/ seo/metadata"
 import { getCategoryById } from "@/lib/tools/categories"
@@ -35,10 +36,13 @@ export async function generateMetadata({
     }
   }
 
+  const tools = getToolsByCategory(category.id)
+
   return generateCategoryMetadata(
     category.name,
     category.description,
-    category.id
+    category.id,
+    tools.length
   )
 }
 
@@ -61,7 +65,17 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const toolsWithMeta = tools
 
   return (
-    <div className="gradient-bg min-h-screen">
+    <>
+      {/* BreadcrumbList Schema */}
+      <BreadcrumbSchema
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Categories", url: "/" },
+          { name: category.name },
+        ]}
+      />
+      
+      <div className="gradient-bg min-h-screen">
       <div className="container mx-auto px-4 py-4 sm:py-6 space-y-8 sm:space-y-12 pb-12 sm:pb-16">
         <Breadcrumb items={breadcrumbItems} />
 
@@ -179,5 +193,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         )}
       </div>
     </div>
+    </>
   )
 }

@@ -4,6 +4,8 @@ import { HelpCircle, MessageCircle } from "lucide-react"
 import type { Metadata } from "next"
 
 import { FAQ, FAQItem } from "@/components/common/faq"
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
+import { FAQSchema } from "@/components/seo/FAQSchema"
 import { SmoothLink } from "@/components/layout/smooth-link"
 
 export const metadata: Metadata = {
@@ -106,8 +108,23 @@ const faqSections: { category: string; questions: FAQItem[] }[] = [
 ]
 
 export default function FAQPage() {
+  // Flatten all FAQ items for the schema
+  const allFAQs = faqSections.flatMap(section => section.questions)
+  
   return (
-    <div className="gradient-bg min-h-screen">
+    <>
+      {/* BreadcrumbList Schema */}
+      <BreadcrumbSchema
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "FAQ" },
+        ]}
+      />
+      
+      {/* FAQPage Schema */}
+      <FAQSchema faqs={allFAQs} />
+      
+      <div className="gradient-bg min-h-screen">
       <div className="container mx-auto px-4 py-12 sm:py-16 space-y-12">
         {/* Hero Section */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
@@ -161,5 +178,6 @@ export default function FAQPage() {
         </Card>
       </div>
     </div>
+    </>
   )
 }

@@ -5,6 +5,7 @@ import { Zap } from "lucide-react"
 
 import { isGeneratorTool } from "@/lib/tools/tool-utils"
 import { Tool } from "@/lib/tools/types"
+import { BlogToolLinks } from "@/components/internal-links/BlogToolLinks"
 
 import { EditorPanel } from "./editor-panel"
 import { ToolActions, ToolActionsProps } from "./tool-actions"
@@ -179,6 +180,11 @@ export function ToolLayout({
             <ToolInfo info={tool.info} toolName={tool.name} />
           </div>
         )}
+
+        {/* Blog Links Section - "Learn More" articles */}
+        <div className="mt-4 sm:mt-6">
+          <BlogToolLinks toolId={tool.id} />
+        </div>
 
         {/* Footer Section - Separate card for better organization */}
         {(footerProps.examples?.length ||

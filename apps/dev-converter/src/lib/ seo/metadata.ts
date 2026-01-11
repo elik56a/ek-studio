@@ -2,36 +2,100 @@ import type { Metadata } from "next"
 
 import { Tool } from "@/lib/tools/types"
 
+/**
+ * Extracts the primary keyword from the tool name
+ * Example: "Base64 Encoder & Decoder" -> "Base64"
+ */
+function extractPrimaryKeyword(toolName: string): string {
+  // Take the first significant word (usually the primary keyword)
+  const words = toolName.split(/[\s&-]+/)
+  return words[0] || toolName
+}
+
+/**
+ * Optimizes title for SERP CTR by adding CTR-optimizing terms
+ * and placing primary keywords early
+ */
+function optimizeTitle(tool: Tool): string {
+  const primaryKeyword = extractPrimaryKeyword(tool.name)
+  
+  // Check if title already has CTR-optimizing terms
+  const ctrTerms = ["Free", "Online", "Instant", "No Signup", "Fast", "Easy"]
+  const hasOptimizingTerm = ctrTerms.some(term => 
+    tool.metadata.title.includes(term)
+  )
+  
+  if (hasOptimizingTerm) {
+    // Title already optimized, ensure canonical URL format
+    return tool.metadata.title
+  }
+  
+  // Add CTR-optimizing terms: "Free Online" for most tools
+  return `${tool.name} - Free Online ${primaryKeyword} Tool | DevConverter`
+}
+
+/**
+ * Optimizes description for SERP CTR by adding benefit-focused language
+ */
+function optimizeDescription(tool: Tool): string {
+  // Prefer metadata.description over info.description for CTR optimization check
+  const metadataDescription = tool.metadata.description
+  
+  // Check if metadata description already has CTR-optimizing terms
+  const ctrTerms = ["Free", "online", "Instant", "no signup", "Fast", "Easy"]
+  const hasOptimizingTerm = ctrTerms.some(term => 
+    metadataDescription.toLowerCase().includes(term.toLowerCase())
+  )
+  
+  if (hasOptimizingTerm) {
+    return metadataDescription
+  }
+  
+  // Add CTR-optimizing prefix if not present
+  return `Free online ${tool.name.toLowerCase()} - ${metadataDescription} Instant results, no signup required.`
+}
+
 export function generateToolMetadata(tool: Tool): Metadata {
   const url = `https://devconverter.dev/${tool.slug}`
+  const optimizedTitle = optimizeTitle(tool)
+  const optimizedDescription = optimizeDescription(tool)
+  
+  // Use absolute URL for images (metadataBase handles this, but being explicit)
+  const ogImageUrl = "https://devconverter.dev/opengraph-image.png"
 
   return {
-    title: tool.metadata.title,
-    description: tool.metadata.description,
+    title: optimizedTitle,
+    description: optimizedDescription,
     keywords: tool.metadata.keywords,
+    applicationName: "DevConverter",
+    authors: [{ name: "DevConverter" }],
+    creator: "DevConverter",
+    publisher: "DevConverter",
+    category: "Developer Tools",
     alternates: {
       canonical: url,
     },
     openGraph: {
-      title: tool.metadata.title,
-      description: tool.metadata.description,
+      title: optimizedTitle,
+      description: optimizedDescription,
       type: "website",
       siteName: "DevConverter",
       url,
       images: [
         {
-          url: "/opengraph-image.png",
+          url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: tool.metadata.title,
+          alt: optimizedTitle,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: tool.metadata.title,
-      description: tool.metadata.description,
-      images: ["/opengraph-image.png"],
+      title: optimizedTitle,
+      description: optimizedDescription,
+      images: [ogImageUrl],
+      creator: "@devconverter",
     },
     robots: {
       index: true,
@@ -43,19 +107,53 @@ export function generateToolMetadata(tool: Tool): Metadata {
 export function generateCategoryMetadata(
   categoryName: string,
   categoryDescription: string,
-  categoryId: string
+  categoryId: string,
+  toolCount?: number
 ): Metadata {
+  const url = `https://devconverter.dev/categories/${categoryId}`
+  
+  // Optimize title with CTR terms
+  const optimizedTitle = `${categoryName} Tools - Free Online Developer Tools | DevConverter`
+  
+  // Optimize description with tool count and benefits
+  const toolCountText = toolCount ? `${toolCount} free ` : "Free "
+  const optimizedDescription = `${toolCountText}online ${categoryName.toLowerCase()} tools for developers. ${categoryDescription} Instant results, no signup required.`
+  
+  // Use absolute URL for images
+  const ogImageUrl = "https://devconverter.dev/opengraph-image.png"
+
   return {
-    title: `${categoryName} Tools - DevConverter`,
-    description: `${categoryDescription} Free online tools for developers.`,
-    openGraph: {
-      title: `${categoryName} Tools - DevConverter`,
-      description: `${categoryDescription} Free online tools for developers.`,
-      type: "website",
-      url: `https://devconverter.dev/categories/${categoryId}`,
-    },
+    title: optimizedTitle,
+    description: optimizedDescription,
+    applicationName: "DevConverter",
+    authors: [{ name: "DevConverter" }],
+    creator: "DevConverter",
+    publisher: "DevConverter",
+    category: "Developer Tools",
     alternates: {
-      canonical: `https://devconverter.dev/categories/${categoryId}`,
+      canonical: url,
+    },
+    openGraph: {
+      title: optimizedTitle,
+      description: optimizedDescription,
+      type: "website",
+      siteName: "DevConverter",
+      url,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: optimizedTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: optimizedTitle,
+      description: optimizedDescription,
+      images: [ogImageUrl],
+      creator: "@devconverter",
     },
     robots: {
       index: true,

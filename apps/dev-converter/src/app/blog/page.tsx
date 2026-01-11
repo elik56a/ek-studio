@@ -5,6 +5,7 @@ import {
   BlogSEOManager,
 } from "@ek-studio/blog"
 
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
 import { blogConfig } from "../../config/blog.config"
 
 /**
@@ -39,7 +40,16 @@ export default async function BlogPage({
   const { posts, pagination } = await contentManager.getPaginatedPosts(page)
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-7xl">
+    <>
+      {/* BreadcrumbList Schema */}
+      <BreadcrumbSchema
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Blog" },
+        ]}
+      />
+      
+      <div className="container mx-auto px-4 py-12 max-w-7xl">
       {/* Hero Section */}
       <div className="mb-12 text-center">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
@@ -111,5 +121,6 @@ export default async function BlogPage({
         </>
       )}
     </div>
+    </>
   )
 }

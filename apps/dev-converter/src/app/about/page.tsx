@@ -12,6 +12,8 @@ import {
 
 import type { Metadata } from "next"
 
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
+
 export const metadata: Metadata = {
   title: "About Us",
   description:
@@ -20,7 +22,16 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="gradient-bg min-h-screen w-full">
+    <>
+      {/* BreadcrumbList Schema */}
+      <BreadcrumbSchema
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "About" },
+        ]}
+      />
+      
+      <div className="gradient-bg min-h-screen w-full">
       <div className="container mx-auto px-4 py-12 sm:py-16 space-y-12 sm:space-y-16">
         {/* Hero Section */}
         <div className="text-center space-y-4 sm:space-y-6 max-w-3xl mx-auto">
@@ -184,5 +195,6 @@ export default function AboutPage() {
         </Card>
       </div>
     </div>
+    </>
   )
 }

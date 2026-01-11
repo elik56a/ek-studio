@@ -3,6 +3,8 @@ import { AlertCircle, FileText, Scale, Shield } from "lucide-react"
 
 import type { Metadata } from "next"
 
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
+
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
@@ -11,7 +13,16 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="gradient-bg min-h-screen w-full">
+    <>
+      {/* BreadcrumbList Schema */}
+      <BreadcrumbSchema
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Terms of Service" },
+        ]}
+      />
+      
+      <div className="gradient-bg min-h-screen w-full">
       <div className="container mx-auto px-4 py-12 sm:py-16 space-y-12">
         {/* Hero Section */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
@@ -264,5 +275,6 @@ export default function TermsPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }
