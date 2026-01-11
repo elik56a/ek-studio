@@ -34,6 +34,11 @@ const UrlEncodeDecodeTool = () => {
       ? "Decode"
       : "Encode"
 
+  // Dynamic input/output labels based on operation
+  const isDecoding = input.trim() && detectUrlEncoded(input)
+  const inputLabel = isDecoding ? "URL (Encoded)" : "Text (Plain)"
+  const outputLabel = isDecoding ? "Text (Decoded)" : "URL (Encoded)"
+
   return (
     <ToolLayout
       tool={tool}
@@ -47,11 +52,12 @@ const UrlEncodeDecodeTool = () => {
         onInputChange: setInput,
         inputPlaceholder: tool.ui.inputPlaceholder,
         outputPlaceholder: tool.ui.outputPlaceholder,
-        inputLabel: tool.ui.inputLabel,
-        outputLabel: tool.ui.outputLabel,
+        inputLabel: inputLabel,
+        outputLabel: outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
         showSwapButton: tool.ui.showSwapButton,
         onSwap: handleSwap,
+        showAutoDetect: true,
       }}
       toolActionsProps={{
         onCopy: handleCopy,

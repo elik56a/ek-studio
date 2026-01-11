@@ -113,7 +113,7 @@ const TextDiffChecker = () => {
                     value={text1}
                     onChange={e => setText1(e.target.value)}
                     placeholder="Paste your original text here..."
-                    className="w-full h-full min-h-[200px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
+                    className="w-full h-full min-h-[200px] max-h-[500px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
                   />
                 </CardContent>
               </Card>

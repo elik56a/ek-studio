@@ -37,6 +37,11 @@ const HtmlEscapeUnescapeTool = () => {
       ? "Unescape"
       : "Escape"
 
+  // Dynamic input/output labels based on operation
+  const isUnescaping = input.trim() && detectHtmlEscaped(input)
+  const inputLabel = isUnescaping ? "HTML (Escaped)" : "HTML (Plain)"
+  const outputLabel = isUnescaping ? "HTML (Unescaped)" : "HTML (Escaped)"
+
   return (
     <ToolLayout
       tool={tool}
@@ -50,11 +55,12 @@ const HtmlEscapeUnescapeTool = () => {
         onInputChange: setInput,
         inputPlaceholder: tool.ui.inputPlaceholder,
         outputPlaceholder: tool.ui.outputPlaceholder,
-        inputLabel: tool.ui.inputLabel,
-        outputLabel: tool.ui.outputLabel,
+        inputLabel: inputLabel,
+        outputLabel: outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
         showSwapButton: tool.ui.showSwapButton,
         onSwap: handleSwap,
+        showAutoDetect: true,
       }}
       toolActionsProps={{
         onCopy: handleCopy,

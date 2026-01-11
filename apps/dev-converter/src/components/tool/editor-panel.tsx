@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "@ek-studio/ui"
 import { cn } from "@ek-studio/ui"
-import { AlertCircle, ArrowLeftRight } from "lucide-react"
+import { AlertCircle, ArrowLeftRight, Zap } from "lucide-react"
 
 import { useOutputAnimation } from "@/hooks/use-output-animation"
 
@@ -32,6 +32,7 @@ interface EditorPanelProps {
   showSwapButton?: boolean
   onSwap?: () => void
   outputActions?: React.ReactNode
+  showAutoDetect?: boolean // New prop to indicate auto-detection
 }
 
 export function EditorPanel({
@@ -51,6 +52,7 @@ export function EditorPanel({
   showSwapButton = false,
   onSwap,
   outputActions,
+  showAutoDetect = false,
 }: EditorPanelProps) {
   const showInput = inputValue !== undefined && onInputChange !== undefined
   const isOutputAnimating = useOutputAnimation(outputValue)
@@ -75,6 +77,12 @@ export function EditorPanel({
                   <span className="text-xs bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-semibold uppercase tracking-wide">
                     Input
                   </span>
+                  {showAutoDetect && (
+                    <span className="text-xs bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-medium flex items-center gap-1">
+                      <Zap className="h-3 w-3" />
+                      Auto-detect
+                    </span>
+                  )}
                   {inputValue && (
                     <span className="text-xs text-muted-foreground hidden sm:inline font-medium">
                       {inputValue.length} chars
@@ -98,7 +106,7 @@ export function EditorPanel({
                   onChange={e => onInputChange(e.target.value)}
                   placeholder={inputPlaceholder}
                   autoFocus
-                  className="w-full h-full min-h-[100px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
+                  className="w-full h-full min-h-[100px] max-h-[800px] resize-none font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
                 />
               )}
             </CardContent>
@@ -183,7 +191,7 @@ export function EditorPanel({
                 readOnly
                 placeholder={outputPlaceholder}
                 className={cn(
-                  "w-full h-full min-h-[100px] max-h-[400px] resize-none font-mono text-xs sm:text-sm bg-muted/30 border-border/50 cursor-default transition-all duration-500",
+                  "w-full h-full min-h-[100px] max-h-[800px] resize-none font-mono text-xs sm:text-sm bg-muted/30 border-border/50 cursor-default transition-all duration-500",
                   isOutputAnimating && "output-glow-animation"
                 )}
                 suppressHydrationWarning

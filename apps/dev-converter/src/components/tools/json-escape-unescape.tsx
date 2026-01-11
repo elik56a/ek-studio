@@ -37,6 +37,11 @@ const JsonEscapeUnescapeTool = () => {
       ? "Unescape"
       : "Escape"
 
+  // Dynamic input/output labels based on operation
+  const isUnescaping = input.trim() && detectJsonEscaped(input)
+  const inputLabel = isUnescaping ? "JSON (Escaped)" : "JSON (Plain)"
+  const outputLabel = isUnescaping ? "JSON (Unescaped)" : "JSON (Escaped)"
+
   return (
     <ToolLayout
       tool={tool}
@@ -50,11 +55,12 @@ const JsonEscapeUnescapeTool = () => {
         onInputChange: setInput,
         inputPlaceholder: tool.ui.inputPlaceholder,
         outputPlaceholder: tool.ui.outputPlaceholder,
-        inputLabel: tool.ui.inputLabel,
-        outputLabel: tool.ui.outputLabel,
+        inputLabel: inputLabel,
+        outputLabel: outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
         showSwapButton: tool.ui.showSwapButton,
         onSwap: handleSwap,
+        showAutoDetect: true,
       }}
       toolActionsProps={{
         onCopy: handleCopy,

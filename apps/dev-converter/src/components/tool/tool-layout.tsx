@@ -34,6 +34,7 @@ interface ToolLayoutProps {
     customInputComponent?: React.ReactNode
     showSwapButton?: boolean
     onSwap?: () => void
+    showAutoDetect?: boolean
   }
   footerProps: {
     examples?: Array<{ title: string; input: string; description?: string }>
