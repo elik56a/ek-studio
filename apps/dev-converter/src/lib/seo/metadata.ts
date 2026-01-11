@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
-import { Tool } from "@/lib/tools/types"
 import { siteConfig } from "@/config/site"
+import { Tool } from "@/lib/tools/types"
 
 /**
  * Extracts the primary keyword from the tool name
@@ -327,10 +327,7 @@ export const orgStructuredData = {
   image: `${siteConfig.url}/opengraph-image.png`,
   description:
     "Providing free online developer tools for JSON formatting, Base64 encoding, JWT decoding, and more.",
-  sameAs: [
-    siteConfig.links.github,
-    siteConfig.links.linkedin,
-  ],
+  sameAs: [siteConfig.links.github, siteConfig.links.linkedin],
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "Customer Service",

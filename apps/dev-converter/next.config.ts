@@ -47,14 +47,14 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: '/:path*',
+        source: "/:path*",
         has: [
           {
-            type: 'host',
-            value: 'www.(?<domain>.*)',
+            type: "host",
+            value: "www.(?<domain>.*)",
           },
         ],
-        destination: 'https://:domain/:path*',
+        destination: "https://:domain/:path*",
         permanent: true,
       },
     ]
@@ -65,7 +65,7 @@ const nextConfig: NextConfig = {
     const oneYearInSeconds = 31536000
     const oneYearFromNow = new Date()
     oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1)
-    
+
     return [
       {
         source: "/ads.txt",

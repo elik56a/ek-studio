@@ -53,18 +53,9 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/icon", sizes: "32x32", type: "image/png" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
     ],
     apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
-    shortcut: ["/icon"],
-    other: [
-      {
-        rel: "icon",
-        type: "image/png",
-        sizes: "192x192",
-        url: "/apple-icon",
-      },
-    ],
   },
   manifest: "/manifest.webmanifest",
   other: {
@@ -108,6 +99,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Hreflang for English */}
+        <link rel="alternate" hrefLang="en" href={siteConfig.url} />
+        <link rel="alternate" hrefLang="x-default" href={siteConfig.url} />
+
         {/* Critical preconnects for performance */}
         <link
           rel="preconnect"

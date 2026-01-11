@@ -6,6 +6,7 @@ export const size = {
   height: 180,
 }
 export const contentType = "image/png"
+export const runtime = "edge"
 
 // Image generation
 export default function AppleIcon() {
