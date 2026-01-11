@@ -57,6 +57,22 @@ const nextConfig: NextConfig = {
         destination: "https://:domain/:path*",
         permanent: true,
       },
+      // Redirect image routes with .png extension to without extension
+      {
+        source: "/opengraph-image.png",
+        destination: "/opengraph-image",
+        permanent: true,
+      },
+      {
+        source: "/icon.png",
+        destination: "/icon",
+        permanent: true,
+      },
+      {
+        source: "/apple-icon.png",
+        destination: "/apple-icon",
+        permanent: true,
+      },
     ]
   },
 
