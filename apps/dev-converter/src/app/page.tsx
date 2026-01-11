@@ -16,6 +16,8 @@ import { ScrollButton } from "@/components/home/scroll-button"
 import { Logo } from "@/components/layout/logo"
 import { SmoothLink } from "@/components/layout/smooth-link"
 import { categories } from "@/lib/tools/categories"
+import { generateStaticPageMetadata, orgStructuredData } from "@/lib/seo/metadata"
+import { siteConfig } from "@/config/site"
 
 // Lazy load below-the-fold sections
 const CategoriesSection = dynamic(
@@ -32,11 +34,11 @@ const FeaturesSection = dynamic(
   }
 )
 
-export const metadata: Metadata = {
-  title:
-    "DevConverter - Free Online Developer Tools | JSON, Base64, JWT & More",
+export const metadata: Metadata = generateStaticPageMetadata({
+  title: "Free Online Developer Tools | JSON, Base64, JWT & More",
   description:
     "Free online developer tools for JSON formatting, Base64 encoding, JWT decoding, hash generation, and more. Lightning-fast, privacy-first tools that run entirely in your browser. No signup required.",
+  url: "/",
   keywords: [
     "developer tools",
     "online tools",
@@ -47,21 +49,10 @@ export const metadata: Metadata = {
     "free developer tools",
     "browser tools",
     "privacy-first tools",
+    "web developer tools",
+    "programming tools",
   ],
-  openGraph: {
-    title: "DevConverter - Free Online Developer Tools",
-    description:
-      "Lightning-fast, privacy-first developer tools. JSON formatting, Base64 encoding, JWT decoding, and more. Everything runs in your browser.",
-    type: "website",
-    siteName: "DevConverter",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "DevConverter - Free Online Developer Tools",
-    description:
-      "Lightning-fast, privacy-first developer tools. JSON formatting, Base64 encoding, JWT decoding, and more.",
-  },
-}
+})
 
 export default function Home() {
   const popularTools = [
@@ -83,8 +74,93 @@ export default function Home() {
     },
   ]
 
+  // WebSite schema with SearchAction
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${siteConfig.url}#website`,
+    name: "DevConverter",
+    alternateName: "DevConverter - Free Online Developer Tools",
+    url: siteConfig.url,
+    description:
+      "Free online developer tools for JSON formatting, Base64 encoding, JWT decoding, hash generation, and more. Lightning-fast, privacy-first tools that run entirely in your browser.",
+    inLanguage: "en",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${siteConfig.url}/?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  }
+
+  // Breadcrumb schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteConfig.url,
+      },
+    ],
+  }
+
+  // ItemList schema for popular tools
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Popular Developer Tools",
+    description: "The most popular developer tools on DevConverter",
+    numberOfItems: popularTools.length,
+    itemListElement: popularTools.map((tool, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "SoftwareApplication",
+        name: tool.name,
+        url: `${siteConfig.url}/${tool.slug}`,
+        applicationCategory: "DeveloperApplication",
+        operatingSystem: "Any",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+      },
+    })),
+  }
+
   return (
-    <div className="gradient-bg min-h-screen w-full">
+    <>
+      {/* WebSite Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+
+      {/* Organization Schema (from SEO lib) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgStructuredData) }}
+      />
+
+      {/* Breadcrumb Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
+      {/* ItemList Schema for Popular Tools */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
+
+      <div className="gradient-bg min-h-screen w-full">
       <div className="w-full space-y-16 pb-16">
         {/* Hero Section */}
         <section className="text-center space-y-6 sm:space-y-8 pt-8 sm:pt-16 pb-6 sm:pb-8 px-4">
@@ -212,6 +288,7 @@ export default function Home() {
         {/* Features Section */}
         <FeaturesSection />
       </div>
-    </div>
+      </div>
+    </>
   )
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { Tool } from "@/lib/tools/types"
+import { siteConfig } from "@/config/site"
 
 /**
  * Extracts the primary keyword from the tool name
@@ -314,24 +315,26 @@ export const structuredData = {
 export const orgStructuredData = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${siteConfig.url}#organization`,
   name: "DevConverter",
-  url: "https://devconverter.dev",
+  url: siteConfig.url,
   logo: {
     "@type": "ImageObject",
-    url: "https://devconverter.dev/icon",
-    width: "32",
-    height: "32",
+    url: `${siteConfig.url}/opengraph-image.png`,
+    width: 1200,
+    height: 630,
   },
-  image: "https://devconverter.dev/opengraph-image",
+  image: `${siteConfig.url}/opengraph-image.png`,
   description:
     "Providing free online developer tools for JSON formatting, Base64 encoding, JWT decoding, and more.",
   sameAs: [
-    "https://github.com/devconverter",
-    "https://twitter.com/devconverter",
+    siteConfig.links.github,
+    siteConfig.links.linkedin,
   ],
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "Customer Service",
-    url: "https://devconverter.dev/contact",
+    email: siteConfig.links.email,
+    url: `${siteConfig.url}/contact`,
   },
 }
