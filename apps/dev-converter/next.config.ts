@@ -40,9 +40,6 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
   },
 
-  // Optimize fonts
-  optimizeFonts: true,
-
   // Turbopack configuration (Next.js 16+)
   turbopack: {},
 
