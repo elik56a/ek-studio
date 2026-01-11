@@ -1,5 +1,5 @@
-import { ToolFAQ } from "@/lib/tools/types"
 import { generateFAQPageSchema } from "@/lib/seo/schema-generators"
+import { ToolFAQ } from "@/lib/tools/types"
 
 interface FAQSchemaProps {
   faqs: ToolFAQ[]
@@ -11,12 +11,12 @@ interface FAQSchemaProps {
  */
 export function FAQSchema({ faqs }: FAQSchemaProps) {
   const schema = generateFAQPageSchema(faqs)
-  
+
   // Don't render if no schema generated (empty FAQs)
   if (!schema) {
     return null
   }
-  
+
   return (
     <script
       type="application/ld+json"

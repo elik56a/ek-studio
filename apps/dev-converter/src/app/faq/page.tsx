@@ -4,15 +4,24 @@ import { HelpCircle, MessageCircle } from "lucide-react"
 import type { Metadata } from "next"
 
 import { FAQ, FAQItem } from "@/components/common/faq"
+import { SmoothLink } from "@/components/layout/smooth-link"
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
 import { FAQSchema } from "@/components/seo/FAQSchema"
-import { SmoothLink } from "@/components/layout/smooth-link"
+import { generateStaticPageMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = generateStaticPageMetadata({
   title: "FAQ - Frequently Asked Questions",
   description:
     "Find answers to common questions about DevConverter tools, privacy, features, and more.",
-}
+  url: "/faq",
+  keywords: [
+    "faq",
+    "frequently asked questions",
+    "help",
+    "support",
+    "devconverter",
+  ],
+})
 
 const faqSections: { category: string; questions: FAQItem[] }[] = [
   {
@@ -110,74 +119,71 @@ const faqSections: { category: string; questions: FAQItem[] }[] = [
 export default function FAQPage() {
   // Flatten all FAQ items for the schema
   const allFAQs = faqSections.flatMap(section => section.questions)
-  
+
   return (
     <>
       {/* BreadcrumbList Schema */}
       <BreadcrumbSchema
-        breadcrumbs={[
-          { name: "Home", url: "/" },
-          { name: "FAQ" },
-        ]}
+        breadcrumbs={[{ name: "Home", url: "/" }, { name: "FAQ" }]}
       />
-      
+
       {/* FAQPage Schema */}
       <FAQSchema faqs={allFAQs} />
-      
+
       <div className="gradient-bg min-h-screen">
-      <div className="container mx-auto px-4 py-12 sm:py-16 space-y-12">
-        {/* Hero Section */}
-        <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground">
-            <HelpCircle className="w-4 h-4 text-accent" />
-            <span>Frequently Asked Questions</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-            How Can We Help?
-          </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Find answers to common questions about our tools, privacy, and
-            features.
-          </p>
-        </div>
-
-        {/* FAQ Sections */}
-        <div className="max-w-4xl mx-auto space-y-8">
-          {faqSections.map((section, sectionIndex) => (
-            <div key={sectionIndex} className="space-y-4">
-              <h2 className="text-2xl font-bold text-foreground">
-                {section.category}
-              </h2>
-              <Card className="glass border-0">
-                <CardContent className="p-6">
-                  <FAQ items={section.questions} />
-                </CardContent>
-              </Card>
+        <div className="container mx-auto px-4 py-12 sm:py-16 space-y-12">
+          {/* Hero Section */}
+          <div className="text-center space-y-4 max-w-3xl mx-auto">
+            <div className="flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground">
+              <HelpCircle className="w-4 h-4 text-accent" />
+              <span>Frequently Asked Questions</span>
             </div>
-          ))}
-        </div>
-
-        {/* Contact Section */}
-        <Card className="glass border-0 max-w-3xl mx-auto bg-gradient-to-br from-primary/5 to-accent/5">
-          <CardContent className="pt-8 text-center space-y-4">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto">
-              <MessageCircle className="w-7 h-7 text-primary" />
-            </div>
-            <h2 className="text-2xl font-bold">Still Have Questions?</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Can't find the answer you're looking for? Feel free to reach out
-              to us directly.
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              How Can We Help?
+            </h1>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Find answers to common questions about our tools, privacy, and
+              features.
             </p>
-            <SmoothLink
-              href="/contact"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
-            >
-              Contact Us
-            </SmoothLink>
-          </CardContent>
-        </Card>
+          </div>
+
+          {/* FAQ Sections */}
+          <div className="max-w-4xl mx-auto space-y-8">
+            {faqSections.map((section, sectionIndex) => (
+              <div key={sectionIndex} className="space-y-4">
+                <h2 className="text-2xl font-bold text-foreground">
+                  {section.category}
+                </h2>
+                <Card className="glass border-0">
+                  <CardContent className="p-6">
+                    <FAQ items={section.questions} />
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </div>
+
+          {/* Contact Section */}
+          <Card className="glass border-0 max-w-3xl mx-auto bg-gradient-to-br from-primary/5 to-accent/5">
+            <CardContent className="pt-8 text-center space-y-4">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto">
+                <MessageCircle className="w-7 h-7 text-primary" />
+              </div>
+              <h2 className="text-2xl font-bold">Still Have Questions?</h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                Can't find the answer you're looking for? Feel free to reach out
+                to us directly.
+              </p>
+              <SmoothLink
+                href="/contact"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
+              >
+                Contact Us
+              </SmoothLink>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
     </>
   )
 }

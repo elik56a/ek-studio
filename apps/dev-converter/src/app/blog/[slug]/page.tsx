@@ -6,9 +6,10 @@ import {
 
 import { notFound } from "next/navigation"
 
-import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
 import { RelatedToolsLinks } from "@/components/internal-links/RelatedToolsLinks"
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
 import { getRelatedToolsForBlog } from "@/lib/seo/internal-linking"
+
 import { blogConfig } from "../../../config/blog.config"
 
 /**
@@ -82,7 +83,7 @@ export default async function BlogPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      
+
       {/* BreadcrumbList Schema */}
       <BreadcrumbSchema
         breadcrumbs={[
@@ -94,7 +95,7 @@ export default async function BlogPostPage({
 
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <BlogPostContent post={post} basePath={blogConfig.basePath} />
-        
+
         {/* Related Tools Section */}
         {relatedToolIds.length > 0 && (
           <div className="mt-12 pt-8 border-t">

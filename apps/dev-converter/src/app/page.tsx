@@ -1,4 +1,3 @@
-import { Metadata } from "next"
 import { Button, Card, CardHeader, CardTitle } from "@ek-studio/ui"
 import {
   ArrowRight,
@@ -10,11 +9,12 @@ import {
   Zap,
 } from "lucide-react"
 
+import { Metadata } from "next"
 import dynamic from "next/dynamic"
 
+import { ScrollButton } from "@/components/home/scroll-button"
 import { Logo } from "@/components/layout/logo"
 import { SmoothLink } from "@/components/layout/smooth-link"
-import { ScrollButton } from "@/components/home/scroll-button"
 import { categories } from "@/lib/tools/categories"
 
 // Lazy load below-the-fold sections
@@ -33,8 +33,10 @@ const FeaturesSection = dynamic(
 )
 
 export const metadata: Metadata = {
-  title: "DevConverter - Free Online Developer Tools | JSON, Base64, JWT & More",
-  description: "Free online developer tools for JSON formatting, Base64 encoding, JWT decoding, hash generation, and more. Lightning-fast, privacy-first tools that run entirely in your browser. No signup required.",
+  title:
+    "DevConverter - Free Online Developer Tools | JSON, Base64, JWT & More",
+  description:
+    "Free online developer tools for JSON formatting, Base64 encoding, JWT decoding, hash generation, and more. Lightning-fast, privacy-first tools that run entirely in your browser. No signup required.",
   keywords: [
     "developer tools",
     "online tools",
@@ -48,14 +50,16 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "DevConverter - Free Online Developer Tools",
-    description: "Lightning-fast, privacy-first developer tools. JSON formatting, Base64 encoding, JWT decoding, and more. Everything runs in your browser.",
+    description:
+      "Lightning-fast, privacy-first developer tools. JSON formatting, Base64 encoding, JWT decoding, and more. Everything runs in your browser.",
     type: "website",
     siteName: "DevConverter",
   },
   twitter: {
     card: "summary_large_image",
     title: "DevConverter - Free Online Developer Tools",
-    description: "Lightning-fast, privacy-first developer tools. JSON formatting, Base64 encoding, JWT decoding, and more.",
+    description:
+      "Lightning-fast, privacy-first developer tools. JSON formatting, Base64 encoding, JWT decoding, and more.",
   },
 }
 
@@ -179,7 +183,7 @@ export default function Home() {
 
           <div className="container mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              {popularTools.map((tool) => {
+              {popularTools.map(tool => {
                 const IconComponent = tool.icon
                 return (
                   <SmoothLink key={tool.slug} href={`/${tool.slug}`}>

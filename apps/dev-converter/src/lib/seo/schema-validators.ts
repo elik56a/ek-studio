@@ -18,7 +18,7 @@ function isNonEmptyString(value: any): boolean {
  */
 function isValidUrl(value: any): boolean {
   if (typeof value !== "string") return false
-  
+
   try {
     const url = new URL(value)
     return url.protocol === "http:" || url.protocol === "https:"
@@ -39,17 +39,17 @@ function isStringArray(value: any): boolean {
  */
 export function validateWebApplicationSchema(schema: any): ValidationResult {
   const errors: string[] = []
-  
+
   // Validate @context
   if (schema["@context"] !== "https://schema.org") {
     errors.push("@context must be 'https://schema.org'")
   }
-  
+
   // Validate @type
   if (schema["@type"] !== "WebApplication") {
     errors.push("@type must be 'WebApplication'")
   }
-  
+
   // Validate required string fields
   const requiredStringFields = ["@id", "name", "description", "url"]
   for (const field of requiredStringFields) {
@@ -57,7 +57,7 @@ export function validateWebApplicationSchema(schema: any): ValidationResult {
       errors.push(`${field} must be a non-empty string`)
     }
   }
-  
+
   // Validate URLs are absolute
   const urlFields = ["@id", "url", "image"]
   for (const field of urlFields) {
@@ -65,19 +65,19 @@ export function validateWebApplicationSchema(schema: any): ValidationResult {
       errors.push(`${field} must be a valid absolute URL`)
     }
   }
-  
+
   // Validate isAccessibleForFree is present and boolean
   if (typeof schema.isAccessibleForFree !== "boolean") {
     errors.push("isAccessibleForFree must be a boolean")
   }
-  
+
   // Validate featureList if present
   if (schema.featureList !== undefined) {
     if (!isStringArray(schema.featureList)) {
       errors.push("featureList must be an array of non-empty strings")
     }
   }
-  
+
   // Validate offers structure
   if (!schema.offers || typeof schema.offers !== "object") {
     errors.push("offers must be an object")
@@ -92,7 +92,7 @@ export function validateWebApplicationSchema(schema: any): ValidationResult {
       errors.push("offers.priceCurrency must be 'USD'")
     }
   }
-  
+
   // Validate creator structure
   if (!schema.creator || typeof schema.creator !== "object") {
     errors.push("creator must be an object")
@@ -107,7 +107,7 @@ export function validateWebApplicationSchema(schema: any): ValidationResult {
       errors.push("creator.url must be a valid absolute URL")
     }
   }
-  
+
   return {
     valid: errors.length === 0,
     errors,
@@ -119,17 +119,17 @@ export function validateWebApplicationSchema(schema: any): ValidationResult {
  */
 export function validateBreadcrumbListSchema(schema: any): ValidationResult {
   const errors: string[] = []
-  
+
   // Validate @context
   if (schema["@context"] !== "https://schema.org") {
     errors.push("@context must be 'https://schema.org'")
   }
-  
+
   // Validate @type
   if (schema["@type"] !== "BreadcrumbList") {
     errors.push("@type must be 'BreadcrumbList'")
   }
-  
+
   // Validate itemListElement
   if (!Array.isArray(schema.itemListElement)) {
     errors.push("itemListElement must be an array")
@@ -139,31 +139,35 @@ export function validateBreadcrumbListSchema(schema: any): ValidationResult {
       if (item["@type"] !== "ListItem") {
         errors.push(`itemListElement[${index}].@type must be 'ListItem'`)
       }
-      
+
       // Validate position
       if (typeof item.position !== "number" || item.position !== index + 1) {
         errors.push(`itemListElement[${index}].position must be ${index + 1}`)
       }
-      
+
       // Validate name
       if (!isNonEmptyString(item.name)) {
         errors.push(`itemListElement[${index}].name must be a non-empty string`)
       }
-      
+
       // Validate item URL if present (should not be on last item)
       if (item.item !== undefined) {
         if (!isValidUrl(item.item)) {
-          errors.push(`itemListElement[${index}].item must be a valid absolute URL`)
+          errors.push(
+            `itemListElement[${index}].item must be a valid absolute URL`
+          )
         }
-        
+
         // Last item should not have an item URL
         if (index === schema.itemListElement.length - 1) {
-          errors.push(`itemListElement[${index}] is the last item and should not have an 'item' property`)
+          errors.push(
+            `itemListElement[${index}] is the last item and should not have an 'item' property`
+          )
         }
       }
     })
   }
-  
+
   return {
     valid: errors.length === 0,
     errors,
@@ -175,17 +179,17 @@ export function validateBreadcrumbListSchema(schema: any): ValidationResult {
  */
 export function validateFAQPageSchema(schema: any): ValidationResult {
   const errors: string[] = []
-  
+
   // Validate @context
   if (schema["@context"] !== "https://schema.org") {
     errors.push("@context must be 'https://schema.org'")
   }
-  
+
   // Validate @type
   if (schema["@type"] !== "FAQPage") {
     errors.push("@type must be 'FAQPage'")
   }
-  
+
   // Validate mainEntity
   if (!Array.isArray(schema.mainEntity)) {
     errors.push("mainEntity must be an array")
@@ -193,39 +197,52 @@ export function validateFAQPageSchema(schema: any): ValidationResult {
     if (schema.mainEntity.length === 0) {
       errors.push("mainEntity must contain at least one question")
     }
-    
+
     schema.mainEntity.forEach((question: any, index: number) => {
       // Validate @type
       if (question["@type"] !== "Question") {
         errors.push(`mainEntity[${index}].@type must be 'Question'`)
       }
-      
+
       // Validate name (question text)
       if (!isNonEmptyString(question.name)) {
         errors.push(`mainEntity[${index}].name must be a non-empty string`)
       }
-      
+
       // Validate acceptedAnswer
-      if (!question.acceptedAnswer || typeof question.acceptedAnswer !== "object") {
+      if (
+        !question.acceptedAnswer ||
+        typeof question.acceptedAnswer !== "object"
+      ) {
         errors.push(`mainEntity[${index}].acceptedAnswer must be an object`)
       } else {
         if (question.acceptedAnswer["@type"] !== "Answer") {
-          errors.push(`mainEntity[${index}].acceptedAnswer.@type must be 'Answer'`)
+          errors.push(
+            `mainEntity[${index}].acceptedAnswer.@type must be 'Answer'`
+          )
         }
-        
+
         if (!isNonEmptyString(question.acceptedAnswer.text)) {
-          errors.push(`mainEntity[${index}].acceptedAnswer.text must be a non-empty string`)
+          errors.push(
+            `mainEntity[${index}].acceptedAnswer.text must be a non-empty string`
+          )
         }
-        
+
         // Check for HTML entities that might break validation
         const text = question.acceptedAnswer.text
-        if (text.includes("&lt;") || text.includes("&gt;") || text.includes("&amp;")) {
-          errors.push(`mainEntity[${index}].acceptedAnswer.text contains HTML entities that should be decoded`)
+        if (
+          text.includes("&lt;") ||
+          text.includes("&gt;") ||
+          text.includes("&amp;")
+        ) {
+          errors.push(
+            `mainEntity[${index}].acceptedAnswer.text contains HTML entities that should be decoded`
+          )
         }
       }
     })
   }
-  
+
   return {
     valid: errors.length === 0,
     errors,

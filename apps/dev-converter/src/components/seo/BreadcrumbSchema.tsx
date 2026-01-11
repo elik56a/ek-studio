@@ -9,7 +9,7 @@ interface BreadcrumbSchemaProps {
  */
 export function BreadcrumbSchema({ breadcrumbs }: BreadcrumbSchemaProps) {
   const schema = generateBreadcrumbListSchema(breadcrumbs)
-  
+
   return (
     <script
       type="application/ld+json"

@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+
 import { blogConfig } from "@/config/blog.config"
 import { getRelatedBlogs } from "@/lib/seo/internal-linking"
 
@@ -88,10 +89,7 @@ function BlogCard({ post }: { post: BlogPost }) {
           </span>
         </div>
 
-        <Link
-          href={`${blogConfig.basePath}/${post.slug}`}
-          className="block"
-        >
+        <Link href={`${blogConfig.basePath}/${post.slug}`} className="block">
           <h2 className="mb-3 text-xl font-bold leading-tight text-foreground transition-colors group-hover:text-primary">
             {post.title}
           </h2>

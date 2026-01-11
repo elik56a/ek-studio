@@ -20,13 +20,20 @@ const STATIC_CONTENT_DATES = {
 export default async function sitemap() {
   const baseUrl = "https://devconverter.dev"
   const tools = getAllTools()
-  
+
   // Use Set to prevent duplicate URLs
   const urlSet = new Set<string>()
   const routes: Array<{
     url: string
     lastModified: Date
-    changeFrequency: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"
+    changeFrequency:
+      | "always"
+      | "hourly"
+      | "daily"
+      | "weekly"
+      | "monthly"
+      | "yearly"
+      | "never"
     priority: number
   }> = []
 
@@ -34,12 +41,20 @@ export default async function sitemap() {
   const addRoute = (
     url: string,
     lastModified: Date,
-    changeFrequency: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never",
+    changeFrequency:
+      | "always"
+      | "hourly"
+      | "daily"
+      | "weekly"
+      | "monthly"
+      | "yearly"
+      | "never",
     priority: number
   ) => {
     // Ensure consistent trailing slash handling (no trailing slash)
-    const normalizedUrl = url.endsWith("/") && url !== baseUrl ? url.slice(0, -1) : url
-    
+    const normalizedUrl =
+      url.endsWith("/") && url !== baseUrl ? url.slice(0, -1) : url
+
     if (!urlSet.has(normalizedUrl)) {
       urlSet.add(normalizedUrl)
       routes.push({
@@ -70,7 +85,12 @@ export default async function sitemap() {
   })
 
   // Add categories index page
-  addRoute(`${baseUrl}/categories`, STATIC_CONTENT_DATES.categoriesIndex, "monthly", 0.7)
+  addRoute(
+    `${baseUrl}/categories`,
+    STATIC_CONTENT_DATES.categoriesIndex,
+    "monthly",
+    0.7
+  )
 
   // Add category pages with stable date based on category updates
   categories.forEach(category => {
@@ -83,7 +103,12 @@ export default async function sitemap() {
   })
 
   // Add blog listing page
-  addRoute(`${baseUrl}${blogConfig.basePath}`, STATIC_CONTENT_DATES.homepage, "daily", 0.9)
+  addRoute(
+    `${baseUrl}${blogConfig.basePath}`,
+    STATIC_CONTENT_DATES.homepage,
+    "daily",
+    0.9
+  )
 
   // Add blog posts with actual post dates
   const contentManager = new BlogContentManager(blogConfig)

@@ -18,18 +18,18 @@ function extractPrimaryKeyword(toolName: string): string {
  */
 function optimizeTitle(tool: Tool): string {
   const primaryKeyword = extractPrimaryKeyword(tool.name)
-  
+
   // Check if title already has CTR-optimizing terms
   const ctrTerms = ["Free", "Online", "Instant", "No Signup", "Fast", "Easy"]
-  const hasOptimizingTerm = ctrTerms.some(term => 
+  const hasOptimizingTerm = ctrTerms.some(term =>
     tool.metadata.title.includes(term)
   )
-  
+
   if (hasOptimizingTerm) {
     // Title already optimized, ensure canonical URL format
     return tool.metadata.title
   }
-  
+
   // Add CTR-optimizing terms: "Free Online" for most tools
   return `${tool.name} - Free Online ${primaryKeyword} Tool | DevConverter`
 }
@@ -40,17 +40,17 @@ function optimizeTitle(tool: Tool): string {
 function optimizeDescription(tool: Tool): string {
   // Prefer metadata.description over info.description for CTR optimization check
   const metadataDescription = tool.metadata.description
-  
+
   // Check if metadata description already has CTR-optimizing terms
   const ctrTerms = ["Free", "online", "Instant", "no signup", "Fast", "Easy"]
-  const hasOptimizingTerm = ctrTerms.some(term => 
+  const hasOptimizingTerm = ctrTerms.some(term =>
     metadataDescription.toLowerCase().includes(term.toLowerCase())
   )
-  
+
   if (hasOptimizingTerm) {
     return metadataDescription
   }
-  
+
   // Add CTR-optimizing prefix if not present
   return `Free online ${tool.name.toLowerCase()} - ${metadataDescription} Instant results, no signup required.`
 }
@@ -59,7 +59,7 @@ export function generateToolMetadata(tool: Tool): Metadata {
   const url = `https://devconverter.dev/${tool.slug}`
   const optimizedTitle = optimizeTitle(tool)
   const optimizedDescription = optimizeDescription(tool)
-  
+
   // Use absolute URL for images (metadataBase handles this, but being explicit)
   const ogImageUrl = "https://devconverter.dev/opengraph-image.png"
 
@@ -111,14 +111,14 @@ export function generateCategoryMetadata(
   toolCount?: number
 ): Metadata {
   const url = `https://devconverter.dev/categories/${categoryId}`
-  
+
   // Optimize title with CTR terms
   const optimizedTitle = `${categoryName} Tools - Free Online Developer Tools | DevConverter`
-  
+
   // Optimize description with tool count and benefits
   const toolCountText = toolCount ? `${toolCount} free ` : "Free "
   const optimizedDescription = `${toolCountText}online ${categoryName.toLowerCase()} tools for developers. ${categoryDescription} Instant results, no signup required.`
-  
+
   // Use absolute URL for images
   const ogImageUrl = "https://devconverter.dev/opengraph-image.png"
 
@@ -158,6 +158,92 @@ export function generateCategoryMetadata(
     robots: {
       index: true,
       follow: true,
+    },
+  }
+}
+
+/**
+ * Parameters for generating static page metadata
+ */
+export interface StaticPageMetadataParams {
+  /** Page title (will be appended with "| DevConverter") */
+  title: string
+  /** Page description for meta tags and social sharing */
+  description: string
+  /** Page URL path (e.g., "/about", "/terms") */
+  url: string
+  /** Optional: Additional keywords for the page */
+  keywords?: string[]
+  /** Optional: Whether to index the page (default: true) */
+  index?: boolean
+  /** Optional: Whether to follow links on the page (default: true) */
+  follow?: boolean
+}
+
+/**
+ * Generates complete metadata for static pages (About, Terms, Contact, Privacy, etc.)
+ * Includes canonical URL, robots directives, and social sharing tags
+ *
+ * @example
+ * export const metadata = generateStaticPageMetadata({
+ *   title: "About Us",
+ *   description: "Learn about DevConverter and our mission",
+ *   url: "/about",
+ * })
+ */
+export function generateStaticPageMetadata(
+  params: StaticPageMetadataParams
+): Metadata {
+  const {
+    title,
+    description,
+    url,
+    keywords,
+    index = true,
+    follow = true,
+  } = params
+
+  const fullUrl = `https://devconverter.dev${url}`
+  const fullTitle = `${title} | DevConverter`
+  const ogImageUrl = "https://devconverter.dev/opengraph-image.png"
+
+  return {
+    title: fullTitle,
+    description,
+    keywords,
+    applicationName: "DevConverter",
+    authors: [{ name: "DevConverter" }],
+    creator: "DevConverter",
+    publisher: "DevConverter",
+    category: "Developer Tools",
+    alternates: {
+      canonical: fullUrl,
+    },
+    openGraph: {
+      title: fullTitle,
+      description,
+      type: "website",
+      siteName: "DevConverter",
+      url: fullUrl,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: fullTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: fullTitle,
+      description,
+      images: [ogImageUrl],
+      creator: "@devconverter",
+    },
+    robots: {
+      index,
+      follow,
     },
   }
 }

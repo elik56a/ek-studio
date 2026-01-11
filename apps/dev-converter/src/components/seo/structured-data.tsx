@@ -1,6 +1,6 @@
-import { orgStructuredData, structuredData } from "@/lib/ seo/metadata"
-import { Tool } from "@/lib/tools/types"
+import { orgStructuredData, structuredData } from "@/lib/seo/metadata"
 import { generateWebApplicationSchema } from "@/lib/seo/schema-generators"
+import { Tool } from "@/lib/tools/types"
 
 export function WebsiteStructuredData() {
   return (
@@ -30,7 +30,7 @@ interface ToolStructuredDataProps {
  */
 export function ToolStructuredData({ tool }: ToolStructuredDataProps) {
   const schema = generateWebApplicationSchema(tool)
-  
+
   return (
     <script
       type="application/ld+json"

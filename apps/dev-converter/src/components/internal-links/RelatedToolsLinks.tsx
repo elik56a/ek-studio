@@ -1,6 +1,7 @@
 import Link from "next/link"
-import { getToolBySlug } from "@/lib/tools/registry"
+
 import { generateAnchorText } from "@/lib/seo/internal-linking"
+import { getToolBySlug } from "@/lib/tools/registry"
 
 interface RelatedToolsLinksProps {
   toolIds: string[]

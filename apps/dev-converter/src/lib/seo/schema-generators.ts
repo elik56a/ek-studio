@@ -1,5 +1,5 @@
-import { Tool, ToolFAQ } from "@/lib/tools/types"
 import { siteConfig } from "@/config/site"
+import { Tool, ToolFAQ } from "@/lib/tools/types"
 
 /**
  * Sanitizes text for use in JSON-LD schemas by removing HTML entities and tags
@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site"
 function sanitizeText(text: string): string {
   // Remove HTML tags
   let sanitized = text.replace(/<[^>]*>/g, "")
-  
+
   // Decode common HTML entities
   sanitized = sanitized
     .replace(/&lt;/g, "<")
@@ -16,22 +16,30 @@ function sanitizeText(text: string): string {
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
     .replace(/&nbsp;/g, " ")
-  
+
   // Trim whitespace
   return sanitized.trim()
 }
 
 /**
  * Ensures a URL is absolute by prepending the site URL if needed
+ * Handles both relative paths (/about) and already absolute URLs
  */
 function ensureAbsoluteUrl(url: string): string {
+  // Already absolute URL
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url
   }
-  
-  // Remove leading slash if present to avoid double slashes
+
+  // Remove leading slash to avoid double slashes
   const cleanUrl = url.startsWith("/") ? url.slice(1) : url
-  return `${siteConfig.url}/${cleanUrl}`
+
+  // Ensure siteConfig.url doesn't have trailing slash
+  const baseUrl = siteConfig.url.endsWith("/")
+    ? siteConfig.url.slice(0, -1)
+    : siteConfig.url
+
+  return `${baseUrl}/${cleanUrl}`
 }
 
 /**
@@ -40,14 +48,17 @@ function ensureAbsoluteUrl(url: string): string {
 export function generateWebApplicationSchema(tool: Tool) {
   const url = ensureAbsoluteUrl(`/${tool.slug}`)
   const imageUrl = ensureAbsoluteUrl("/opengraph-image.png")
-  
+
+  // Use fragment identifier for stable @id
+  const schemaId = `${url}#webapp`
+
   // Use tool.info.description if available, otherwise fall back to tool.description
   const description = tool.info?.description || tool.description
-  
+
   const schema: Record<string, any> = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "@id": url,
+    "@id": schemaId,
     name: tool.name,
     description: sanitizeText(description),
     url,
@@ -70,12 +81,12 @@ export function generateWebApplicationSchema(tool: Tool) {
     browserRequirements: "Requires JavaScript. Requires HTML5.",
     permissions: "No special permissions required",
   }
-  
+
   // Add featureList if tool.info.features exists
   if (tool.info?.features && tool.info.features.length > 0) {
     schema.featureList = tool.info.features.map(sanitizeText)
   }
-  
+
   return schema
 }
 
@@ -94,12 +105,12 @@ export function generateBreadcrumbListSchema(
         position: index + 1,
         name: crumb.name,
       }
-      
+
       // Only add item URL if it's not the last breadcrumb
       if (crumb.url && index < breadcrumbs.length - 1) {
         item.item = ensureAbsoluteUrl(crumb.url)
       }
-      
+
       return item
     }),
   }
@@ -113,7 +124,7 @@ export function generateFAQPageSchema(faqs: ToolFAQ[]) {
   if (!faqs || faqs.length === 0) {
     return null
   }
-  
+
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -126,4 +137,129 @@ export function generateFAQPageSchema(faqs: ToolFAQ[]) {
       },
     })),
   }
+}
+
+/**
+ * Parameters for generating static page schema
+ */
+export interface StaticPageSchemaParams {
+  /** Page title */
+  title: string
+  /** Page description */
+  description: string
+  /** Page URL path (e.g., "/about", "/terms") */
+  url: string
+  /**
+   * Schema.org type for the page
+   * - "AboutPage" for about pages
+   * - "ContactPage" for contact pages
+   * - "FAQPage" for FAQ pages (use generateFAQPageSchema instead)
+   * - "WebPage" for generic pages (default)
+   */
+  type?: "AboutPage" | "ContactPage" | "FAQPage" | "WebPage"
+  /** Optional: Date the page was published */
+  datePublished?: string
+  /** Optional: Date the page was last modified */
+  dateModified?: string
+  /** Optional: Additional keywords for the page */
+  keywords?: string[]
+}
+
+/**
+ * Generates WebPage schema for static pages (About, Terms, Contact, etc.)
+ * This is a generic function that can be used for any informational page
+ *
+ * @example
+ * // Basic usage for an About page
+ * const schema = generateStaticPageSchema({
+ *   title: "About Us - DevConverter",
+ *   description: "Learn about our mission and values",
+ *   url: "/about",
+ * })
+ *
+ * @example
+ * // With breadcrumbs and keywords
+ * const schema = generateStaticPageSchema({
+ *   title: "Terms of Service",
+ *   description: "Read our terms and conditions",
+ *   url: "/terms",
+ *   breadcrumbs: [
+ *     { name: "Home", url: "/" },
+ *     { name: "Terms" },
+ *   ],
+ *   keywords: ["terms", "legal", "conditions"],
+ * })
+ *
+ * @example
+ * // With dates for content freshness
+ * const schema = generateStaticPageSchema({
+ *   title: "Privacy Policy",
+ *   description: "How we protect your data",
+ *   url: "/privacy",
+ *   datePublished: "2024-01-01",
+ *   dateModified: "2024-06-15",
+ * })
+ */
+export function generateStaticPageSchema(params: StaticPageSchemaParams) {
+  const {
+    title,
+    description,
+    url,
+    type = "WebPage",
+    datePublished,
+    dateModified,
+    keywords,
+  } = params
+
+  const absoluteUrl = ensureAbsoluteUrl(url)
+  const imageUrl = ensureAbsoluteUrl("/opengraph-image.png")
+
+  // Use fragment identifier for stable @id (best practice)
+  const schemaId = `${absoluteUrl}#webpage`
+
+  const schema: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": type,
+    "@id": schemaId,
+    name: sanitizeText(title),
+    description: sanitizeText(description),
+    url: absoluteUrl,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": absoluteUrl,
+    },
+    image: imageUrl,
+    inLanguage: "en",
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": siteConfig.url,
+      name: "DevConverter",
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "DevConverter",
+      url: siteConfig.url,
+      logo: {
+        "@type": "ImageObject",
+        url: imageUrl,
+      },
+    },
+  }
+
+  // Add optional dates
+  if (datePublished) {
+    schema.datePublished = datePublished
+  }
+
+  if (dateModified) {
+    schema.dateModified = dateModified
+  }
+
+  // Add keywords if provided
+  if (keywords && keywords.length > 0) {
+    schema.keywords = keywords.join(", ")
+  }
+
+  return schema
 }

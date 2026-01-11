@@ -1,5 +1,5 @@
+import { getAllTools, getToolBySlug } from "@/lib/tools/registry"
 import { Tool } from "@/lib/tools/types"
-import { getToolBySlug, getAllTools } from "@/lib/tools/registry"
 
 /**
  * Configuration for tool-to-blog bidirectional linking
@@ -72,32 +72,32 @@ export function getRelatedTools(toolId: string): Tool[] {
 export function getRelatedBlogs(toolId: string): string[] {
   // First check exact mapping
   const exactMatches = toolToBlogMapping[toolId] || []
-  
+
   // If we have exact matches, return them
   if (exactMatches.length > 0) {
     return exactMatches
   }
-  
+
   // Otherwise, use fuzzy matching based on keywords
   const tool = getToolBySlug(toolId)
   if (!tool) {
     return []
   }
-  
+
   const toolKeywords = [
     ...tool.keywords,
     ...extractKeywords(tool.slug),
     ...extractKeywords(tool.id),
   ]
-  
+
   // Get all blog slugs from the mapping and check for keyword overlap
   const allBlogSlugs = Object.keys(blogToToolMapping)
-  
+
   const matchedBlogs = allBlogSlugs.filter(blogSlug => {
     const blogKeywords = extractKeywords(blogSlug)
     return hasKeywordOverlap(toolKeywords, blogKeywords)
   })
-  
+
   return matchedBlogs
 }
 
@@ -108,16 +108,16 @@ export function getRelatedBlogs(toolId: string): string[] {
 export function getRelatedToolsForBlog(blogSlug: string): string[] {
   // First check exact mapping
   const exactMatches = blogToToolMapping[blogSlug] || []
-  
+
   // If we have exact matches, return them
   if (exactMatches.length > 0) {
     return exactMatches
   }
-  
+
   // Otherwise, use fuzzy matching based on keywords
   const blogKeywords = extractKeywords(blogSlug)
   const allTools = getAllTools()
-  
+
   const matchedTools = allTools
     .filter(tool => {
       // Check if tool keywords overlap with blog slug keywords
@@ -129,7 +129,7 @@ export function getRelatedToolsForBlog(blogSlug: string): string[] {
       return hasKeywordOverlap(blogKeywords, toolKeywords)
     })
     .map(tool => tool.id)
-  
+
   return matchedTools
 }
 

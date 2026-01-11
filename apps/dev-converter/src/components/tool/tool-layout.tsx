@@ -3,9 +3,9 @@ import { cn } from "@ek-studio/ui"
 import { Button } from "@ek-studio/ui"
 import { Zap } from "lucide-react"
 
+import { BlogToolLinks } from "@/components/internal-links/BlogToolLinks"
 import { isGeneratorTool } from "@/lib/tools/tool-utils"
 import { Tool } from "@/lib/tools/types"
-import { BlogToolLinks } from "@/components/internal-links/BlogToolLinks"
 
 import { EditorPanel } from "./editor-panel"
 import { ToolActions, ToolActionsProps } from "./tool-actions"

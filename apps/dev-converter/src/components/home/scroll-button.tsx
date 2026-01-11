@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@ek-studio/ui"
+
 import { ReactNode } from "react"
 
 interface ScrollButtonProps {
