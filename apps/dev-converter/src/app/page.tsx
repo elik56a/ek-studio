@@ -38,7 +38,7 @@ const FeaturesSection = dynamic(
 )
 
 export const metadata: Metadata = generateStaticPageMetadata({
-  title: "DevConverter - Free Developer Tools",
+  title: "Free Developer Tools - DevConverter",
   description:
     "Free developer tools: JSON formatter, Base64 encoder, JWT decoder, hash generator. Fast, private, browser-based.",
   url: "/",
@@ -173,7 +173,7 @@ export default function Home() {
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent px-4">
-                DevConverter: Free Online Developer Tools
+                Free Developer Tools - DevConverter
               </h1>
               <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto px-4">
                 Professional tools for JSON, Base64, JWT, hashing, and more.
