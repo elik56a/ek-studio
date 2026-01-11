@@ -28,16 +28,23 @@ const Base64EncodeDecodeTool = () => {
   }
 
   // Dynamic button label based on input detection
+  const isDetectedEncoded = input.trim() && detectBase64(input)
   const convertLabel = !input.trim()
     ? tool.ui.convertLabel
-    : detectBase64(input)
+    : isDetectedEncoded
       ? "Decode"
       : "Encode"
 
   // Dynamic input/output labels based on operation
-  const isDecoding = input.trim() && detectBase64(input)
-  const inputLabel = isDecoding ? "Base64 (Encoded)" : "Text (Plain)"
-  const outputLabel = isDecoding ? "Text (Decoded)" : "Base64 (Encoded)"
+  const inputLabel = isDetectedEncoded ? "Base64 (Encoded)" : "Text (Plain)"
+  const outputLabel = isDetectedEncoded ? "Text (Decoded)" : "Base64 (Encoded)"
+  
+  // Auto-detect label from config
+  const autoDetectLabel = !input.trim() 
+    ? undefined 
+    : isDetectedEncoded 
+      ? tool.ui.autoDetect?.labels.detected
+      : tool.ui.autoDetect?.labels.plain
 
   return (
     <ToolLayout
@@ -57,7 +64,8 @@ const Base64EncodeDecodeTool = () => {
         errorMessage: status === "error" ? statusMessage : undefined,
         showSwapButton: tool.ui.showSwapButton,
         onSwap: handleSwap,
-        showAutoDetect: true,
+        showAutoDetect: tool.ui.autoDetect?.enabled,
+        autoDetectLabel: autoDetectLabel,
       }}
       toolActionsProps={{
         onCopy: handleCopy,

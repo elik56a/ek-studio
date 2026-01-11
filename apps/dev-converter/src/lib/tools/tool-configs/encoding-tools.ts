@@ -196,6 +196,13 @@ export const encodingTools: Tool[] = [
       outputLabel: "Base64 Output",
       convertLabel: "Encode/Decode",
       showSwapButton: true,
+      autoDetect: {
+        enabled: true,
+        labels: {
+          detected: "Encoded",
+          plain: "Plain Text",
+        },
+      },
     },
   },
 
@@ -303,6 +310,13 @@ export const encodingTools: Tool[] = [
       outputLabel: "URL Output",
       convertLabel: "Encode/Decode",
       showSwapButton: true,
+      autoDetect: {
+        enabled: true,
+        labels: {
+          detected: "Encoded",
+          plain: "Plain Text",
+        },
+      },
     },
   },
 
@@ -410,6 +424,13 @@ export const encodingTools: Tool[] = [
       outputLabel: "HTML Output",
       convertLabel: "Escape/Unescape",
       showSwapButton: true,
+      autoDetect: {
+        enabled: true,
+        labels: {
+          detected: "Escaped",
+          plain: "Plain HTML",
+        },
+      },
     },
   },
 
@@ -515,6 +536,13 @@ export const encodingTools: Tool[] = [
       outputLabel: "JSON String Output",
       convertLabel: "Escape/Unescape",
       showSwapButton: true,
+      autoDetect: {
+        enabled: true,
+        labels: {
+          detected: "Escaped",
+          plain: "Plain JSON",
+        },
+      },
     },
   },
 ]

@@ -31,16 +31,23 @@ const HtmlEscapeUnescapeTool = () => {
   }
 
   // Dynamic button label based on input detection
+  const isDetectedEscaped = input.trim() && detectHtmlEscaped(input)
   const convertLabel = !input.trim()
     ? tool.ui.convertLabel
-    : detectHtmlEscaped(input)
+    : isDetectedEscaped
       ? "Unescape"
       : "Escape"
 
   // Dynamic input/output labels based on operation
-  const isUnescaping = input.trim() && detectHtmlEscaped(input)
-  const inputLabel = isUnescaping ? "HTML (Escaped)" : "HTML (Plain)"
-  const outputLabel = isUnescaping ? "HTML (Unescaped)" : "HTML (Escaped)"
+  const inputLabel = isDetectedEscaped ? "HTML (Escaped)" : "HTML (Plain)"
+  const outputLabel = isDetectedEscaped ? "HTML (Unescaped)" : "HTML (Escaped)"
+  
+  // Auto-detect label from config
+  const autoDetectLabel = !input.trim() 
+    ? undefined 
+    : isDetectedEscaped 
+      ? tool.ui.autoDetect?.labels.detected
+      : tool.ui.autoDetect?.labels.plain
 
   return (
     <ToolLayout
@@ -60,7 +67,8 @@ const HtmlEscapeUnescapeTool = () => {
         errorMessage: status === "error" ? statusMessage : undefined,
         showSwapButton: tool.ui.showSwapButton,
         onSwap: handleSwap,
-        showAutoDetect: true,
+        showAutoDetect: tool.ui.autoDetect?.enabled,
+        autoDetectLabel: autoDetectLabel,
       }}
       toolActionsProps={{
         onCopy: handleCopy,

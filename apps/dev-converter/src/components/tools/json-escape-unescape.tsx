@@ -31,16 +31,23 @@ const JsonEscapeUnescapeTool = () => {
   }
 
   // Dynamic button label based on input detection
+  const isDetectedEscaped = input.trim() && detectJsonEscaped(input)
   const convertLabel = !input.trim()
     ? tool.ui.convertLabel
-    : detectJsonEscaped(input)
+    : isDetectedEscaped
       ? "Unescape"
       : "Escape"
 
   // Dynamic input/output labels based on operation
-  const isUnescaping = input.trim() && detectJsonEscaped(input)
-  const inputLabel = isUnescaping ? "JSON (Escaped)" : "JSON (Plain)"
-  const outputLabel = isUnescaping ? "JSON (Unescaped)" : "JSON (Escaped)"
+  const inputLabel = isDetectedEscaped ? "JSON (Escaped)" : "JSON (Plain)"
+  const outputLabel = isDetectedEscaped ? "JSON (Unescaped)" : "JSON (Escaped)"
+  
+  // Auto-detect label from config
+  const autoDetectLabel = !input.trim() 
+    ? undefined 
+    : isDetectedEscaped 
+      ? tool.ui.autoDetect?.labels.detected
+      : tool.ui.autoDetect?.labels.plain
 
   return (
     <ToolLayout
@@ -60,7 +67,8 @@ const JsonEscapeUnescapeTool = () => {
         errorMessage: status === "error" ? statusMessage : undefined,
         showSwapButton: tool.ui.showSwapButton,
         onSwap: handleSwap,
-        showAutoDetect: true,
+        showAutoDetect: tool.ui.autoDetect?.enabled,
+        autoDetectLabel: autoDetectLabel,
       }}
       toolActionsProps={{
         onCopy: handleCopy,

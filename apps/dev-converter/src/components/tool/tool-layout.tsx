@@ -36,6 +36,7 @@ interface ToolLayoutProps {
     showSwapButton?: boolean
     onSwap?: () => void
     showAutoDetect?: boolean
+    autoDetectLabel?: string
     inputActions?: React.ReactNode
   }
   footerProps: {

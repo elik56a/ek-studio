@@ -33,6 +33,13 @@ export interface ToolUI {
   outputLabel: string
   convertLabel: string
   showSwapButton?: boolean
+  autoDetect?: {
+    enabled: boolean
+    labels: {
+      detected: string // Label when encoded/escaped format is detected
+      plain: string // Label when plain format is detected
+    }
+  }
 }
 
 export interface ToolSwitcherGroup {

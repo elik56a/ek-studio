@@ -34,6 +34,7 @@ interface EditorPanelProps {
   outputActions?: React.ReactNode
   inputActions?: React.ReactNode
   showAutoDetect?: boolean // New prop to indicate auto-detection
+  autoDetectLabel?: string // Label to show what was detected (e.g., "Encoded", "Plain Text")
 }
 
 export function EditorPanel({
@@ -55,6 +56,7 @@ export function EditorPanel({
   outputActions,
   inputActions,
   showAutoDetect = false,
+  autoDetectLabel,
 }: EditorPanelProps) {
   const showInput = inputValue !== undefined && onInputChange !== undefined
   const isOutputAnimating = useOutputAnimation(outputValue)
@@ -79,11 +81,20 @@ export function EditorPanel({
                   <span className="text-xs bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-semibold uppercase tracking-wide">
                     Input
                   </span>
-                  {showAutoDetect && (
-                    <span className="text-xs bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-medium flex items-center gap-1">
-                      <Zap className="h-3 w-3" />
-                      Auto-detect
-                    </span>
+                  {showAutoDetect && autoDetectLabel && (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="text-xs bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-medium flex items-center gap-1 cursor-help transition-all duration-200 hover:bg-purple-500/20">
+                            <Zap className="h-3 w-3" />
+                            {autoDetectLabel}
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Auto-detected input type</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   )}
                   {inputValue && (
                     <span className="text-xs text-muted-foreground hidden sm:inline font-medium">
