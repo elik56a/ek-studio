@@ -276,3 +276,218 @@ export function convertMarkdownHtml(
     }
   }
 }
+
+/**
+ * Regex match result interface
+ */
+export interface RegexMatch {
+  match: string
+  index: number
+  groups: string[]
+  namedGroups?: Record<string, string>
+}
+
+/**
+ * Regex test result interface
+ */
+export interface RegexTestResult {
+  matches: RegexMatch[]
+  totalMatches: number
+  isValid: boolean
+  flags: string
+  pattern: string
+}
+
+/**
+ * Parse regex pattern from string (supports /pattern/flags format)
+ * @param regexString - The regex string to parse
+ * @returns Object with pattern and flags
+ */
+export function parseRegexString(regexString: string): {
+  pattern: string
+  flags: string
+  isValid: boolean
+  error?: string
+} {
+  try {
+    // Check if it's in /pattern/flags format
+    const regexMatch = regexString.match(/^\/(.+)\/([gimuy]*)$/)
+
+    if (regexMatch) {
+      return {
+        pattern: regexMatch[1],
+        flags: regexMatch[2] || "",
+        isValid: true,
+      }
+    }
+
+    // If not in /pattern/flags format, treat as plain pattern
+    return {
+      pattern: regexString,
+      flags: "",
+      isValid: true,
+    }
+  } catch (error) {
+    return {
+      pattern: regexString,
+      flags: "",
+      isValid: false,
+      error: error instanceof Error ? error.message : "Invalid regex format",
+    }
+  }
+}
+
+/**
+ * Test regex pattern against text and format results as string
+ * @param regexPattern - The regex pattern (without slashes)
+ * @param flags - Object with flag states
+ * @param testText - The text to test against
+ * @returns ConversionResult with formatted string output
+ */
+export function testRegexWithFormatting(
+  regexPattern: string,
+  flags: {
+    g?: boolean
+    i?: boolean
+    m?: boolean
+    s?: boolean
+    u?: boolean
+    y?: boolean
+  },
+  testText: string
+): ConversionResult<string> {
+  const flagsString = Object.entries(flags)
+    .filter(([_, enabled]) => enabled)
+    .map(([flag]) => flag)
+    .join("")
+
+  const fullRegex = `/${regexPattern}/${flagsString}`
+  const result = testRegex(fullRegex, testText)
+
+  // Convert RegexTestResult to string format
+  if (result.success && result.data) {
+    const matches = result.data.matches
+    if (matches.length > 0) {
+      const outputStr = matches
+        .map((match, idx) => {
+          let matchInfo = `Match ${idx + 1}: "${match.match}" at index ${match.index}`
+
+          if (match.groups && match.groups.length > 0) {
+            matchInfo += `\n  Groups: ${match.groups.map((g, i) => `$${i + 1}="${g}"`).join(", ")}`
+          }
+
+          if (match.namedGroups && Object.keys(match.namedGroups).length > 0) {
+            matchInfo += `\n  Named: ${Object.entries(match.namedGroups)
+              .map(([name, val]) => `${name}="${val}"`)
+              .join(", ")}`
+          }
+
+          return matchInfo
+        })
+        .join("\n\n")
+
+      return {
+        success: true,
+        data: outputStr,
+        message: result.message,
+      }
+    } else {
+      return {
+        success: true,
+        data: "No matches found",
+        message: "No matches found",
+      }
+    }
+  }
+
+  return {
+    success: false,
+    error: result.error || "Regex test failed",
+  }
+}
+
+/**
+ * Test regex pattern against text
+ * @param regexString - The regex pattern string (supports /pattern/flags format)
+ * @param testText - The text to test against
+ * @returns ConversionResult with regex test results
+ */
+export function testRegex(
+  regexString: string,
+  testText: string
+): ConversionResult<RegexTestResult> {
+  if (!regexString.trim()) {
+    return {
+      success: false,
+      error: "Regex pattern is empty",
+    }
+  }
+
+  if (!testText.trim()) {
+    return {
+      success: false,
+      error: "Test text is empty",
+    }
+  }
+
+  try {
+    const { pattern, flags, isValid, error } = parseRegexString(regexString)
+
+    if (!isValid) {
+      return {
+        success: false,
+        error: error || "Invalid regex pattern",
+      }
+    }
+
+    // Create regex object
+    const regex = new RegExp(pattern, flags)
+    const matches: RegexMatch[] = []
+
+    if (flags.includes("g")) {
+      // Global search - find all matches
+      let match
+      while ((match = regex.exec(testText)) !== null) {
+        matches.push({
+          match: match[0],
+          index: match.index,
+          groups: match.slice(1),
+          namedGroups: match.groups,
+        })
+
+        // Prevent infinite loop on zero-length matches
+        if (match.index === regex.lastIndex) {
+          regex.lastIndex++
+        }
+      }
+    } else {
+      // Single match
+      const match = regex.exec(testText)
+      if (match) {
+        matches.push({
+          match: match[0],
+          index: match.index,
+          groups: match.slice(1),
+          namedGroups: match.groups,
+        })
+      }
+    }
+
+    return {
+      success: true,
+      data: {
+        matches,
+        totalMatches: matches.length,
+        isValid: true,
+        flags,
+        pattern,
+      },
+      message: `Found ${matches.length} match${matches.length !== 1 ? "es" : ""}`,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Regex test failed",
+    }
+  }
+}

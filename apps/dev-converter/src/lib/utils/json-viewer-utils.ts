@@ -1,4 +1,10 @@
-export type JsonValue = string | number | boolean | null | JsonObject | JsonArray
+export type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JsonObject
+  | JsonArray
 export interface JsonObject {
   [key: string]: JsonValue
 }
@@ -84,7 +90,7 @@ export function parseJsonOrYaml(value: string): any {
  */
 export function collectAllPaths(obj: any, currentPath: string = ""): string[] {
   const allPaths: string[] = []
-  
+
   const collectPaths = (obj: any, currentPath: string = "") => {
     if (obj && typeof obj === "object") {
       if (currentPath) allPaths.push(currentPath) // Only add non-empty paths
@@ -123,19 +129,19 @@ export function getValueTypeClasses(value: JsonValue): string {
   if (value === null) {
     return "text-purple-600 dark:text-purple-400"
   }
-  
+
   if (typeof value === "boolean") {
     return "text-orange-600 dark:text-orange-400"
   }
-  
+
   if (typeof value === "number") {
     return "text-blue-600 dark:text-blue-400"
   }
-  
+
   if (typeof value === "string") {
     return "text-green-600 dark:text-green-400"
   }
-  
+
   return "text-muted-foreground"
 }
 

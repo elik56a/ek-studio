@@ -1,6 +1,7 @@
 "use client"
 
 import Hotjar from "@hotjar/browser"
+
 import { useEffect } from "react"
 
 export function HotjarAnalytics() {

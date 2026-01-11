@@ -6,7 +6,7 @@ interface ToolHeaderProps {
 
 export function ToolHeader({ title, description, className }: ToolHeaderProps) {
   return (
-    <div className={`text-center space-y-3 ${className}`}>
+    <div className={`text-center space-y-2 ${className}`}>
       <h1 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
         {title}
       </h1>

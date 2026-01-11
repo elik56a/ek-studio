@@ -32,6 +32,7 @@ interface EditorPanelProps {
   showSwapButton?: boolean
   onSwap?: () => void
   outputActions?: React.ReactNode
+  inputActions?: React.ReactNode
   showAutoDetect?: boolean // New prop to indicate auto-detection
 }
 
@@ -52,6 +53,7 @@ export function EditorPanel({
   showSwapButton = false,
   onSwap,
   outputActions,
+  inputActions,
   showAutoDetect = false,
 }: EditorPanelProps) {
   const showInput = inputValue !== undefined && onInputChange !== undefined
@@ -91,8 +93,16 @@ export function EditorPanel({
                 </div>
               </div>
             </CardHeader>
-            {/* Spacer to match output toolbar height */}
-            {outputActions && (
+            {/* Input Toolbar - Below divider */}
+            {inputActions && (
+              <div className="px-4 sm:px-6 py-2">
+                <div className="flex items-center justify-start gap-2">
+                  {inputActions}
+                </div>
+              </div>
+            )}
+            {/* Spacer to match output toolbar height when no input actions */}
+            {!inputActions && outputActions && (
               <div className="px-4 sm:px-6 py-2">
                 <div className="h-[32px]" />
               </div>

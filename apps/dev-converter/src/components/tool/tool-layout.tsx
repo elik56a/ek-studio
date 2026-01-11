@@ -35,6 +35,7 @@ interface ToolLayoutProps {
     showSwapButton?: boolean
     onSwap?: () => void
     showAutoDetect?: boolean
+    inputActions?: React.ReactNode
   }
   footerProps: {
     examples?: Array<{ title: string; input: string; description?: string }>
@@ -74,15 +75,7 @@ export function ToolLayout({
         className
       )}
     >
-      <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
-        {/* Header Section - No card, just text */}
-        {headerProps && (
-          <ToolHeader
-            title={headerProps.title}
-            description={headerProps.description}
-          />
-        )}
-
+      <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* Main Tool Section - Enhanced with special styling */}
         <Card className="relative overflow-hidden border-0 shadow-2xl bg-gradient-to-br from-card via-card to-primary/5 backdrop-blur-xl">
           {/* Decorative gradient overlay */}
@@ -93,8 +86,16 @@ export function ToolLayout({
 
           <div
             id="editor-section"
-            className="relative space-y-4 sm:space-y-8 p-3 sm:p-4 md:p-8 scroll-mt-20"
+            className="relative space-y-4 sm:space-y-6 p-3 sm:p-4 md:p-8 scroll-mt-20"
           >
+            {/* Header Section - Inside card at the top */}
+            {headerProps && (
+              <ToolHeader
+                title={headerProps.title}
+                description={headerProps.description}
+              />
+            )}
+
             {/* Actions Toolbar with Tool Switcher */}
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4 w-full">
               {/* Tool Controls - Left */}
@@ -162,13 +163,17 @@ export function ToolLayout({
         </Card>
 
         {/* Info Section - Educational content */}
-        {tool.info && <ToolInfo info={tool.info} toolName={tool.name} />}
+        {tool.info && (
+          <div className="mt-4 sm:mt-6">
+            <ToolInfo info={tool.info} toolName={tool.name} />
+          </div>
+        )}
 
         {/* Footer Section - Separate card for better organization */}
         {(footerProps.examples?.length ||
           footerProps.faqs?.length ||
           footerProps.relatedTools?.length) && (
-          <Card className="glass border-0 shadow-glow p-4 sm:p-6 md:p-8">
+          <Card className="glass border-0 shadow-glow p-4 sm:p-6 md:p-8 mt-4 sm:mt-6">
             <ToolFooter {...footerProps} />
           </Card>
         )}

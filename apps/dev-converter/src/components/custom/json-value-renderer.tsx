@@ -1,13 +1,14 @@
 import { ChevronRight } from "lucide-react"
+
 import React from "react"
 
 import {
-  formatValueForDisplay,
-  getValueTypeClasses,
   JsonArray,
   JsonObject,
   JsonValue,
   NodeState,
+  formatValueForDisplay,
+  getValueTypeClasses,
 } from "@/lib/utils/json-viewer-utils"
 
 interface JsonValueRendererProps {
@@ -60,9 +61,7 @@ export function JsonValueRenderer({
 
         <div
           className={`ml-4 border-l-2 border-border/50 pl-3 mt-1 overflow-hidden transition-all duration-150 ${
-            isCollapsed
-              ? "max-h-0 opacity-0"
-              : "max-h-[10000px] opacity-100"
+            isCollapsed ? "max-h-0 opacity-0" : "max-h-[10000px] opacity-100"
           }`}
         >
           {value.map((item, index) => (
@@ -108,9 +107,7 @@ export function JsonValueRenderer({
 
       <div
         className={`ml-4 border-l-2 border-border/50 pl-3 mt-1 overflow-hidden transition-all duration-150 ${
-          isCollapsed
-            ? "max-h-0 opacity-0"
-            : "max-h-[10000px] opacity-100"
+          isCollapsed ? "max-h-0 opacity-0" : "max-h-[10000px] opacity-100"
         }`}
       >
         {keys.map(key => (

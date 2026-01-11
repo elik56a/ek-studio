@@ -70,6 +70,9 @@ export const toolComponents: Record<string, ComponentType<any>> = {
     () => import("@/components/tools/text-diff-checker"),
     { ssr: true }
   ),
+  "regex-tester": dynamic(() => import("@/components/tools/regex-tester"), {
+    ssr: true,
+  }),
 
   // Time Tools
   "unix-timestamp-converter": dynamic(
