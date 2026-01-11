@@ -56,11 +56,9 @@ export default async function OgImage() {
           style={{
             fontSize: 72,
             fontWeight: 900,
-            background: "linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%)",
-            backgroundClip: "text",
-            WebkitBackgroundClip: "text",
-            color: "transparent",
-            marginBottom: 20,
+            color: "#a78bfa",
+            marginBottom: 40,
+            lineHeight: 1,
           }}
         >
           DevConverter
@@ -70,7 +68,7 @@ export default async function OgImage() {
         <div
           style={{
             fontSize: 32,
-            color: "rgba(255, 255, 255, 0.8)",
+            color: "rgba(255, 255, 255, 0.9)",
             fontWeight: 600,
             marginBottom: 40,
           }}
