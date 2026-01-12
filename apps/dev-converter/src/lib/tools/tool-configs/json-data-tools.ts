@@ -108,7 +108,7 @@ export const jsonDataTools: Tool[] = [
           "A JSON beautifier improves readability by adding indentation and spacing. A JSON validator checks that the JSON syntax is correct and can be parsed without errors. This tool supports both formatting and validation.",
       },
     ],
-    relatedTools: ["json-to-yaml", "json-to-csv"],
+    relatedTools: ["json-to-yaml", "json-to-csv", "yaml-to-json", "csv-to-json", "base64-encode", "url-encode"],
     ui: {
       inputPlaceholder: "Paste your JSON here...",
       outputPlaceholder: "Formatted JSON will appear here...",
@@ -216,7 +216,7 @@ export const jsonDataTools: Tool[] = [
           "Yes. YAML supports the same data structures as JSON such as objects, arrays, strings, numbers, booleans, and null values. The conversion preserves data structure and meaning.",
       },
     ],
-    relatedTools: ["yaml-to-json", "json-formatter"],
+    relatedTools: ["yaml-to-json", "json-formatter", "json-to-csv", "csv-to-json", "base64-encode", "url-encode"],
     ui: {
       inputPlaceholder: "Paste your JSON here...",
       outputPlaceholder: "YAML output will appear here...",
@@ -323,7 +323,7 @@ export const jsonDataTools: Tool[] = [
           "Yes. This tool works great for converting Kubernetes manifests, Docker Compose files, and other YAML-based configs into JSON for scripting or validation.",
       },
     ],
-    relatedTools: ["json-to-yaml", "json-formatter"],
+    relatedTools: ["json-to-yaml", "json-formatter", "json-to-csv", "csv-to-json", "base64-encode", "url-encode"],
     ui: {
       inputPlaceholder: "Paste your YAML here...",
       outputPlaceholder: "JSON output will appear here...",
@@ -432,7 +432,7 @@ export const jsonDataTools: Tool[] = [
           "CSV headers are generated from keys detected in your JSON objects. If some objects have missing keys, those columns may appear empty. Ensure your JSON objects share consistent fields for best results.",
       },
     ],
-    relatedTools: ["csv-to-json", "json-formatter"],
+    relatedTools: ["csv-to-json", "json-formatter", "json-to-yaml", "yaml-to-json", "base64-encode", "url-encode"],
     ui: {
       inputPlaceholder: "Paste your JSON array here...",
       outputPlaceholder: "CSV output will appear here...",
@@ -541,7 +541,7 @@ export const jsonDataTools: Tool[] = [
           "CSV to JSON conversion is ideal when importing spreadsheet data into APIs, converting reports into structured formats, or preparing datasets for frontend applications and database insertion.",
       },
     ],
-    relatedTools: ["json-to-csv", "json-formatter"],
+    relatedTools: ["json-to-csv", "json-formatter", "json-to-yaml", "yaml-to-json", "base64-encode", "url-encode"],
     ui: {
       inputPlaceholder: "Paste your CSV here...",
       outputPlaceholder: "JSON output will appear here...",

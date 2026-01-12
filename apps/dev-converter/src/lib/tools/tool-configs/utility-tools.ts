@@ -114,7 +114,7 @@ export const utilityTools: Tool[] = [
           "The alpha channel controls transparency and ranges from 0 (fully transparent) to 1 (fully opaque). For example, rgba(255, 87, 51, 0.5) produces a semi-transparent version of the same color.",
       },
     ],
-    relatedTools: ["hash-generator", "base64-encode-decode"],
+    relatedTools: ["hash-generator", "base64-encode-decode", "mime-type-lookup", "uuid-generator", "json-formatter", "url-encode-decode"],
     ui: {
       inputPlaceholder:
         "Enter color value (e.g., #FF5733, rgb(255, 87, 51), hsl(9, 100%, 60%))...",
@@ -227,7 +227,7 @@ export const utilityTools: Tool[] = [
           "Using the wrong MIME type can cause files to break, display incorrectly, or be blocked by browsers. For example, serving JavaScript with the wrong Content-Type can trigger security warnings or prevent scripts from executing properly.",
       },
     ],
-    relatedTools: ["hash-generator", "base64-encode-decode", "color-converter"],
+    relatedTools: ["hash-generator", "base64-encode-decode", "color-converter", "uuid-generator", "json-formatter", "file-to-base64"],
     ui: {
       inputPlaceholder: "Enter file extension (e.g., .pdf, jpg, .mp4)...",
       outputPlaceholder: "MIME type information will appear here...",

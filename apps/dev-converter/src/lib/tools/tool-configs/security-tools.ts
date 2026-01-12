@@ -102,7 +102,7 @@ export const securityTools: Tool[] = [
           "This tool decodes tokens locally in your browser and does not send data to a server. Still, avoid pasting real production tokens that contain sensitive information into any online tool.",
       },
     ],
-    relatedTools: ["hash-generator", "base64-encode-decode"],
+    relatedTools: ["hash-generator", "base64-encode-decode", "uuid-generator", "password-generator", "json-formatter", "url-encode-decode"],
     ui: {
       inputPlaceholder: "Paste your JWT token here...",
       outputPlaceholder: "Decoded JWT will appear here...",
@@ -210,7 +210,7 @@ export const securityTools: Tool[] = [
           "A checksum is a hash value used to verify that data has not changed. You can compare two checksums to confirm that files or messages are identical and untampered.",
       },
     ],
-    relatedTools: ["jwt-decoder", "uuid-generator", "base64-encode-decode"],
+    relatedTools: ["jwt-decoder", "uuid-generator", "base64-encode-decode", "password-generator", "json-formatter", "url-encode-decode"],
     ui: {
       inputPlaceholder: "Enter text to hash...",
       outputPlaceholder: "Generated hashes will appear here...",
@@ -319,7 +319,7 @@ export const securityTools: Tool[] = [
           "Use UUIDs when you need globally unique IDs across multiple services, want to avoid exposing sequential IDs publicly, or need offline ID generation without database coordination.",
       },
     ],
-    relatedTools: ["hash-generator", "jwt-decoder"],
+    relatedTools: ["hash-generator", "jwt-decoder", "password-generator", "base64-encode-decode", "json-formatter", "url-encode-decode"],
     ui: {
       inputPlaceholder: "Click generate to create UUIDs...",
       outputPlaceholder: "Generated UUIDs will appear here...",
@@ -429,7 +429,7 @@ export const securityTools: Tool[] = [
           "Only change passwords when there is a suspected breach or if your password is weak. Modern best practice is to use long unique passwords and enable multi-factor authentication rather than frequent forced rotation.",
       },
     ],
-    relatedTools: ["hash-generator", "uuid-generator", "jwt-decoder"],
+    relatedTools: ["hash-generator", "uuid-generator", "jwt-decoder", "base64-encode-decode", "json-formatter", "url-encode-decode"],
     ui: {
       inputPlaceholder: "",
       outputPlaceholder: "Generated password will appear here...",

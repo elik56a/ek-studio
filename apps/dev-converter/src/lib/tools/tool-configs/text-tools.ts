@@ -97,7 +97,7 @@ export const textTools: Tool[] = [
           "kebab-case uses lowercase words separated by hyphens (e.g., my-file-name). It's widely used in URLs, SEO-friendly slugs, and file names because it reads naturally and is web-safe.",
       },
     ],
-    relatedTools: ["diff-checker", "regex-tester"],
+    relatedTools: ["diff-checker", "regex-tester", "markdown-html-converter", "json-formatter", "url-encode-decode", "html-escape-unescape"],
     ui: {
       inputPlaceholder: "Enter text to convert case...",
       outputPlaceholder: "Converted text will appear here...",
@@ -209,7 +209,7 @@ export const textTools: Tool[] = [
           "Common use cases include reviewing document edits, comparing website copy, validating config changes, checking JSON differences, and ensuring code refactors didn’t introduce unintended changes.",
       },
     ],
-    relatedTools: ["case-converter", "regex-tester"],
+    relatedTools: ["case-converter", "regex-tester", "markdown-html-converter", "json-formatter", "json-to-yaml", "yaml-to-json"],
     ui: {
       inputPlaceholder: "Enter first text to compare...",
       outputPlaceholder: "Differences will be highlighted here...",
@@ -328,7 +328,7 @@ export const textTools: Tool[] = [
           "Yes. This tester is ideal for JavaScript and TypeScript regex debugging. You can test patterns exactly as you would write them in JS, including flags, groups, and global searches.",
       },
     ],
-    relatedTools: ["diff-checker", "case-converter"],
+    relatedTools: ["diff-checker", "case-converter", "markdown-html-converter", "json-formatter", "url-encode-decode", "html-escape-unescape"],
     ui: {
       inputPlaceholder: "Enter text to test against regex...",
       outputPlaceholder: "Regex matches will appear here...",
@@ -439,7 +439,7 @@ export const textTools: Tool[] = [
           "Use Markdown when you want easy-to-write, readable formatting for documentation or content creation. Use HTML when you need full control over structure, attributes, and advanced layouts.",
       },
     ],
-    relatedTools: ["html-escape-unescape", "case-converter"],
+    relatedTools: ["html-escape-unescape", "case-converter", "diff-checker", "regex-tester", "json-formatter", "url-encode-decode"],
     ui: {
       inputPlaceholder: "Enter Markdown or HTML...",
       outputPlaceholder: "Converted output will appear here...",

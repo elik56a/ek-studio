@@ -29,6 +29,8 @@ export {
 export { Input } from "./input"
 export { Label } from "./label"
 export { FileUpload } from "./file-upload"
+export { Carousel } from "./carousel"
+export type { CarouselItem } from "./carousel"
 export {
   Select,
   SelectContent,

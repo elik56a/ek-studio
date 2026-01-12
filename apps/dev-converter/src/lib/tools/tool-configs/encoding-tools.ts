@@ -82,7 +82,7 @@ export const encodingTools: Tool[] = [
           "No, Base64 encoding is lossless and preserves the original image quality. However, the encoded string is about 33% larger than the original file size due to the encoding format.",
       },
     ],
-    relatedTools: ["base64-encode-decode"],
+    relatedTools: ["base64-encode-decode", "url-encode-decode", "html-escape-unescape", "json-formatter", "json-escape-unescape", "jwt-decoder"],
     ui: {
       inputPlaceholder: "Upload an image file...",
       outputPlaceholder: "Base64 data URL will appear here...",
@@ -216,7 +216,7 @@ export const encodingTools: Tool[] = [
           "Base64 is widely used for embedding images in HTML/CSS, encoding binary files in JSON or APIs, sending attachments via email, generating authentication tokens or basic credentials, and encoding JWT tokens.",
       },
     ],
-    relatedTools: ["url-encode-decode", "html-escape-unescape"],
+    relatedTools: ["url-encode-decode", "html-escape-unescape", "file-to-base64", "json-escape-unescape", "jwt-decoder", "json-formatter"],
     ui: {
       inputPlaceholder: "Enter text to encode or Base64 to decode...",
       outputPlaceholder: "Encoded/decoded result will appear here...",
@@ -339,7 +339,7 @@ export const encodingTools: Tool[] = [
           "URL encoding ensures tracking parameters (UTM tags), search queries, and special characters do not break a link. A valid URL is easier for browsers, crawlers, and analytics platforms to process reliably.",
       },
     ],
-    relatedTools: ["base64-encode-decode", "html-escape-unescape"],
+    relatedTools: ["base64-encode-decode", "html-escape-unescape", "json-escape-unescape", "file-to-base64", "jwt-decoder", "json-formatter"],
     ui: {
       inputPlaceholder: "Enter URL to encode or encoded URL to decode...",
       outputPlaceholder: "Encoded/decoded URL will appear here...",
@@ -462,7 +462,7 @@ export const encodingTools: Tool[] = [
           "Escaping is a strong defense against XSS when displaying text content. However, full XSS protection also requires safe rendering practices, proper CSP headers, and avoiding unsafe HTML insertion methods.",
       },
     ],
-    relatedTools: ["url-encode-decode", "json-escape-unescape"],
+    relatedTools: ["url-encode-decode", "json-escape-unescape", "base64-encode-decode", "file-to-base64", "jwt-decoder", "json-formatter"],
     ui: {
       inputPlaceholder: "Enter HTML to escape or HTML entities to unescape...",
       outputPlaceholder: "Escaped/unescaped HTML will appear here...",
@@ -583,7 +583,7 @@ export const encodingTools: Tool[] = [
           "Not exactly. JSON escaping prepares raw text to fit safely inside a JSON string. JSON.stringify converts full objects and strings into valid JSON format. This tool focuses on escaping and unescaping raw text for JSON strings.",
       },
     ],
-    relatedTools: ["json-formatter", "html-escape-unescape"],
+    relatedTools: ["json-formatter", "html-escape-unescape", "base64-encode-decode", "url-encode-decode", "file-to-base64", "jwt-decoder"],
     ui: {
       inputPlaceholder: "Enter text to escape or JSON string to unescape...",
       outputPlaceholder: "Escaped/unescaped text will appear here...",

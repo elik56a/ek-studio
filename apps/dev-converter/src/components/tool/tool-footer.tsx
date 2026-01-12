@@ -1,4 +1,5 @@
-import { Button } from "@ek-studio/ui"
+import { Button, Carousel } from "@ek-studio/ui"
+import type { CarouselItem } from "@ek-studio/ui"
 import {
   ArrowRight,
   HelpCircle,
@@ -186,27 +187,7 @@ export function ToolFooter({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {relatedTools.map((tool, index) => (
-              <SmoothLink
-                key={index}
-                href={tool.href}
-                className="group block p-4 rounded-xl border border-border bg-card hover:border-emerald-500/30 hover:shadow-lg transition-all duration-200"
-              >
-                <div className="space-y-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-semibold text-sm group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1">
-                      {tool.name}
-                    </h3>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
-                  </div>
-                  <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
-                    {tool.description}
-                  </p>
-                </div>
-              </SmoothLink>
-            ))}
-          </div>
+          <Carousel items={relatedTools as CarouselItem[]} itemsPerView={3} />
         </section>
       )}
     </div>

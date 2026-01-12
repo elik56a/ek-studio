@@ -103,7 +103,7 @@ export const timeTools: Tool[] = [
           "Unix timestamps are always based on UTC, but humans often work in local timezones. Timezone conversion helps prevent mistakes when debugging logs, scheduling jobs, or comparing timestamps across systems and regions.",
       },
     ],
-    relatedTools: ["hash-generator", "uuid-generator"],
+    relatedTools: ["hash-generator", "uuid-generator", "jwt-decoder", "json-formatter", "base64-encode-decode", "color-converter"],
     ui: {
       inputPlaceholder:
         "Enter Unix timestamp (e.g., 1704672000) or date (e.g., 2024-01-08)...",
