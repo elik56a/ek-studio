@@ -1,6 +1,7 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
+import { useAutoDetect } from "@/hooks/use-auto-detect"
 import { useTool } from "@/hooks/use-tool"
 import {
   detectHtmlEscaped,
@@ -30,24 +31,18 @@ const HtmlEscapeUnescapeTool = () => {
     return <div>Tool not found</div>
   }
 
-  // Dynamic button label based on input detection
-  const isDetectedEscaped = input.trim() && detectHtmlEscaped(input)
-  const convertLabel = !input.trim()
-    ? tool.ui.convertLabel
-    : isDetectedEscaped
-      ? "Unescape"
-      : "Escape"
+  // Use auto-detect hook for all dynamic labels
+  const { inputLabel, outputLabel, autoDetectLabel, convertLabel } =
+    useAutoDetect({
+      tool,
+      input,
+      isDetected: Boolean(input.trim() && detectHtmlEscaped(input)),
+    })
 
-  // Dynamic input/output labels based on operation
-  const inputLabel = isDetectedEscaped ? "HTML (Escaped)" : "HTML (Plain)"
-  const outputLabel = isDetectedEscaped ? "HTML (Unescaped)" : "HTML (Escaped)"
-  
-  // Auto-detect label from config
-  const autoDetectLabel = !input.trim() 
-    ? undefined 
-    : isDetectedEscaped 
-      ? tool.ui.autoDetect?.labels.detected
-      : tool.ui.autoDetect?.labels.plain
+  // Split error message and details (separated by |)
+  const [errorMessage, errorDetails] = statusMessage?.includes("|")
+    ? statusMessage.split("|")
+    : [statusMessage, undefined]
 
   return (
     <ToolLayout
@@ -64,7 +59,8 @@ const HtmlEscapeUnescapeTool = () => {
         outputPlaceholder: tool.ui.outputPlaceholder,
         inputLabel: inputLabel,
         outputLabel: outputLabel,
-        errorMessage: status === "error" ? statusMessage : undefined,
+        errorMessage: status === "error" ? errorMessage : undefined,
+        errorDetails: status === "error" ? errorDetails : undefined,
         showSwapButton: tool.ui.showSwapButton,
         onSwap: handleSwap,
         showAutoDetect: tool.ui.autoDetect?.enabled,

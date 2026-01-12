@@ -35,9 +35,19 @@ export interface ToolUI {
   showSwapButton?: boolean
   autoDetect?: {
     enabled: boolean
+    emptyLabel: string // Label when no input (e.g., "paste text or Base64")
     labels: {
-      detected: string // Label when encoded/escaped format is detected
-      plain: string // Label when plain format is detected
+      detected: string // Label when encoded/escaped format is detected (e.g., "Base64 → Decoding")
+      plain: string // Label when plain format is detected (e.g., "Plain text → Encoding")
+    }
+    // Dynamic input/output labels based on detected state
+    inputLabels?: {
+      detected: string // Input label when detected format (e.g., "Base64 (Encoded)")
+      plain: string // Input label when plain format (e.g., "Text (Plain)")
+    }
+    outputLabels?: {
+      detected: string // Output label when detected format (e.g., "Text (Decoded)")
+      plain: string // Output label when plain format (e.g., "Base64 (Encoded)")
     }
   }
 }

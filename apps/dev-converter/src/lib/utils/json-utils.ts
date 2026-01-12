@@ -6,6 +6,7 @@ export interface ConversionResult<T = any> {
   data?: T
   error?: string
   message?: string
+  details?: string // Additional error details or suggestions
   metadata?: Record<string, any>
 }
 

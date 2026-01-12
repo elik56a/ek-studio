@@ -77,7 +77,12 @@ export function useTool({
         setStatusMessage("Conversion successful")
       } else {
         setStatus("error")
-        setStatusMessage(result.error || "Conversion failed")
+        // Combine error and details for display
+        const errorMsg = result.error || "Conversion failed"
+        const fullMessage = result.details
+          ? `${errorMsg}|${result.details}`
+          : errorMsg
+        setStatusMessage(fullMessage)
         setOutput("")
       }
     } catch (error) {

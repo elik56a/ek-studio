@@ -7,7 +7,7 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import { GoogleAnalytics } from "@/components/analytics/google-analytics"
-import { HotjarAnalytics } from "@/components/analytics/hotjar"
+import { SmartlookAnalytics } from "@/components/analytics/smartlook"
 import { ThemeProvider } from "@/components/core/theme-provider"
 import { ToastProvider } from "@/components/core/toast-provider"
 import { Footer } from "@/components/layout/footer"
@@ -144,7 +144,7 @@ export default function RootLayout({
 
         {/* Analytics - load after main content */}
         <Suspense fallback={null}>
-          <HotjarAnalytics />
+          <SmartlookAnalytics />
           <GoogleAnalytics />
           <Analytics />
           <SpeedInsights />

@@ -198,9 +198,18 @@ export const encodingTools: Tool[] = [
       showSwapButton: true,
       autoDetect: {
         enabled: true,
+        emptyLabel: "paste text or Base64",
         labels: {
-          detected: "Encoded",
-          plain: "Plain Text",
+          detected: "Base64 → Decoding",
+          plain: "Plain text → Encoding",
+        },
+        inputLabels: {
+          detected: "Base64 (Encoded)",
+          plain: "Text (Plain)",
+        },
+        outputLabels: {
+          detected: "Text (Decoded)",
+          plain: "Base64 (Encoded)",
         },
       },
     },
@@ -312,9 +321,18 @@ export const encodingTools: Tool[] = [
       showSwapButton: true,
       autoDetect: {
         enabled: true,
+        emptyLabel: "paste text or URL",
         labels: {
-          detected: "Encoded",
-          plain: "Plain Text",
+          detected: "URL encoded → Decoding",
+          plain: "Plain text → Encoding",
+        },
+        inputLabels: {
+          detected: "URL (Encoded)",
+          plain: "Text (Plain)",
+        },
+        outputLabels: {
+          detected: "Text (Decoded)",
+          plain: "URL (Encoded)",
         },
       },
     },
@@ -426,9 +444,18 @@ export const encodingTools: Tool[] = [
       showSwapButton: true,
       autoDetect: {
         enabled: true,
+        emptyLabel: "paste HTML or entities",
         labels: {
-          detected: "Escaped",
-          plain: "Plain HTML",
+          detected: "Escaped → Unescaping",
+          plain: "Plain HTML → Escaping",
+        },
+        inputLabels: {
+          detected: "HTML (Escaped)",
+          plain: "HTML (Plain)",
+        },
+        outputLabels: {
+          detected: "HTML (Unescaped)",
+          plain: "HTML (Escaped)",
         },
       },
     },
@@ -538,9 +565,18 @@ export const encodingTools: Tool[] = [
       showSwapButton: true,
       autoDetect: {
         enabled: true,
+        emptyLabel: "paste text or JSON",
         labels: {
-          detected: "Escaped",
-          plain: "Plain JSON",
+          detected: "Escaped → Unescaping",
+          plain: "Plain text → Escaping",
+        },
+        inputLabels: {
+          detected: "JSON (Escaped)",
+          plain: "JSON (Plain)",
+        },
+        outputLabels: {
+          detected: "JSON (Unescaped)",
+          plain: "JSON (Escaped)",
         },
       },
     },
