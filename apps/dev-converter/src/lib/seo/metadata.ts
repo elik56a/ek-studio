@@ -3,6 +3,9 @@ import type { Metadata } from "next"
 import { siteConfig } from "@/config/site"
 import { Tool } from "@/lib/tools/types"
 
+const SITE_URL = siteConfig.url
+const OG_IMAGE = `${SITE_URL}/opengraph-image.png`
+
 /**
  * Extracts the primary keyword from the tool name
  * Example: "Base64 Encoder & Decoder" -> "Base64"
@@ -57,12 +60,12 @@ function optimizeDescription(tool: Tool): string {
 }
 
 export function generateToolMetadata(tool: Tool): Metadata {
-  const url = `https://devconverter.dev/${tool.slug}`
+  const url = `${SITE_URL}/${tool.slug}`
   const optimizedTitle = optimizeTitle(tool)
   const optimizedDescription = optimizeDescription(tool)
 
   // Use absolute URL for images (metadataBase handles this, but being explicit)
-  const ogImageUrl = "https://devconverter.dev/opengraph-image.png"
+  const ogImageUrl = OG_IMAGE
 
   return {
     title: optimizedTitle,
@@ -111,7 +114,7 @@ export function generateCategoryMetadata(
   categoryId: string,
   toolCount?: number
 ): Metadata {
-  const url = `https://devconverter.dev/categories/${categoryId}`
+  const url = `${SITE_URL}/categories/${categoryId}`
 
   // Optimize title with CTR terms
   const optimizedTitle = `${categoryName} Tools - Free Online Developer Tools | DevConverter`
@@ -121,7 +124,7 @@ export function generateCategoryMetadata(
   const optimizedDescription = `${toolCountText}online ${categoryName.toLowerCase()} tools for developers. ${categoryDescription} Instant results, no signup required.`
 
   // Use absolute URL for images
-  const ogImageUrl = "https://devconverter.dev/opengraph-image.png"
+  const ogImageUrl = OG_IMAGE
 
   return {
     title: optimizedTitle,
@@ -204,9 +207,9 @@ export function generateStaticPageMetadata(
     follow = true,
   } = params
 
-  const fullUrl = `https://devconverter.dev${url}`
+  const fullUrl = `${SITE_URL}${url}`
   const fullTitle = `${title} | DevConverter`
-  const ogImageUrl = "https://devconverter.dev/opengraph-image.png"
+  const ogImageUrl = OG_IMAGE
 
   return {
     title: fullTitle,
@@ -250,19 +253,35 @@ export function generateStaticPageMetadata(
 }
 
 export function generateStructuredData(tool: Tool) {
-  const url = `https://devconverter.dev/${tool.slug}`
+  const url = `${SITE_URL}/${tool.slug}`
 
   return {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "@id": url,
+    "@id": `${url}#webapp`,
     name: tool.name,
     description: tool.description,
     url,
-    image: "https://devconverter.dev/opengraph-image.png",
+    image: OG_IMAGE,
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Any",
     inLanguage: "en",
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}#website`,
+      name: "DevConverter",
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      "@id": `${SITE_URL}#organization`,
+      name: "DevConverter",
+      url: SITE_URL,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
     offers: {
       "@type": "Offer",
       price: "0",
@@ -271,7 +290,7 @@ export function generateStructuredData(tool: Tool) {
     creator: {
       "@type": "Organization",
       name: "DevConverter",
-      url: "https://devconverter.dev",
+      url: SITE_URL,
     },
   }
 }
@@ -279,15 +298,32 @@ export function generateStructuredData(tool: Tool) {
 export const structuredData = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
+  "@id": `${SITE_URL}#webapp`,
   name: "DevConverter",
   alternateName: "DevConverter - Free Online Developer Tools",
   description:
     "Free online tools for developers: JSON formatter, Base64 encoder, JWT decoder, and more. Fast, secure, client-side processing.",
-  url: "https://devconverter.dev",
+  url: SITE_URL,
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Any",
   browserRequirements: "Requires JavaScript. Requires HTML5.",
   permissions: "No special permissions required",
+  isPartOf: {
+    "@type": "WebSite",
+    "@id": `${SITE_URL}#website`,
+    name: "DevConverter",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    "@id": `${SITE_URL}#organization`,
+    name: "DevConverter",
+    url: SITE_URL,
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": SITE_URL,
+  },
   offers: {
     "@type": "Offer",
     price: "0",
@@ -297,7 +333,7 @@ export const structuredData = {
   creator: {
     "@type": "Organization",
     name: "DevConverter",
-    url: "https://devconverter.dev",
+    url: SITE_URL,
   },
   featureList: [
     "JSON Formatter and Validator",
@@ -309,7 +345,7 @@ export const structuredData = {
     "QR Code Generator",
     "Color Converter",
   ],
-  screenshot: "https://devconverter.dev/opengraph-image.png",
+  screenshot: OG_IMAGE,
 }
 
 export const orgStructuredData = {
@@ -334,4 +370,34 @@ export const orgStructuredData = {
     email: siteConfig.links.email,
     url: `${siteConfig.url}/contact`,
   },
+}
+
+/**
+ * Generates FAQPage schema for tools with FAQ sections
+ * This helps search engines display rich FAQ results in SERPs
+ *
+ * @param tool - The tool object containing FAQ data
+ * @returns FAQPage schema object or null if no FAQs exist
+ */
+export function generateFAQPageSchema(tool: Tool) {
+  // Don't generate schema if there are no FAQs
+  if (!tool.faq || tool.faq.length === 0) {
+    return null
+  }
+
+  const url = `${SITE_URL}/${tool.slug}`
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${url}#faqpage`,
+    mainEntity: tool.faq.map(faq => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  }
 }

@@ -7,6 +7,7 @@ import { useCallback, useMemo, useState } from "react"
 
 import { ButtonGroup } from "@/components/common/button-group"
 import { JsonValueRenderer } from "@/components/custom/json-value-renderer"
+import { useOutputAnimation } from "@/hooks/use-output-animation"
 import {
   NodeState,
   createCollapsedState,
@@ -30,6 +31,9 @@ export function CollapsibleJsonViewer({
 
   // Parse the input value (supports JSON and YAML-like structures)
   const parsedData = useMemo(() => parseJsonOrYaml(value), [value])
+
+  // Add glowing animation on value change
+  const isOutputAnimating = useOutputAnimation(value)
 
   const toggleNode = useCallback((path: string) => {
     setCollapsedNodes(prev => ({
@@ -83,15 +87,15 @@ export function CollapsibleJsonViewer({
         className
       )}
     >
-      {/* Animated border glow */}
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 opacity-50 blur-lg -z-10 animate-pulse" />
-
       {/* JSON Tree View with Controls */}
-      <div className="flex-1 overflow-auto bg-muted/30 border border-border/50 rounded-lg flex flex-col relative">
-        {/* Decorative gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none rounded-lg" />
+      <div
+        className={cn(
+          "flex-1 overflow-auto bg-white dark:bg-muted/30 border border-border/50 rounded-lg flex flex-col relative transition-all duration-500",
+          isOutputAnimating && "output-glow-animation"
+        )}
+      >
         {/* Controls - Inside the container */}
-        <div className="flex items-center gap-3 px-4 py-2 border-b border-border/50 bg-background/50 sticky top-0 z-10">
+        <div className="flex items-center gap-3 px-4 py-2 border-b border-border/50 bg-white/80 dark:bg-background/50 backdrop-blur-sm sticky top-0 z-10">
           {/* View Mode Toggle */}
           <ButtonGroup
             options={[

@@ -11,10 +11,10 @@ export function detectBase64(input: string): boolean {
   // Standard Base64 uses +, /, and = for padding
   // Must be multiple of 4 in length
   return (
-    /^[A-Za-z0-9+/]*={0,2}$/.test(trimmedInput) && 
+    /^[A-Za-z0-9+/]*={0,2}$/.test(trimmedInput) &&
     trimmedInput.length % 4 === 0 &&
     // Ensure it's not just plain text (must have some Base64 characteristics)
-    (trimmedInput.length >= 4 || trimmedInput.includes('='))
+    (trimmedInput.length >= 4 || trimmedInput.includes("="))
   )
 }
 
@@ -166,7 +166,10 @@ function validateBase64(
  * @param removePadding - Whether to remove padding
  * @returns Base64URL string
  */
-function base64ToBase64Url(base64: string, removePadding: boolean = true): string {
+function base64ToBase64Url(
+  base64: string,
+  removePadding: boolean = true
+): string {
   let result = base64.replace(/\+/g, "-").replace(/\//g, "_")
   if (removePadding) {
     result = result.replace(/=+$/, "")
@@ -757,14 +760,4 @@ export function fileToBase64(file: File): Promise<ConversionResult<string>> {
 
     reader.readAsDataURL(file)
   })
-}
-
-/**
- * Converts an image file to Base64 data URL
- * @param file - The image file to convert
- * @returns Promise<ConversionResult<string>> with Base64 data URL or error
- * @deprecated Use fileToBase64 instead
- */
-export function imageToBase64(file: File): Promise<ConversionResult<string>> {
-  return fileToBase64(file)
 }

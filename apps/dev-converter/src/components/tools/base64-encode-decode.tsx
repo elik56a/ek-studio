@@ -1,15 +1,17 @@
 "use client"
 
-import { useState, useCallback } from "react"
 import { Checkbox, Label } from "@ek-studio/ui"
+
+import { useCallback, useState } from "react"
+
 import { ButtonGroup } from "@/components/common/button-group"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useAutoDetect } from "@/hooks/use-auto-detect"
 import { useTool } from "@/hooks/use-tool"
 import {
+  type CharacterEncoding,
   base64Convert,
   detectBase64,
-  type CharacterEncoding,
 } from "@/lib/utils/encoding-utils"
 
 const Base64EncodeDecodeTool = () => {
@@ -69,7 +71,7 @@ const Base64EncodeDecodeTool = () => {
             { value: "binary", label: "Binary (btoa/atob)" },
           ]}
           value={encoding}
-          onChange={(value) => setEncoding(value as CharacterEncoding)}
+          onChange={value => setEncoding(value as CharacterEncoding)}
           size="sm"
         />
       </div>
@@ -85,7 +87,7 @@ const Base64EncodeDecodeTool = () => {
             { value: "url", label: "Base64URL" },
           ]}
           value={useUrlSafe ? "url" : "standard"}
-          onChange={(value) => {
+          onChange={value => {
             const isUrl = value === "url"
             setUseUrlSafe(isUrl)
             // Auto-enable "without padding" when URL-safe is enabled
@@ -103,7 +105,7 @@ const Base64EncodeDecodeTool = () => {
           <Checkbox
             id="remove-padding"
             checked={removePadding}
-            onCheckedChange={(checked) => setRemovePadding(checked === true)}
+            onCheckedChange={checked => setRemovePadding(checked === true)}
           />
           <Label
             htmlFor="remove-padding"

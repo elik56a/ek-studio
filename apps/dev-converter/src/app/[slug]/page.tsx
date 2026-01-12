@@ -5,8 +5,7 @@ import { notFound } from "next/navigation"
 import { Breadcrumb } from "@/components/layout/breadcrumb"
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
 import { ToolStructuredData } from "@/components/seo/structured-data"
-import { generateToolMetadata } from "@/lib/seo/metadata"
-import { generateFAQQuestionsSchema } from "@/lib/seo/schema-generators"
+import { generateFAQPageSchema, generateToolMetadata } from "@/lib/seo/metadata"
 import { getCategoryByToolId } from "@/lib/tools/categories"
 import { getToolBySlug } from "@/lib/tools/registry"
 
@@ -48,6 +47,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
   const category = getCategoryByToolId(tool.id)
   const ToolComponent = tool.component
+  const faqSchema = generateFAQPageSchema(tool)
 
   // Build breadcrumb data for both UI and schema
   const breadcrumbItems = [
@@ -68,14 +68,6 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
   if (!ToolComponent) {
     // Generate FAQ schema if FAQs exist
-    const faqSchema =
-      tool.faq && tool.faq.length > 0
-        ? {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: generateFAQQuestionsSchema(tool.faq),
-          }
-        : null
 
     return (
       <>
@@ -113,16 +105,10 @@ export default async function ToolPage({ params }: ToolPageProps) {
       <BreadcrumbSchema breadcrumbs={breadcrumbSchemaData} />
 
       {/* FAQPage Schema (conditionally rendered if FAQs exist) */}
-      {tool.faq && tool.faq.length > 0 && (
+      {faqSchema && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: generateFAQQuestionsSchema(tool.faq),
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
 

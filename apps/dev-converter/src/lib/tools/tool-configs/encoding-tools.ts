@@ -96,7 +96,8 @@ export const encodingTools: Tool[] = [
     id: "base64-encode-decode",
     slug: "base64-encode-decode",
     name: "Base64 Encoder & Decoder",
-    description: "Encode text to Base64 or decode Base64 back to text with Base64URL (JWT) support",
+    description:
+      "Encode text to Base64 or decode Base64 back to text with Base64URL (JWT) support",
     category: "encoding",
     type: "converter",
     keywords: ["base64", "encode", "decode", "binary", "jwt", "base64url"],

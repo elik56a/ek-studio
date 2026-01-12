@@ -102,16 +102,17 @@ export function EditorPanel({
               </div>
             </CardHeader>
             {/* Input Toolbar - Below divider */}
-            {/* Input Toolbar - Below divider */}
             {inputActions && (
-              <div className="px-4 sm:px-6 pt-2 pb-3">
-                {inputActions}
+              <div className="px-4 sm:px-6 py-2">
+                <div className="flex items-center justify-start gap-2">
+                  {inputActions}
+                </div>
               </div>
             )}
             {/* Spacer to match output toolbar height when no input toolbar */}
             {!inputActions && outputActions && (
               <div className="px-4 sm:px-6 py-2">
-                <div className="h-[32px]" />
+                <div className="h-[40px]" />
               </div>
             )}
             <CardContent className="flex-1 sm:p-6 pt-3 sm:pt-4">
@@ -158,9 +159,17 @@ export function EditorPanel({
           <CardHeader className="pb-2 px-4 sm:px-6 border-b border-border/30">
             {/* Title Row */}
             <div className="flex items-center justify-between gap-2">
-              <CardTitle className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
-                {outputLabel}
-              </CardTitle>
+              <div className="flex flex-col gap-1">
+                <CardTitle className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
+                  {outputLabel}
+                </CardTitle>
+                {/* Spacer to match input auto-detect label height */}
+                {showAutoDetect && autoDetectLabel && (
+                  <span className="text-xs text-transparent select-none">
+                    Spacer
+                  </span>
+                )}
+              </div>
               <div className="flex items-center gap-2">
                 <span className="text-xs bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-semibold uppercase tracking-wide">
                   Output
@@ -182,9 +191,9 @@ export function EditorPanel({
             </div>
           )}
           {/* Spacer to match input toolbar height when no output toolbar */}
-          {!outputActions && (inputActions || showAutoDetect) && (
+          {!outputActions && inputActions && (
             <div className="px-4 sm:px-6 py-2">
-              <div className="h-[32px]" />
+              <div className="h-[40px]" />
             </div>
           )}
           <CardContent className="flex-1 p-3 sm:p-6 pt-3 sm:pt-4">
