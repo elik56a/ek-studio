@@ -96,27 +96,32 @@ export const encodingTools: Tool[] = [
     id: "base64-encode-decode",
     slug: "base64-encode-decode",
     name: "Base64 Encoder & Decoder",
-    description: "Encode text to Base64 or decode Base64 back to text",
+    description: "Encode text to Base64 or decode Base64 back to text with Base64URL (JWT) support",
     category: "encoding",
     type: "converter",
-    keywords: ["base64", "encode", "decode", "binary"],
+    keywords: ["base64", "encode", "decode", "binary", "jwt", "base64url"],
     metadata: {
       title: "Base64 Encoder & Decoder - Encode and Decode Base64 Online",
       description:
-        "Free online Base64 encoder and decoder. Convert text to Base64 encoding or decode Base64 back to readable text.",
+        "Free online Base64 encoder and decoder with Base64URL (JWT-compatible) support. Convert text to Base64 encoding or decode Base64 back to readable text.",
       keywords: [
         "base64 encoder",
         "base64 decoder",
         "base64 converter",
         "binary encoding",
+        "base64url",
+        "jwt encoder",
       ],
     },
     info: {
       description:
-        "A Base64 encoder and decoder is a tool that converts text or binary data into Base64 format and back again. Base64 is a binary-to-text encoding standard commonly used in web development, APIs, authentication headers, email attachments, and data transmission systems. Encoding ensures that binary or special characters can be safely transmitted through text-based formats like JSON, HTML, and HTTP headers. This tool helps you quickly encode plain text into Base64, decode Base64 back into readable text, and test tokens, payloads, or encoded values instantly.",
+        "A Base64 encoder and decoder is a tool that converts text or binary data into Base64 format and back again. Base64 is a binary-to-text encoding standard commonly used in web development, APIs, authentication headers, email attachments, and data transmission systems. This tool also supports Base64URL (JWT-compatible) encoding, which uses URL-safe characters (- and _ instead of + and /) and omits padding, making it perfect for JWTs, URL parameters, and filenames. Encoding ensures that binary or special characters can be safely transmitted through text-based formats like JSON, HTML, and HTTP headers.",
       howToUse: [
         "Paste your text or Base64 string into the input field",
         "The tool automatically detects whether you want to encode or decode",
+        "Select character encoding: UTF-8 (default, recommended) or Binary (Latin1)",
+        "Toggle 'Base64URL (JWT)' checkbox to enable URL-safe encoding for JWTs",
+        "Toggle 'Without padding' to remove = padding characters from output",
         "Click Encode/Decode to run the conversion instantly",
         "Copy the output result using the copy button",
         "Use the encoded or decoded output in APIs, authentication headers, or applications",
@@ -124,17 +129,23 @@ export const encodingTools: Tool[] = [
       useCases: [
         "Encode Text for APIs: Convert text into Base64 for safe transmission in JSON or HTTP headers",
         "Decode Tokens: Decode Base64 tokens to inspect stored data or debug authentication payloads",
+        "JWT Encoding: Use Base64URL mode for encoding/decoding JWT tokens",
         "Email Attachments: Encode binary data for email systems and MIME payloads",
         "Basic Authentication: Encode username:password for HTTP Basic Auth headers",
         "Store Data Safely: Encode configuration strings for environment variables and config files",
+        "URL-Safe Encoding: Use Base64URL for query parameters and filenames",
         "Debug Encoding Errors: Quickly check whether a value is valid Base64 and decode it",
       ],
       features: [
         "Two-Way Conversion: Encode text to Base64 and decode Base64 back to text",
-        "Auto Detection: Automatically detects Base64 vs plain text for easy workflow",
+        "Base64URL Support: Toggle JWT-compatible Base64URL encoding with URL-safe characters",
+        "Padding Control: Option to remove padding (=) for cleaner output",
+        "UTF-8 Encoding: Default UTF-8 support for proper Unicode character handling",
+        "Binary Mode (btoa/atob): Switch to binary encoding for legacy compatibility",
+        "Auto Detection: Automatically detects Base64, Base64URL, or plain text for easy workflow",
         "Instant Results: Fast conversion in real time",
         "One-Click Copy: Copy output instantly to clipboard",
-        "Safe for Developers: Perfect for debugging API payloads and authentication headers",
+        "Safe for Developers: Perfect for debugging API payloads, JWTs, and authentication headers",
         "Privacy Friendly: Runs locally in your browser — no data uploaded",
       ],
     },
@@ -155,10 +166,16 @@ export const encodingTools: Tool[] = [
         description: "Encode JSON data to Base64",
       },
       {
+        title: "Decode Base64URL (JWT)",
+        input: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+        description:
+          "Decode Base64URL JWT header (enable Base64URL mode for encoding)",
+      },
+      {
         title: "Encode URL-safe token",
         input: "user:12345|role:admin",
         description:
-          "Encode a string token to Base64 for safe storage or transmission",
+          "Encode a string token to Base64URL for safe storage or transmission (enable Base64URL mode)",
       },
     ],
     faq: [
@@ -168,14 +185,24 @@ export const encodingTools: Tool[] = [
           "Base64 is a binary-to-text encoding format that converts data into readable ASCII characters. It is commonly used to safely transfer binary data through text-based systems such as email, JSON payloads, and URL-safe tokens.",
       },
       {
+        question: "What is Base64URL and how is it different from Base64?",
+        answer:
+          "Base64URL is a URL-safe variant of Base64 used in JWTs and URLs. It replaces + with -, / with _, and removes padding (=) characters. This makes it safe for use in URLs, filenames, and query parameters without encoding issues.",
+      },
+      {
         question: "How do I encode text to Base64 online?",
         answer:
-          "Paste your text into the input box and click Encode/Decode. The tool will automatically detect plain text and convert it into Base64 format instantly.",
+          "Paste your text into the input box and click Encode/Decode. The tool will automatically detect plain text and convert it into Base64 format instantly. Enable the Base64URL checkbox for JWT-compatible encoding.",
       },
       {
         question: "How do I decode Base64 back to text?",
         answer:
-          "Paste your Base64 string into the input field and the tool will detect it as valid Base64, decode it, and return readable text immediately.",
+          "Paste your Base64 string into the input field and the tool will detect it as valid Base64, decode it, and return readable text immediately. It supports both standard Base64 and Base64URL formats.",
+      },
+      {
+        question: "When should I use Base64URL instead of standard Base64?",
+        answer:
+          "Use Base64URL when encoding data for JWTs, URL parameters, filenames, or any context where + and / characters could cause issues. Base64URL is specifically designed to be URL-safe and doesn't require percent-encoding.",
       },
       {
         question: "Is Base64 encryption? Is it secure?",
@@ -185,7 +212,7 @@ export const encodingTools: Tool[] = [
       {
         question: "What are common use cases for Base64 encoding?",
         answer:
-          "Base64 is widely used for embedding images in HTML/CSS, encoding binary files in JSON or APIs, sending attachments via email, and generating authentication tokens or basic credentials.",
+          "Base64 is widely used for embedding images in HTML/CSS, encoding binary files in JSON or APIs, sending attachments via email, generating authentication tokens or basic credentials, and encoding JWT tokens.",
       },
     ],
     relatedTools: ["url-encode-decode", "html-escape-unescape"],

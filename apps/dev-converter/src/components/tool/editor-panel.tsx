@@ -76,9 +76,19 @@ export function EditorPanel({
           <Card className="glass border-0 shadow-glow flex flex-col h-full transition-all duration-200">
             <CardHeader className="pb-2 px-4 sm:px-6 border-b border-border/30">
               <div className="flex items-center justify-between gap-2">
-                <CardTitle className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
-                  {inputLabel}
-                </CardTitle>
+                <div className="flex flex-col gap-1">
+                  <CardTitle className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
+                    {inputLabel}
+                  </CardTitle>
+                  {/* Auto-detect status text under title */}
+                  {showAutoDetect && autoDetectLabel && (
+                    <span className="text-xs text-muted-foreground">
+                      {inputValue?.trim()
+                        ? `Detected: ${autoDetectLabel}`
+                        : `Auto-detect: ${autoDetectLabel}`}
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-semibold uppercase tracking-wide">
                     Input
@@ -92,43 +102,19 @@ export function EditorPanel({
               </div>
             </CardHeader>
             {/* Input Toolbar - Below divider */}
-            {(inputActions || (showAutoDetect && autoDetectLabel)) && (
-              <div className="px-4 sm:px-6 py-2">
-                <div className="flex items-center justify-between gap-2">
-                  {/* Left side: Auto-detect badge */}
-                  {showAutoDetect && autoDetectLabel && (
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <div className="inline-flex items-center gap-1.5 text-xs bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 px-2.5 py-1 rounded-full font-medium cursor-help transition-all duration-200 hover:bg-purple-500/20">
-                            <Zap className="h-3 w-3 flex-shrink-0" />
-                            <span className="whitespace-nowrap">
-                              {inputValue?.trim()
-                                ? `Detected: ${autoDetectLabel}`
-                                : `Auto-detect: ${autoDetectLabel}`}
-                            </span>
-                          </div>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Automatically detects input format</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  )}
-                  {/* Right side: Input actions */}
-                  <div className="flex items-center gap-2">
-                    {inputActions}
-                  </div>
-                </div>
+            {/* Input Toolbar - Below divider */}
+            {inputActions && (
+              <div className="px-4 sm:px-6 pt-2 pb-3">
+                {inputActions}
               </div>
             )}
             {/* Spacer to match output toolbar height when no input toolbar */}
-            {!inputActions && !showAutoDetect && outputActions && (
+            {!inputActions && outputActions && (
               <div className="px-4 sm:px-6 py-2">
                 <div className="h-[32px]" />
               </div>
             )}
-            <CardContent className="flex-1 p-3 sm:p-6 pt-3 sm:pt-4">
+            <CardContent className="flex-1 sm:p-6 pt-3 sm:pt-4">
               {customInputComponent ? (
                 customInputComponent
               ) : (
@@ -189,10 +175,16 @@ export function EditorPanel({
           </CardHeader>
           {/* Action Toolbar - Below divider */}
           {outputActions && (
-            <div className="px-4 sm:px-6">
+            <div className="px-4 sm:px-6 py-2">
               <div className="flex items-center justify-end gap-2">
                 {outputActions}
               </div>
+            </div>
+          )}
+          {/* Spacer to match input toolbar height when no output toolbar */}
+          {!outputActions && (inputActions || showAutoDetect) && (
+            <div className="px-4 sm:px-6 py-2">
+              <div className="h-[32px]" />
             </div>
           )}
           <CardContent className="flex-1 p-3 sm:p-6 pt-3 sm:pt-4">

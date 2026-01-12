@@ -1,15 +1,38 @@
 import { ConversionResult } from "./json-utils"
 
 /**
- * Detects if input appears to be Base64 encoded
+ * Detects if input appears to be Base64 encoded (standard)
  * @param input - The input string to check
- * @returns true if input looks like Base64
+ * @returns true if input looks like standard Base64
  */
 export function detectBase64(input: string): boolean {
   if (!input.trim()) return false
   const trimmedInput = input.trim()
+  // Standard Base64 uses +, /, and = for padding
+  // Must be multiple of 4 in length
   return (
-    /^[A-Za-z0-9+/]*={0,2}$/.test(trimmedInput) && trimmedInput.length % 4 === 0
+    /^[A-Za-z0-9+/]*={0,2}$/.test(trimmedInput) && 
+    trimmedInput.length % 4 === 0 &&
+    // Ensure it's not just plain text (must have some Base64 characteristics)
+    (trimmedInput.length >= 4 || trimmedInput.includes('='))
+  )
+}
+
+/**
+ * Detects if input appears to be Base64URL encoded (JWT-compatible)
+ * @param input - The input string to check
+ * @returns true if input looks like Base64URL
+ */
+export function detectBase64Url(input: string): boolean {
+  if (!input.trim()) return false
+  const trimmedInput = input.trim()
+  // Base64URL uses - and _ instead of + and /, and typically no padding
+  // Must contain at least one Base64URL specific character or be long enough
+  return (
+    /^[A-Za-z0-9_-]+$/.test(trimmedInput) &&
+    trimmedInput.length >= 4 &&
+    // Must contain at least one - or _ to distinguish from plain text
+    (/[-_]/.test(trimmedInput) || trimmedInput.length > 20)
   )
 }
 
@@ -46,16 +69,36 @@ export function detectJsonEscaped(input: string): boolean {
 /**
  * Validates Base64 input and provides detailed error information
  * @param input - The Base64 string to validate
+ * @param isUrlSafe - Whether to validate as Base64URL (JWT-compatible)
  * @returns Validation result with specific error details
  */
-function validateBase64(input: string): {
+function validateBase64(
+  input: string,
+  isUrlSafe: boolean = false
+): {
   isValid: boolean
   error?: string
   suggestion?: string
 } {
   const trimmed = input.trim()
 
-  // Check for invalid characters
+  if (isUrlSafe) {
+    // Base64URL validation
+    const invalidChars = trimmed.match(/[^A-Za-z0-9_-]/g)
+    if (invalidChars) {
+      const uniqueChars = [...new Set(invalidChars)].join(", ")
+      return {
+        isValid: false,
+        error: `Invalid Base64URL characters detected: ${uniqueChars}`,
+        suggestion:
+          "Base64URL only uses A-Z, a-z, 0-9, -, and _. No padding (=) is used. Remove or replace invalid characters.",
+      }
+    }
+    // Base64URL doesn't require length to be multiple of 4 (no padding)
+    return { isValid: true }
+  }
+
+  // Standard Base64 validation
   const invalidChars = trimmed.match(/[^A-Za-z0-9+/=\s]/g)
   if (invalidChars) {
     const uniqueChars = [...new Set(invalidChars)].join(", ")
@@ -118,11 +161,91 @@ function validateBase64(input: string): {
 }
 
 /**
+ * Converts standard Base64 to Base64URL (JWT-compatible)
+ * @param base64 - Standard Base64 string
+ * @param removePadding - Whether to remove padding
+ * @returns Base64URL string
+ */
+function base64ToBase64Url(base64: string, removePadding: boolean = true): string {
+  let result = base64.replace(/\+/g, "-").replace(/\//g, "_")
+  if (removePadding) {
+    result = result.replace(/=+$/, "")
+  }
+  return result
+}
+
+/**
+ * Converts Base64URL to standard Base64
+ * @param base64url - Base64URL string
+ * @returns Standard Base64 string
+ */
+function base64UrlToBase64(base64url: string): string {
+  let base64 = base64url.replace(/-/g, "+").replace(/_/g, "/")
+  // Add padding if needed
+  const padding = base64.length % 4
+  if (padding > 0) {
+    base64 += "=".repeat(4 - padding)
+  }
+  return base64
+}
+
+/**
+ * Encodes a string to Base64 using UTF-8 encoding
+ * @param str - The string to encode
+ * @returns Base64 encoded string
+ */
+function encodeUtf8ToBase64(str: string): string {
+  // Use TextEncoder for proper UTF-8 encoding
+  const encoder = new TextEncoder()
+  const uint8Array = encoder.encode(str)
+  // Convert Uint8Array to binary string
+  let binaryString = ""
+  for (let i = 0; i < uint8Array.length; i++) {
+    binaryString += String.fromCharCode(uint8Array[i])
+  }
+  return btoa(binaryString)
+}
+
+/**
+ * Decodes a Base64 string using UTF-8 decoding
+ * @param base64 - The Base64 string to decode
+ * @returns Decoded string
+ */
+function decodeBase64ToUtf8(base64: string): string {
+  // Decode base64 to binary string
+  const binaryString = atob(base64)
+  // Convert binary string to Uint8Array
+  const uint8Array = new Uint8Array(binaryString.length)
+  for (let i = 0; i < binaryString.length; i++) {
+    uint8Array[i] = binaryString.charCodeAt(i)
+  }
+  // Use TextDecoder for proper UTF-8 decoding
+  const decoder = new TextDecoder("utf-8")
+  return decoder.decode(uint8Array)
+}
+
+export type CharacterEncoding = "utf8" | "binary"
+
+/**
  * Encodes text to Base64 or decodes Base64 to text (auto-detects)
  * @param input - The text to encode or Base64 string to decode
+ * @param options - Encoding options
  * @returns ConversionResult with encoded/decoded data or error
  */
-export function base64Convert(input: string): ConversionResult<string> {
+export function base64Convert(
+  input: string,
+  options: {
+    useUrlSafe?: boolean
+    removePadding?: boolean
+    encoding?: CharacterEncoding
+  } = {}
+): ConversionResult<string> {
+  const {
+    useUrlSafe = false,
+    removePadding = false,
+    encoding = "utf8",
+  } = options
+
   if (!input.trim()) {
     return {
       success: false,
@@ -131,12 +254,13 @@ export function base64Convert(input: string): ConversionResult<string> {
   }
 
   try {
-    // Detect if input is Base64 (decode) or plain text (encode)
-    const isBase64 = detectBase64(input)
+    // Detect if input is Base64URL first (more specific), then standard Base64
+    const isBase64Url = detectBase64Url(input)
+    const isBase64 = !isBase64Url && detectBase64(input)
 
-    if (isBase64) {
+    if (isBase64 || isBase64Url) {
       // Validate Base64 before attempting to decode
-      const validation = validateBase64(input)
+      const validation = validateBase64(input, isBase64Url)
       if (!validation.isValid) {
         return {
           success: false,
@@ -146,31 +270,81 @@ export function base64Convert(input: string): ConversionResult<string> {
       }
 
       try {
-        // Try to decode
-        const decoded = atob(input.trim().replace(/\s/g, ""))
+        // Convert Base64URL to standard Base64 if needed
+        const base64Input = isBase64Url
+          ? base64UrlToBase64(input.trim())
+          : input.trim().replace(/\s/g, "")
+
+        // Try to decode based on encoding type
+        let decoded: string
+        if (encoding === "utf8") {
+          decoded = decodeBase64ToUtf8(base64Input)
+        } else {
+          // Binary (Latin1) - direct atob
+          decoded = atob(base64Input)
+        }
+
         return {
           success: true,
           data: decoded,
-          message: "Base64 decoded successfully",
+          message: `Base64${isBase64Url ? "URL" : ""} decoded successfully`,
         }
       } catch (error) {
-        // Provide specific decode error
-        const errorMsg =
-          error instanceof Error ? error.message : "Decode failed"
-        return {
-          success: false,
-          error: "Failed to decode Base64",
-          details: `${errorMsg}. The string may be corrupted or contain invalid encoded data.`,
+        // If decode fails, treat as plain text to encode instead
+        try {
+          let encoded: string
+          if (encoding === "utf8") {
+            encoded = encodeUtf8ToBase64(input)
+          } else {
+            // Binary (Latin1) - direct btoa
+            encoded = btoa(input)
+          }
+
+          // Apply URL-safe conversion if needed
+          if (useUrlSafe) {
+            encoded = base64ToBase64Url(encoded, removePadding)
+          } else if (removePadding) {
+            // Remove padding even for standard Base64 if requested
+            encoded = encoded.replace(/=+$/, "")
+          }
+
+          return {
+            success: true,
+            data: encoded,
+            message: `Text encoded to Base64${useUrlSafe ? "URL" : ""} successfully`,
+          }
+        } catch (encodeError) {
+          return {
+            success: false,
+            error: "Failed to encode to Base64",
+            details:
+              "The input contains characters that cannot be encoded with the selected character encoding.",
+          }
         }
       }
     } else {
       // Encode to Base64
       try {
-        const encoded = btoa(input)
+        let encoded: string
+        if (encoding === "utf8") {
+          encoded = encodeUtf8ToBase64(input)
+        } else {
+          // Binary (Latin1) - direct btoa
+          encoded = btoa(input)
+        }
+
+        // Apply URL-safe conversion if needed
+        if (useUrlSafe) {
+          encoded = base64ToBase64Url(encoded, removePadding)
+        } else if (removePadding) {
+          // Remove padding even for standard Base64 if requested
+          encoded = encoded.replace(/=+$/, "")
+        }
+
         return {
           success: true,
           data: encoded,
-          message: "Text encoded to Base64 successfully",
+          message: `Text encoded to Base64${useUrlSafe ? "URL" : ""} successfully`,
         }
       } catch (error) {
         // Handle encoding errors (e.g., invalid Unicode characters)
@@ -178,7 +352,7 @@ export function base64Convert(input: string): ConversionResult<string> {
           success: false,
           error: "Failed to encode to Base64",
           details:
-            "The input contains characters that cannot be encoded. Try using UTF-8 encoding or remove special characters.",
+            "The input contains characters that cannot be encoded with the selected character encoding.",
         }
       }
     }

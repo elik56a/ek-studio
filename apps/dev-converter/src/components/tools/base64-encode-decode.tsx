@@ -1,11 +1,22 @@
 "use client"
 
+import { useState, useCallback } from "react"
+import { Checkbox, Label } from "@ek-studio/ui"
+import { ButtonGroup } from "@/components/common/button-group"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useAutoDetect } from "@/hooks/use-auto-detect"
 import { useTool } from "@/hooks/use-tool"
-import { base64Convert, detectBase64 } from "@/lib/utils/encoding-utils"
+import {
+  base64Convert,
+  detectBase64,
+  type CharacterEncoding,
+} from "@/lib/utils/encoding-utils"
 
 const Base64EncodeDecodeTool = () => {
+  const [useUrlSafe, setUseUrlSafe] = useState(false)
+  const [removePadding, setRemovePadding] = useState(false)
+  const [encoding, setEncoding] = useState<CharacterEncoding>("utf8")
+
   const {
     input,
     setInput,
@@ -18,10 +29,13 @@ const Base64EncodeDecodeTool = () => {
     toolSlug,
     tool,
     relatedTools,
-    convert,
     handleExampleClick,
   } = useTool({
-    convertFn: base64Convert,
+    convertFn: useCallback(
+      (input: string) =>
+        base64Convert(input, { useUrlSafe, removePadding, encoding }),
+      [useUrlSafe, removePadding, encoding]
+    ),
   })
 
   if (!tool) {
@@ -40,6 +54,67 @@ const Base64EncodeDecodeTool = () => {
   const [errorMessage, errorDetails] = statusMessage?.includes("|")
     ? statusMessage.split("|")
     : [statusMessage, undefined]
+
+  // Input actions with encoding options (displayed below auto-detect)
+  const inputActions = (
+    <div className="flex flex-wrap items-end gap-3">
+      {/* Character Encoding Selector */}
+      <div className="flex flex-col gap-1">
+        <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
+          Encoding
+        </span>
+        <ButtonGroup
+          options={[
+            { value: "utf8", label: "UTF-8" },
+            { value: "binary", label: "Binary (btoa/atob)" },
+          ]}
+          value={encoding}
+          onChange={(value) => setEncoding(value as CharacterEncoding)}
+          size="sm"
+        />
+      </div>
+
+      {/* Base64 Mode Selector */}
+      <div className="flex flex-col gap-1">
+        <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
+          Mode
+        </span>
+        <ButtonGroup
+          options={[
+            { value: "standard", label: "Base64" },
+            { value: "url", label: "Base64URL" },
+          ]}
+          value={useUrlSafe ? "url" : "standard"}
+          onChange={(value) => {
+            const isUrl = value === "url"
+            setUseUrlSafe(isUrl)
+            // Auto-enable "without padding" when URL-safe is enabled
+            if (isUrl && !removePadding) {
+              setRemovePadding(true)
+            }
+          }}
+          size="sm"
+        />
+      </div>
+
+      {/* No Padding Toggle - Only show when Base64URL is selected */}
+      {useUrlSafe && (
+        <div className="flex items-center gap-1.5 pb-[3px]">
+          <Checkbox
+            id="remove-padding"
+            checked={removePadding}
+            onCheckedChange={(checked) => setRemovePadding(checked === true)}
+          />
+          <Label
+            htmlFor="remove-padding"
+            className="text-xs font-medium cursor-pointer select-none text-muted-foreground"
+          >
+            No padding
+          </Label>
+        </div>
+      )}
+    </div>
+  )
 
   return (
     <ToolLayout
@@ -62,6 +137,7 @@ const Base64EncodeDecodeTool = () => {
         onSwap: handleSwap,
         showAutoDetect: tool.ui.autoDetect?.enabled,
         autoDetectLabel: autoDetectLabel,
+        inputActions: inputActions,
       }}
       toolActionsProps={{
         onCopy: handleCopy,
