@@ -33,7 +33,7 @@ const UrlEncodeDecodeTool = () => {
     useAutoDetect({
       tool,
       input,
-      isDetected: input.trim() && detectUrlEncoded(input),
+      isDetected: Boolean(input.trim() && detectUrlEncoded(input)),
     })
 
   // Split error message and details (separated by |)
