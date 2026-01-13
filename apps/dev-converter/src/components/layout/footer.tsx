@@ -26,8 +26,10 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="DevConverter on GitHub - View Source Code"
+                title="View DevConverter source code on GitHub"
               >
                 <Github className="w-5 h-5" />
+                <span className="sr-only">DevConverter GitHub Repository</span>
               </a>
               <a
                 href={siteConfig.links.linkedin}
@@ -35,16 +37,20 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Connect with DevConverter on LinkedIn"
+                title="Connect with DevConverter team on LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
+                <span className="sr-only">DevConverter LinkedIn Profile</span>
               </a>
               <a
                 href={`mailto:${siteConfig.links.email}`}
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Email DevConverter Support"
+                title="Contact DevConverter via email"
                 rel="noopener noreferrer"
               >
                 <Mail className="w-5 h-5" />
+                <span className="sr-only">Email DevConverter</span>
               </a>
             </div>
           </div>

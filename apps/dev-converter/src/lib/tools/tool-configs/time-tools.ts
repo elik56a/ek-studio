@@ -11,20 +11,22 @@ export const timeTools: Tool[] = [
     type: "converter",
     keywords: ["unix", "timestamp", "epoch", "date", "time", "convert"],
     metadata: {
-      title: "Unix Timestamp Converter - Convert Unix Time Online",
+      title: "Unix Timestamp Converter - Epoch Time Tool",
       description:
-        "Free online Unix timestamp converter. Convert between Unix timestamps and human-readable dates with timezone support and relative time display.",
+        "Convert Unix timestamps to dates and dates to timestamps instantly. Supports seconds, milliseconds, and multiple timezones. Free online epoch time converter.",
       keywords: [
         "unix timestamp converter",
         "epoch converter",
         "time converter",
         "date converter",
         "timestamp to date",
+        "epoch time",
+        "unix time",
       ],
     },
     info: {
       description:
-        "A Unix timestamp converter is a tool that converts between Unix time (also called epoch time) and human-readable date formats such as ISO 8601, local date strings, and timezone-adjusted time values. Unix timestamps represent the number of seconds (or milliseconds) since January 1, 1970 at 00:00:00 UTC, and are widely used in programming, APIs, databases, system logs, and distributed systems because they provide a consistent and timezone-independent way to represent time. This online Unix timestamp converter helps you instantly decode timestamps into readable dates, convert dates back into timestamps, and view results across different timezones. It is essential for debugging logs, verifying event timing, inspecting API payloads, and preventing timezone-related bugs.",
+        "A Unix timestamp converter transforms epoch time (seconds or milliseconds since January 1, 1970 UTC) into human-readable dates and vice versa. Essential for debugging server logs, validating API timestamps, inspecting database records, and troubleshooting timezone issues in distributed systems. This tool works with both 10-digit (seconds) and 13-digit (milliseconds) timestamps, automatically detecting the format. Perfect for developers working with REST APIs, microservices, cron jobs, and any system that stores time as Unix timestamps. Use alongside our JSON formatter for API debugging, JWT decoder for token expiration validation, and hash generator for timestamp-based signatures.",
       howToUse: [
         "Paste a Unix timestamp (seconds or milliseconds) into the input field",
         "Or paste a date/time value such as an ISO 8601 string or natural language date",

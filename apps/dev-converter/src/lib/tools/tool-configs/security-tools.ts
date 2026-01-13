@@ -5,101 +5,155 @@ export const securityTools: Tool[] = [
     id: "jwt-decoder",
     slug: "jwt-decoder",
     name: "JWT Decoder",
-    description: "Decode JWT tokens to view header, payload, and signature",
+    description: "Decode and inspect JWT tokens instantly - debug authentication flows, validate claims, and detect security vulnerabilities in OAuth2 and API tokens",
     category: "security",
     type: "converter",
-    keywords: ["jwt", "decode", "token", "json web token"],
+    keywords: ["jwt", "decode", "token", "json web token", "oauth2", "oidc", "bearer token", "authentication debugging"],
     metadata: {
-      title: "JWT Decoder - Decode JSON Web Tokens Online",
+      title: "JWT Decoder - Instantly Decode & Debug JSON Web Tokens | OAuth2 & API Authentication Inspector",
       description:
-        "Free online JWT decoder. Decode JWT tokens to view header, payload, and signature information.",
+        "Professional JWT decoder for developers. Instantly decode OAuth2 access tokens, inspect claims, validate expiration, detect algorithm vulnerabilities, and debug microservices authentication. Browser-based, zero data transmission.",
       keywords: [
         "jwt decoder",
-        "json web token",
+        "json web token decoder",
         "jwt parser",
-        "token decoder",
+        "oauth2 token decoder",
+        "bearer token inspector",
+        "jwt debugger",
+        "jwt claims validator",
+        "microservices authentication",
       ],
     },
     info: {
       description:
-        "A JWT decoder is a tool that allows you to decode JSON Web Tokens (JWTs) and inspect the token structure including the header, payload (claims), and signature. JWTs are widely used for authentication and authorization in modern web applications, APIs, and microservices. Because JWTs are Base64URL encoded, they are not directly readable until decoded. This online JWT decoder helps developers debug login flows, inspect user claims such as sub, userId, email, roles, and permissions, and verify important security fields like exp (expiration), iat (issued at), iss (issuer), and aud (audience). This tool is perfect for troubleshooting identity systems, OAuth providers, and API authentication tokens.",
+        "A professional JWT decoder built for modern authentication debugging. Instantly decode JSON Web Tokens used in OAuth2, OpenID Connect (OIDC), API authentication, and microservices architectures. This tool reveals the complete token anatomy: algorithm specifications in the header, user identity and permission claims in the payload, and signature integrity markers. Unlike basic decoders, this inspector helps identify common security vulnerabilities including algorithm confusion attacks (RS256 vs HS256 mismatches), dangerous 'none' algorithm usage, missing critical claims, and expired tokens causing silent authentication failures. Essential for debugging SSO integrations, troubleshooting 401 Unauthorized errors, validating JWT structure before server-side verification, inspecting third-party OAuth tokens from providers like Auth0, Okta, Firebase, and AWS Cognito, and understanding why authentication suddenly breaks in distributed systems. The decoder processes tokens entirely in your browser using Base64URL decoding—no network requests, no logging, complete privacy for production token inspection.",
       howToUse: [
-        "Paste your JWT token into the JWT input field",
-        "Click Decode JWT to decode the token instantly",
-        "View the decoded header, payload (claims), and signature sections",
-        "Inspect important claims like exp, sub, iss, aud, and roles",
-        "Copy the decoded JSON output for debugging or documentation",
+        "Copy the JWT token from your Authorization header, cookie, or API response",
+        "Paste the complete token (including all three dot-separated segments) into the input field",
+        "Click 'Decode JWT' to instantly reveal header, payload, and signature components",
+        "Examine the algorithm field in the header for security red flags (watch for 'none' or unexpected algorithms)",
+        "Inspect critical claims: exp (expiration timestamp), iat (issued at), nbf (not before), sub (subject/user ID), iss (issuer), aud (audience)",
+        "Verify expiration by comparing exp timestamp against current Unix time",
+        "Check for missing required claims that might cause validation failures downstream",
+        "Copy decoded JSON for documentation, bug reports, or security audits",
       ],
       useCases: [
-        "Debug Authentication Issues: Decode JWT tokens to understand why login or authorization is failing",
-        "Inspect Claims and Roles: View user permissions, roles, and identity data stored in the token payload",
-        "Validate Token Expiration: Check the exp claim to see whether a token is expired",
-        "Verify Issuer & Audience: Inspect iss and aud values when working with OAuth providers and SSO systems",
-        "API Testing: Decode bearer tokens from Postman requests to confirm token contents",
-        "Security Auditing: Review JWT headers for algorithm values like HS256 or RS256 to detect misconfigurations",
+        "Debug 401 Unauthorized Errors: Decode tokens to discover expired exp claims, mismatched aud values, or missing required fields causing authentication rejections",
+        "Troubleshoot Microservices Auth: Inspect tokens passed between services to verify claim propagation, role inheritance, and tenant isolation in multi-service architectures",
+        "Validate OAuth2 Integration: Decode access tokens from Auth0, Okta, Firebase, Keycloak, or AWS Cognito to confirm claim structure matches your application expectations",
+        "Detect Algorithm Vulnerabilities: Identify dangerous 'none' algorithm usage or RS256/HS256 confusion attacks by examining the alg field in decoded headers",
+        "Inspect SSO Token Claims: View SAML-to-JWT conversions, group memberships, custom attributes, and identity provider metadata in enterprise SSO implementations",
+        "API Testing & Postman Debugging: Decode bearer tokens from API responses to verify claim contents before writing assertion tests",
+        "Investigate Token Expiration Issues: Calculate remaining token lifetime by decoding exp claims when debugging refresh token flows",
+        "Security Audits: Review JWT structure for compliance with RFC 7519 standards, proper claim usage, and secure algorithm selection",
+        "Debug Mobile App Authentication: Decode tokens from iOS/Android apps to troubleshoot native OAuth flows and deep link authentication",
+        "Understand Third-Party Tokens: Inspect JWTs from external APIs, webhooks, or partner integrations to understand their claim structure without documentation",
       ],
       features: [
-        "Instant JWT Decoding: Decode header, payload, and signature in real time",
-        "Readable JSON Output: Pretty formatted output for easier inspection",
-        "Supports JWT Standards: Works with common JWT structures and Base64URL encoding",
-        "Privacy Friendly: Runs locally in your browser — no token data is uploaded",
-        "Developer Friendly: Great for debugging auth systems, APIs, and identity providers",
-        "Claim Inspection: Helps you inspect exp, iss, aud, sub, iat, roles, and custom claims easily",
+        "Instant Base64URL Decoding: Reveals header, payload, and signature segments in milliseconds without server round-trips",
+        "Algorithm Security Detection: Highlights potentially dangerous algorithms including 'none', weak HS256 with public exposure, and algorithm confusion patterns",
+        "Expiration Timestamp Converter: Automatically converts Unix timestamps in exp, iat, and nbf claims to human-readable dates",
+        "Claim Validation Hints: Identifies missing standard claims (iss, aud, exp) that commonly cause verification failures",
+        "RFC 7519 Compliant: Handles standard JWT structure with proper Base64URL padding and JSON parsing",
+        "Zero Network Transmission: All decoding happens in-browser using JavaScript—tokens never leave your device, safe for production debugging",
+        "Pretty-Printed JSON: Formatted output with syntax highlighting for rapid claim inspection",
+        "Copy-Friendly Output: One-click copying of decoded JSON for Slack messages, bug reports, or documentation",
+        "Multi-Algorithm Support: Decodes tokens signed with HS256, HS384, HS512, RS256, RS384, RS512, ES256, ES384, ES512, and PS256",
+        "OAuth2 & OIDC Optimized: Recognizes standard OAuth2 claims (scope, client_id) and OIDC claims (email, email_verified, name, picture)",
       ],
     },
     examples: [
       {
-        title: "Decode JWT Token",
+        title: "Decode Standard JWT with User Claims",
         input:
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-        description: "Decode a sample JWT token to view its contents",
+        description: "Decode a basic JWT to reveal subject (sub), name, and issued-at (iat) claims commonly used in authentication systems",
       },
       {
-        title: "View Token Claims",
+        title: "Inspect OAuth2 Access Token with Roles and Permissions",
         input:
           "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MjEiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJyb2xlcyI6WyJ1c2VyIiwiYWRtaW4iXSwiZXhwIjoxNzM2MjA4MDAwfQ.signature",
-        description: "Decode a JWT with user claims and roles",
+        description: "Decode an OAuth2 token to view user roles, email claims, and expiration—useful for debugging role-based access control (RBAC)",
       },
       {
-        title: "Decode JWT and check expiration (exp)",
+        title: "Debug Expired Token Causing 401 Errors",
         input:
           "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxMDAxIiwiZXhwIjoxNzM2MjA4MDAwfQ.signature",
         description:
-          "Decode a JWT and inspect the exp (expiration) timestamp claim",
+          "Decode a JWT to check the exp (expiration) timestamp and determine if token expiration is causing authentication failures",
       },
       {
-        title: "Decode JWT to inspect issuer (iss) and audience (aud)",
+        title: "Validate Issuer and Audience for SSO Integration",
         input:
           "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoLmV4YW1wbGUuY29tIiwiYXVkIjoiYXBpLmV4YW1wbGUuY29tIn0.signature",
         description:
-          "Decode a JWT to verify issuer and audience values in the payload",
+          "Decode a JWT to verify issuer (iss) and audience (aud) claims match your OAuth provider configuration—critical for SSO troubleshooting",
+      },
+      {
+        title: "Detect Algorithm Confusion Security Vulnerability",
+        input:
+          "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJhdHRhY2tlciIsImFkbWluIjp0cnVlfQ.",
+        description:
+          "Decode a JWT with 'none' algorithm to identify a critical security vulnerability where signature verification is bypassed—never accept 'none' in production",
+      },
+      {
+        title: "Inspect OIDC ID Token with Email Verification",
+        input:
+          "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIzIiwiZW1haWwiOiJ1c2VyQGV4YW1wbGUuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJKb2huIERvZSIsInBpY3R1cmUiOiJodHRwczovL2V4YW1wbGUuY29tL3Bob3RvLmpwZyJ9.signature",
+        description:
+          "Decode an OpenID Connect (OIDC) ID token to view email, email_verified, name, and picture claims used in social login flows",
       },
     ],
     faq: [
       {
-        question: "What is a JWT token and how does it work?",
+        question: "What is a JWT token and how does it work in OAuth2 authentication?",
         answer:
-          "JWT (JSON Web Token) is a compact token format used for authentication and authorization. It contains three parts: a Base64-encoded header, payload (claims), and a signature used to verify integrity.",
+          "JWT (JSON Web Token) is a self-contained token format widely used in OAuth2 and OpenID Connect for stateless authentication. It consists of three Base64URL-encoded parts separated by dots: header (algorithm and token type), payload (claims like user ID, roles, expiration), and signature (cryptographic proof of integrity). When a user authenticates, the authorization server issues a JWT that the client includes in API requests. Resource servers decode and verify the JWT to authorize access without database lookups, enabling scalable microservices architectures.",
       },
       {
-        question: "How do I decode a JWT token online?",
+        question: "How do I decode a JWT token to debug 401 Unauthorized errors?",
         answer:
-          "Paste your JWT token into the input field and click Decode JWT. The tool instantly shows the decoded header, payload, and signature so you can inspect claims like exp, iss, sub, and roles.",
+          "Paste your complete JWT token (all three dot-separated segments) into the decoder input and click 'Decode JWT'. The tool instantly reveals the header and payload in readable JSON format. Check these common 401 causes: (1) exp claim shows token is expired, (2) aud claim doesn't match your API's expected audience, (3) iss claim doesn't match your OAuth provider, (4) required claims like sub or scope are missing, (5) algorithm in header is 'none' or doesn't match server expectations. Compare decoded values against your server's validation rules to identify the mismatch.",
       },
       {
-        question: "Can this tool verify a JWT signature?",
+        question: "Can this tool verify JWT signatures or validate token authenticity?",
         answer:
-          "No. This tool only decodes the token contents. Verifying signatures requires the correct secret/public key and must be done server-side to ensure authenticity.",
+          "No. This decoder only extracts and displays the header and payload contents—it does NOT verify signatures or validate authenticity. Signature verification requires the secret key (for HMAC algorithms like HS256) or public key (for RSA/ECDSA algorithms like RS256) and must always be performed server-side. Never trust decoded JWT data without proper signature verification in your backend. Use this tool for inspection and debugging only, not for security decisions.",
       },
       {
-        question: "Why is my JWT not decoding correctly?",
+        question: "Why is my JWT showing 'alg: none' and is this dangerous?",
         answer:
-          "JWT tokens must contain three dot-separated parts: header.payload.signature. If the token is missing a part or uses invalid Base64URL encoding, decoding will fail.",
+          "If your decoded JWT header shows 'alg: none', this is a critical security vulnerability. The 'none' algorithm means the token has no signature, allowing anyone to forge tokens by simply Base64-encoding arbitrary claims. Attackers exploit this by modifying legitimate tokens to use 'none', then changing payload claims (like setting admin: true) without detection. Production systems must NEVER accept 'none' algorithm tokens. Always configure your JWT library to reject 'none' and enforce specific allowed algorithms like RS256 or HS256.",
       },
       {
-        question: "Is it safe to decode JWT tokens online?",
+        question: "Is it safe to decode production JWT tokens in an online tool?",
         answer:
-          "This tool decodes tokens locally in your browser and does not send data to a server. Still, avoid pasting real production tokens that contain sensitive information into any online tool.",
+          "This decoder runs entirely in your browser using JavaScript—no tokens are transmitted to servers, logged, or stored. However, best practice is to avoid pasting production tokens containing real user data into any online tool. For production debugging, use this tool with test tokens, or run it locally. For sensitive production issues, use command-line tools (like jwt-cli) or decode programmatically in your development environment. Remember: decoding reveals all claims in plaintext, so treat JWTs like passwords.",
+      },
+      {
+        question: "What's the difference between OAuth2 access tokens and OIDC ID tokens?",
+        answer:
+          "Both are often JWTs, but serve different purposes. OAuth2 access tokens authorize API access and contain claims like scope, client_id, and permissions—they're meant for resource servers. OIDC ID tokens prove user identity and contain claims like email, name, email_verified, and picture—they're meant for client applications. When you decode tokens, access tokens typically have broader scopes (read:users, write:posts), while ID tokens have personal identity claims. Never use ID tokens to authorize API requests; use access tokens instead.",
+      },
+      {
+        question: "How do I check if my JWT is expired by decoding it?",
+        answer:
+          "Decode the JWT and look for the 'exp' claim in the payload—this is a Unix timestamp (seconds since January 1, 1970). Compare it to the current Unix timestamp (Date.now() / 1000 in JavaScript). If exp is less than the current time, the token is expired. Many decoders automatically convert exp to human-readable dates. Also check 'iat' (issued at) and 'nbf' (not before) claims. If current time is before nbf, the token isn't valid yet. Expired tokens cause 401 errors even with valid signatures.",
+      },
+      {
+        question: "What does 'algorithm confusion' mean in JWT security?",
+        answer:
+          "Algorithm confusion is a critical JWT vulnerability where attackers change the algorithm in the token header from RS256 (asymmetric) to HS256 (symmetric). If your server uses the RSA public key as an HMAC secret, attackers can forge valid signatures. For example: decode a legitimate RS256 token, change 'alg' to 'HS256', modify claims, then sign with the public key (which they can access). The server incorrectly validates it. Prevent this by explicitly specifying allowed algorithms in your JWT library and never using the same key for multiple algorithms.",
+      },
+      {
+        question: "Why does my decoded JWT have weird characters or fail to parse?",
+        answer:
+          "JWTs must have exactly three parts separated by dots (header.payload.signature). Common issues: (1) Token is truncated—ensure you copied the complete string including the signature, (2) Token uses standard Base64 instead of Base64URL encoding (+ and / instead of - and _), (3) Extra whitespace or line breaks were added when copying, (4) Token is actually a JWE (JSON Web Encryption) with five parts instead of three, (5) Token is not a JWT at all but an opaque reference token. Verify you're using a JWT by checking for three dot-separated segments.",
+      },
+      {
+        question: "How do I decode JWTs in microservices to debug authentication propagation?",
+        answer:
+          "In microservices, decode tokens at each service boundary to verify claim propagation. Common issues: (1) Gateway strips or modifies tokens before forwarding, (2) Service-to-service calls don't include the Authorization header, (3) Token expires during long request chains, (4) Custom claims added by one service aren't visible to downstream services, (5) Audience (aud) claim doesn't include all services. Decode tokens at each hop and compare payloads to identify where claims are lost or modified. Use correlation IDs (jti claim) to trace tokens across services.",
       },
     ],
     relatedTools: ["hash-generator", "base64-encode-decode", "uuid-generator", "password-generator", "json-formatter", "url-encode-decode"],

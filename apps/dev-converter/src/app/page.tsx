@@ -10,15 +10,11 @@ import {
 import { Metadata } from "next"
 import dynamic from "next/dynamic"
 
-import { ScrollButton } from "@/components/home/scroll-button"
 import { Logo } from "@/components/layout/logo"
 import { SmoothLink } from "@/components/layout/smooth-link"
 import { popularTools } from "@/config/popular-tools"
 import { siteConfig } from "@/config/site"
-import {
-  generateStaticPageMetadata,
-  orgStructuredData,
-} from "@/lib/seo/metadata"
+import { orgStructuredData } from "@/lib/seo/metadata"
 import { categories } from "@/lib/tools/categories"
 
 // Lazy load below-the-fold sections
@@ -36,11 +32,10 @@ const FeaturesSection = dynamic(
   }
 )
 
-export const metadata: Metadata = generateStaticPageMetadata({
+export const metadata: Metadata = {
   title: "Free Developer Tools - DevConverter",
   description:
     "Free developer tools: JSON formatter, Base64 encoder, JWT decoder, hash generator. Fast, private, browser-based.",
-  url: "/",
   keywords: [
     "developer tools",
     "online tools",
@@ -54,7 +49,47 @@ export const metadata: Metadata = generateStaticPageMetadata({
     "web developer tools",
     "programming tools",
   ],
-})
+  applicationName: "DevConverter",
+  authors: [{ name: "DevConverter" }],
+  creator: "DevConverter",
+  publisher: "DevConverter",
+  category: "Developer Tools",
+  alternates: {
+    canonical: siteConfig.url,
+    languages: {
+      "en": siteConfig.url,
+      "x-default": siteConfig.url,
+    },
+  },
+  openGraph: {
+    title: "Free Developer Tools - DevConverter",
+    description:
+      "Free developer tools: JSON formatter, Base64 encoder, JWT decoder, hash generator. Fast, private, browser-based.",
+    type: "website",
+    siteName: "DevConverter",
+    url: siteConfig.url,
+    images: [
+      {
+        url: `${siteConfig.url}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Free Developer Tools - DevConverter",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free Developer Tools - DevConverter",
+    description:
+      "Free developer tools: JSON formatter, Base64 encoder, JWT decoder, hash generator. Fast, private, browser-based.",
+    images: [`${siteConfig.url}/opengraph-image`],
+    creator: "@devconverter",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+}
 
 export default function Home() {
   // WebSite schema with SearchAction
@@ -238,7 +273,11 @@ export default function Home() {
                 <strong>JWT decoder</strong>, and{" "}
                 <strong>hash generator</strong> (MD5, SHA-1, SHA-256). All
                 DevConverter tools are free online tools that work offline and
-                process data locally in your browser for maximum privacy.
+                process data locally in your browser for maximum privacy. Need to work with timestamps? Try our{" "}
+                <SmoothLink href="/unix-timestamp-converter" className="text-primary hover:underline">
+                  Unix timestamp converter
+                </SmoothLink>{" "}
+                for epoch time conversions.
               </p>
             </div>
 

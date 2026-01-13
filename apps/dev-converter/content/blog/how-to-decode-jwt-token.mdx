@@ -13,37 +13,104 @@ tags:
 image: "/images/blog/jwt-decode.svg"
 ---
 
-## What is JWT Decoding and Why Do You Need It?
+## What is JWT Decoding and Why Every Developer Needs It
 
-JWT (JSON Web Token) decoding is the process of extracting the payload data from a JWT without verifying its signature. This is useful when you need to quickly inspect token contents during development, debugging authentication issues, or understanding what data your API is receiving.
+JWT (JSON Web Token) decoding is the critical first step in debugging modern authentication systems. It's the process of extracting and reading the encoded header and payload from a JWT without performing signature verification. Think of it as "opening the envelope" to see what's inside before checking if the seal is authentic.
+
+**Why decoding matters in 2026:**
+
+Modern applications rely on stateless authentication where JWTs carry user identity, permissions, and session data across microservices, APIs, and mobile apps. When authentication breaks—and it will—you need to decode tokens instantly to diagnose whether the problem is expired claims, missing roles, wrong audience values, or algorithm misconfigurations.
 
 **Who this guide is for:**
 
-- Developers debugging authentication flows
-- Backend engineers inspecting API tokens
-- Frontend developers working with JWT-based auth
-- Anyone needing to quickly view JWT contents
+- Backend engineers debugging 401 Unauthorized errors in production
+- Frontend developers integrating OAuth2 flows with Auth0, Okta, or Firebase
+- DevOps teams troubleshooting microservices authentication propagation
+- Security engineers auditing JWT implementations for vulnerabilities
+- Mobile developers inspecting tokens from native OAuth flows
+- Anyone facing "Invalid token" errors without clear error messages
 
-## Understanding JWT Structure
+## Understanding JWT Anatomy: The Three-Part Structure
 
-A JWT consists of three parts separated by dots (.):
+Every JWT follows a strict three-segment format separated by dots:
 
 ```
+xxxxx.yyyyy.zzzzz
 header.payload.signature
 ```
 
-- **Header**: Contains token type and signing algorithm
-- **Payload**: Contains the claims (user data)
-- **Signature**: Verifies the token hasn't been tampered with
+### Header: Algorithm and Token Metadata
+
+The header specifies how the token is secured. Typical structure:
+
+```json
+{
+  "alg": "RS256",
+  "typ": "JWT",
+  "kid": "key-2024-01"
+}
+```
+
+- **alg**: Signing algorithm (HS256, RS256, ES256, or dangerously: "none")
+- **typ**: Token type (always "JWT")
+- **kid**: Key ID for key rotation in production systems
+
+**Security warning:** If you decode a token and see `"alg": "none"`, this is a critical vulnerability. The token has no signature and can be forged by anyone.
+
+### Payload: Claims and User Data
+
+The payload contains claims—statements about the user and token metadata:
+
+```json
+{
+  "sub": "user123",
+  "email": "user@example.com",
+  "roles": ["admin", "editor"],
+  "exp": 1736208000,
+  "iss": "https://auth.yourapp.com",
+  "aud": "https://api.yourapp.com"
+}
+```
+
+**Standard claims:**
+- **sub** (subject): User identifier
+- **exp** (expiration): Unix timestamp when token expires ([convert timestamps](/unix-timestamp-converter))
+- **iat** (issued at): When token was created
+- **iss** (issuer): Who created the token (your auth server)
+- **aud** (audience): Who should accept this token (your API)
+- **nbf** (not before): Token not valid before this time
+
+**Custom claims:** Your application can add any claims like `roles`, `permissions`, `tenant_id`, or `subscription_tier`.
+
+### Signature: Cryptographic Integrity Proof
+
+The signature ensures the token hasn't been modified. It's created by:
+
+1. Taking the encoded header and payload
+2. Signing them with a secret key (HMAC) or private key (RSA/ECDSA)
+3. Base64URL encoding the result
+
+**Critical distinction:** Decoding reads the header and payload. Verification checks the signature. Never trust decoded data without verification.
 
 ## Step-by-Step: How to Decode a JWT
 
-### Method 1: Using DevConverter (Fastest)
+### Method 1: Using DevConverter (Fastest & Most Secure)
 
-1. Copy your JWT token
+**The quickest way to decode JWTs without installing anything:**
+
+1. Copy your complete JWT token (all three dot-separated parts)
 2. Go to [JWT Token Decoder and Inspector Tool](/jwt-decoder)
-3. Paste your token
-4. View the decoded header and payload instantly
+3. Paste your token into the input field
+4. Click "Decode JWT" to instantly view header and payload
+5. Inspect the algorithm, claims, expiration, and other metadata
+6. Use [Unix Timestamp Converter](/unix-timestamp-converter) to convert exp/iat timestamps to readable dates
+
+**Why use this method:**
+- Zero installation required
+- Works offline after first load
+- Processes tokens entirely in your browser (no network transmission)
+- Highlights security issues like "none" algorithm
+- Converts Unix timestamps to readable dates automatically
 
 ### Method 2: Using JavaScript/Node.js
 
@@ -92,178 +159,672 @@ payload = decode_jwt(token)
 print(payload)
 ```
 
-## Common Mistakes to Avoid
+## Common Mistakes That Break JWT Authentication
 
-### 1. Confusing Decoding with Verification
+### 1. Confusing Decoding with Verification (The #1 Security Mistake)
 
-**Mistake:** Thinking decoded = verified
+**The dangerous assumption:** "If I can decode it, it must be valid."
 
 ```javascript
-// ❌ WRONG - This doesn't verify the signature!
+// ❌ CRITICAL SECURITY FLAW - Never do this!
 const decoded = decodeJWT(token)
 if (decoded.payload.role === "admin") {
-  grantAccess() // SECURITY RISK!
+  grantAdminAccess() // Attacker can forge this!
 }
+```
+
+**Why this fails:** Anyone can create a JWT with `"role": "admin"` and Base64-encode it. Without signature verification, you're trusting user-supplied data.
+
+**Correct approach:**
+
+```javascript
+// ✅ SECURE - Always verify before trusting
+try {
+  const verified = jwt.verify(token, process.env.JWT_SECRET, {
+    algorithms: ['RS256'], // Explicitly specify allowed algorithms
+    issuer: 'https://auth.yourapp.com',
+    audience: 'https://api.yourapp.com'
+  })
+  
+  if (verified.role === "admin") {
+    grantAdminAccess() // Now safe - signature verified
+  }
+} catch (error) {
+  return res.status(401).json({ error: 'Invalid token' })
+}
+```
+
+### 2. Accepting the "none" Algorithm (Algorithm Confusion Attack)
+
+**The vulnerability:** Some JWT libraries accept `"alg": "none"` for unsigned tokens.
+
+```javascript
+// Attacker decodes your token, changes it to:
+{
+  "alg": "none",  // Changed from RS256
+  "typ": "JWT"
+}
+{
+  "sub": "attacker",
+  "role": "admin",  // Elevated privileges
+  "exp": 9999999999
+}
+// No signature needed!
+```
+
+**How to prevent:**
+
+```javascript
+// ✅ Explicitly reject "none" algorithm
+jwt.verify(token, secret, {
+  algorithms: ['RS256', 'HS256'], // Whitelist only - "none" rejected
+})
+```
+
+### 3. Ignoring Token Expiration
+
+**The mistake:** Decoding shows `exp` but not checking if it's past.
+
+```javascript
+// ❌ Token might be expired
+const decoded = decodeJWT(token)
+console.log(decoded.payload.exp) // Just logging isn't enough
 ```
 
 **Correct approach:**
 
 ```javascript
-// ✅ CORRECT - Always verify before trusting
-const verified = jwt.verify(token, secretKey)
-if (verified.role === "admin") {
-  grantAccess()
-}
-```
-
-### 2. Forgetting Base64 Padding
-
-JWT uses base64url encoding which may need padding. Always add padding when decoding manually.
-
-### 3. Exposing Sensitive Data in JWTs
-
-**Don't store:**
-
-- Passwords
-- Credit card numbers
-- Social security numbers
-- Private keys
-
-**Do store:**
-
-- User ID
-- Username
-- Roles/permissions
-- Expiration time
-
-### 4. Not Checking Token Expiration
-
-```javascript
-// ✅ Always check exp claim
+// ✅ Check expiration during verification
 const decoded = decodeJWT(token)
-if (decoded.payload.exp < Date.now() / 1000) {
-  throw new Error("Token expired")
+const now = Math.floor(Date.now() / 1000)
+
+if (decoded.payload.exp < now) {
+  throw new Error(`Token expired ${now - decoded.payload.exp} seconds ago`)
 }
+
+// Better: Let the library handle it
+jwt.verify(token, secret) // Automatically checks exp
 ```
 
-## Best Practices for Working with JWTs
+### 4. Storing Sensitive Data in JWT Payloads
 
-### 1. Use HTTPS Only
+**Never put these in JWTs:**
 
-Always transmit JWTs over HTTPS to prevent interception.
+- ❌ Passwords or password hashes
+- ❌ Credit card numbers
+- ❌ Social security numbers
+- ❌ Private API keys
+- ❌ Personally identifiable information (PII) you don't want exposed
 
-### 2. Set Short Expiration Times
+**Why:** JWTs are encoded, not encrypted. Anyone can decode and read the payload.
+
+**Safe to store:**
+
+- ✅ User ID (sub)
+- ✅ Username or email
+- ✅ Roles and permissions
+- ✅ Tenant/organization ID
+- ✅ Token metadata (exp, iat, iss, aud)
+
+### 5. Mismatched Issuer or Audience Claims
+
+**The problem:** Your API expects `aud: "api.yourapp.com"` but the token has `aud: "different-api.com"`.
 
 ```javascript
-// Good: 15 minutes for access tokens
-const token = jwt.sign(payload, secret, { expiresIn: "15m" })
+// ❌ Decoding shows the mismatch but you ignore it
+const decoded = decodeJWT(token)
+console.log(decoded.payload.aud) // "wrong-audience.com"
+// Proceeds anyway - security risk!
 ```
+
+**Correct approach:**
+
+```javascript
+// ✅ Verify iss and aud match expectations
+jwt.verify(token, secret, {
+  issuer: 'https://auth.yourapp.com',
+  audience: 'https://api.yourapp.com'
+})
+// Throws error if mismatch - request rejected
+```
+
+### 6. Algorithm Confusion (RS256 vs HS256)
+
+**The attack:** Changing RS256 (asymmetric) to HS256 (symmetric) and signing with the public key.
+
+```javascript
+// Original token uses RS256 with private key
+// Attacker changes header to:
+{
+  "alg": "HS256"  // Changed from RS256
+}
+// Then signs with your PUBLIC key (which they can access)
+// If your server uses the public key as HMAC secret, it validates!
+```
+
+**Prevention:**
+
+```javascript
+// ✅ Explicitly specify algorithm - don't let token dictate it
+jwt.verify(token, publicKey, {
+  algorithms: ['RS256'] // Only RS256 allowed
+})
+```
+
+## Debugging Microservices Authentication with JWT Decoding
+
+Microservices architectures introduce unique JWT challenges. Here's how to debug authentication propagation across services.
+
+### Common Microservices JWT Problems
+
+**Problem 1: Token Expires During Request Chain**
+
+```
+User → API Gateway → Service A → Service B → Service C
+       (token valid)   (valid)     (valid)     (EXPIRED!)
+```
+
+**Solution:** Decode the token at each service to check `exp` claim:
+
+```javascript
+// Add middleware to log token expiration at each service
+app.use((req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1]
+  if (token) {
+    const decoded = jwt.decode(token)
+    const now = Math.floor(Date.now() / 1000)
+    const timeRemaining = decoded.exp - now
+    
+    logger.info('Token expiration check', {
+      service: 'service-b',
+      timeRemaining: `${timeRemaining}s`,
+      willExpireIn: `${Math.floor(timeRemaining / 60)}m`
+    })
+    
+    if (timeRemaining < 60) {
+      logger.warn('Token expiring soon', { timeRemaining })
+    }
+  }
+  next()
+})
+```
+
+**Problem 2: Missing Authorization Header in Service-to-Service Calls**
+
+```javascript
+// ❌ Service A calls Service B but forgets to forward token
+const response = await fetch('http://service-b/api/data')
+
+// ✅ Always propagate the Authorization header
+const token = req.headers.authorization
+const response = await fetch('http://service-b/api/data', {
+  headers: {
+    'Authorization': token,
+    'X-Correlation-ID': req.correlationId
+  }
+})
+```
+
+**Problem 3: Audience Mismatch Across Services**
+
+Each service expects a different `aud` value:
+
+```javascript
+// Gateway expects: "aud": "api-gateway"
+// Service A expects: "aud": "service-a"
+// Service B expects: "aud": "service-b"
+
+// Solution: Use array of audiences or wildcard
+const token = jwt.sign(payload, secret, {
+  audience: ['api-gateway', 'service-a', 'service-b']
+})
+
+// Or use a common audience for all internal services
+const token = jwt.sign(payload, secret, {
+  audience: 'internal-services'
+})
+```
+
+### Debugging Strategy: Decode at Every Boundary
+
+```javascript
+// Create a debugging middleware for each service
+function jwtDebugMiddleware(serviceName) {
+  return (req, res, next) => {
+    const token = req.headers.authorization?.split(' ')[1]
+    
+    if (!token) {
+      logger.warn(`${serviceName}: No token present`)
+      return res.status(401).json({ error: 'No token' })
+    }
+    
+    try {
+      const decoded = jwt.decode(token, { complete: true })
+      
+      logger.info(`${serviceName}: Token decoded`, {
+        algorithm: decoded.header.alg,
+        subject: decoded.payload.sub,
+        issuer: decoded.payload.iss,
+        audience: decoded.payload.aud,
+        expiresIn: decoded.payload.exp - Math.floor(Date.now() / 1000),
+        claims: Object.keys(decoded.payload)
+      })
+      
+      // Check for common issues
+      if (decoded.header.alg === 'none') {
+        logger.error(`${serviceName}: SECURITY ALERT - none algorithm`)
+      }
+      
+      if (decoded.payload.exp < Math.floor(Date.now() / 1000)) {
+        logger.error(`${serviceName}: Token expired`)
+        return res.status(401).json({ error: 'Token expired' })
+      }
+      
+      // Verify (don't just decode in production!)
+      const verified = jwt.verify(token, publicKey, {
+        algorithms: ['RS256'],
+        issuer: process.env.JWT_ISSUER,
+        audience: serviceName
+      })
+      
+      req.user = verified
+      next()
+      
+    } catch (error) {
+      logger.error(`${serviceName}: Token verification failed`, {
+        error: error.message,
+        name: error.name
+      })
+      res.status(401).json({ error: 'Invalid token' })
+    }
+  }
+}
+
+// Apply to each service
+app.use(jwtDebugMiddleware('service-a'))
+```
+
+### Tracing Tokens Across Services
+
+Use the `jti` (JWT ID) claim for correlation:
+
+```javascript
+// When issuing tokens, add a unique ID
+const token = jwt.sign({
+  sub: userId,
+  jti: uuidv4(), // Unique token ID
+  // ... other claims
+}, secret)
+
+// In each service, log the jti
+const decoded = jwt.decode(token)
+logger.info('Request processed', {
+  service: 'service-a',
+  tokenId: decoded.jti,
+  correlationId: req.headers['x-correlation-id']
+})
+
+// Now you can trace the same token across all services in logs
+```
+
+### 1. Use HTTPS Everywhere
+
+Always transmit JWTs over HTTPS. Tokens sent over HTTP can be intercepted and replayed by attackers.
+
+### 2. Set Appropriate Expiration Times
+
+```javascript
+// Access tokens: Short-lived (5-15 minutes)
+const accessToken = jwt.sign(payload, secret, { expiresIn: '15m' })
+
+// Refresh tokens: Longer-lived (7-30 days) with rotation
+const refreshToken = jwt.sign(payload, secret, { expiresIn: '7d' })
+```
+
+**Why short expiration?** Limits damage if a token is stolen. Use refresh tokens to get new access tokens.
 
 ### 3. Store Tokens Securely
 
-- **Frontend**: Use httpOnly cookies (not localStorage)
-- **Backend**: Never log tokens in production
+**Frontend storage:**
+- ✅ **Best:** httpOnly, Secure, SameSite cookies
+- ⚠️ **Acceptable:** Memory (lost on refresh)
+- ❌ **Never:** localStorage or sessionStorage (vulnerable to XSS)
 
-### 4. Validate All Claims
+**Backend storage:**
+- ✅ Environment variables for secrets
+- ✅ Key management services (AWS KMS, HashiCorp Vault)
+- ❌ Never hardcode secrets in source code
+- ❌ Never log tokens in production
+
+### 4. Validate All Critical Claims
 
 ```javascript
-const decoded = decodeJWT(token)
-
-// Check issuer
-if (decoded.payload.iss !== "your-auth-server.com") {
-  throw new Error("Invalid issuer")
+// ✅ Comprehensive validation
+const options = {
+  algorithms: ['RS256'], // Whitelist algorithms
+  issuer: 'https://auth.yourapp.com', // Expected issuer
+  audience: 'https://api.yourapp.com', // Expected audience
+  clockTolerance: 30, // Allow 30s clock skew
+  maxAge: '1h', // Reject tokens older than 1 hour
 }
 
-// Check audience
-if (decoded.payload.aud !== "your-app.com") {
-  throw new Error("Invalid audience")
+try {
+  const verified = jwt.verify(token, publicKey, options)
+  
+  // Additional custom validation
+  if (!verified.sub) {
+    throw new Error('Missing subject claim')
+  }
+  
+  if (!verified.roles || !Array.isArray(verified.roles)) {
+    throw new Error('Invalid roles claim')
+  }
+  
+} catch (error) {
+  // Log for monitoring but don't expose details to client
+  logger.error('JWT validation failed', { error: error.message })
+  return res.status(401).json({ error: 'Unauthorized' })
 }
+```
+
+### 5. Implement Token Rotation
+
+```javascript
+// When access token expires, use refresh token to get new pair
+app.post('/auth/refresh', async (req, res) => {
+  const { refreshToken } = req.body
+  
+  try {
+    const verified = jwt.verify(refreshToken, REFRESH_SECRET)
+    
+    // Issue new access token
+    const newAccessToken = jwt.sign(
+      { sub: verified.sub, roles: verified.roles },
+      ACCESS_SECRET,
+      { expiresIn: '15m' }
+    )
+    
+    // Optionally rotate refresh token too
+    const newRefreshToken = jwt.sign(
+      { sub: verified.sub },
+      REFRESH_SECRET,
+      { expiresIn: '7d' }
+    )
+    
+    // Invalidate old refresh token in database
+    await revokeToken(refreshToken)
+    
+    res.json({ accessToken: newAccessToken, refreshToken: newRefreshToken })
+  } catch (error) {
+    res.status(401).json({ error: 'Invalid refresh token' })
+  }
+})
+```
+
+### 6. Use Strong Signing Algorithms
+
+**Recommended algorithms:**
+- **RS256** (RSA + SHA-256): Best for microservices - public key can be shared
+- **ES256** (ECDSA + SHA-256): Smaller signatures, faster verification
+- **HS256** (HMAC + SHA-256): Only if secret can be kept truly secret
+
+**Avoid:**
+- ❌ **none**: No signature - never use in production
+- ❌ **HS256 with weak secrets**: Use at least 256-bit random secrets
+
+### 7. Implement Token Revocation for Critical Actions
+
+```javascript
+// Maintain revocation list for logout, password changes, etc.
+const revokedTokens = new Set() // In production: use Redis
+
+app.post('/auth/logout', (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1]
+  const decoded = jwt.decode(token)
+  
+  // Add token ID to revocation list until expiration
+  revokedTokens.add(decoded.jti)
+  
+  // Set TTL to token's remaining lifetime
+  const ttl = decoded.exp - Math.floor(Date.now() / 1000)
+  redis.setex(`revoked:${decoded.jti}`, ttl, '1')
+  
+  res.json({ message: 'Logged out successfully' })
+})
+
+// Check revocation in auth middleware
+async function checkRevocation(token) {
+  const decoded = jwt.decode(token)
+  const isRevoked = await redis.exists(`revoked:${decoded.jti}`)
+  if (isRevoked) {
+    throw new Error('Token has been revoked')
+  }
+}
+```
+
+### 8. Monitor and Alert on Suspicious Patterns
+
+```javascript
+// Track failed verification attempts
+app.use((req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1]
+  
+  try {
+    const verified = jwt.verify(token, secret)
+    req.user = verified
+    next()
+  } catch (error) {
+    // Log suspicious patterns
+    if (error.name === 'TokenExpiredError') {
+      metrics.increment('jwt.expired')
+    } else if (error.name === 'JsonWebTokenError') {
+      metrics.increment('jwt.invalid')
+      logger.warn('Invalid JWT attempt', {
+        ip: req.ip,
+        userAgent: req.headers['user-agent'],
+        error: error.message
+      })
+    }
+    
+    res.status(401).json({ error: 'Unauthorized' })
+  }
+})
 ```
 
 ## FAQ
 
 ### Can I decode a JWT without the secret key?
 
-Yes! Decoding only requires base64 decoding. The secret key is only needed for **verification** (checking if the token is valid and hasn't been tampered with).
+Yes! Decoding only requires Base64URL decoding—no secret needed. The secret key is only required for **verification** (checking if the token is valid and hasn't been tampered with). This is why you should never trust decoded data without server-side verification.
 
 ### Is it safe to decode JWTs in the browser?
 
-Yes, decoding is safe because JWTs are not encrypted—they're just encoded. However, never trust decoded data without verification on the server.
+Yes, decoding is safe because JWTs are encoded, not encrypted—anyone can decode them. However, never trust decoded data without verification on the server. Also, avoid pasting production tokens containing real user data into online tools. Use test tokens or run decoders locally for sensitive debugging.
 
 ### What's the difference between decoding and verifying a JWT?
 
-- **Decoding**: Extracting the payload (no security check)
-- **Verifying**: Checking the signature to ensure the token is valid and unmodified
+- **Decoding**: Extracting the header and payload using Base64URL decoding (no security check, anyone can do this)
+- **Verifying**: Checking the signature using the secret/public key to ensure the token is authentic and unmodified (requires the key, must be done server-side)
+
+Think of it like opening a sealed envelope (decoding) vs. checking if the wax seal is authentic (verifying).
 
 ### How do I decode a JWT in the command line?
 
 ```bash
-# Using jq and base64
+# Using jq and base64 (macOS/Linux)
 echo 'eyJhbGc...' | cut -d'.' -f2 | base64 -d | jq
+
+# Or install jwt-cli for better handling
+jwt decode eyJhbGc...
+
+# Python one-liner
+python3 -c "import sys,json,base64; print(json.dumps(json.loads(base64.urlsafe_b64decode(sys.argv[1]+'===')), indent=2))" "eyJhbGc..."
 ```
 
-### Why does my decoded JWT look garbled?
+### Why does my decoded JWT look garbled or fail to parse?
 
-Make sure you're:
+Common causes:
 
-1. Using base64url decoding (not regular base64)
-2. Adding proper padding (=) if needed
-3. Decoding the payload part (second segment)
+1. **Incomplete token**: Ensure you copied all three dot-separated parts (header.payload.signature)
+2. **Wrong encoding**: JWTs use Base64URL (with `-` and `_`) not standard Base64 (with `+` and `/`)
+3. **Extra whitespace**: Remove line breaks, spaces, or tabs added during copy/paste
+4. **Not a JWT**: Some systems use opaque tokens (random strings) instead of JWTs
+5. **JWE not JWT**: JSON Web Encryption (JWE) tokens have 5 parts and need decryption, not just decoding
 
 ### Can expired JWTs still be decoded?
 
-Yes! Expiration only affects **verification**, not decoding. You can decode expired tokens to inspect their contents.
+Absolutely! Expiration (`exp` claim) only affects **verification**, not decoding. You can decode expired tokens to inspect their contents, which is actually useful for debugging why authentication failed. The token structure remains valid even after expiration.
 
-### What should I do if my JWT has 4 or 5 parts?
+### What should I do if my JWT has 4 or 5 parts instead of 3?
 
-Standard JWTs have 3 parts. If yours has more, it might be:
+Standard JWTs have exactly 3 parts. If yours has more:
 
-- A JWE (JSON Web Encryption) token
-- A malformed token
-- A custom token format
+- **5 parts**: Likely a JWE (JSON Web Encryption) token that's encrypted, not just signed. You need the decryption key.
+- **4 parts**: Possibly malformed or a custom token format
+- **2 parts or less**: Definitely malformed or not a JWT
 
 ### How can I decode JWTs in production safely?
 
-Use established libraries:
+Use established, well-maintained libraries:
 
 - **Node.js**: `jsonwebtoken`, `jose`
-- **Python**: `PyJWT`
-- **Java**: `java-jwt`
-- **Go**: `golang-jwt`
+- **Python**: `PyJWT`, `python-jose`
+- **Java**: `java-jwt`, `jjwt`
+- **Go**: `golang-jwt/jwt`
+- **C#**: `System.IdentityModel.Tokens.Jwt`
+- **PHP**: `firebase/php-jwt`
 
-Never roll your own JWT implementation in production.
+Never roll your own JWT implementation. These libraries handle edge cases, security vulnerabilities, and algorithm validation correctly.
 
-### What information is in the JWT header?
+### What information is in the JWT header and why does it matter?
 
-Typically:
+Typical header contents:
 
-- `alg`: Signing algorithm (HS256, RS256, etc.)
-- `typ`: Token type (usually "JWT")
-- `kid`: Key ID (for key rotation)
+```json
+{
+  "alg": "RS256",
+  "typ": "JWT",
+  "kid": "key-2024-01"
+}
+```
 
-### How do I handle JWT decoding errors?
+- **alg**: Signing algorithm - critical for security. Watch for "none" (dangerous) or unexpected algorithms
+- **typ**: Token type (usually "JWT")
+- **kid**: Key ID used for key rotation - helps servers find the right public key
+
+The `alg` field is especially important because algorithm confusion attacks exploit mismatches between what the header claims and what the server expects.
+
+### How do I handle JWT decoding errors in my application?
 
 ```javascript
-try {
-  const decoded = decodeJWT(token)
-  console.log(decoded)
-} catch (error) {
-  if (error.message.includes("Invalid JWT format")) {
-    // Handle malformed token
-  } else {
-    // Handle other errors
+function safeDecodeJWT(token) {
+  try {
+    const parts = token.split('.')
+    
+    if (parts.length !== 3) {
+      throw new Error('Invalid JWT format: expected 3 parts')
+    }
+    
+    const header = JSON.parse(atob(parts[0]))
+    const payload = JSON.parse(atob(parts[1]))
+    
+    return { header, payload, signature: parts[2] }
+  } catch (error) {
+    if (error.message.includes('Invalid JWT format')) {
+      // Handle malformed token
+      logger.error('Malformed JWT', { token: token.substring(0, 20) })
+    } else if (error instanceof SyntaxError) {
+      // Handle invalid JSON in header/payload
+      logger.error('Invalid JSON in JWT', { error: error.message })
+    } else {
+      // Handle other errors (invalid Base64, etc.)
+      logger.error('JWT decode error', { error: error.message })
+    }
+    
+    throw new Error('Unable to decode JWT')
   }
 }
 ```
 
-## Quick Summary
+### Why do I see different exp values when I decode the same token multiple times?
 
-- JWT decoding extracts payload data without verification
-- Use [JWT Token Decoder and Inspector Tool](/jwt-decoder) for instant, secure decoding
-- Never trust decoded data without server-side verification
-- Always check expiration and validate claims
-- Use HTTPS and store tokens securely
+You shouldn't! The `exp` (expiration) claim is set when the token is created and never changes. If you're seeing different values:
+
+1. You're decoding different tokens (new tokens issued with new expiration)
+2. Your decoder is incorrectly converting the Unix timestamp
+3. You're looking at `iat` (issued at) instead of `exp`
+
+The `exp` value is a Unix timestamp (seconds since January 1, 1970 UTC) and should be consistent for the same token. Use our [Unix Timestamp Converter](/unix-timestamp-converter) to convert exp values to readable dates.
+
+### How do I debug "Invalid token" errors in microservices?
+
+Decode the token at each service boundary to identify where it breaks:
+
+1. **At the API Gateway**: Decode to verify the token structure is valid
+2. **After authentication**: Decode to confirm claims are present
+3. **At each microservice**: Decode to check if claims are propagated correctly
+4. **Compare decoded values**: Look for missing claims, wrong audience, or expired tokens
+
+Common microservices JWT issues:
+- Token expires during long request chains
+- Service-to-service calls don't forward the Authorization header
+- Each service expects different `aud` values
+- Custom claims added by one service aren't visible to others
+
+### What's the difference between OAuth2 access tokens and OIDC ID tokens?
+
+Both can be JWTs, but they serve different purposes:
+
+**Access Token (OAuth2):**
+```json
+{
+  "sub": "user123",
+  "scope": "read:posts write:comments",
+  "client_id": "app_abc",
+  "aud": "https://api.example.com"
+}
+```
+- Purpose: Authorize API access
+- Audience: Resource servers (your APIs)
+- Contains: Scopes, permissions, client info
+
+**ID Token (OIDC):**
+```json
+{
+  "sub": "user123",
+  "email": "user@example.com",
+  "email_verified": true,
+  "name": "John Doe",
+  "picture": "https://example.com/photo.jpg"
+}
+```
+- Purpose: Prove user identity
+- Audience: Client applications
+- Contains: User profile information
+
+**Critical rule:** Never use ID tokens to authorize API requests. Use access tokens for APIs, ID tokens for user identity.
+
+## Quick Summary: JWT Decoding Essentials
+
+**What you learned:**
+
+- JWT decoding extracts header and payload without verifying signatures—never trust decoded data without server-side verification
+- Use [JWT Token Decoder and Inspector Tool](/jwt-decoder) for instant, secure browser-based decoding with zero data transmission
+- Watch for critical security vulnerabilities: "none" algorithm, algorithm confusion (RS256→HS256), and expired tokens
+- Always verify tokens server-side using established libraries with explicit algorithm whitelisting
+- In microservices, decode tokens at each service boundary to debug authentication propagation issues
+- Store tokens in httpOnly cookies (frontend) and use short expiration times (15 minutes for access tokens)
+- Validate all critical claims: exp, iss, aud, sub, and custom claims like roles
+- Never store sensitive data (passwords, credit cards, PII) in JWT payloads—they're encoded, not encrypted
 
 **Ready to decode your JWT?** [Use the Free JWT Token Decoder and Inspector Tool](/jwt-decoder)
 
-No installation, no sign-up, completely private—your tokens never leave your browser.
+No installation, no sign-up, completely private—your tokens never leave your browser. Perfect for debugging OAuth2 flows, inspecting API tokens, and troubleshooting microservices authentication.
+
+---
+
+**Related Tools:**
+- [Base64 Encoder/Decoder](/base64-encode-decode) - Decode the Base64URL encoding used in JWTs
+- [Hash Generator](/hash-generator) - Generate SHA-256 hashes for token fingerprinting
+- [JSON Formatter](/json-formatter) - Format decoded JWT payloads for easier reading
+- [Unix Timestamp Converter](/unix-timestamp-converter) - Convert JWT exp/iat timestamps to readable dates

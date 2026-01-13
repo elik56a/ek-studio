@@ -223,8 +223,9 @@ export function ContactForm() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      title="View DevConverter source code repository on GitHub"
                     >
-                      View Repository
+                      View DevConverter Repository
                     </a>
                   </div>
                 </div>
@@ -240,8 +241,9 @@ export function ContactForm() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      title="Connect with DevConverter team on LinkedIn"
                     >
-                      Connect with us
+                      Connect with DevConverter on LinkedIn
                     </a>
                   </div>
                 </div>
