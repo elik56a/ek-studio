@@ -2,9 +2,7 @@ import { Card, CardHeader, CardTitle } from "@ek-studio/ui"
 import {
   ArrowRight,
   Code2,
-  Database,
   FileText,
-  Hash,
   Lock,
   Zap,
 } from "lucide-react"
@@ -164,33 +162,30 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4">
-              <ScrollButton
-                targetId="categories"
-                className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 shadow-glow bg-primary hover:bg-primary/90"
-                ariaLabel="Explore all developer tools"
+              <SmoothLink
+                href="/json-formatter"
+                className="inline-flex items-center justify-center w-full sm:w-auto text-base px-6 py-3.5 rounded-lg font-medium shadow-glow bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300"
               >
                 <Code2
-                  className="w-4 h-4 sm:w-5 sm:h-5 mr-2"
+                  className="w-4 h-4 mr-2"
                   aria-hidden="true"
                 />
-                <span>Explore Tools</span>
+                <span>Try JSON Formatter Now</span>
                 <ArrowRight
-                  className="w-4 h-4 sm:w-5 sm:h-5 ml-2"
+                  className="w-4 h-4 ml-2"
                   aria-hidden="true"
                 />
-              </ScrollButton>
-              <ScrollButton
-                targetId="popular"
-                variant="outline"
-                className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6"
-                ariaLabel="View most popular developer tools"
+              </SmoothLink>
+              <SmoothLink
+                href="/categories"
+                className="inline-flex items-center justify-center w-full sm:w-auto text-base px-6 py-3.5 rounded-lg font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-all duration-300"
               >
                 <Zap
-                  className="w-4 h-4 sm:w-5 sm:h-5 mr-2"
+                  className="w-4 h-4 mr-2"
                   aria-hidden="true"
                 />
-                <span>Popular Tools</span>
-              </ScrollButton>
+                <span>Explore All Tools</span>
+              </SmoothLink>
             </div>
 
             {/* Stats */}

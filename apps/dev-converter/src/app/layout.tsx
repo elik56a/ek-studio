@@ -50,6 +50,13 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   publisher: siteConfig.name,
   metadataBase: new URL(siteConfig.url),
+  alternates: {
+    canonical: siteConfig.url,
+    languages: {
+      "en": siteConfig.url,
+      "x-default": siteConfig.url,
+    },
+  },
   icons: {
     icon: [
       { url: "/icon", sizes: "32x32", type: "image/png" },
@@ -100,10 +107,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Hreflang for English */}
-        <link rel="alternate" hrefLang="en" href={siteConfig.url} />
-        <link rel="alternate" hrefLang="x-default" href={siteConfig.url} />
-
         {/* Critical preconnects for performance */}
         <link
           rel="preconnect"

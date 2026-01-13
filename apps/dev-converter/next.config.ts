@@ -29,6 +29,9 @@ const nextConfig: NextConfig = {
   // Production source maps (disable for faster builds)
   productionBrowserSourceMaps: false,
 
+  // Enable SWC minification (default in Next.js 13+)
+  swcMinify: true,
+
   // Experimental features for better performance
   experimental: {
     optimizePackageImports: [
@@ -126,6 +129,28 @@ const nextConfig: NextConfig = {
           {
             key: "Cache-Control",
             value: "public, max-age=86400, must-revalidate",
+          },
+        ],
+      },
+      {
+        source: "/_next/static/chunks/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+          {
+            key: "Content-Encoding",
+            value: "gzip",
+          },
+        ],
+      },
+      {
+        source: "/:path*.(js|css)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },

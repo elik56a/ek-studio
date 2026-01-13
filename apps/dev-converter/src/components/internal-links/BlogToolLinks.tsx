@@ -162,7 +162,7 @@ const blogPostsData: Record<string, BlogPost> = {
       url: "https://devconverter.dev",
     },
     tags: ["jwt", "authentication", "security", "tokens", "api"],
-    image: "/images/blog/jwt.svg",
+    image: "/images/blog/jwt-decode.svg",
     readingTime: "10 min read",
   },
   "json-to-yaml-converter-guide": {

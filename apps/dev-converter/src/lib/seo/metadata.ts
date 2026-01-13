@@ -78,6 +78,10 @@ export function generateToolMetadata(tool: Tool): Metadata {
     category: "Developer Tools",
     alternates: {
       canonical: url,
+      languages: {
+        "en": url,
+        "x-default": url,
+      },
     },
     openGraph: {
       title: optimizedTitle,
@@ -136,6 +140,10 @@ export function generateCategoryMetadata(
     category: "Developer Tools",
     alternates: {
       canonical: url,
+      languages: {
+        "en": url,
+        "x-default": url,
+      },
     },
     openGraph: {
       title: optimizedTitle,
@@ -222,6 +230,10 @@ export function generateStaticPageMetadata(
     category: "Developer Tools",
     alternates: {
       canonical: fullUrl,
+      languages: {
+        "en": fullUrl,
+        "x-default": fullUrl,
+      },
     },
     openGraph: {
       title: fullTitle,

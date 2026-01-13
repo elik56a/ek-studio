@@ -20,31 +20,32 @@ export function Footer() {
               happens in your browser for complete privacy.
             </p>
             <div className="flex items-center space-x-4">
-              <Link
+              <a
                 href={siteConfig.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="GitHub"
+                aria-label="DevConverter on GitHub - View Source Code"
               >
                 <Github className="w-5 h-5" />
-              </Link>
-              <Link
+              </a>
+              <a
                 href={siteConfig.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="LinkedIn"
+                aria-label="Connect with DevConverter on LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
-              </Link>
-              <Link
+              </a>
+              <a
                 href={`mailto:${siteConfig.links.email}`}
                 className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Email"
+                aria-label="Email DevConverter Support"
+                rel="noopener noreferrer"
               >
                 <Mail className="w-5 h-5" />
-              </Link>
+              </a>
             </div>
           </div>
 
