@@ -29,9 +29,6 @@ const nextConfig: NextConfig = {
   // Production source maps (disable for faster builds)
   productionBrowserSourceMaps: false,
 
-  // Enable SWC minification (default in Next.js 13+)
-  swcMinify: true,
-
   // Experimental features for better performance
   experimental: {
     optimizePackageImports: [
