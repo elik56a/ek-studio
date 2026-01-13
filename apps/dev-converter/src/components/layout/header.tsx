@@ -56,9 +56,9 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 glass border-b backdrop-blur-xl bg-background/95">
-      <div className="px-4 flex h-16 items-center justify-between max-w-full">
+      <div className="container mx-auto px-3 sm:px-4 flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4">
         {/* Logo - Left */}
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 min-w-0">
           <Logo size="sm" variant="default" href="/" />
         </div>
 
@@ -83,15 +83,15 @@ export function Header() {
         </nav>
 
         {/* Search & Theme Toggle - Right */}
-        <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
-          {/* Desktop Search */}
-          <div className="relative hidden md:block">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+          {/* Desktop Search - Hidden on small and medium screens */}
+          <div className="relative hidden lg:block">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
             <Input
               placeholder="Search tools..."
               value={searchQuery}
               onChange={e => handleSearch(e.target.value)}
-              className="pl-10 w-48 lg:w-64 bg-background/50 border-border/50 focus:bg-background focus:border-primary/50"
+              className="pl-10 w-48 xl:w-64 bg-background/50 border-border/50 focus:bg-background focus:border-primary/50"
             />
             {showSearch && (
               <div className="absolute top-full mt-2 w-full border rounded-xl shadow-2xl z-[100] overflow-hidden bg-background backdrop-blur-xl">
@@ -129,13 +129,13 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden"
+            className="lg:hidden h-9 w-9"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4" />
             ) : (
-              <Menu className="h-5 w-5" />
+              <Menu className="h-4 w-4" />
             )}
           </Button>
         </div>
@@ -145,8 +145,8 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="lg:hidden border-t bg-background">
           <div className="px-4 py-4 space-y-4">
-            {/* Mobile Search */}
-            <div className="relative md:hidden">
+            {/* Mobile Search - Show on small and medium screens */}
+            <div className="relative lg:hidden">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
               <Input
                 placeholder="Search tools..."

@@ -116,8 +116,8 @@ export function Carousel({
               className={cn(
                 "h-1.5 rounded-full transition-all duration-300",
                 index === currentIndex
-                  ? "w-6 bg-emerald-500"
-                  : "w-1.5 bg-border hover:bg-emerald-500/50"
+                  ? "w-6 bg-primary"
+                  : "w-1.5 bg-border hover:bg-primary/50"
               )}
               aria-label={`Go to slide ${index + 1}`}
             />
