@@ -5,16 +5,17 @@ import { getAllTools } from "@/lib/tools/registry"
 
 import { blogConfig } from "../config/blog.config"
 
-// Stable dates for static content - only update when content actually changes
+// Real lastmod dates based on actual content updates
+// These should be updated when the corresponding content changes
 const STATIC_CONTENT_DATES = {
-  homepage: new Date("2024-01-01"),
-  about: new Date("2024-01-01"),
-  privacy: new Date("2024-01-01"),
-  terms: new Date("2024-01-01"),
-  contact: new Date("2024-01-01"),
-  faq: new Date("2024-01-01"),
-  toolsRegistry: new Date("2024-01-01"), // Update when tools are added/removed
-  categoriesIndex: new Date("2024-01-01"), // Update when categories change
+  homepage: new Date("2026-01-13"), // Updated with latest site changes
+  about: new Date("2025-12-15"),
+  privacy: new Date("2025-12-15"),
+  terms: new Date("2025-12-15"),
+  contact: new Date("2025-12-15"),
+  faq: new Date("2025-12-15"),
+  toolsRegistry: new Date("2026-01-13"), // Last tool registry update
+  categoriesIndex: new Date("2026-01-09"), // Last category structure update
 }
 
 export default async function sitemap() {
@@ -105,35 +106,37 @@ export default async function sitemap() {
   // Add blog listing page
   addRoute(
     `${baseUrl}${blogConfig.basePath}`,
-    STATIC_CONTENT_DATES.homepage,
+    new Date("2026-01-09"), // Use latest blog post date
     "daily",
     0.9
   )
 
-  // Add blog posts with actual post dates
+  // Add blog posts with their actual publish dates
   const contentManager = new BlogContentManager(blogConfig)
   const posts = await contentManager.getAllPosts()
 
   posts.forEach(post => {
     addRoute(
       `${baseUrl}${blogConfig.basePath}/${post.slug}`,
-      new Date(post.date),
+      new Date(post.date), // Use actual post date from frontmatter
       "monthly",
       0.8
     )
   })
 
-  // Add blog tag pages with stable date
+  // Note: Tag pages are excluded as they are thin content and less valuable for SEO
+  // If you want to include them, uncomment the code below:
+  /*
   const tags = await contentManager.getAllTags()
-
   tags.forEach(tag => {
     addRoute(
       `${baseUrl}${blogConfig.basePath}/tag/${tag}`,
-      STATIC_CONTENT_DATES.homepage,
+      new Date("2026-01-09"),
       "weekly",
-      0.7
+      0.5
     )
   })
+  */
 
   return routes
 }

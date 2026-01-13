@@ -31,6 +31,7 @@ export class BlogSEOManager {
         images: [{ url: imageUrl }],
         type: 'article',
         publishedTime: post.date,
+        modifiedTime: post.dateModified || post.date,
         authors: [post.author.name],
         tags: post.tags,
       },
@@ -80,30 +81,44 @@ export class BlogSEOManager {
 
   /**
    * Generate JSON-LD structured data for a blog post
+   * Creates a complete BlogPosting schema with all required fields
    */
   generateArticleSchema(post: BlogPost): object {
+    const postUrl = `${this.config.siteUrl}${this.config.basePath}/${post.slug}`;
+    const imageUrl = post.image 
+      ? `${this.config.siteUrl}${post.image}`
+      : `${this.config.siteUrl}/og-image.png`;
+
     return {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
       headline: post.title,
       description: post.description,
-      image: post.image ? `${this.config.siteUrl}${post.image}` : undefined,
+      image: imageUrl,
       datePublished: post.date,
+      dateModified: post.dateModified || post.date,
       author: {
         '@type': 'Person',
         name: post.author.name,
-        url: post.author.url,
+        url: post.author.url || this.config.siteUrl,
       },
       publisher: {
         '@type': 'Organization',
         name: this.config.siteName,
         url: this.config.siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url: `${this.config.siteUrl}/logo.png`,
+        },
       },
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': `${this.config.siteUrl}${this.config.basePath}/${post.slug}`,
+        '@id': postUrl,
       },
       keywords: post.tags.join(', '),
+      articleSection: post.tags[0] || 'Technology',
+      wordCount: post.content.split(/\s+/).length,
+      inLanguage: 'en-US',
     };
   }
 }

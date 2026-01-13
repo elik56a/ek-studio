@@ -74,6 +74,7 @@ export class BlogContentManager {
         title: data.title,
         description: data.description,
         date: data.date,
+        dateModified: data.dateModified,
         author: data.author,
         tags: data.tags || [],
         image: data.image,
