@@ -56,7 +56,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 glass border-b backdrop-blur-xl bg-background/95">
-      <div className="container mx-auto px-3 sm:px-4 flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4">
+      <div className="px-4 flex h-16 items-center justify-between max-w-full">
         {/* Logo - Left */}
         <div className="flex-shrink-0 min-w-0">
           <Logo size="sm" variant="default" href="/" />

@@ -15,6 +15,7 @@ import dynamic from "next/dynamic"
 import { ScrollButton } from "@/components/home/scroll-button"
 import { Logo } from "@/components/layout/logo"
 import { SmoothLink } from "@/components/layout/smooth-link"
+import { popularTools } from "@/config/popular-tools"
 import { siteConfig } from "@/config/site"
 import {
   generateStaticPageMetadata,
@@ -58,25 +59,6 @@ export const metadata: Metadata = generateStaticPageMetadata({
 })
 
 export default function Home() {
-  const popularTools = [
-    {
-      name: "JSON Formatter",
-      slug: "json-formatter",
-      icon: Database,
-    },
-    {
-      name: "Base64 Encoder",
-      slug: "base64-encode-decode",
-      icon: Lock,
-    },
-    { name: "JWT Decoder", slug: "jwt-decoder", icon: FileText },
-    {
-      name: "Hash Generator",
-      slug: "hash-generator",
-      icon: Hash,
-    },
-  ]
-
   // WebSite schema with SearchAction
   const websiteSchema = {
     "@context": "https://schema.org",

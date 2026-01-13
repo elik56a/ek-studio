@@ -50,7 +50,7 @@ export function Carousel({
           className={cn(
             "h-10 w-10 rounded-full flex-shrink-0 transition-all duration-200",
             canGoLeft
-              ? "hover:bg-emerald-500/10 hover:border-emerald-500/30"
+              ? "hover:bg-primary/10 hover:border-primary/30"
               : "opacity-40 cursor-not-allowed"
           )}
           aria-label="Previous tools"
@@ -70,13 +70,17 @@ export function Carousel({
               <a
                 key={index}
                 href={item.href}
+                style={{
+                  width: `calc(${100 / itemsPerView}% - ${((itemsPerView - 1) * 12) / itemsPerView}px)`,
+                  minWidth: `calc(${100 / itemsPerView}% - ${((itemsPerView - 1) * 12) / itemsPerView}px)`,
+                  maxWidth: `calc(${100 / itemsPerView}% - ${((itemsPerView - 1) * 12) / itemsPerView}px)`,
+                }}
                 className={cn(
-                  "group block p-4 rounded-xl border border-border bg-card hover:border-emerald-500/30 hover:shadow-lg transition-all duration-200 flex-shrink-0",
-                  `w-[calc(${100 / itemsPerView}%-${((itemsPerView - 1) * 12) / itemsPerView}px)]`
+                  "group block p-4 rounded-xl border border-primary/10 bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-200 flex-shrink-0"
                 )}
               >
                 <div className="space-y-2">
-                  <h3 className="font-semibold text-sm group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1">
+                  <h3 className="font-semibold text-sm group-hover:text-primary transition-colors line-clamp-1">
                     {item.name}
                   </h3>
                   <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
@@ -97,7 +101,7 @@ export function Carousel({
           className={cn(
             "h-10 w-10 rounded-full flex-shrink-0 transition-all duration-200",
             canGoRight
-              ? "hover:bg-emerald-500/10 hover:border-emerald-500/30"
+              ? "hover:bg-primary/10 hover:border-primary/30"
               : "opacity-40 cursor-not-allowed"
           )}
           aria-label="Next tools"

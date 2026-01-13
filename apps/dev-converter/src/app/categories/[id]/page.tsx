@@ -6,18 +6,23 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  Carousel,
 } from "@ek-studio/ui"
+import type { CarouselItem } from "@ek-studio/ui"
 import { ArrowRight, Clock, Star, Users } from "lucide-react"
 
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
+import { FAQ } from "@/components/common/faq"
 import { Breadcrumb } from "@/components/layout/breadcrumb"
 import { SmoothLink } from "@/components/layout/smooth-link"
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
+import { categoryContent } from "@/config/category-content"
+import { popularTools } from "@/config/popular-tools"
 import { generateCategoryMetadata } from "@/lib/seo/metadata"
 import { generateCollectionPageSchema } from "@/lib/seo/schema-generators"
-import { getCategoryById } from "@/lib/tools/categories"
+import { categories, getCategoryById } from "@/lib/tools/categories"
 import { getToolsByCategory } from "@/lib/tools/registry"
 
 interface CategoryPageProps {
@@ -57,6 +62,16 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   const tools = getToolsByCategory(category.id)
   const IconComponent = category.icon
+  const content = categoryContent[category.id]
+
+  // Prepare other categories for carousel (without icon components)
+  const otherCategories: CarouselItem[] = categories
+    .filter(cat => cat.id !== category.id)
+    .map(cat => ({
+      name: cat.name,
+      href: `/categories/${cat.id}`,
+      description: cat.description,
+    }))
 
   const breadcrumbItems = [
     { label: "Categories", href: "/categories" },
@@ -79,6 +94,23 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     ],
   })
 
+  // Generate FAQPage schema if FAQs exist
+  const faqSchema =
+    content?.faqs && content.faqs.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: content.faqs.map(faq => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
+          })),
+        }
+      : null
+
   return (
     <>
       {/* CollectionPage Schema */}
@@ -86,6 +118,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
       />
+
+      {/* FAQPage Schema */}
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
 
       {/* BreadcrumbList Schema */}
       <BreadcrumbSchema
@@ -212,6 +252,88 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               </Button>
             </div>
           )}
+
+          {/* About This Category Section */}
+          {content?.description && (
+            <Card className="glass border-0 shadow-glow p-6 sm:p-8">
+              <div className="space-y-4">
+                <h2 className="text-2xl sm:text-3xl font-bold">
+                  About {category.name} Tools
+                </h2>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  {content.description}
+                </p>
+              </div>
+            </Card>
+          )}
+
+          {/* Popular Tools Section */}
+          <section className="space-y-6">
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-2">
+                Popular Developer Tools
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Most used tools across all categories
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pb-4">
+              {popularTools.map(tool => {
+                const IconComponent = tool.icon
+                return (
+                  <SmoothLink key={tool.slug} href={`/${tool.slug}`}>
+                    <Card className="group hover:shadow-glow transition-all duration-300 hover:-translate-y-1 glass border-0 h-full">
+                      <CardHeader>
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-accent/30 transition-all">
+                          <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                        </div>
+                        <CardTitle className="text-base sm:text-lg transition-colors">
+                          {tool.name}
+                        </CardTitle>
+                      </CardHeader>
+                    </Card>
+                  </SmoothLink>
+                )
+              })}
+            </div>
+          </section>
+
+          {/* FAQ Section */}
+          {content?.faqs && content.faqs.length > 0 && (
+            <section className="space-y-6 pb-4">
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-2">
+                  Frequently Asked Questions
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Common questions about {category.name.toLowerCase()} tools
+                </p>
+              </div>
+
+              <Card className="glass border-0 shadow-glow overflow-visible">
+                <CardContent className="overflow-visible">
+                  <FAQ items={content.faqs} />
+                </CardContent>
+              </Card>
+            </section>
+          )}
+
+          {/* Explore More Categories Section */}
+          <Card className="glass border-0 shadow-glow p-6 sm:p-8">
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold">
+                  Explore More Categories
+                </h2>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Discover other tool categories
+                </p>
+              </div>
+
+              <Carousel items={otherCategories} itemsPerView={3} />
+            </div>
+          </Card>
         </div>
       </div>
     </>

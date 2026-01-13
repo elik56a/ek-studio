@@ -4,6 +4,7 @@ import Link from "next/link"
 
 import { Logo } from "@/components/layout/logo"
 import { SmoothLink } from "@/components/layout/smooth-link"
+import { popularTools } from "@/config/popular-tools"
 import { siteConfig } from "@/config/site"
 import { categories } from "@/lib/tools/categories"
 
@@ -52,38 +53,16 @@ export function Footer() {
               Popular Tools
             </h4>
             <ul className="space-y-2 sm:space-y-3 text-sm">
-              <li>
-                <Link
-                  href="/json-formatter"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  JSON Formatter
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/base64-encode-decode"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Base64 Encoder
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/jwt-decoder"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  JWT Decoder
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/hash-generator"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Hash Generator
-                </Link>
-              </li>
+              {popularTools.map(tool => (
+                <li key={tool.slug}>
+                  <Link
+                    href={`/${tool.slug}`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {tool.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

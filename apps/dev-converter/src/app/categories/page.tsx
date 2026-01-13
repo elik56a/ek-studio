@@ -384,15 +384,17 @@ export default function CategoriesPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 pb-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 pb-8">
               <Card className="glass border-0 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
                 <CardHeader>
-                  <div className="flex items-center gap-3 mb-3">
+                  <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                       <Database className="w-6 h-6 text-primary" />
                     </div>
                     <CardTitle className="text-lg">JSON & Data</CardTitle>
                   </div>
+                </CardHeader>
+                <CardContent>
                   <CardDescription className="text-sm leading-relaxed">
                     Format, validate, and convert JSON, YAML, CSV, and other
                     data formats. Essential for API development and data
@@ -406,12 +408,12 @@ export default function CategoriesPage() {
                       </span>
                     </SmoothLink>
                   </div>
-                </CardHeader>
+                </CardContent>
               </Card>
 
               <Card className="glass border-0 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
                 <CardHeader>
-                  <div className="flex items-center gap-3 mb-3">
+                  <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                       <Lock className="w-6 h-6 text-primary" />
                     </div>
@@ -419,6 +421,8 @@ export default function CategoriesPage() {
                       Encoding & Decoding
                     </CardTitle>
                   </div>
+                </CardHeader>
+                <CardContent>
                   <CardDescription className="text-sm leading-relaxed">
                     Encode and decode Base64, URL, HTML entities, and more.
                     Perfect for handling encoded data in web development.
@@ -431,17 +435,19 @@ export default function CategoriesPage() {
                       </span>
                     </SmoothLink>
                   </div>
-                </CardHeader>
+                </CardContent>
               </Card>
 
               <Card className="glass border-0 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
                 <CardHeader>
-                  <div className="flex items-center gap-3 mb-3">
+                  <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                       <Shield className="w-6 h-6 text-primary" />
                     </div>
                     <CardTitle className="text-lg">Security & Crypto</CardTitle>
                   </div>
+                </CardHeader>
+                <CardContent>
                   <CardDescription className="text-sm leading-relaxed">
                     JWT decoding, hash generation (MD5, SHA), UUID creation,
                     and other security-focused utilities for developers.
@@ -454,7 +460,7 @@ export default function CategoriesPage() {
                       </span>
                     </SmoothLink>
                   </div>
-                </CardHeader>
+                </CardContent>
               </Card>
             </div>
           </section>
@@ -470,11 +476,13 @@ export default function CategoriesPage() {
               </p>
             </div>
 
-            <Card className="glass border-0 max-w-4xl mx-auto mb-2">
-              <CardContent className="px-6 py-6 sm:px-8 sm:py-8">
-                <FAQ items={faqItems} />
-              </CardContent>
-            </Card>
+            <div className="max-w-4xl mx-auto">
+              <Card className="glass border-0">
+                <CardContent>
+                  <FAQ items={faqItems} />
+                </CardContent>
+              </Card>
+            </div>
           </section>
 
           {/* Related Links Section */}

@@ -124,19 +124,5 @@ export default async function sitemap() {
     )
   })
 
-  // Note: Tag pages are excluded as they are thin content and less valuable for SEO
-  // If you want to include them, uncomment the code below:
-  /*
-  const tags = await contentManager.getAllTags()
-  tags.forEach(tag => {
-    addRoute(
-      `${baseUrl}${blogConfig.basePath}/tag/${tag}`,
-      new Date("2026-01-09"),
-      "weekly",
-      0.5
-    )
-  })
-  */
-
   return routes
 }

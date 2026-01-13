@@ -50,6 +50,10 @@ export async function generateMetadata({
   return {
     title: `Posts tagged with "${tag}" - ${blogConfig.siteName}`,
     description: `Browse all blog posts tagged with ${tag}. Found ${posts.length} ${posts.length === 1 ? "post" : "posts"}.`,
+    robots: {
+      index: false,
+      follow: true,
+    },
     openGraph: {
       title: `Posts tagged with "${tag}"`,
       description: `Browse all blog posts tagged with ${tag}`,
