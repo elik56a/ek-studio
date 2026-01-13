@@ -33,12 +33,12 @@ export default function CategoriesSection({
       </div>
 
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 pb-4">
           {categories.map(category => {
             const IconComponent = category.icon
             return (
               <SmoothLink key={category.id} href={`/categories/${category.id}`}>
-                <Card className="group h-full transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 hover:scale-[1.02] glass border-0 relative overflow-hidden">
+                <Card className="group h-full transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 hover:scale-[1.02] glass border-0 relative">
                   <CardHeader className="pb-3 sm:pb-4">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300 flex-shrink-0">

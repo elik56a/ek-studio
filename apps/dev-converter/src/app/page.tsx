@@ -266,7 +266,7 @@ export default function Home() {
             </div>
 
             <div className="container mx-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pb-4">
                 {popularTools.map(tool => {
                   const IconComponent = tool.icon
                   return (
@@ -308,7 +308,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
                 <Card className="glass border-0">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-lg">
@@ -382,7 +382,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4">
                 <Card className="glass border-0">
                   <CardHeader>
                     <CardTitle className="text-base sm:text-lg">

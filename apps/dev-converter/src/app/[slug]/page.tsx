@@ -51,6 +51,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
   // Build breadcrumb data for both UI and schema
   const breadcrumbItems = [
+    { label: "Categories", href: "/categories" },
     ...(category
       ? [{ label: category.name, href: `/categories/${category.id}` }]
       : []),
@@ -60,6 +61,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
   // Build breadcrumb schema data with absolute URLs
   const breadcrumbSchemaData = [
     { name: "Home", url: "/" },
+    { name: "Categories", url: "/categories" },
     ...(category
       ? [{ name: category.name, url: `/categories/${category.id}` }]
       : []),

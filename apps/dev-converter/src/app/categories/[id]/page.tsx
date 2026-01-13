@@ -59,7 +59,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const IconComponent = category.icon
 
   const breadcrumbItems = [
-    { label: "Categories", href: "/" },
+    { label: "Categories", href: "/categories" },
     { label: category.name },
   ]
 
@@ -91,7 +91,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <BreadcrumbSchema
         breadcrumbs={[
           { name: "Home", url: "/" },
-          { name: "Categories", url: "/" },
+          { name: "Categories", url: "/categories" },
           { name: category.name },
         ]}
       />

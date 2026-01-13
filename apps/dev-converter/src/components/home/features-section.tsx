@@ -14,8 +14,8 @@ export default function FeaturesSection() {
       </div>
 
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          <Card className="glass border-0 text-center p-6 sm:p-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 pb-4">
+          <Card className="glass border-0 text-center py-6 px-6 sm:py-8 sm:px-8">
             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto mb-3 sm:mb-4">
               <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             </div>
@@ -28,7 +28,7 @@ export default function FeaturesSection() {
             </p>
           </Card>
 
-          <Card className="glass border-0 text-center p-6 sm:p-8">
+          <Card className="glass border-0 text-center py-6 px-6 sm:py-8 sm:px-8">
             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto mb-3 sm:mb-4">
               <Lock className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             </div>
@@ -40,7 +40,7 @@ export default function FeaturesSection() {
             </p>
           </Card>
 
-          <Card className="glass border-0 text-center p-6 sm:p-8 sm:col-span-2 md:col-span-1">
+          <Card className="glass border-0 text-center py-6 px-6 sm:py-8 sm:px-8 sm:col-span-2 md:col-span-1">
             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto mb-3 sm:mb-4">
               <Code2 className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             </div>
