@@ -87,6 +87,7 @@ const nextConfig: NextConfig = {
     const oneYearInSeconds = 31536000
     const oneYearFromNow = new Date()
     oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1)
+    const isProduction = process.env.NODE_ENV === "production"
 
     return [
       {
@@ -118,10 +119,6 @@ const nextConfig: NextConfig = {
             key: "Cache-Control",
             value: "public, max-age=31536000, immutable",
           },
-          {
-            key: "Content-Encoding",
-            value: "gzip",
-          },
         ],
       },
       {
@@ -140,10 +137,6 @@ const nextConfig: NextConfig = {
             key: "Cache-Control",
             value: "public, max-age=31536000, immutable",
           },
-          {
-            key: "Content-Encoding",
-            value: "gzip",
-          },
         ],
       },
       {
@@ -152,10 +145,6 @@ const nextConfig: NextConfig = {
           {
             key: "Cache-Control",
             value: "public, max-age=31536000, immutable",
-          },
-          {
-            key: "Content-Encoding",
-            value: "gzip",
           },
         ],
       },
