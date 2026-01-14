@@ -4,111 +4,128 @@ export const timeTools: Tool[] = [
   {
     id: "unix-timestamp-converter",
     slug: "unix-timestamp-converter",
-    name: "Unix Timestamp Converter",
+    name: "Unix Timestamp Converter (Epoch ↔ Date)",
     description:
-      "Convert between Unix timestamps and human-readable dates with timezone support",
+      "Convert Unix timestamps to human-readable dates (and back) with UTC/local timezone display — supports seconds and milliseconds",
     category: "time",
     type: "converter",
-    keywords: ["unix", "timestamp", "epoch", "date", "time", "convert"],
+    keywords: [
+      "unix timestamp converter",
+      "epoch time converter",
+      "timestamp to date",
+      "date to timestamp",
+      "unix time",
+      "epoch converter",
+      "seconds to date",
+      "milliseconds to date",
+      "utc timestamp",
+    ],
     metadata: {
-      title: "Unix Timestamp Converter - Epoch Time Tool",
+      title: "Unix Timestamp Converter (Epoch to Date & Back)",
       description:
-        "Convert Unix timestamps to dates and dates to timestamps instantly. Supports seconds, milliseconds, and multiple timezones. Free online epoch time converter.",
+        "Convert Unix epoch timestamps to dates and convert dates to timestamps. Auto-detects seconds vs milliseconds and shows UTC + local timezone output.",
       keywords: [
         "unix timestamp converter",
-        "epoch converter",
-        "time converter",
-        "date converter",
+        "epoch to date",
         "timestamp to date",
-        "epoch time",
-        "unix time",
+        "date to unix timestamp",
+        "epoch time converter",
+        "unix time converter",
+        "seconds vs milliseconds timestamp",
       ],
     },
     info: {
       description:
-        "A Unix timestamp converter transforms epoch time (seconds or milliseconds since January 1, 1970 UTC) into human-readable dates and vice versa. Essential for debugging server logs, validating API timestamps, inspecting database records, and troubleshooting timezone issues in distributed systems. This tool works with both 10-digit (seconds) and 13-digit (milliseconds) timestamps, automatically detecting the format. Perfect for developers working with REST APIs, microservices, cron jobs, and any system that stores time as Unix timestamps. Use alongside our JSON formatter for API debugging, JWT decoder for token expiration validation, and hash generator for timestamp-based signatures.",
+        "Unix Timestamp Converter helps you convert epoch time to a readable date and convert a date back to a Unix timestamp. Unix time is the number of seconds (or milliseconds) since January 1, 1970 (UTC) and shows up everywhere: server logs, database fields, API responses, analytics events, job schedulers, and JWT expiration claims. This tool auto-detects 10-digit timestamps (seconds) vs 13-digit timestamps (milliseconds), displays the result in UTC and local time, and makes it easy to avoid common timezone mistakes when debugging production systems.",
       howToUse: [
-        "Paste a Unix timestamp (seconds or milliseconds) into the input field",
-        "Or paste a date/time value such as an ISO 8601 string or natural language date",
-        "Click Convert to generate the converted output instantly",
-        "View the readable date in UTC and optionally in your local timezone",
-        "Copy the output timestamp or formatted date for use in your application, logs, or API payload",
+        "Paste a Unix timestamp (seconds or milliseconds) into the input",
+        "Or paste a date/time string (ISO 8601, common formats, or readable dates)",
+        "Click Convert to generate the result instantly",
+        "Review UTC and local timezone output to confirm the expected time",
+        "Copy the converted timestamp or formatted date for logs, APIs, or code",
       ],
       useCases: [
-        "Debug Server Logs: Convert timestamps from logs into readable time to track incidents and errors",
-        "API Testing: Convert timestamp fields in API requests and responses to verify correct event timing",
-        "Database Queries: Convert stored Unix timestamps into human-readable date values for debugging or reporting",
-        "Timezone Troubleshooting: Compare UTC timestamps with local timezone values to prevent scheduling bugs",
-        "Job Scheduling: Convert human dates into Unix timestamps for cron jobs and scheduled tasks",
-        "Front-End Development: Convert timestamps from backend services into readable UI dates",
+        "Convert timestamps from server logs into readable incident timelines",
+        "Verify API event times by converting timestamp fields to dates",
+        "Convert database epoch columns into human-readable values for debugging",
+        "Fix timezone bugs by comparing UTC output with local time output",
+        "Create timestamps for cron jobs, schedules, and delayed execution",
+        "Check JWT exp/iat/nbf timestamps when debugging authentication",
       ],
       features: [
-        "Two-Way Conversion: Convert Unix timestamps to dates and dates back to Unix timestamps",
-        "Seconds & Milliseconds Support: Automatically detects 10-digit vs 13-digit timestamps",
-        "Timezone Display: View results in UTC and different local timezones to avoid timezone confusion",
-        "ISO 8601 Support: Works with ISO strings like 2024-01-08T00:00:00Z",
-        "Natural Language Input: Accepts readable formats like 'December 25, 2022'",
-        "Instant Results: Fast conversion in the browser with no page reloads",
-        "Privacy Friendly: Conversion runs locally — no timestamps or dates are uploaded",
+        "Two-way conversion: epoch → date and date → epoch",
+        "Auto-detects seconds (10-digit) vs milliseconds (13-digit) timestamps",
+        "Displays UTC and local timezone results to reduce confusion",
+        "Accepts ISO 8601 inputs (e.g., 2024-01-08T00:00:00Z)",
+        "Accepts readable date formats (e.g., December 25, 2022)",
+        "Instant in-browser conversion (no uploads, privacy-friendly)",
       ],
     },
     examples: [
       {
-        title: "Unix timestamp example (seconds)",
+        title: "Unix timestamp in seconds → date",
         input: "1704672000",
-        description:
-          "Convert a Unix timestamp in seconds to a readable date (UTC-based)",
+        description: "Convert a 10-digit timestamp (seconds) into a UTC date",
       },
       {
-        title: "Milliseconds timestamp",
+        title: "Unix timestamp in milliseconds → date",
         input: "1609459200000",
-        description:
-          "Convert a Unix timestamp in milliseconds to a readable date (Jan 1, 2021)",
+        description: "Convert a 13-digit timestamp (milliseconds) to a date",
       },
       {
-        title: "ISO date string to timestamp",
+        title: "ISO 8601 → timestamp",
         input: "2023-06-15T14:30:00Z",
-        description: "Convert an ISO 8601 date string into a Unix timestamp",
+        description: "Convert an ISO timestamp into Unix epoch time",
       },
       {
-        title: "Human-readable date to timestamp",
+        title: "Readable date → timestamp",
         input: "December 25, 2022",
-        description: "Convert a natural language date into a Unix timestamp",
+        description: "Convert a human-readable date into a Unix timestamp",
       },
     ],
     faq: [
       {
         question: "What is a Unix timestamp (epoch time)?",
         answer:
-          "A Unix timestamp (also called epoch time) is the number of seconds that have passed since January 1, 1970 at 00:00:00 UTC. It is widely used in programming, databases, APIs, and logging systems to represent time consistently.",
+          "Unix timestamp (epoch time) is the number of seconds since 1970-01-01 00:00:00 UTC. Some systems store milliseconds instead of seconds.",
       },
       {
-        question:
-          "What is the difference between seconds and milliseconds timestamps?",
+        question: "How can I tell if a timestamp is seconds or milliseconds?",
         answer:
-          "Unix timestamps can be stored in seconds (10 digits) or milliseconds (13 digits). This tool automatically detects which format you're using and converts it correctly without needing manual selection.",
+          "Most seconds timestamps are 10 digits, while milliseconds timestamps are usually 13 digits. This tool auto-detects the format for you.",
       },
       {
-        question: "How do I convert a Unix timestamp to a human-readable date?",
+        question: "How do I convert a Unix timestamp to a date?",
         answer:
-          "Paste your timestamp (in seconds or milliseconds) into the input, and the converter will instantly return the readable date and time. You can also view the result in different timezones for easier debugging.",
+          "Paste the timestamp and convert. You’ll see a readable date/time in UTC and your local timezone to help with debugging.",
       },
       {
-        question: "Can I convert a date back into a Unix timestamp?",
+        question: "Can I convert a date back to a Unix timestamp?",
         answer:
-          "Yes. You can paste ISO 8601 dates (like 2024-01-08T00:00:00Z), common formats (01/08/2024), or natural language dates (January 8, 2024), and the tool will generate the equivalent Unix timestamp.",
+          "Yes. Paste an ISO 8601 date/time or a readable date format and the tool outputs the matching Unix epoch timestamp.",
       },
       {
-        question:
-          "Why is timezone support important when converting timestamps?",
+        question: "Why do timestamps look “wrong” in my timezone?",
         answer:
-          "Unix timestamps are always based on UTC, but humans often work in local timezones. Timezone conversion helps prevent mistakes when debugging logs, scheduling jobs, or comparing timestamps across systems and regions.",
+          "Unix timestamps are always UTC-based. If you compare them to local time without converting timezones, the displayed hour/day can look off.",
+      },
+      {
+        question: "Is this Unix timestamp converter safe for production data?",
+        answer:
+          "Yes. Conversion runs locally in your browser and doesn’t upload timestamps or dates to a server.",
       },
     ],
-    relatedTools: ["hash-generator", "uuid-generator", "jwt-decoder", "json-formatter", "base64-encode-decode", "color-converter"],
+    relatedTools: [
+      "hash-generator",
+      "uuid-generator",
+      "jwt-decoder",
+      "json-formatter",
+      "base64-encode-decode",
+      "color-converter",
+    ],
     ui: {
       inputPlaceholder:
-        "Enter Unix timestamp (e.g., 1704672000) or date (e.g., 2024-01-08)...",
+        "Enter epoch time (e.g., 1704672000 / 1704672000000) or a date (e.g., 2024-01-08T00:00:00Z)...",
       outputPlaceholder: "Converted date/timestamp will appear here...",
       inputLabel: "Timestamp or Date",
       outputLabel: "Converted Result",
