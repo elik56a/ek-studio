@@ -24,11 +24,12 @@ export default function CategoriesSection({
   categories: Category[]
 }) {
   return (
-    <div id="categories" className="space-y-6 sm:space-y-8 px-4">
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl sm:text-3xl font-bold">All Categories</h2>
-        <p className="text-sm sm:text-base text-muted-foreground">
-          Organized tools for every development need
+    <section id="categories" className="space-y-12 px-4">
+      <div className="text-center space-y-4 max-w-3xl mx-auto">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">Browse by Category</h2>
+        <p className="text-base sm:text-lg text-muted-foreground">
+          Discover 20+ developer tools organized by category. From JSON formatting to cryptography,
+          find the perfect tool for your workflow.
         </p>
       </div>
 
@@ -88,6 +89,6 @@ export default function CategoriesSection({
           })}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
