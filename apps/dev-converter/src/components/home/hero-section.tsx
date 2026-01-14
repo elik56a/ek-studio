@@ -15,42 +15,42 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section className="relative text-center space-y-8 pt-20 sm:pt-32 pb-12 px-4">
+    <section className="relative text-center space-y-6 pt-12 sm:pt-16 pb-8 px-4">
       {/* Decorative background pattern */}
       <CodePatternSVG />
       
       {/* Logo */}
-      <div className="flex justify-center mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <Logo size="xl" variant="default" showTagline={false} />
+      <div className="flex justify-center mb-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <Logo size="lg" variant="default" showTagline={false} />
       </div>
 
       {/* Main Headline */}
-      <div className="space-y-6 max-w-5xl mx-auto">
+      <div className="space-y-4 max-w-5xl mx-auto">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-primary animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
           <Sparkles className="w-4 h-4" />
-          <span>20+ Professional Developer Tools</span>
+          <span>50+ Professional Developer Tools</span>
           <Sparkles className="w-4 h-4" />
         </div>
 
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
           <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
             Developer Tools
           </span>
-          <span className="block mt-2 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+          <span className="block mt-1 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
             That Actually Work
           </span>
         </h1>
 
-        <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
-          Format JSON, decode JWT, encode Base64, generate hashes, and 20+ more utilities.
-          <span className="block mt-2 font-semibold text-foreground">
+        <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
+          Format JSON, decode JWT, encode Base64, generate hashes, and 50+ more utilities.
+          <span className="block mt-1 font-semibold text-foreground">
             Fast. Private. Free Forever.
           </span>
         </p>
       </div>
 
       {/* CTA Buttons */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400">
         <SmoothLink
           href="/json-formatter"
           className="group relative inline-flex items-center justify-center w-full sm:w-auto text-lg px-8 py-4 rounded-2xl font-semibold shadow-glow bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 hover:scale-105 hover:shadow-xl overflow-hidden"
@@ -71,7 +71,7 @@ export function HeroSection() {
       </div>
 
       {/* Feature Pills */}
-      <div className="flex flex-wrap items-center justify-center gap-3 pt-8 max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
+      <div className="flex flex-wrap items-center justify-center gap-3 pt-4 max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
         {[
           "✓ No Registration",
           "✓ 100% Private",
@@ -89,7 +89,7 @@ export function HeroSection() {
 
       {/* Animated Code Preview */}
       {mounted && (
-        <div className="max-w-4xl mx-auto mt-16 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-600">
+        <div className="max-w-4xl mx-auto mt-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-600">
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-primary via-accent to-primary rounded-3xl blur-xl opacity-25 group-hover:opacity-40 transition duration-1000" />
             <div className="relative glass rounded-2xl p-6 sm:p-8 border-2 border-primary/10">
