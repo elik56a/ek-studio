@@ -50,13 +50,6 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   publisher: siteConfig.name,
   metadataBase: new URL(siteConfig.url),
-  alternates: {
-    canonical: siteConfig.url,
-    languages: {
-      "en": siteConfig.url,
-      "x-default": siteConfig.url,
-    },
-  },
   icons: {
     icon: [
       { url: "/icon", sizes: "32x32", type: "image/png" },
