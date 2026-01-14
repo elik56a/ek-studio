@@ -21,7 +21,7 @@ interface FAQProps {
 
 export function FAQ({ items, defaultOpen, className }: FAQProps) {
   return (
-    <section itemScope itemType="https://schema.org/FAQPage">
+    <section>
       <Accordion
         type="single"
         collapsible
@@ -40,28 +40,15 @@ export function FAQ({ items, defaultOpen, className }: FAQProps) {
                 delay: index * 0.05,
                 ease: "easeOut",
               }}
-              itemScope
-              itemProp="mainEntity"
-              itemType="https://schema.org/Question"
             >
               <AccordionItem value={value}>
                 <AccordionTrigger className="hover:no-underline group">
-                  <h3
-                    className="text-left font-medium group-hover:text-primary transition-colors text-base"
-                    itemProp="name"
-                  >
+                  <h3 className="text-left font-medium group-hover:text-primary transition-colors text-base">
                     {item.question}
                   </h3>
                 </AccordionTrigger>
-                <AccordionContent
-                  itemScope
-                  itemProp="acceptedAnswer"
-                  itemType="https://schema.org/Answer"
-                >
-                  <div
-                    className="text-muted-foreground leading-relaxed"
-                    itemProp="text"
-                  >
+                <AccordionContent>
+                  <div className="text-muted-foreground leading-relaxed">
                     {item.answer}
                   </div>
                 </AccordionContent>
