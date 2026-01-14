@@ -141,7 +141,7 @@ export function generateCategoryMetadata(
     alternates: {
       canonical: url,
       languages: {
-        "en": url,
+        en: url,
         "x-default": url,
       },
     },
@@ -231,7 +231,7 @@ export function generateStaticPageMetadata(
     alternates: {
       canonical: fullUrl,
       languages: {
-        "en": fullUrl,
+        en: fullUrl,
         "x-default": fullUrl,
       },
     },

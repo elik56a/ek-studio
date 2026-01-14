@@ -242,6 +242,7 @@ export default function CategoriesPage() {
                   <SmoothLink
                     key={category.id}
                     href={`/categories/${category.id}`}
+                    aria-label={`View ${category.name} category with ${toolCount} tools`}
                   >
                     <Card className="group h-full transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 hover:scale-[1.02] glass border-0 relative">
                       <CardHeader className="pb-3 sm:pb-4">

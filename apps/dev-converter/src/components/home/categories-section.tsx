@@ -37,7 +37,11 @@ export default function CategoriesSection({
           {categories.map(category => {
             const IconComponent = category.icon
             return (
-              <SmoothLink key={category.id} href={`/categories/${category.id}`}>
+              <SmoothLink 
+                key={category.id} 
+                href={`/categories/${category.id}`}
+                aria-label={`View ${category.name} tools`}
+              >
                 <Card className="group h-full transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 hover:scale-[1.02] glass border-0 relative">
                   <CardHeader className="pb-3 sm:pb-4">
                     <div className="flex items-center gap-3 mb-2">

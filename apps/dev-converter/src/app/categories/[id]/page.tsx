@@ -190,7 +190,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-7">
                 {toolsWithMeta.map((tool, index) => (
-                  <SmoothLink key={tool.id} href={`/${tool.slug}`}>
+                  <SmoothLink 
+                    key={tool.id} 
+                    href={`/${tool.slug}`}
+                    aria-label={`Go to ${tool.name}`}
+                  >
                     <Card className="group h-full transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1 glass border border-border/50 hover:border-primary/30 overflow-hidden">
                       <CardHeader className="pb-4">
                         <div className="flex items-start justify-between mb-3 gap-2">
@@ -282,7 +286,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               {popularTools.map(tool => {
                 const IconComponent = tool.icon
                 return (
-                  <SmoothLink key={tool.slug} href={`/${tool.slug}`}>
+                  <SmoothLink 
+                    key={tool.slug} 
+                    href={`/${tool.slug}`}
+                    aria-label={`Go to ${tool.name}`}
+                  >
                     <Card className="group hover:shadow-glow transition-all duration-300 hover:-translate-y-1 glass border-0 h-full">
                       <CardHeader>
                         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-accent/30 transition-all">

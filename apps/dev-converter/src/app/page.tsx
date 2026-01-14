@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteConfig.url,
     languages: {
-      "en": siteConfig.url,
+      en: siteConfig.url,
       "x-default": siteConfig.url,
     },
   },
@@ -286,7 +286,11 @@ export default function Home() {
                 {popularTools.map(tool => {
                   const IconComponent = tool.icon
                   return (
-                    <SmoothLink key={tool.slug} href={`/${tool.slug}`}>
+                    <SmoothLink 
+                      key={tool.slug} 
+                      href={`/${tool.slug}`}
+                      aria-label={`Go to ${tool.name}`}
+                    >
                       <Card className="group hover:shadow-glow transition-all duration-300 hover:-translate-y-1 glass border-0">
                         <CardHeader className="pb-3 sm:pb-4">
                           <div className="flex items-center justify-between">

@@ -44,8 +44,8 @@ export class BlogSEOManager {
       alternates: {
         canonical: url,
         languages: {
-          'en': url,
-          'x-default': url,
+          en: url,
+          "x-default": url,
         },
       },
     };
@@ -80,8 +80,8 @@ export class BlogSEOManager {
       alternates: {
         canonical: url,
         languages: {
-          'en': url,
-          'x-default': url,
+          en: url,
+          "x-default": url,
         },
       },
     };
