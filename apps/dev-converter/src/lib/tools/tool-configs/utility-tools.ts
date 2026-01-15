@@ -4,7 +4,7 @@ export const utilityTools: Tool[] = [
   {
     id: "color-converter",
     slug: "color-converter",
-    name: "Color Converter (HEX ↔ RGB ↔ HSL)",
+    name: "Color Converter",
     description:
       "Convert HEX, RGB, RGBA, HSL, and HSLA colors instantly with a live preview — perfect for CSS, design systems, and UI theming",
     category: "utility",
@@ -141,7 +141,7 @@ export const utilityTools: Tool[] = [
   {
     id: "mime-type-lookup",
     slug: "mime-type-lookup",
-    name: "MIME Type Lookup (Content-Type Finder)",
+    name: "MIME Type Lookup",
     description:
       "Find the correct MIME type / Content-Type for any file extension (e.g., .pdf, .png, .json) — helpful for uploads, APIs, and headers",
     category: "utility",

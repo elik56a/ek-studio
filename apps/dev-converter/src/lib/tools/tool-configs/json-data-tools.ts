@@ -10,7 +10,7 @@ export const jsonDataTools: Tool[] = [
   {
     id: "json-formatter",
     slug: "json-formatter",
-    name: "JSON Formatter & JSON Validator",
+    name: "JSON Formatter & Validator",
     description:
       "Format, validate, beautify, and minify JSON with instant error detection",
     category: "json-data",

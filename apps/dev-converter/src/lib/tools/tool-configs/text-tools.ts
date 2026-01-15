@@ -4,7 +4,7 @@ export const textTools: Tool[] = [
   {
     id: "case-converter",
     slug: "case-converter",
-    name: "Case Converter (camelCase, snake_case, kebab-case)",
+    name: "Case Converter",
     description:
       "Convert text to camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, Title Case, and more — perfect for code, APIs, and SEO slugs",
     category: "text",
@@ -129,7 +129,7 @@ export const textTools: Tool[] = [
   {
     id: "diff-checker",
     slug: "diff-checker",
-    name: "Text Diff Checker (Side-by-Side Compare)",
+    name: "Text Diff Checker",
     description:
       "Compare two texts side-by-side and highlight additions, deletions, and edits — ideal for code, configs, and document reviews",
     category: "text",
@@ -259,7 +259,7 @@ export const textTools: Tool[] = [
   {
     id: "regex-tester",
     slug: "regex-tester",
-    name: "Regex Tester (Live Matches & Groups)",
+    name: "Regex Tester",
     description:
       "Test regular expressions with live matching, highlighted results, and capture group extraction — ideal for validation and parsing",
     category: "text",
@@ -382,7 +382,7 @@ export const textTools: Tool[] = [
   {
     id: "markdown-html-converter",
     slug: "markdown-html-converter",
-    name: "Markdown to HTML / HTML to Markdown Converter",
+    name: "Markdown ↔ HTML Converter",
     description:
       "Convert Markdown to HTML or HTML to Markdown with clean output — great for docs, README files, and content migration",
     category: "text",

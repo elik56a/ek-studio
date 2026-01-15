@@ -4,7 +4,7 @@ export const timeTools: Tool[] = [
   {
     id: "unix-timestamp-converter",
     slug: "unix-timestamp-converter",
-    name: "Unix Timestamp Converter (Epoch ↔ Date)",
+    name: "Unix Timestamp Converter",
     description:
       "Convert Unix timestamps to human-readable dates (and back) with UTC/local timezone display — supports seconds and milliseconds",
     category: "time",

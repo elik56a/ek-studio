@@ -4,7 +4,7 @@ export const encodingTools: Tool[] = [
   {
     id: "file-to-base64",
     slug: "file-to-base64",
-    name: "File to Base64 Converter (Data URL)",
+    name: "File to Base64 Converter",
     description:
       "Convert files to Base64 data URLs for HTML, CSS, JSON, and APIs — locally in your browser",
     category: "encoding",
@@ -110,7 +110,7 @@ export const encodingTools: Tool[] = [
   {
     id: "base64-encode-decode",
     slug: "base64-encode-decode",
-    name: "Base64 Encoder / Decoder (Base64URL for JWT)",
+    name: "Base64 Encoder / Decoder",
     description:
       "Encode text to Base64 or decode Base64 to text — includes Base64URL (JWT) mode and padding control",
     category: "encoding",
@@ -399,7 +399,7 @@ export const encodingTools: Tool[] = [
   {
     id: "html-escape-unescape",
     slug: "html-escape-unescape",
-    name: "HTML Escape & Unescape (Entities)",
+    name: "HTML Escape & Unescape",
     description:
       "Escape HTML characters into entities or unescape entities back to text (safe for XSS-sensitive output)",
     category: "encoding",
@@ -522,7 +522,7 @@ export const encodingTools: Tool[] = [
   {
     id: "json-escape-unescape",
     slug: "json-escape-unescape",
-    name: "JSON Escape & Unescape (String Encoder)",
+    name: "JSON Escape & Unescape",
     description:
       "Escape text for JSON strings (quotes, slashes, newlines) or unescape JSON-encoded strings back to readable text",
     category: "encoding",

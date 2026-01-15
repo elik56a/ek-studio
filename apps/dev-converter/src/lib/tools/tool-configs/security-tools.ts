@@ -4,7 +4,7 @@ export const securityTools: Tool[] = [
   {
     id: "jwt-decoder",
     slug: "jwt-decoder",
-    name: "JWT Decoder & Claims Inspector",
+    name: "JWT Decoder",
     description:
       "Decode JSON Web Tokens (JWT) locally to inspect header, payload claims, expiration, issuer/audience, and debug OAuth2/OIDC authentication issues",
     category: "security",
@@ -168,7 +168,7 @@ export const securityTools: Tool[] = [
   {
     id: "hash-generator",
     slug: "hash-generator",
-    name: "Hash Generator (MD5, SHA-256, SHA-512)",
+    name: "Hash Generator",
     description:
       "Generate MD5, SHA-256, SHA-384, and SHA-512 hashes from text for checksums, integrity checks, and fingerprints",
     category: "security",
@@ -284,7 +284,7 @@ export const securityTools: Tool[] = [
   {
     id: "uuid-generator",
     slug: "uuid-generator",
-    name: "UUID v4 Generator (RFC 4122)",
+    name: "UUID Generator",
     description:
       "Generate random UUID v4 values for databases, APIs, request tracing, and distributed systems",
     category: "security",
@@ -394,7 +394,7 @@ export const securityTools: Tool[] = [
   {
     id: "password-generator",
     slug: "password-generator",
-    name: "Strong Password Generator",
+    name: "Password Generator",
     description:
       "Generate strong random passwords with custom length, symbols, numbers, and mixed-case options — built for secure account creation",
     category: "security",
