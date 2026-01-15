@@ -8,15 +8,28 @@ import {
   Shield,
 } from "lucide-react"
 
-import {
-  encodingToolSlugs,
-  jsonDataToolSlugs,
-  securityToolSlugs,
-  textToolSlugs,
-  timeToolSlugs,
-  utilityToolSlugs,
-} from "./tool-configs"
 import { Category } from "./types"
+import * as encodingConfigs from "@/tools/configs/encoding"
+import * as securityConfigs from "@/tools/configs/security"
+import * as dataConfigs from "@/tools/configs/data"
+import * as textConfigs from "@/tools/configs/text"
+import * as timeConfigs from "@/tools/configs/time"
+import * as utilityConfigs from "@/tools/configs/utility"
+
+const extractSlugs = (configs: Record<string, any>): string[] => {
+  return Object.values(configs)
+    .filter((config): config is { slug: string } => 
+      typeof config === "object" && config !== null && "slug" in config
+    )
+    .map(config => config.slug)
+}
+
+const encodingToolSlugs = extractSlugs(encodingConfigs)
+const securityToolSlugs = extractSlugs(securityConfigs)
+const jsonDataToolSlugs = extractSlugs(dataConfigs)
+const textToolSlugs = extractSlugs(textConfigs)
+const timeToolSlugs = extractSlugs(timeConfigs)
+const utilityToolSlugs = extractSlugs(utilityConfigs)
 
 export interface CategoryConfig {
   id: string

@@ -6,7 +6,7 @@ import { useTool } from "@/hooks/use-tool"
 import {
   detectJsonEscaped,
   jsonEscapeUnescape,
-} from "@/lib/utils/encoding-utils"
+} from "@/features/encoding/json"
 
 const JsonEscapeUnescapeTool = () => {
   const {

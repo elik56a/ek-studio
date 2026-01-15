@@ -6,7 +6,7 @@ import { useState } from "react"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { generateUUIDs } from "@/lib/utils/security-utils"
+import { generateUUIDs } from "@/features/security/uuid"
 
 const UUIDGeneratorTool = () => {
   const [count, setCount] = useState(1)

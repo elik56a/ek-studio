@@ -16,7 +16,7 @@ import { useState } from "react"
 import { DiffViewer } from "@/components/custom/diff-viewer"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useToolState } from "@/hooks/use-tool-state"
-import { compareDiff } from "@/lib/utils/text-utils"
+import { compareDiff } from "@/features/text/diff"
 
 const TextDiffChecker = () => {
   const { tool, relatedTools } = useToolState()

@@ -2,7 +2,7 @@
 
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { jsonToYaml } from "@/lib/utils/json-utils"
+import { jsonToYaml } from "@/features/data-transform/json"
 
 const JsonToYamlTool = () => {
   const {

@@ -5,7 +5,7 @@ import { useState } from "react"
 import { Select, SelectOption } from "@/components/common/select"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { ConversionMode, convertMarkdownHtml } from "@/lib/utils/text-utils"
+import { ConversionMode, convertMarkdownHtml } from "@/features/text/markdown"
 
 const modeOptions: SelectOption[] = [
   {

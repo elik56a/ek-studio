@@ -1,23 +1,12 @@
 import { getToolComponent } from "./component-loader"
-import {
-  encodingTools,
-  jsonDataTools,
-  securityTools,
-  textTools,
-  timeTools,
-  utilityTools,
-} from "./tool-configs"
 import { Tool } from "./types"
+import * as allToolConfigs from "@/tools/configs"
 
-// Add components dynamically to avoid circular dependencies
-const toolsWithComponents: Tool[] = [
-  ...jsonDataTools,
-  ...encodingTools,
-  ...securityTools,
-  ...textTools,
-  ...timeTools,
-  ...utilityTools,
-].map(tool => ({
+const toolConfigs = Object.values(allToolConfigs).filter(
+  (config): config is Tool => typeof config === "object" && "id" in config
+)
+
+const toolsWithComponents: Tool[] = toolConfigs.map(tool => ({
   ...tool,
   component: getToolComponent(tool.id) || undefined,
 }))

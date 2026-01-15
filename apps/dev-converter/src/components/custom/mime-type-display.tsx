@@ -6,7 +6,7 @@ import { Check, Copy, FileText } from "lucide-react"
 
 import { useState } from "react"
 
-import { MimeTypeInfo } from "@/lib/utils/mime-utils"
+import { MimeTypeInfo } from "@/features/data/mime"
 
 interface MimeTypeDisplayProps {
   results: MimeTypeInfo[]

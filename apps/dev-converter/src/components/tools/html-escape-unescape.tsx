@@ -6,7 +6,7 @@ import { useTool } from "@/hooks/use-tool"
 import {
   detectHtmlEscaped,
   htmlEscapeUnescape,
-} from "@/lib/utils/encoding-utils"
+} from "@/features/encoding/html"
 
 const HtmlEscapeUnescapeTool = () => {
   const {

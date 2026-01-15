@@ -5,7 +5,7 @@ import { useMemo } from "react"
 import { TimestampDisplay } from "@/components/custom/timestamp-display"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { convertTimestamp } from "@/lib/utils/time-utils"
+import { convertTimestamp } from "@/features/time/timestamp-converter"
 
 const UnixTimestampConverter = () => {
   const {

@@ -2,7 +2,7 @@
 
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { jsonToCsv } from "@/lib/utils/json-utils"
+import { jsonToCsv } from "@/features/data-transform/json"
 
 const JsonToCsvTool = () => {
   const {

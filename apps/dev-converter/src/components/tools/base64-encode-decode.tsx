@@ -12,7 +12,7 @@ import {
   type CharacterEncoding,
   base64Convert,
   detectBase64,
-} from "@/lib/utils/encoding-utils"
+} from "@/features/encoding/base64"
 
 const Base64EncodeDecodeTool = () => {
   const [useUrlSafe, setUseUrlSafe] = useState(false)

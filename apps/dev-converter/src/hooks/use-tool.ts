@@ -4,7 +4,7 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
 import { useToolState } from "@/hooks/use-tool-state"
 import { isConverterTool } from "@/lib/tools/tool-utils"
-import { ConversionResult } from "@/lib/utils/json-utils"
+import { ConversionResult } from "@/shared/types"
 
 interface UseToolConfig {
   /**

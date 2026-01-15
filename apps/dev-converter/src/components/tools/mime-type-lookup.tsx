@@ -3,8 +3,8 @@
 import { MimeTypeDisplay } from "@/components/custom/mime-type-display"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { ConversionResult } from "@/lib/utils/json-utils"
-import { MimeTypeInfo, lookupMimeType } from "@/lib/utils/mime-utils"
+import { ConversionResult } from "@/shared/types"
+import { MimeTypeInfo, lookupMimeType } from "@/features/data/mime"
 
 const MimeTypeLookupTool = () => {
   const {

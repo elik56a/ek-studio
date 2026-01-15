@@ -12,7 +12,7 @@ import {
   NodeState,
   createCollapsedState,
   parseJsonOrYaml,
-} from "@/lib/utils/json-viewer-utils"
+} from "@/features/ui/json-viewer"
 
 interface CollapsibleJsonViewerProps {
   value: string

@@ -6,7 +6,7 @@ import { useState } from "react"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { PasswordOptions, generatePassword } from "@/lib/utils/security-utils"
+import { PasswordOptions, generatePassword } from "@/features/security/password"
 
 const PasswordGeneratorTool = () => {
   const [length, setLength] = useState(16)

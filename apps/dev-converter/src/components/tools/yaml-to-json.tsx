@@ -3,7 +3,7 @@
 import { CollapsibleJsonViewer } from "@/components/custom/collapsible-json-viewer"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { yamlToJson } from "@/lib/utils/json-utils"
+import { yamlToJson } from "@/features/data-transform/json"
 
 const YamlToJsonTool = () => {
   const {

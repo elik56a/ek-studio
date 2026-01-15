@@ -1,0 +1,10 @@
+export type TextCaseType =
+  | "camelCase"
+  | "PascalCase"
+  | "snake_case"
+  | "kebab-case"
+  | "CONSTANT_CASE"
+  | "Title Case"
+  | "Sentence case"
+  | "lowercase"
+  | "UPPERCASE"

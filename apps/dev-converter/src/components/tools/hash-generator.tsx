@@ -5,7 +5,7 @@ import { useState } from "react"
 import { Select, SelectOption } from "@/components/common/select"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { HashAlgorithm, generateHash } from "@/lib/utils/security-utils"
+import { HashAlgorithm, generateHash } from "@/features/security/hash"
 
 const HashGeneratorTool = () => {
   const [algorithm, setAlgorithm] = useState<HashAlgorithm>("SHA-256")

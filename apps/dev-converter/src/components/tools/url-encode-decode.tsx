@@ -3,7 +3,7 @@
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useAutoDetect } from "@/hooks/use-auto-detect"
 import { useTool } from "@/hooks/use-tool"
-import { detectUrlEncoded, urlEncodeDecode } from "@/lib/utils/encoding-utils"
+import { detectUrlEncoded, urlEncodeDecode } from "@/features/encoding/url"
 
 const UrlEncodeDecodeTool = () => {
   const {

@@ -9,7 +9,7 @@ import {
   NodeState,
   formatValueForDisplay,
   getValueTypeClasses,
-} from "@/lib/utils/json-viewer-utils"
+} from "@/features/ui/json-viewer"
 
 interface JsonValueRendererProps {
   value: JsonValue

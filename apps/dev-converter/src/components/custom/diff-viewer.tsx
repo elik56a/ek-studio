@@ -24,7 +24,7 @@ import {
   scrollToPositionSplit,
   scrollToPositionUnified,
   syncSplitScroll,
-} from "@/lib/utils/diff-utils"
+} from "@/features/ui/diff"
 
 interface DiffChange {
   value: string

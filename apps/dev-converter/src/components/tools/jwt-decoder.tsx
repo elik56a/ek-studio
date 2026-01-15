@@ -2,7 +2,7 @@
 
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { useTool } from "@/hooks/use-tool"
-import { decodeJWT } from "@/lib/utils/security-utils"
+import { decodeJWT } from "@/features/security/jwt"
 
 const JWTDecoderTool = () => {
   const {
@@ -16,7 +16,6 @@ const JWTDecoderTool = () => {
     toolSlug,
     tool,
     relatedTools,
-    convert,
     handleExampleClick,
   } = useTool({
     convertFn: decodeJWT,
