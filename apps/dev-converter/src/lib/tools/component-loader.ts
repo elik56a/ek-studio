@@ -90,8 +90,8 @@ export const toolComponents: Record<string, ComponentType<any>> = {
   ),
 }
 
-export function getToolComponent(
+export const getToolComponent = (
   toolId: string
-): ComponentType<any> | undefined {
+): ComponentType<any> | undefined => {
   return toolComponents[toolId]
 }

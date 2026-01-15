@@ -1,6 +1,7 @@
 "use client"
 
 import { Award, Clock, Lock, Users } from "lucide-react"
+
 import { useEffect, useRef, useState } from "react"
 
 export function StatsSection() {
@@ -79,8 +80,12 @@ function StatCard({
       <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 mb-4">
         <Icon className="w-7 h-7 text-primary" />
       </div>
-      <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">{value}</div>
-      <div className="text-base sm:text-lg font-semibold text-foreground mb-1">{label}</div>
+      <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">
+        {value}
+      </div>
+      <div className="text-base sm:text-lg font-semibold text-foreground mb-1">
+        {label}
+      </div>
       <div className="text-sm text-muted-foreground">{description}</div>
     </div>
   )

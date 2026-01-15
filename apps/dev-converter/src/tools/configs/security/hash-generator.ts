@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * Hash Generator Tool Configuration
- * 
+ *
  * Generates cryptographic hashes (MD5, SHA-256, SHA-384, SHA-512) from text input.
  * Used for checksums, integrity verification, fingerprinting, and detecting content changes.
  * Hashing is one-way and deterministic - same input always produces the same hash.
@@ -42,7 +42,7 @@ export const hashGeneratorTool: Tool = {
       "Hash Generator creates deterministic cryptographic hashes from any text input using MD5, SHA-256, SHA-384, and SHA-512. Hashes are fixed-length fingerprints used to verify integrity, detect changes, compare values, and generate checksums. Unlike encryption, hashing is one-way: you can't reconstruct the original input from the hash. Use this tool to compare expected vs actual checksums, create stable fingerprints for strings, or quickly validate that content hasn't changed during copy/paste, builds, or deployments.",
     howToUse: [
       "Paste the text you want to hash",
-      "Click \"Generate Hashes\"",
+      'Click "Generate Hashes"',
       "Copy MD5, SHA-256, SHA-384, or SHA-512 output",
       "Compare hashes to verify whether two inputs match exactly",
       "Use the checksum in scripts, CI checks, or documentation",
@@ -66,17 +66,20 @@ export const hashGeneratorTool: Tool = {
     {
       title: "Hash a short string",
       input: "hello-world",
-      description: "Generate multiple hashes for the same input to compare algorithms",
+      description:
+        "Generate multiple hashes for the same input to compare algorithms",
     },
     {
       title: "Hash JSON text for integrity checks",
       input: '{"userId":123,"action":"login","timestamp":1704537600}',
-      description: "Create a deterministic fingerprint for a JSON string (exact match required)",
+      description:
+        "Create a deterministic fingerprint for a JSON string (exact match required)",
     },
     {
       title: "Detect hidden whitespace differences",
       input: "value\n",
-      description: "Hashing helps reveal differences caused by newlines or spaces",
+      description:
+        "Hashing helps reveal differences caused by newlines or spaces",
     },
   ],
   faq: [
@@ -121,4 +124,4 @@ export const hashGeneratorTool: Tool = {
     outputLabel: "Hash Output",
     convertLabel: "Generate Hashes",
   },
-};
+}

@@ -1,8 +1,11 @@
 import { ConversionResult } from "@/shared/types"
-import { MimeTypeInfo } from './types'
-import { mimeDatabase } from './database'
 
-export const lookupMimeType = (input: string): ConversionResult<MimeTypeInfo[]> => {
+import { mimeDatabase } from "./database"
+import { MimeTypeInfo } from "./types"
+
+export const lookupMimeType = (
+  input: string
+): ConversionResult<MimeTypeInfo[]> => {
   const trimmed = input.trim()
 
   if (!trimmed) {

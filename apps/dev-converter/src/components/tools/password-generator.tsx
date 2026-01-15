@@ -5,8 +5,8 @@ import { Checkbox, Label, Slider } from "@ek-studio/ui"
 import { useState } from "react"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useTool } from "@/hooks/use-tool"
 import { PasswordOptions, generatePassword } from "@/features/security/password"
+import { useTool } from "@/hooks/use-tool"
 
 const PasswordGeneratorTool = () => {
   const [length, setLength] = useState(16)

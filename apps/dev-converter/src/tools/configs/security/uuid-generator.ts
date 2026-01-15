@@ -1,5 +1,4 @@
-import { Tool } from "@/lib/tools/types";
-
+import { Tool } from "@/lib/tools/types"
 
 export const uuidGeneratorTool: Tool = {
   id: "uuid-generator",
@@ -33,7 +32,7 @@ export const uuidGeneratorTool: Tool = {
     description:
       "UUID v4 Generator creates random RFC 4122 UUIDs (also called GUIDs) for unique identification across systems. UUID v4 uses random values, making collisions extremely unlikely and avoiding database coordination. Use UUIDs for database primary keys, public IDs in URLs, request/correlation IDs for logs, event identifiers, and test fixtures. This tool generates valid UUID v4 strings quickly and supports batch generation for seeding and automation.",
     howToUse: [
-      "Click \"Generate UUIDs\" to create one or more UUID v4 values",
+      'Click "Generate UUIDs" to create one or more UUID v4 values',
       "Copy the UUID output",
       "Use UUIDs in databases, APIs, or message/event systems",
       "Generate multiple values for fixtures, seeds, or bulk inserts",
@@ -64,7 +63,8 @@ export const uuidGeneratorTool: Tool = {
       title: "Generate multiple UUIDs for seeding",
       input:
         "550e8400-e29b-41d4-a716-446655440000\n6ba7b810-9dad-11d1-80b4-00c04fd430c8\n6ba7b811-9dad-11d1-80b4-00c04fd430c8",
-      description: "Generate several UUIDs at once for fixtures or bulk inserts",
+      description:
+        "Generate several UUIDs at once for fixtures or bulk inserts",
     },
   ],
   faq: [
@@ -109,4 +109,4 @@ export const uuidGeneratorTool: Tool = {
     outputLabel: "Generated UUIDs",
     convertLabel: "Generate UUIDs",
   },
-};
+}

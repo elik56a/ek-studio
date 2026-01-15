@@ -148,7 +148,8 @@ export const categoryContent: Record<string, CategoryContent> = {
           "Use our Unix timestamp converter to transform epoch time into human-readable dates. It supports both seconds (10-digit) and milliseconds (13-digit) timestamps and displays results in UTC and local timezones.",
       },
       {
-        question: "What's the difference between seconds and milliseconds timestamps?",
+        question:
+          "What's the difference between seconds and milliseconds timestamps?",
         answer:
           "Unix timestamps can be in seconds (10 digits, e.g., 1704067200) or milliseconds (13 digits, e.g., 1704067200000). JavaScript uses milliseconds, while many backend systems use seconds. Our converter automatically detects the format.",
       },

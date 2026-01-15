@@ -6,13 +6,13 @@ import { useCallback, useState } from "react"
 
 import { ButtonGroup } from "@/components/common/button-group"
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useAutoDetect } from "@/hooks/use-auto-detect"
-import { useTool } from "@/hooks/use-tool"
 import {
   type CharacterEncoding,
   base64Convert,
   detectBase64,
 } from "@/features/encoding/base64"
+import { useAutoDetect } from "@/hooks/use-auto-detect"
+import { useTool } from "@/hooks/use-tool"
 
 const Base64EncodeDecodeTool = () => {
   const [useUrlSafe, setUseUrlSafe] = useState(false)

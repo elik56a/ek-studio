@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * Base64 Encoder/Decoder Tool Configuration
- * 
+ *
  * Provides encoding and decoding functionality for Base64 and Base64URL formats.
  * Supports UTF-8 and Binary (Latin1) character encodings with optional padding control.
  * Commonly used for JWT token inspection, API payloads, and HTTP Basic Auth.
@@ -159,4 +159,4 @@ export const base64EncodeDecodeTool: Tool = {
       },
     },
   },
-};
+}

@@ -79,7 +79,7 @@ export function generateToolMetadata(tool: Tool): Metadata {
     alternates: {
       canonical: url,
       languages: {
-        "en": url,
+        en: url,
         "x-default": url,
       },
     },

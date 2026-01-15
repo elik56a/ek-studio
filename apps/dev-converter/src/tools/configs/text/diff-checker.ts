@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * Text Diff Checker Tool Configuration
- * 
+ *
  * Compares two texts side-by-side and highlights differences.
  * Shows additions, deletions, and modifications line-by-line.
  * Essential for code reviews, config changes, document comparisons, and debugging.
@@ -41,7 +41,7 @@ export const diffCheckerTool: Tool = {
     howToUse: [
       "Paste the original text into the left editor",
       "Paste the updated text into the right editor",
-      "Click \"Compare Texts\" to generate differences",
+      'Click "Compare Texts" to generate differences',
       "Review additions/removals/changes in the diff output",
       "Copy results if you need to share or document changes",
     ],
@@ -110,8 +110,7 @@ export const diffCheckerTool: Tool = {
     },
     {
       question: "Does the diff checker store my text?",
-      answer:
-        "No. It runs locally in your browser—your input isn't uploaded.",
+      answer: "No. It runs locally in your browser—your input isn't uploaded.",
     },
   ],
   relatedTools: [
@@ -135,4 +134,4 @@ export const diffCheckerTool: Tool = {
     showAllLink: true,
     preserveInput: false,
   },
-};
+}

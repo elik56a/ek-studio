@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * YAML to JSON Converter Tool Configuration
- * 
+ *
  * Converts YAML configuration files into structured JSON data.
  * Essential for APIs, automation scripts, and JavaScript applications.
  * Validates YAML syntax and produces clean JSON output.
@@ -11,8 +11,7 @@ export const yamlToJsonTool: Tool = {
   id: "yaml-to-json",
   slug: "yaml-to-json",
   name: "YAML to JSON Converter",
-  description:
-    "Convert YAML configuration files into structured JSON data",
+  description: "Convert YAML configuration files into structured JSON data",
   category: "json-data",
   type: "converter",
   keywords: ["yaml to json", "convert yaml to json"],
@@ -59,4 +58,4 @@ export const yamlToJsonTool: Tool = {
     outputLabel: "JSON Output",
     convertLabel: "Convert to JSON",
   },
-};
+}

@@ -25,7 +25,7 @@ import {
 import { useEffect, useState } from "react"
 
 import { useToast } from "@/components/core/toast-provider"
-import { createShareUrl } from "@/lib/share"
+import { createShareUrl } from "@/lib/tools/share"
 
 export interface ToolActionsProps {
   onCopy: () => void

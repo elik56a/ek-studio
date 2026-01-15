@@ -62,15 +62,22 @@ export default function TestimonialsSection() {
                   <Quote className="w-8 h-8 text-primary/30 flex-shrink-0" />
                   <div className="flex-1">
                     <div className="flex items-center gap-1 mb-3">
-                      {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                      ))}
+                      {Array.from({ length: testimonial.rating }).map(
+                        (_, i) => (
+                          <Star
+                            key={i}
+                            className="w-4 h-4 fill-primary text-primary"
+                          />
+                        )
+                      )}
                     </div>
                     <p className="text-sm sm:text-base text-foreground/90 leading-relaxed mb-4">
                       "{testimonial.content}"
                     </p>
                     <div>
-                      <div className="font-semibold text-foreground">{testimonial.name}</div>
+                      <div className="font-semibold text-foreground">
+                        {testimonial.name}
+                      </div>
                       <div className="text-sm text-muted-foreground">
                         {testimonial.role} at {testimonial.company}
                       </div>

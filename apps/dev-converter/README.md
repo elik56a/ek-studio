@@ -4,22 +4,60 @@ A comprehensive collection of developer tools and converters built with Next.js.
 
 ## Project Structure
 
-This is part of the EK Studio monorepo:
+```
+dev-converter/
+├── src/
+│   ├── app/                    # Next.js App Router pages
+│   ├── components/             # React components
+│   │   ├── tools/             # Tool-specific components
+│   │   ├── common/            # Shared UI components
+│   │   └── layout/            # Layout components
+│   ├── features/              # Feature modules (business logic)
+│   │   ├── encoding/          # Base64, URL, HTML, JSON encoding
+│   │   ├── security/          # JWT, Hash, Password, UUID
+│   │   ├── text/              # Case converter, Diff, Markdown, Regex
+│   │   ├── time/              # Timestamp converter
+│   │   ├── data-transform/    # JSON, CSV, YAML conversions
+│   │   ├── data/              # MIME type lookups
+│   │   └── ui/                # UI utilities (color, diff, json-viewer)
+│   ├── tools/                 # Tool configurations
+│   │   └── configs/           # Tool metadata by category
+│   ├── shared/                # Shared types and utilities
+│   ├── hooks/                 # Custom React hooks
+│   ├── lib/                   # Core utilities
+│   └── config/                # App configuration
+└── package.json
+```
+
+## Architecture
+
+### Features Directory
+
+Business logic is organized by domain in `src/features/`. Each feature is self-contained with its own types, functions, and exports.
+
+**Structure:**
+
+- Each feature has focused modules (e.g., `encode.ts`, `decode.ts`, `validate.ts`)
+- All functions use `export const =>` style
+- No comments in code (documentation in tool configs)
+- Barrel exports via `index.ts` files
+
+**Example:**
 
 ```
-ek-studio/
-├── apps/
-│   └── dev-converter/          # This Next.js application
-│       ├── src/
-│       │   ├── app/           # Next.js App Router
-│       │   ├── components/    # React components
-│       │   ├── hooks/         # Custom React hooks
-│       │   └── lib/           # Utility functions
-│       └── package.json
-├── packages/
-│   └── ui/                    # Shared UI components (@ek-studio/ui)
-└── pnpm-workspace.yaml        # Monorepo configuration
+features/security/jwt/
+├── decode.ts       # JWT decoding logic
+├── types.ts        # TypeScript interfaces
+└── index.ts        # Public exports
 ```
+
+### Tools Directory
+
+Tool configurations define metadata, UI text, examples, and FAQs. Located in `src/tools/configs/` organized by category.
+
+### Components Directory
+
+React components for UI. Tool components in `src/components/tools/` use the `useTool` hook and `ToolLayout` for consistent behavior.
 
 ## Getting Started
 
@@ -36,11 +74,9 @@ Or from this directory:
 pnpm dev
 ```
 
-Open [http://localhost:4000](http://localhost:4000) with your browser to see the result.
+Open [http://localhost:4000](http://localhost:4000) to view the app.
 
 ## Available Scripts
-
-From this directory:
 
 - `pnpm dev` - Start development server
 - `pnpm build` - Build for production
@@ -48,15 +84,6 @@ From this directory:
 - `pnpm lint` - Run ESLint
 - `pnpm format` - Format code with Prettier
 - `pnpm format:check` - Check code formatting
-
-## Shared UI Components
-
-This app uses the shared UI component library `@ek-studio/ui` which includes:
-
-- All Radix UI primitives (Button, Card, Input, etc.)
-- Consistent styling with Tailwind CSS
-- Utility functions (cn for className merging)
-- Reusable across all EK Studio applications
 
 ## Technology Stack
 
@@ -66,14 +93,14 @@ This app uses the shared UI component library `@ek-studio/ui` which includes:
 - **UI Components**: @ek-studio/ui (Radix UI primitives)
 - **State Management**: Zustand
 - **Package Manager**: pnpm (with workspaces)
-- **Code Formatting**: Prettier
-- **Linting**: ESLint
 
-## Learn More
+## Code Style
 
-To learn more about Next.js, take a look at the following resources:
+- Use `export const =>` for all functions
+- No comments in feature code
+- TypeScript strict mode enabled
+- Prettier for formatting
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Adding New Tools
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See [CREATING_TOOLS.md](./CREATING_TOOLS.md) for a step-by-step guide.

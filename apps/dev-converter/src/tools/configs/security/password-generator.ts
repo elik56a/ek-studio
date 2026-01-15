@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * Password Generator Tool Configuration
- * 
+ *
  * Generates strong random passwords using cryptographically secure randomness.
  * Supports customizable length and character sets (uppercase, lowercase, numbers, symbols).
  * Essential for creating unique, high-entropy passwords for secure account creation.
@@ -42,7 +42,7 @@ export const passwordGeneratorTool: Tool = {
     howToUse: [
       "Choose a length (16+ characters is a strong default)",
       "Enable character sets: uppercase, lowercase, numbers, symbols",
-      "Click \"Generate Password\"",
+      'Click "Generate Password"',
       "Copy the password and save it in a password manager",
       "Use it for new accounts or to replace weak/reused passwords",
     ],
@@ -120,4 +120,4 @@ export const passwordGeneratorTool: Tool = {
     outputLabel: "Generated Password",
     convertLabel: "Generate Password",
   },
-};
+}

@@ -18,26 +18,31 @@ function extractTextFromChildren(children: ReactNode): string {
   if (typeof children === "string") {
     return children
   }
-  
+
   if (typeof children === "number") {
     return String(children)
   }
-  
+
   if (Array.isArray(children)) {
     return children.map(extractTextFromChildren).join(" ").trim()
   }
-  
+
   if (children && typeof children === "object" && "props" in children) {
     const element = children as { props?: { children?: ReactNode } }
     if (element.props?.children) {
       return extractTextFromChildren(element.props.children)
     }
   }
-  
+
   return ""
 }
 
-export function SmoothLink({ href, onClick, children, ...props }: SmoothLinkProps) {
+export function SmoothLink({
+  href,
+  onClick,
+  children,
+  ...props
+}: SmoothLinkProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
@@ -70,15 +75,11 @@ export function SmoothLink({ href, onClick, children, ...props }: SmoothLinkProp
   }
 
   // Auto-generate aria-label if not provided
-  const ariaLabel = props["aria-label"] || extractTextFromChildren(children) || undefined
+  const ariaLabel =
+    props["aria-label"] || extractTextFromChildren(children) || undefined
 
   return (
-    <Link 
-      href={href} 
-      onClick={handleClick} 
-      aria-label={ariaLabel}
-      {...props}
-    >
+    <Link href={href} onClick={handleClick} aria-label={ariaLabel} {...props}>
       {children}
     </Link>
   )

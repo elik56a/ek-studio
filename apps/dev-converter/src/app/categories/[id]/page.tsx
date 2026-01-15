@@ -190,8 +190,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-7">
                 {toolsWithMeta.map((tool, index) => (
-                  <SmoothLink 
-                    key={tool.id} 
+                  <SmoothLink
+                    key={tool.id}
                     href={`/${tool.slug}`}
                     aria-label={`Go to ${tool.name}`}
                   >
@@ -286,8 +286,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               {popularTools.map(tool => {
                 const IconComponent = tool.icon
                 return (
-                  <SmoothLink 
-                    key={tool.slug} 
+                  <SmoothLink
+                    key={tool.slug}
                     href={`/${tool.slug}`}
                     aria-label={`Go to ${tool.name}`}
                   >

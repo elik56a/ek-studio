@@ -1,4 +1,6 @@
-export const parseRegexString = (regexString: string): {
+export const parseRegexString = (
+  regexString: string
+): {
   pattern: string
   flags: string
   isValid: boolean

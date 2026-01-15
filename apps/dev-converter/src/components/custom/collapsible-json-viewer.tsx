@@ -7,12 +7,12 @@ import { useCallback, useMemo, useState } from "react"
 
 import { ButtonGroup } from "@/components/common/button-group"
 import { JsonValueRenderer } from "@/components/custom/json-value-renderer"
-import { useOutputAnimation } from "@/hooks/use-output-animation"
 import {
   NodeState,
   createCollapsedState,
   parseJsonOrYaml,
 } from "@/features/ui/json-viewer"
+import { useOutputAnimation } from "@/hooks/use-output-animation"
 
 interface CollapsibleJsonViewerProps {
   value: string

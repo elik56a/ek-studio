@@ -48,7 +48,10 @@ export function ToolInfo({ info, toolName, className }: ToolInfoProps) {
       {/* How to Use & Common Use Cases - Side by side on larger screens */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* How to Use */}
-        <Card id="how-to-use" className="glass border-0 shadow-glow p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300 scroll-mt-20">
+        <Card
+          id="how-to-use"
+          className="glass border-0 shadow-glow p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300 scroll-mt-20"
+        >
           <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center gap-3">
               <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">

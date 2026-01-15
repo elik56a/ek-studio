@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * HTML Escape/Unescape Tool Configuration
- * 
+ *
  * Converts HTML characters to entities and vice versa.
  * Essential for displaying code snippets, preventing XSS, and handling user-generated content.
  * Escapes characters like <, >, &, quotes to their entity equivalents (&lt;, &gt;, &amp;, etc.).
@@ -128,4 +128,4 @@ export const htmlEscapeUnescapeTool: Tool = {
       },
     },
   },
-};
+}

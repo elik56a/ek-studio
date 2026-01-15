@@ -14,29 +14,46 @@ export default function PopularToolsSection() {
           Most Popular Developer Tools
         </h2>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-          DevConverter provides essential <strong>free online developer tools</strong> including a{" "}
-          <SmoothLink href="/json-formatter" className="text-primary hover:underline font-semibold">
+          DevConverter provides essential{" "}
+          <strong>free online developer tools</strong> including a{" "}
+          <SmoothLink
+            href="/json-formatter"
+            className="text-primary hover:underline font-semibold"
+          >
             JSON formatter and validator
           </SmoothLink>
           ,{" "}
-          <SmoothLink href="/base64-encode-decode" className="text-primary hover:underline font-semibold">
+          <SmoothLink
+            href="/base64-encode-decode"
+            className="text-primary hover:underline font-semibold"
+          >
             Base64 encoder/decoder
           </SmoothLink>
           ,{" "}
-          <SmoothLink href="/jwt-decoder" className="text-primary hover:underline font-semibold">
+          <SmoothLink
+            href="/jwt-decoder"
+            className="text-primary hover:underline font-semibold"
+          >
             JWT decoder
           </SmoothLink>
           , and{" "}
-          <SmoothLink href="/hash-generator" className="text-primary hover:underline font-semibold">
+          <SmoothLink
+            href="/hash-generator"
+            className="text-primary hover:underline font-semibold"
+          >
             hash generator
           </SmoothLink>{" "}
-          (MD5, SHA-1, SHA-256, SHA-512).
-          All tools process data locally in your browser for maximum privacy and security.
-          Need to work with timestamps? Try our{" "}
-          <SmoothLink href="/unix-timestamp-converter" className="text-primary hover:underline font-semibold">
+          (MD5, SHA-1, SHA-256, SHA-512). All tools process data locally in your
+          browser for maximum privacy and security. Need to work with
+          timestamps? Try our{" "}
+          <SmoothLink
+            href="/unix-timestamp-converter"
+            className="text-primary hover:underline font-semibold"
+          >
             Unix timestamp converter
           </SmoothLink>{" "}
-          for epoch time conversions. Perfect for API development, debugging, and data processing tasks.
+          for epoch time conversions. Perfect for API development, debugging,
+          and data processing tasks.
         </p>
       </div>
 
@@ -79,8 +96,10 @@ export default function PopularToolsSection() {
 
 function getToolDescription(slug: string): string {
   const descriptions: Record<string, string> = {
-    "json-formatter": "Format, validate, and beautify JSON data with syntax highlighting",
-    "base64-encode-decode": "Encode and decode Base64 strings for data transmission",
+    "json-formatter":
+      "Format, validate, and beautify JSON data with syntax highlighting",
+    "base64-encode-decode":
+      "Encode and decode Base64 strings for data transmission",
     "jwt-decoder": "Decode and inspect JWT tokens without verification",
     "hash-generator": "Generate MD5, SHA-1, SHA-256, and SHA-512 hashes",
   }

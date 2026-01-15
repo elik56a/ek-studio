@@ -1,14 +1,15 @@
-import { ConversionResult } from '@/shared/types'
-import { detectHtmlEscaped } from './detect'
-import { validateHtmlEscaped } from './validate'
-import { unescapeHtml } from './unescape'
-import { escapeHtml } from './escape'
+import { ConversionResult } from "@/shared/types"
+
+import { detectHtmlEscaped } from "./detect"
+import { escapeHtml } from "./escape"
+import { unescapeHtml } from "./unescape"
+import { validateHtmlEscaped } from "./validate"
 
 export const htmlEscapeUnescape = (input: string): ConversionResult<string> => {
   if (!input.trim()) {
     return {
       success: false,
-      error: 'Input is empty',
+      error: "Input is empty",
     }
   }
 
@@ -20,7 +21,7 @@ export const htmlEscapeUnescape = (input: string): ConversionResult<string> => {
       if (!validation.isValid) {
         return {
           success: false,
-          error: validation.error || 'Invalid HTML entities',
+          error: validation.error || "Invalid HTML entities",
           details: validation.suggestion,
         }
       }
@@ -32,8 +33,8 @@ export const htmlEscapeUnescape = (input: string): ConversionResult<string> => {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Conversion failed',
-      details: 'An unexpected error occurred during conversion.',
+      error: error instanceof Error ? error.message : "Conversion failed",
+      details: "An unexpected error occurred during conversion.",
     }
   }
 }

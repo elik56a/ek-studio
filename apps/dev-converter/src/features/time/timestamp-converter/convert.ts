@@ -1,4 +1,5 @@
 import { ConversionResult } from "@/shared/types"
+
 import { TimestampConversionResult } from "./types"
 
 const calculateRelativeTime = (date: Date): string => {

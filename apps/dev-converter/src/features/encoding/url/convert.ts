@@ -1,14 +1,15 @@
-import { ConversionResult } from '@/shared/types'
-import { detectUrlEncoded } from './detect'
-import { validateUrlEncoded } from './validate'
-import { decodeUrl } from './decode'
-import { encodeUrl } from './encode'
+import { ConversionResult } from "@/shared/types"
+
+import { decodeUrl } from "./decode"
+import { detectUrlEncoded } from "./detect"
+import { encodeUrl } from "./encode"
+import { validateUrlEncoded } from "./validate"
 
 export const urlEncodeDecode = (input: string): ConversionResult<string> => {
   if (!input.trim()) {
     return {
       success: false,
-      error: 'Input is empty',
+      error: "Input is empty",
     }
   }
 
@@ -20,7 +21,7 @@ export const urlEncodeDecode = (input: string): ConversionResult<string> => {
       if (!validation.isValid) {
         return {
           success: false,
-          error: validation.error || 'Invalid URL encoding',
+          error: validation.error || "Invalid URL encoding",
           details: validation.suggestion,
         }
       }
@@ -32,8 +33,8 @@ export const urlEncodeDecode = (input: string): ConversionResult<string> => {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Conversion failed',
-      details: 'An unexpected error occurred during conversion.',
+      error: error instanceof Error ? error.message : "Conversion failed",
+      details: "An unexpected error occurred during conversion.",
     }
   }
 }

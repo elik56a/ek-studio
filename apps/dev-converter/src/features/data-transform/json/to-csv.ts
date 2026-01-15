@@ -1,11 +1,12 @@
-import Papa from 'papaparse'
-import { ConversionResult } from '@/shared/types'
+import Papa from "papaparse"
+
+import { ConversionResult } from "@/shared/types"
 
 export const jsonToCsv = (jsonInput: string): ConversionResult<string> => {
   if (!jsonInput.trim()) {
     return {
       success: false,
-      error: 'Input is empty',
+      error: "Input is empty",
     }
   }
 
@@ -15,19 +16,19 @@ export const jsonToCsv = (jsonInput: string): ConversionResult<string> => {
     let dataArray: any[]
     if (Array.isArray(jsonData)) {
       dataArray = jsonData
-    } else if (typeof jsonData === 'object' && jsonData !== null) {
+    } else if (typeof jsonData === "object" && jsonData !== null) {
       dataArray = [jsonData]
     } else {
       return {
         success: false,
-        error: 'JSON must be an array or object',
+        error: "JSON must be an array or object",
       }
     }
 
     if (dataArray.length === 0) {
       return {
         success: false,
-        error: 'JSON array is empty',
+        error: "JSON array is empty",
       }
     }
 
@@ -49,10 +50,10 @@ export const jsonToCsv = (jsonInput: string): ConversionResult<string> => {
       success: false,
       error:
         error instanceof Error
-          ? error.message.includes('JSON')
+          ? error.message.includes("JSON")
             ? error.message
             : `Invalid JSON: ${error.message}`
-          : 'Failed to convert JSON to CSV',
+          : "Failed to convert JSON to CSV",
     }
   }
 }

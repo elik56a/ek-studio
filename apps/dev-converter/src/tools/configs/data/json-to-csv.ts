@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * JSON to CSV Converter Tool Configuration
- * 
+ *
  * Converts JSON arrays into CSV format for spreadsheets and reporting.
  * Automatically generates headers from JSON keys.
  * Essential for Excel, Google Sheets, and data analysis workflows.
@@ -11,8 +11,7 @@ export const jsonToCsvTool: Tool = {
   id: "json-to-csv",
   slug: "json-to-csv",
   name: "JSON to CSV Converter",
-  description:
-    "Convert JSON arrays into CSV for Excel and Google Sheets",
+  description: "Convert JSON arrays into CSV for Excel and Google Sheets",
   category: "json-data",
   type: "converter",
   keywords: ["json to csv", "convert json to csv"],
@@ -43,11 +42,7 @@ export const jsonToCsvTool: Tool = {
   },
   examples: [],
   faq: [],
-  relatedTools: [
-    "csv-to-json",
-    "json-formatter",
-    "json-to-yaml",
-  ],
+  relatedTools: ["csv-to-json", "json-formatter", "json-to-yaml"],
   ui: {
     inputPlaceholder: "Paste JSON array...",
     outputPlaceholder: "CSV output...",
@@ -55,4 +50,4 @@ export const jsonToCsvTool: Tool = {
     outputLabel: "CSV Output",
     convertLabel: "Convert to CSV",
   },
-};
+}

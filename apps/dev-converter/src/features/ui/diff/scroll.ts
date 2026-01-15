@@ -32,7 +32,10 @@ export const scrollToPositionUnified = (
   }
 }
 
-export const scrollToPositionSplit = (index: number, totalLines: number): void => {
+export const scrollToPositionSplit = (
+  index: number,
+  totalLines: number
+): void => {
   const leftContent = document.querySelector(
     "#diff-content-split > div:first-child"
   )

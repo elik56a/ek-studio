@@ -1,12 +1,9 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
+import { detectHtmlEscaped, htmlEscapeUnescape } from "@/features/encoding/html"
 import { useAutoDetect } from "@/hooks/use-auto-detect"
 import { useTool } from "@/hooks/use-tool"
-import {
-  detectHtmlEscaped,
-  htmlEscapeUnescape,
-} from "@/features/encoding/html"
 
 const HtmlEscapeUnescapeTool = () => {
   const {

@@ -1,4 +1,5 @@
 import { ConversionResult } from "@/shared/types"
+
 import { TextCaseType } from "./types"
 
 const splitIntoWords = (text: string): string[] => {

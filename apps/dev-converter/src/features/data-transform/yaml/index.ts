@@ -1,1 +1,1 @@
-export * from '../json/from-yaml'
+export * from "../json/from-yaml"

@@ -1,8 +1,9 @@
 import { ConversionResult } from "@/shared/types"
-import { CharacterEncoding } from "./types"
+
 import { detectBase64, detectBase64Url } from "./detect"
+import { base64ToBase64Url, encodeUtf8ToBase64 } from "./encode"
+import { CharacterEncoding } from "./types"
 import { validateBase64 } from "./validate"
-import { encodeUtf8ToBase64, base64ToBase64Url } from "./encode"
 
 export const decodeBase64ToUtf8 = (base64: string): string => {
   const binaryString = atob(base64)

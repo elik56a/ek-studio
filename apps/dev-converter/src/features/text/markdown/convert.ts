@@ -1,8 +1,10 @@
 import { marked } from "marked"
 import TurndownService from "turndown"
+
 import { ConversionResult } from "@/shared/types"
-import { ConversionMode } from "./types"
+
 import { formatHtml } from "./format-html"
+import { ConversionMode } from "./types"
 
 export const convertMarkdownHtml = (
   text: string,

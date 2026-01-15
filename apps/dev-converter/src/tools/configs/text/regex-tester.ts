@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * Regex Tester Tool Configuration
- * 
+ *
  * Tests regular expressions with live matching and capture group extraction.
  * Supports common regex flags (g, i, m) and highlights matches in real-time.
  * Essential for validation patterns, parsing, and debugging regex edge cases.
@@ -41,7 +41,7 @@ export const regexTesterTool: Tool = {
     howToUse: [
       "Enter your regex pattern (and flags, if applicable)",
       "Paste the text you want to test against",
-      "Run \"Test Regex\" to see matches and groups",
+      'Run "Test Regex" to see matches and groups',
       "Adjust the pattern until matching is correct",
       "Copy the working pattern into your codebase or editor",
     ],
@@ -128,4 +128,4 @@ export const regexTesterTool: Tool = {
     outputLabel: "Regex Results",
     convertLabel: "Test Regex",
   },
-};
+}

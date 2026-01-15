@@ -5,8 +5,8 @@ import { HeroSection } from "@/components/home/hero-section"
 import { StatsSection } from "@/components/home/stats-section"
 import { TrustSection } from "@/components/home/trust-section"
 import { siteConfig } from "@/config/site"
-import { categories } from "@/lib/tools/categories"
 import { orgStructuredData } from "@/lib/seo/metadata"
+import { categories } from "@/lib/tools/categories"
 
 // Lazy load below-the-fold sections
 const PopularToolsSection = dynamic(
@@ -34,15 +34,13 @@ const TestimonialsSection = dynamic(
   { ssr: true }
 )
 
-const FAQSection = dynamic(
-  () => import("@/components/home/faq-section"),
-  { ssr: true }
-)
+const FAQSection = dynamic(() => import("@/components/home/faq-section"), {
+  ssr: true,
+})
 
-const CTASection = dynamic(
-  () => import("@/components/home/cta-section"),
-  { ssr: true }
-)
+const CTASection = dynamic(() => import("@/components/home/cta-section"), {
+  ssr: true,
+})
 
 export const metadata: Metadata = {
   title: "Free Developer Tools - DevConverter | JSON, Base64, JWT & More",
@@ -186,8 +184,14 @@ export default function Home() {
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-float" />
-          <div className="absolute top-40 right-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
-          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: "4s" }} />
+          <div
+            className="absolute top-40 right-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-float"
+            style={{ animationDelay: "2s" }}
+          />
+          <div
+            className="absolute bottom-20 left-1/3 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-float"
+            style={{ animationDelay: "4s" }}
+          />
         </div>
 
         <div className="relative w-full space-y-24 pb-24">

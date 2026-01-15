@@ -154,10 +154,7 @@ export default function CategoriesPage() {
 
       {/* BreadcrumbList Schema */}
       <BreadcrumbSchema
-        breadcrumbs={[
-          { name: "Home", url: "/" },
-          { name: "Categories" },
-        ]}
+        breadcrumbs={[{ name: "Home", url: "/" }, { name: "Categories" }]}
       />
 
       <div className="gradient-bg min-h-screen">
@@ -320,8 +317,8 @@ export default function CategoriesPage() {
                     Easy Discovery
                   </CardTitle>
                   <CardDescription className="text-sm pt-2">
-                    Find related tools quickly without searching. All tools in
-                    a category solve similar problems.
+                    Find related tools quickly without searching. All tools in a
+                    category solve similar problems.
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -335,8 +332,8 @@ export default function CategoriesPage() {
                     Faster Workflow
                   </CardTitle>
                   <CardDescription className="text-sm pt-2">
-                    Switch between related tools seamlessly. Perfect for
-                    complex tasks requiring multiple utilities.
+                    Switch between related tools seamlessly. Perfect for complex
+                    tasks requiring multiple utilities.
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -450,8 +447,8 @@ export default function CategoriesPage() {
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-sm leading-relaxed">
-                    JWT decoding, hash generation (MD5, SHA), UUID creation,
-                    and other security-focused utilities for developers.
+                    JWT decoding, hash generation (MD5, SHA), UUID creation, and
+                    other security-focused utilities for developers.
                   </CardDescription>
                   <div className="pt-4">
                     <SmoothLink href="/categories/security">
@@ -489,9 +486,7 @@ export default function CategoriesPage() {
           {/* Related Links Section */}
           <section className="space-y-6 sm:space-y-8">
             <div className="text-center space-y-2 max-w-3xl mx-auto">
-              <h2 className="text-2xl sm:text-3xl font-bold">
-                Explore More
-              </h2>
+              <h2 className="text-2xl sm:text-3xl font-bold">Explore More</h2>
               <p className="text-sm sm:text-base text-muted-foreground">
                 Discover additional resources and pages to enhance your
                 development workflow.

@@ -1,9 +1,9 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
+import { detectUrlEncoded, urlEncodeDecode } from "@/features/encoding/url"
 import { useAutoDetect } from "@/hooks/use-auto-detect"
 import { useTool } from "@/hooks/use-tool"
-import { detectUrlEncoded, urlEncodeDecode } from "@/features/encoding/url"
 
 const UrlEncodeDecodeTool = () => {
   const {

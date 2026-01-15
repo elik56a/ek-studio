@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * Markdown ↔ HTML Converter Tool Configuration
- * 
+ *
  * Converts between Markdown and HTML formats bidirectionally.
  * Supports headings, lists, links, code blocks, images, and tables.
  * Essential for documentation, README files, CMS migration, and content workflows.
@@ -127,4 +127,4 @@ export const markdownHtmlConverterTool: Tool = {
     outputLabel: "Output",
     convertLabel: "Convert",
   },
-};
+}

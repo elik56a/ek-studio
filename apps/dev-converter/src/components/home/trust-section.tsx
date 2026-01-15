@@ -11,7 +11,8 @@ export function TrustSection() {
             Trusted by Developers Worldwide
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Join thousands of developers who rely on DevConverter for their daily workflow
+            Join thousands of developers who rely on DevConverter for their
+            daily workflow
           </p>
         </div>
 

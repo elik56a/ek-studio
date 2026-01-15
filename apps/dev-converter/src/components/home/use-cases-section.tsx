@@ -39,9 +39,10 @@ export default function UseCasesSection() {
             Common Developer Use Cases
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground">
-            From API development to security tasks, DevConverter has the tools you need for everyday
-            coding challenges. Format JSON responses, decode JWT tokens, encode credentials, and
-            generate hash signatures—all in one place.
+            From API development to security tasks, DevConverter has the tools
+            you need for everyday coding challenges. Format JSON responses,
+            decode JWT tokens, encode credentials, and generate hash
+            signatures—all in one place.
           </p>
         </div>
 
@@ -49,14 +50,19 @@ export default function UseCasesSection() {
           {useCases.map((useCase, index) => {
             const IconComponent = useCase.icon
             return (
-              <Card key={index} className="glass border-0 hover:shadow-glow transition-all duration-300 hover:-translate-y-1">
+              <Card
+                key={index}
+                className="glass border-0 hover:shadow-glow transition-all duration-300 hover:-translate-y-1"
+              >
                 <CardHeader>
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                       <IconComponent className="w-6 h-6 text-primary" />
                     </div>
                     <div className="flex-1">
-                      <CardTitle className="text-xl mb-3">{useCase.title}</CardTitle>
+                      <CardTitle className="text-xl mb-3">
+                        {useCase.title}
+                      </CardTitle>
                       <p className="text-sm text-muted-foreground leading-relaxed">
                         {useCase.description}
                       </p>

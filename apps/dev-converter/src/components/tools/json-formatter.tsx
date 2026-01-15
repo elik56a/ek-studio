@@ -2,8 +2,8 @@
 
 import { CollapsibleJsonViewer } from "@/components/custom/collapsible-json-viewer"
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useTool } from "@/hooks/use-tool"
 import { formatJson as formatJsonUtil } from "@/features/data-transform/json"
+import { useTool } from "@/hooks/use-tool"
 
 const JsonFormatterTool = () => {
   const {

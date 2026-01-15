@@ -1,10 +1,12 @@
 "use client"
 
 import { ArrowRight, Code2, Sparkles, Zap } from "lucide-react"
+
 import { useEffect, useState } from "react"
 
 import { Logo } from "@/components/layout/logo"
 import { SmoothLink } from "@/components/layout/smooth-link"
+
 import { CodePatternSVG } from "./decorative-svg"
 
 export function HeroSection() {
@@ -18,7 +20,7 @@ export function HeroSection() {
     <section className="relative text-center space-y-6 pt-12 sm:pt-16 pb-8 px-4">
       {/* Decorative background pattern */}
       <CodePatternSVG />
-      
+
       {/* Logo */}
       <div className="flex justify-center mb-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
         <Logo size="lg" variant="default" showTagline={false} />
@@ -42,7 +44,8 @@ export function HeroSection() {
         </h1>
 
         <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
-          Format JSON, decode JWT, encode Base64, generate hashes, and 50+ more utilities.
+          Format JSON, decode JWT, encode Base64, generate hashes, and 50+ more
+          utilities.
           <span className="block mt-1 font-semibold text-foreground">
             Fast. Private. Free Forever.
           </span>
@@ -58,7 +61,10 @@ export function HeroSection() {
           <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <Code2 className="w-5 h-5 mr-2 relative z-10" aria-hidden="true" />
           <span className="relative z-10">Try JSON Formatter</span>
-          <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform relative z-10" aria-hidden="true" />
+          <ArrowRight
+            className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform relative z-10"
+            aria-hidden="true"
+          />
         </SmoothLink>
 
         <SmoothLink
@@ -101,7 +107,7 @@ export function HeroSection() {
                 </div>
                 <div className="flex-1 text-left">
                   <pre className="text-sm sm:text-base font-mono text-foreground/80 overflow-x-auto">
-{`{
+                    {`{
   "tool": "DevConverter",
   "features": ["fast", "private", "free"],
   "processing": "client-side",

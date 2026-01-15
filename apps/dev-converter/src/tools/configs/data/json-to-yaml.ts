@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * JSON to YAML Converter Tool Configuration
- * 
+ *
  * Converts JSON data into clean, human-readable YAML format.
  * Essential for Kubernetes manifests, Docker Compose, CI/CD pipelines, and DevOps configs.
  * Preserves structure, nesting, and data types during conversion.
@@ -62,8 +62,7 @@ export const jsonToYamlTool: Tool = {
     },
     {
       question: "Is this JSON to YAML converter safe?",
-      answer:
-        "Yes. All conversion is done locally in your browser.",
+      answer: "Yes. All conversion is done locally in your browser.",
     },
   ],
   relatedTools: [
@@ -79,4 +78,4 @@ export const jsonToYamlTool: Tool = {
     outputLabel: "YAML Output",
     convertLabel: "Convert to YAML",
   },
-};
+}

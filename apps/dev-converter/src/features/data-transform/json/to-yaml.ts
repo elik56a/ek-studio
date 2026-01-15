@@ -1,11 +1,12 @@
-import yaml from 'js-yaml'
-import { ConversionResult } from '@/shared/types'
+import yaml from "js-yaml"
+
+import { ConversionResult } from "@/shared/types"
 
 export const jsonToYaml = (jsonInput: string): ConversionResult<string> => {
   if (!jsonInput.trim()) {
     return {
       success: false,
-      error: 'Input is empty',
+      error: "Input is empty",
     }
   }
 
@@ -21,17 +22,17 @@ export const jsonToYaml = (jsonInput: string): ConversionResult<string> => {
     return {
       success: true,
       data: yamlOutput,
-      message: 'JSON converted to YAML successfully',
+      message: "JSON converted to YAML successfully",
     }
   } catch (error) {
     return {
       success: false,
       error:
         error instanceof Error
-          ? error.message.includes('JSON')
+          ? error.message.includes("JSON")
             ? error.message
             : `Invalid JSON: ${error.message}`
-          : 'Failed to convert JSON to YAML',
+          : "Failed to convert JSON to YAML",
     }
   }
 }

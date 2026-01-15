@@ -2,8 +2,8 @@
 
 import { ColorOutputDisplay } from "@/components/custom/color-output-display"
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useTool } from "@/hooks/use-tool"
 import { convertColor } from "@/features/ui/color"
+import { useTool } from "@/hooks/use-tool"
 
 const ColorConverterTool = () => {
   const {

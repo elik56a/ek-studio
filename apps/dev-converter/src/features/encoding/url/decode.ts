@@ -1,10 +1,10 @@
-import { ConversionResult } from '@/shared/types'
+import { ConversionResult } from "@/shared/types"
 
 export const decodeUrl = (input: string): ConversionResult<string> => {
   if (!input.trim()) {
     return {
       success: false,
-      error: 'Input is empty',
+      error: "Input is empty",
     }
   }
 
@@ -13,13 +13,13 @@ export const decodeUrl = (input: string): ConversionResult<string> => {
     return {
       success: true,
       data: decoded,
-      message: 'URL decoded successfully',
+      message: "URL decoded successfully",
     }
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : 'Decode failed'
+    const errorMsg = error instanceof Error ? error.message : "Decode failed"
     return {
       success: false,
-      error: 'Failed to decode URL',
+      error: "Failed to decode URL",
       details: `${errorMsg}. The string may contain invalid UTF-8 sequences or corrupted encoding.`,
     }
   }

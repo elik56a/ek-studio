@@ -1,10 +1,10 @@
-import { ConversionResult } from '@/shared/types'
+import { ConversionResult } from "@/shared/types"
 
 export const formatJson = (jsonInput: string): ConversionResult<string> => {
   if (!jsonInput.trim()) {
     return {
       success: false,
-      error: 'Input is empty',
+      error: "Input is empty",
     }
   }
 
@@ -15,12 +15,12 @@ export const formatJson = (jsonInput: string): ConversionResult<string> => {
     return {
       success: true,
       data: formatted,
-      message: 'JSON formatted successfully',
+      message: "JSON formatted successfully",
     }
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Invalid JSON',
+      error: error instanceof Error ? error.message : "Invalid JSON",
     }
   }
 }

@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * Case Converter Tool Configuration
- * 
+ *
  * Converts text between various naming conventions and case styles.
  * Supports camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, and Title Case.
  * Essential for code refactoring, API field naming, URL slugs, and standardizing identifiers.
@@ -65,7 +65,8 @@ export const caseConverterTool: Tool = {
     {
       title: "Text → camelCase",
       input: "hello world example",
-      description: "Convert a phrase into camelCase for variables and functions",
+      description:
+        "Convert a phrase into camelCase for variables and functions",
     },
     {
       title: "PascalCase → snake_case",
@@ -130,4 +131,4 @@ export const caseConverterTool: Tool = {
     outputLabel: "Converted Output",
     convertLabel: "Convert Case",
   },
-};
+}

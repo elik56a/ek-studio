@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * URL Encoder/Decoder Tool Configuration
- * 
+ *
  * Provides percent-encoding (URL encoding) functionality for URLs and query parameters.
  * Handles special characters, spaces, Unicode, and emojis to create valid URLs.
  * Essential for query strings, UTM parameters, redirects, and API requests.
@@ -93,7 +93,8 @@ export const urlEncodeDecodeTool: Tool = {
         "Encode values used in query parameters, redirects, or API URLs when they include spaces, symbols, or Unicode characters.",
     },
     {
-      question: "What's the difference between encodeURI and encodeURIComponent?",
+      question:
+        "What's the difference between encodeURI and encodeURIComponent?",
       answer:
         "encodeURIComponent is safer for query parameters because it encodes reserved characters. encodeURI leaves some reserved characters unencoded for full URLs.",
     },
@@ -140,4 +141,4 @@ export const urlEncodeDecodeTool: Tool = {
       },
     },
   },
-};
+}

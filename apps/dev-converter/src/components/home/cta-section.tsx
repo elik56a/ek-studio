@@ -23,8 +23,8 @@ export default function CTASection() {
               </h2>
 
               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-                Join thousands of developers who trust DevConverter for their daily workflow.
-                No registration, no credit card, no hassle.
+                Join thousands of developers who trust DevConverter for their
+                daily workflow. No registration, no credit card, no hassle.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -46,14 +46,16 @@ export default function CTASection() {
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-3 pt-6">
-                {["✓ No Sign Up", "✓ 100% Free", "✓ Privacy First"].map((feature, index) => (
-                  <span
-                    key={index}
-                    className="px-4 py-2 rounded-full bg-background/80 backdrop-blur-sm border border-border text-sm font-medium"
-                  >
-                    {feature}
-                  </span>
-                ))}
+                {["✓ No Sign Up", "✓ 100% Free", "✓ Privacy First"].map(
+                  (feature, index) => (
+                    <span
+                      key={index}
+                      className="px-4 py-2 rounded-full bg-background/80 backdrop-blur-sm border border-border text-sm font-medium"
+                    >
+                      {feature}
+                    </span>
+                  )
+                )}
               </div>
             </div>
           </div>

@@ -1,10 +1,10 @@
-import { ConversionResult } from '@/shared/types'
+import { ConversionResult } from "@/shared/types"
 
 export const encodeUrl = (input: string): ConversionResult<string> => {
   if (!input.trim()) {
     return {
       success: false,
-      error: 'Input is empty',
+      error: "Input is empty",
     }
   }
 
@@ -13,14 +13,14 @@ export const encodeUrl = (input: string): ConversionResult<string> => {
     return {
       success: true,
       data: encoded,
-      message: 'URL encoded successfully',
+      message: "URL encoded successfully",
     }
   } catch (error) {
     return {
       success: false,
-      error: 'Failed to encode URL',
+      error: "Failed to encode URL",
       details:
-        'The input contains characters that cannot be encoded. Try removing special Unicode characters.',
+        "The input contains characters that cannot be encoded. Try removing special Unicode characters.",
     }
   }
 }

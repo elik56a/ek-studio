@@ -1,12 +1,9 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
+import { detectJsonEscaped, jsonEscapeUnescape } from "@/features/encoding/json"
 import { useAutoDetect } from "@/hooks/use-auto-detect"
 import { useTool } from "@/hooks/use-tool"
-import {
-  detectJsonEscaped,
-  jsonEscapeUnescape,
-} from "@/features/encoding/json"
 
 const JsonEscapeUnescapeTool = () => {
   const {

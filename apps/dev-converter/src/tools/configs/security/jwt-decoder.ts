@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * JWT Decoder Tool Configuration
- * 
+ *
  * Decodes JSON Web Tokens (JWT) to inspect header and payload claims.
  * Essential for debugging OAuth2/OIDC authentication, inspecting token expiration,
  * and troubleshooting 401/403 authorization errors.
@@ -46,7 +46,7 @@ export const jwtDecoderTool: Tool = {
     howToUse: [
       "Copy the full JWT (three dot-separated parts) from an Authorization header, cookie, or API response",
       "Paste the token into the JWT input field",
-      "Click \"Decode JWT\" to display the decoded header and payload JSON",
+      'Click "Decode JWT" to display the decoded header and payload JSON',
       "Review exp/nbf/iat timestamps to confirm token validity window",
       "Check iss (issuer) and aud (audience) for common OAuth2/OIDC misconfigurations",
       "Inspect scopes/roles/permissions to verify authorization behavior",
@@ -135,7 +135,8 @@ export const jwtDecoderTool: Tool = {
         "exp is expiration time, iat is issued-at time, and nbf is not-before time. They are Unix timestamps that define when a token is valid.",
     },
     {
-      question: "What is the difference between an OAuth2 access token and an OIDC ID token?",
+      question:
+        "What is the difference between an OAuth2 access token and an OIDC ID token?",
       answer:
         "Access tokens authorize API access (often contain scopes/permissions). ID tokens represent user identity for the client app (often contain profile claims like email/name).",
     },
@@ -170,4 +171,4 @@ export const jwtDecoderTool: Tool = {
     outputLabel: "Decoded JWT",
     convertLabel: "Decode JWT",
   },
-};
+}

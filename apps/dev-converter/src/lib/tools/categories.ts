@@ -8,18 +8,20 @@ import {
   Shield,
 } from "lucide-react"
 
-import { Category } from "./types"
+import * as dataConfigs from "@/tools/configs/data"
 import * as encodingConfigs from "@/tools/configs/encoding"
 import * as securityConfigs from "@/tools/configs/security"
-import * as dataConfigs from "@/tools/configs/data"
 import * as textConfigs from "@/tools/configs/text"
 import * as timeConfigs from "@/tools/configs/time"
 import * as utilityConfigs from "@/tools/configs/utility"
 
+import { Category } from "./types"
+
 const extractSlugs = (configs: Record<string, any>): string[] => {
   return Object.values(configs)
-    .filter((config): config is { slug: string } => 
-      typeof config === "object" && config !== null && "slug" in config
+    .filter(
+      (config): config is { slug: string } =>
+        typeof config === "object" && config !== null && "slug" in config
     )
     .map(config => config.slug)
 }

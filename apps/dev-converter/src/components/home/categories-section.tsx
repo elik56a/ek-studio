@@ -26,10 +26,12 @@ export default function CategoriesSection({
   return (
     <section id="categories" className="space-y-12 px-4">
       <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">Browse by Category</h2>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">
+          Browse by Category
+        </h2>
         <p className="text-base sm:text-lg text-muted-foreground">
-          Discover 20+ developer tools organized by category. From JSON formatting to cryptography,
-          find the perfect tool for your workflow.
+          Discover 20+ developer tools organized by category. From JSON
+          formatting to cryptography, find the perfect tool for your workflow.
         </p>
       </div>
 
@@ -38,8 +40,8 @@ export default function CategoriesSection({
           {categories.map(category => {
             const IconComponent = category.icon
             return (
-              <SmoothLink 
-                key={category.id} 
+              <SmoothLink
+                key={category.id}
                 href={`/categories/${category.id}`}
                 aria-label={`View ${category.name} tools`}
               >

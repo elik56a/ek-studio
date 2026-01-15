@@ -1,14 +1,15 @@
-import { ConversionResult } from '@/shared/types'
-import { detectJsonEscaped } from './detect'
-import { validateJsonEscaped } from './validate'
-import { unescapeJson } from './unescape'
-import { escapeJson } from './escape'
+import { ConversionResult } from "@/shared/types"
+
+import { detectJsonEscaped } from "./detect"
+import { escapeJson } from "./escape"
+import { unescapeJson } from "./unescape"
+import { validateJsonEscaped } from "./validate"
 
 export const jsonEscapeUnescape = (input: string): ConversionResult<string> => {
   if (!input.trim()) {
     return {
       success: false,
-      error: 'Input is empty',
+      error: "Input is empty",
     }
   }
 
@@ -20,7 +21,7 @@ export const jsonEscapeUnescape = (input: string): ConversionResult<string> => {
       if (!validation.isValid) {
         return {
           success: false,
-          error: validation.error || 'Invalid JSON escape sequences',
+          error: validation.error || "Invalid JSON escape sequences",
           details: validation.suggestion,
         }
       }
@@ -32,8 +33,8 @@ export const jsonEscapeUnescape = (input: string): ConversionResult<string> => {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Conversion failed',
-      details: 'An unexpected error occurred during conversion.',
+      error: error instanceof Error ? error.message : "Conversion failed",
+      details: "An unexpected error occurred during conversion.",
     }
   }
 }

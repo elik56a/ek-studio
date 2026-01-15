@@ -1,6 +1,9 @@
-import { NodeState } from './types'
+import { NodeState } from "./types"
 
-export const collectAllPaths = (obj: any, currentPath: string = ""): string[] => {
+export const collectAllPaths = (
+  obj: any,
+  currentPath: string = ""
+): string[] => {
   const allPaths: string[] = []
 
   const collectPaths = (obj: any, currentPath: string = "") => {

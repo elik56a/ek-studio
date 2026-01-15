@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * Unix Timestamp Converter Tool Configuration
- * 
+ *
  * Converts Unix epoch timestamps to human-readable dates and vice versa.
  * Auto-detects seconds (10-digit) vs milliseconds (13-digit) timestamps.
  * Displays both UTC and local timezone results to prevent timezone confusion.
@@ -112,7 +112,7 @@ export const unixTimestampConverterTool: Tool = {
         "Yes. Paste an ISO 8601 date/time or a readable date format and the tool outputs the matching Unix epoch timestamp.",
     },
     {
-      question: "Why do timestamps look \"wrong\" in my timezone?",
+      question: 'Why do timestamps look "wrong" in my timezone?',
       answer:
         "Unix timestamps are always UTC-based. If you compare them to local time without converting timezones, the displayed hour/day can look off.",
     },
@@ -144,4 +144,4 @@ export const unixTimestampConverterTool: Tool = {
     showAllLink: true,
     preserveInput: true,
   },
-};
+}

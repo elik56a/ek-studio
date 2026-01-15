@@ -1,4 +1,4 @@
-import { ValidationResult } from '@/shared/types'
+import { ValidationResult } from "@/shared/types"
 
 export const validateBase64 = (
   input: string,

@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * JSON Formatter & Validator Tool Configuration
- * 
+ *
  * Formats, validates, beautifies, and minifies JSON with instant error detection.
  * Essential for debugging API responses, validating JSON syntax, and improving readability.
  * Supports large and deeply nested JSON files with syntax highlighting.
@@ -15,7 +15,12 @@ export const jsonFormatterTool: Tool = {
     "Format, validate, beautify, and minify JSON with instant error detection",
   category: "json-data",
   type: "converter",
-  keywords: ["json formatter", "json validator", "json beautifier", "json minify"],
+  keywords: [
+    "json formatter",
+    "json validator",
+    "json beautifier",
+    "json minify",
+  ],
   metadata: {
     title: "JSON Formatter & Validator Online (Free & Fast)",
     description:
@@ -113,4 +118,4 @@ export const jsonFormatterTool: Tool = {
     outputLabel: "Formatted JSON",
     convertLabel: "Format JSON",
   },
-};
+}

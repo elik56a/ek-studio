@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * JSON Escape/Unescape Tool Configuration
- * 
+ *
  * Escapes special characters for JSON strings and unescapes JSON-encoded strings.
  * Handles quotes, backslashes, newlines, tabs, and control characters.
  * Essential for fixing JSON parse errors and preparing multiline text for JSON payloads.
@@ -36,7 +36,7 @@ export const jsonEscapeUnescapeTool: Tool = {
   },
   info: {
     description:
-      "This JSON Escape & Unescape tool helps you convert raw text into JSON-safe strings and decode escaped JSON strings back into readable text. JSON requires special characters like quotes, backslashes, and newlines to be escaped using sequences such as \\\", \\\\, and \\n. If you've ever hit a \"Unexpected token\" error in a JSON parser, escaping strings correctly is often the fix—especially for multiline text, Windows file paths, and user-generated content.",
+      'This JSON Escape & Unescape tool helps you convert raw text into JSON-safe strings and decode escaped JSON strings back into readable text. JSON requires special characters like quotes, backslashes, and newlines to be escaped using sequences such as \\", \\\\, and \\n. If you\'ve ever hit a "Unexpected token" error in a JSON parser, escaping strings correctly is often the fix—especially for multiline text, Windows file paths, and user-generated content.',
     howToUse: [
       "Paste plain text (to escape) or an escaped JSON string (to unescape)",
       "Click Escape/Unescape",
@@ -134,4 +134,4 @@ export const jsonEscapeUnescapeTool: Tool = {
       },
     },
   },
-};
+}

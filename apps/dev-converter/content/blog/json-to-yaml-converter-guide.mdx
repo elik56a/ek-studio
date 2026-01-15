@@ -21,6 +21,7 @@ image: "/images/blog/json-yaml.svg"
 JSON formatting is critical in 2026. Clean, properly formatted JSON improves readability, reduces bugs, speeds up debugging, and prevents production issues in APIs, frontend apps, backend services, and configuration files.
 
 Poorly formatted JSON leads to:
+
 - API parsing errors
 - Broken deployments
 - Slower debugging
@@ -35,6 +36,7 @@ If you work with APIs, configs, logs, or data exchange, you must know how to for
 ## What Does "Formatting JSON" Mean?
 
 Formatting JSON (also called pretty-printing JSON) means structuring JSON data with:
+
 - Consistent indentation
 - Proper spacing
 - Line breaks
@@ -43,7 +45,11 @@ Formatting JSON (also called pretty-printing JSON) means structuring JSON data w
 ### ❌ Minified JSON (Hard to Read)
 
 ```json
-{"name":"myapp","version":"1.0.0","dependencies":{"react":"^18.2.0","next":"^14.0.0"}}
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "dependencies": { "react": "^18.2.0", "next": "^14.0.0" }
+}
 ```
 
 ### ✅ Properly Formatted JSON (Best Practice)
@@ -70,6 +76,7 @@ This is the recommended JSON format in 2026 across APIs, open-source projects, a
 The fastest and safest way is using a browser-based tool.
 
 Steps:
+
 1. Paste your JSON
 2. Click Format
 3. Copy the clean output
@@ -77,6 +84,7 @@ Steps:
 ✅ Use [Free JSON Formatter and Validator Tool](/json-formatter) — runs fully in your browser, no data leaves your device.
 
 Best for:
+
 - API responses
 - Debugging payloads
 - Large JSON files
@@ -99,6 +107,7 @@ fs.writeFileSync("formatted.json", formatted)
 ```
 
 Best for:
+
 - Backend scripts
 - Build pipelines
 - CLI tools
@@ -118,6 +127,7 @@ with open("formatted.json", "w") as f:
 ```
 
 Best for:
+
 - Data processing
 - Automation
 - Analytics workflows
@@ -133,7 +143,7 @@ Best for:
 ```json
 {
   "name": "app",
-  "version": "1.0.0",
+  "version": "1.0.0"
 }
 ```
 
@@ -153,7 +163,7 @@ Best for:
 ❌ Wrong
 
 ```json
-{'name': 'app'}
+{ "name": "app" }
 ```
 
 ✅ Correct
@@ -230,7 +240,6 @@ Formatting does not guarantee validity.
 ```
 
 Avoid mixing styles like `userId` and `user_id`.
-
 
 ---
 

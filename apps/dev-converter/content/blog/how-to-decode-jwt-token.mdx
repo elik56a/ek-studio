@@ -73,6 +73,7 @@ The payload contains claims—statements about the user and token metadata:
 ```
 
 **Standard claims:**
+
 - **sub** (subject): User identifier
 - **exp** (expiration): Unix timestamp when token expires ([convert timestamps](/unix-timestamp-converter))
 - **iat** (issued at): When token was created
@@ -106,6 +107,7 @@ The signature ensures the token hasn't been modified. It's created by:
 6. Use [Unix Timestamp Converter](/unix-timestamp-converter) to convert exp/iat timestamps to readable dates
 
 **Why use this method:**
+
 - Zero installation required
 - Works offline after first load
 - Processes tokens entirely in your browser (no network transmission)
@@ -181,16 +183,16 @@ if (decoded.payload.role === "admin") {
 // ✅ SECURE - Always verify before trusting
 try {
   const verified = jwt.verify(token, process.env.JWT_SECRET, {
-    algorithms: ['RS256'], // Explicitly specify allowed algorithms
-    issuer: 'https://auth.yourapp.com',
-    audience: 'https://api.yourapp.com'
+    algorithms: ["RS256"], // Explicitly specify allowed algorithms
+    issuer: "https://auth.yourapp.com",
+    audience: "https://api.yourapp.com",
   })
-  
+
   if (verified.role === "admin") {
     grantAdminAccess() // Now safe - signature verified
   }
 } catch (error) {
-  return res.status(401).json({ error: 'Invalid token' })
+  return res.status(401).json({ error: "Invalid token" })
 }
 ```
 
@@ -217,7 +219,7 @@ try {
 ```javascript
 // ✅ Explicitly reject "none" algorithm
 jwt.verify(token, secret, {
-  algorithms: ['RS256', 'HS256'], // Whitelist only - "none" rejected
+  algorithms: ["RS256", "HS256"], // Whitelist only - "none" rejected
 })
 ```
 
@@ -282,8 +284,8 @@ console.log(decoded.payload.aud) // "wrong-audience.com"
 ```javascript
 // ✅ Verify iss and aud match expectations
 jwt.verify(token, secret, {
-  issuer: 'https://auth.yourapp.com',
-  audience: 'https://api.yourapp.com'
+  issuer: "https://auth.yourapp.com",
+  audience: "https://api.yourapp.com",
 })
 // Throws error if mismatch - request rejected
 ```
@@ -307,7 +309,7 @@ jwt.verify(token, secret, {
 ```javascript
 // ✅ Explicitly specify algorithm - don't let token dictate it
 jwt.verify(token, publicKey, {
-  algorithms: ['RS256'] // Only RS256 allowed
+  algorithms: ["RS256"], // Only RS256 allowed
 })
 ```
 
@@ -329,20 +331,20 @@ User → API Gateway → Service A → Service B → Service C
 ```javascript
 // Add middleware to log token expiration at each service
 app.use((req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1]
+  const token = req.headers.authorization?.split(" ")[1]
   if (token) {
     const decoded = jwt.decode(token)
     const now = Math.floor(Date.now() / 1000)
     const timeRemaining = decoded.exp - now
-    
-    logger.info('Token expiration check', {
-      service: 'service-b',
+
+    logger.info("Token expiration check", {
+      service: "service-b",
       timeRemaining: `${timeRemaining}s`,
-      willExpireIn: `${Math.floor(timeRemaining / 60)}m`
+      willExpireIn: `${Math.floor(timeRemaining / 60)}m`,
     })
-    
+
     if (timeRemaining < 60) {
-      logger.warn('Token expiring soon', { timeRemaining })
+      logger.warn("Token expiring soon", { timeRemaining })
     }
   }
   next()
@@ -391,57 +393,56 @@ const token = jwt.sign(payload, secret, {
 // Create a debugging middleware for each service
 function jwtDebugMiddleware(serviceName) {
   return (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1]
-    
+    const token = req.headers.authorization?.split(" ")[1]
+
     if (!token) {
       logger.warn(`${serviceName}: No token present`)
-      return res.status(401).json({ error: 'No token' })
+      return res.status(401).json({ error: "No token" })
     }
-    
+
     try {
       const decoded = jwt.decode(token, { complete: true })
-      
+
       logger.info(`${serviceName}: Token decoded`, {
         algorithm: decoded.header.alg,
         subject: decoded.payload.sub,
         issuer: decoded.payload.iss,
         audience: decoded.payload.aud,
         expiresIn: decoded.payload.exp - Math.floor(Date.now() / 1000),
-        claims: Object.keys(decoded.payload)
+        claims: Object.keys(decoded.payload),
       })
-      
+
       // Check for common issues
-      if (decoded.header.alg === 'none') {
+      if (decoded.header.alg === "none") {
         logger.error(`${serviceName}: SECURITY ALERT - none algorithm`)
       }
-      
+
       if (decoded.payload.exp < Math.floor(Date.now() / 1000)) {
         logger.error(`${serviceName}: Token expired`)
-        return res.status(401).json({ error: 'Token expired' })
+        return res.status(401).json({ error: "Token expired" })
       }
-      
+
       // Verify (don't just decode in production!)
       const verified = jwt.verify(token, publicKey, {
-        algorithms: ['RS256'],
+        algorithms: ["RS256"],
         issuer: process.env.JWT_ISSUER,
-        audience: serviceName
+        audience: serviceName,
       })
-      
+
       req.user = verified
       next()
-      
     } catch (error) {
       logger.error(`${serviceName}: Token verification failed`, {
         error: error.message,
-        name: error.name
+        name: error.name,
       })
-      res.status(401).json({ error: 'Invalid token' })
+      res.status(401).json({ error: "Invalid token" })
     }
   }
 }
 
 // Apply to each service
-app.use(jwtDebugMiddleware('service-a'))
+app.use(jwtDebugMiddleware("service-a"))
 ```
 
 ### Tracing Tokens Across Services
@@ -450,18 +451,21 @@ Use the `jti` (JWT ID) claim for correlation:
 
 ```javascript
 // When issuing tokens, add a unique ID
-const token = jwt.sign({
-  sub: userId,
-  jti: uuidv4(), // Unique token ID
-  // ... other claims
-}, secret)
+const token = jwt.sign(
+  {
+    sub: userId,
+    jti: uuidv4(), // Unique token ID
+    // ... other claims
+  },
+  secret
+)
 
 // In each service, log the jti
 const decoded = jwt.decode(token)
-logger.info('Request processed', {
-  service: 'service-a',
+logger.info("Request processed", {
+  service: "service-a",
   tokenId: decoded.jti,
-  correlationId: req.headers['x-correlation-id']
+  correlationId: req.headers["x-correlation-id"],
 })
 
 // Now you can trace the same token across all services in logs
@@ -475,10 +479,10 @@ Always transmit JWTs over HTTPS. Tokens sent over HTTP can be intercepted and re
 
 ```javascript
 // Access tokens: Short-lived (5-15 minutes)
-const accessToken = jwt.sign(payload, secret, { expiresIn: '15m' })
+const accessToken = jwt.sign(payload, secret, { expiresIn: "15m" })
 
 // Refresh tokens: Longer-lived (7-30 days) with rotation
-const refreshToken = jwt.sign(payload, secret, { expiresIn: '7d' })
+const refreshToken = jwt.sign(payload, secret, { expiresIn: "7d" })
 ```
 
 **Why short expiration?** Limits damage if a token is stolen. Use refresh tokens to get new access tokens.
@@ -486,11 +490,13 @@ const refreshToken = jwt.sign(payload, secret, { expiresIn: '7d' })
 ### 3. Store Tokens Securely
 
 **Frontend storage:**
+
 - ✅ **Best:** httpOnly, Secure, SameSite cookies
 - ⚠️ **Acceptable:** Memory (lost on refresh)
 - ❌ **Never:** localStorage or sessionStorage (vulnerable to XSS)
 
 **Backend storage:**
+
 - ✅ Environment variables for secrets
 - ✅ Key management services (AWS KMS, HashiCorp Vault)
 - ❌ Never hardcode secrets in source code
@@ -501,29 +507,28 @@ const refreshToken = jwt.sign(payload, secret, { expiresIn: '7d' })
 ```javascript
 // ✅ Comprehensive validation
 const options = {
-  algorithms: ['RS256'], // Whitelist algorithms
-  issuer: 'https://auth.yourapp.com', // Expected issuer
-  audience: 'https://api.yourapp.com', // Expected audience
+  algorithms: ["RS256"], // Whitelist algorithms
+  issuer: "https://auth.yourapp.com", // Expected issuer
+  audience: "https://api.yourapp.com", // Expected audience
   clockTolerance: 30, // Allow 30s clock skew
-  maxAge: '1h', // Reject tokens older than 1 hour
+  maxAge: "1h", // Reject tokens older than 1 hour
 }
 
 try {
   const verified = jwt.verify(token, publicKey, options)
-  
+
   // Additional custom validation
   if (!verified.sub) {
-    throw new Error('Missing subject claim')
+    throw new Error("Missing subject claim")
   }
-  
+
   if (!verified.roles || !Array.isArray(verified.roles)) {
-    throw new Error('Invalid roles claim')
+    throw new Error("Invalid roles claim")
   }
-  
 } catch (error) {
   // Log for monitoring but don't expose details to client
-  logger.error('JWT validation failed', { error: error.message })
-  return res.status(401).json({ error: 'Unauthorized' })
+  logger.error("JWT validation failed", { error: error.message })
+  return res.status(401).json({ error: "Unauthorized" })
 }
 ```
 
@@ -531,32 +536,30 @@ try {
 
 ```javascript
 // When access token expires, use refresh token to get new pair
-app.post('/auth/refresh', async (req, res) => {
+app.post("/auth/refresh", async (req, res) => {
   const { refreshToken } = req.body
-  
+
   try {
     const verified = jwt.verify(refreshToken, REFRESH_SECRET)
-    
+
     // Issue new access token
     const newAccessToken = jwt.sign(
       { sub: verified.sub, roles: verified.roles },
       ACCESS_SECRET,
-      { expiresIn: '15m' }
+      { expiresIn: "15m" }
     )
-    
+
     // Optionally rotate refresh token too
-    const newRefreshToken = jwt.sign(
-      { sub: verified.sub },
-      REFRESH_SECRET,
-      { expiresIn: '7d' }
-    )
-    
+    const newRefreshToken = jwt.sign({ sub: verified.sub }, REFRESH_SECRET, {
+      expiresIn: "7d",
+    })
+
     // Invalidate old refresh token in database
     await revokeToken(refreshToken)
-    
+
     res.json({ accessToken: newAccessToken, refreshToken: newRefreshToken })
   } catch (error) {
-    res.status(401).json({ error: 'Invalid refresh token' })
+    res.status(401).json({ error: "Invalid refresh token" })
   }
 })
 ```
@@ -564,11 +567,13 @@ app.post('/auth/refresh', async (req, res) => {
 ### 6. Use Strong Signing Algorithms
 
 **Recommended algorithms:**
+
 - **RS256** (RSA + SHA-256): Best for microservices - public key can be shared
 - **ES256** (ECDSA + SHA-256): Smaller signatures, faster verification
 - **HS256** (HMAC + SHA-256): Only if secret can be kept truly secret
 
 **Avoid:**
+
 - ❌ **none**: No signature - never use in production
 - ❌ **HS256 with weak secrets**: Use at least 256-bit random secrets
 
@@ -578,18 +583,18 @@ app.post('/auth/refresh', async (req, res) => {
 // Maintain revocation list for logout, password changes, etc.
 const revokedTokens = new Set() // In production: use Redis
 
-app.post('/auth/logout', (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1]
+app.post("/auth/logout", (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1]
   const decoded = jwt.decode(token)
-  
+
   // Add token ID to revocation list until expiration
   revokedTokens.add(decoded.jti)
-  
+
   // Set TTL to token's remaining lifetime
   const ttl = decoded.exp - Math.floor(Date.now() / 1000)
-  redis.setex(`revoked:${decoded.jti}`, ttl, '1')
-  
-  res.json({ message: 'Logged out successfully' })
+  redis.setex(`revoked:${decoded.jti}`, ttl, "1")
+
+  res.json({ message: "Logged out successfully" })
 })
 
 // Check revocation in auth middleware
@@ -597,7 +602,7 @@ async function checkRevocation(token) {
   const decoded = jwt.decode(token)
   const isRevoked = await redis.exists(`revoked:${decoded.jti}`)
   if (isRevoked) {
-    throw new Error('Token has been revoked')
+    throw new Error("Token has been revoked")
   }
 }
 ```
@@ -607,26 +612,26 @@ async function checkRevocation(token) {
 ```javascript
 // Track failed verification attempts
 app.use((req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1]
-  
+  const token = req.headers.authorization?.split(" ")[1]
+
   try {
     const verified = jwt.verify(token, secret)
     req.user = verified
     next()
   } catch (error) {
     // Log suspicious patterns
-    if (error.name === 'TokenExpiredError') {
-      metrics.increment('jwt.expired')
-    } else if (error.name === 'JsonWebTokenError') {
-      metrics.increment('jwt.invalid')
-      logger.warn('Invalid JWT attempt', {
+    if (error.name === "TokenExpiredError") {
+      metrics.increment("jwt.expired")
+    } else if (error.name === "JsonWebTokenError") {
+      metrics.increment("jwt.invalid")
+      logger.warn("Invalid JWT attempt", {
         ip: req.ip,
-        userAgent: req.headers['user-agent'],
-        error: error.message
+        userAgent: req.headers["user-agent"],
+        error: error.message,
       })
     }
-    
-    res.status(401).json({ error: 'Unauthorized' })
+
+    res.status(401).json({ error: "Unauthorized" })
   }
 })
 ```
@@ -719,29 +724,29 @@ The `alg` field is especially important because algorithm confusion attacks expl
 ```javascript
 function safeDecodeJWT(token) {
   try {
-    const parts = token.split('.')
-    
+    const parts = token.split(".")
+
     if (parts.length !== 3) {
-      throw new Error('Invalid JWT format: expected 3 parts')
+      throw new Error("Invalid JWT format: expected 3 parts")
     }
-    
+
     const header = JSON.parse(atob(parts[0]))
     const payload = JSON.parse(atob(parts[1]))
-    
+
     return { header, payload, signature: parts[2] }
   } catch (error) {
-    if (error.message.includes('Invalid JWT format')) {
+    if (error.message.includes("Invalid JWT format")) {
       // Handle malformed token
-      logger.error('Malformed JWT', { token: token.substring(0, 20) })
+      logger.error("Malformed JWT", { token: token.substring(0, 20) })
     } else if (error instanceof SyntaxError) {
       // Handle invalid JSON in header/payload
-      logger.error('Invalid JSON in JWT', { error: error.message })
+      logger.error("Invalid JSON in JWT", { error: error.message })
     } else {
       // Handle other errors (invalid Base64, etc.)
-      logger.error('JWT decode error', { error: error.message })
+      logger.error("JWT decode error", { error: error.message })
     }
-    
-    throw new Error('Unable to decode JWT')
+
+    throw new Error("Unable to decode JWT")
   }
 }
 ```
@@ -766,6 +771,7 @@ Decode the token at each service boundary to identify where it breaks:
 4. **Compare decoded values**: Look for missing claims, wrong audience, or expired tokens
 
 Common microservices JWT issues:
+
 - Token expires during long request chains
 - Service-to-service calls don't forward the Authorization header
 - Each service expects different `aud` values
@@ -776,6 +782,7 @@ Common microservices JWT issues:
 Both can be JWTs, but they serve different purposes:
 
 **Access Token (OAuth2):**
+
 ```json
 {
   "sub": "user123",
@@ -784,11 +791,13 @@ Both can be JWTs, but they serve different purposes:
   "aud": "https://api.example.com"
 }
 ```
+
 - Purpose: Authorize API access
 - Audience: Resource servers (your APIs)
 - Contains: Scopes, permissions, client info
 
 **ID Token (OIDC):**
+
 ```json
 {
   "sub": "user123",
@@ -798,6 +807,7 @@ Both can be JWTs, but they serve different purposes:
   "picture": "https://example.com/photo.jpg"
 }
 ```
+
 - Purpose: Prove user identity
 - Audience: Client applications
 - Contains: User profile information
@@ -824,6 +834,7 @@ No installation, no sign-up, completely private—your tokens never leave your b
 ---
 
 **Related Tools:**
+
 - [Base64 Encoder/Decoder](/base64-encode-decode) - Decode the Base64URL encoding used in JWTs
 - [Hash Generator](/hash-generator) - Generate SHA-256 hashes for token fingerprinting
 - [JSON Formatter](/json-formatter) - Format decoded JWT payloads for easier reading

@@ -5,8 +5,8 @@ import { FileUpload } from "@ek-studio/ui"
 import { useCallback, useMemo, useState } from "react"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useTool } from "@/hooks/use-tool"
 import { fileToBase64 } from "@/features/encoding/base64"
+import { useTool } from "@/hooks/use-tool"
 
 const FileToBase64Tool = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)

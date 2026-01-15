@@ -1,4 +1,4 @@
-import { JsonValue, JsonArray } from './types'
+import { JsonArray, JsonValue } from "./types"
 
 export const getValueTypeClasses = (value: JsonValue): string => {
   if (value === null) {

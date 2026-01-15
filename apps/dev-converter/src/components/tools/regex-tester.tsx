@@ -15,8 +15,8 @@ import { useEffect, useRef, useState } from "react"
 
 import { RegexCheatSheet } from "@/components/custom/regex-cheat-sheet"
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useTool } from "@/hooks/use-tool"
 import { testRegex, testRegexWithFormatting } from "@/features/text/regex"
+import { useTool } from "@/hooks/use-tool"
 
 const RegexTesterTool = () => {
   const [regexPattern, setRegexPattern] = useState("")

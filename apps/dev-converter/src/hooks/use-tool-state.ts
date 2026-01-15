@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from "react"
 import { usePathname } from "next/navigation"
 
 import { useAutoSave } from "@/hooks/use-auto-save"
-import { getDataFromUrl } from "@/lib/share"
 import { getToolBySlug } from "@/lib/tools/registry"
+import { getDataFromUrl } from "@/lib/tools/share"
 
 interface UseToolStateOptions {
   initialInput?: string

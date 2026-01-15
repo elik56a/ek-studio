@@ -1,8 +1,8 @@
 "use client"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useTool } from "@/hooks/use-tool"
 import { decodeJWT } from "@/features/security/jwt"
+import { useTool } from "@/hooks/use-tool"
 
 const JWTDecoderTool = () => {
   const {

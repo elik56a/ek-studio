@@ -21,7 +21,7 @@ export function HreflangTags({ path }: HreflangTagsProps) {
     <>
       {/* Self-referencing hreflang for English */}
       <link rel="alternate" hrefLang="en" href={fullUrl} />
-      
+
       {/* x-default should point to the default language version */}
       <link rel="alternate" hrefLang="x-default" href={fullUrl} />
     </>

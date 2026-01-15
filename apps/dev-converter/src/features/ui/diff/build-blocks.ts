@@ -1,4 +1,4 @@
-import { DiffChange, ChangeBlock, MinimapLine, SplitViewLine } from './types'
+import { ChangeBlock, DiffChange, MinimapLine, SplitViewLine } from "./types"
 
 export const buildChangeBlocks = (changes: DiffChange[]): ChangeBlock[] => {
   const blocks: ChangeBlock[] = []
@@ -30,7 +30,9 @@ export const buildChangeBlocks = (changes: DiffChange[]): ChangeBlock[] => {
   return blocks
 }
 
-export const buildUnifiedMinimapLines = (changes: DiffChange[]): MinimapLine[] => {
+export const buildUnifiedMinimapLines = (
+  changes: DiffChange[]
+): MinimapLine[] => {
   const allLines: MinimapLine[] = []
   let currentBlockId = 0
 
@@ -58,7 +60,9 @@ export const buildUnifiedMinimapLines = (changes: DiffChange[]): MinimapLine[] =
   return allLines
 }
 
-export const buildSplitViewLines = (changes: DiffChange[]): {
+export const buildSplitViewLines = (
+  changes: DiffChange[]
+): {
   leftLines: SplitViewLine[]
   rightLines: SplitViewLine[]
   blockIds: Array<string | null>

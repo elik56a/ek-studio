@@ -5,8 +5,8 @@ import { Input, Label } from "@ek-studio/ui"
 import { useState } from "react"
 
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { useTool } from "@/hooks/use-tool"
 import { generateUUIDs } from "@/features/security/uuid"
+import { useTool } from "@/hooks/use-tool"
 
 const UUIDGeneratorTool = () => {
   const [count, setCount] = useState(1)

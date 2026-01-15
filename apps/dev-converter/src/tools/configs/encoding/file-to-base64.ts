@@ -1,8 +1,8 @@
-import { Tool } from "@/lib/tools/types";
+import { Tool } from "@/lib/tools/types"
 
 /**
  * File to Base64 Converter Tool Configuration
- * 
+ *
  * Converts files (images, documents, etc.) to Base64 data URLs.
  * Generates data URLs with proper MIME type prefixes (data:image/png;base64,...).
  * Useful for embedding files in HTML, CSS, JSON, email templates, and API payloads.
@@ -111,4 +111,4 @@ export const fileToBase64Tool: Tool = {
     outputLabel: "Base64 Data URL",
     convertLabel: "Convert to Base64",
   },
-};
+}

@@ -1,6 +1,7 @@
 import { ConversionResult } from "@/shared/types"
-import { RegexMatch, RegexTestResult } from "./types"
+
 import { parseRegexString } from "./parse"
+import { RegexMatch, RegexTestResult } from "./types"
 
 export const testRegex = (
   regexString: string,

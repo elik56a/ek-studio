@@ -1,6 +1,7 @@
+import * as allToolConfigs from "@/tools/configs"
+
 import { getToolComponent } from "./component-loader"
 import { Tool } from "./types"
-import * as allToolConfigs from "@/tools/configs"
 
 const toolConfigs = Object.values(allToolConfigs).filter(
   (config): config is Tool => typeof config === "object" && "id" in config
