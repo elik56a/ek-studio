@@ -1,6 +1,6 @@
 import { BlogContentManager, generateRSSFeed } from "@ek-studio/blog"
 
-import { blogConfig } from "../../../config/blog.config"
+import { blogConfig } from "@/config/blog.config"
 
 /**
  * RSS feed route handler

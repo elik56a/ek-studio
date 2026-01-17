@@ -1,12 +1,6 @@
 import { Tool } from "@/lib/tools/types"
 
-/**
- * Hash Generator Tool Configuration
- *
- * Generates cryptographic hashes (MD5, SHA-256, SHA-384, SHA-512) from text input.
- * Used for checksums, integrity verification, fingerprinting, and detecting content changes.
- * Hashing is one-way and deterministic - same input always produces the same hash.
- */
+
 export const hashGeneratorTool: Tool = {
   id: "hash-generator",
   slug: "hash-generator",

@@ -1,6 +1,6 @@
 "use client"
 
-import { Checkbox, Label, Slider } from "@ek-studio/ui"
+import { Card, Checkbox, Label, Slider } from "@ek-studio/ui"
 
 import { useState } from "react"
 
@@ -49,59 +49,61 @@ const PasswordGeneratorTool = () => {
   }
 
   const toolControls = (
-    <div className="space-y-4 w-full max-w-[280px]">
-      {/* Slider */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <Label htmlFor="password-length" className="text-sm">
-            Length
-          </Label>
-          <span className="text-sm font-medium text-primary">{length}</span>
+    <div className="w-full">
+      <Card className="p-6 space-y-6 bg-background/50 backdrop-blur-sm border-primary/10">
+        {/* Slider */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password-length" className="text-sm font-medium">
+              Password Length
+            </Label>
+            <span className="text-lg font-bold text-primary">{length}</span>
+          </div>
+          <Slider
+            id="password-length"
+            min={1}
+            max={50}
+            step={1}
+            value={[length]}
+            onValueChange={(value: number[]) => setLength(value[0])}
+          />
         </div>
-        <Slider
-          id="password-length"
-          min={1}
-          max={50}
-          step={1}
-          value={[length]}
-          onValueChange={(value: number[]) => setLength(value[0])}
-        />
-      </div>
 
-      {/* Checkboxes */}
-      <div className="space-y-2">
-        <Label className="text-sm">Characters</Label>
-        <div className="flex items-center gap-3">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <Checkbox
-              checked={options.uppercase}
-              onCheckedChange={() => handleOptionChange("uppercase")}
-            />
-            <span className="text-sm">A-Z</span>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <Checkbox
-              checked={options.lowercase}
-              onCheckedChange={() => handleOptionChange("lowercase")}
-            />
-            <span className="text-sm">a-z</span>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <Checkbox
-              checked={options.numbers}
-              onCheckedChange={() => handleOptionChange("numbers")}
-            />
-            <span className="text-sm">0-9</span>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <Checkbox
-              checked={options.symbols}
-              onCheckedChange={() => handleOptionChange("symbols")}
-            />
-            <span className="text-sm">Symbols</span>
-          </label>
+        {/* Checkboxes */}
+        <div className="space-y-3">
+          <Label className="text-sm font-medium">Character Types</Label>
+          <div className="flex flex-wrap items-center gap-4">
+            <label className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+              <Checkbox
+                checked={options.uppercase}
+                onCheckedChange={() => handleOptionChange("uppercase")}
+              />
+              <span className="text-sm font-medium">A-Z</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+              <Checkbox
+                checked={options.lowercase}
+                onCheckedChange={() => handleOptionChange("lowercase")}
+              />
+              <span className="text-sm font-medium">a-z</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+              <Checkbox
+                checked={options.numbers}
+                onCheckedChange={() => handleOptionChange("numbers")}
+              />
+              <span className="text-sm font-medium">0-9</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+              <Checkbox
+                checked={options.symbols}
+                onCheckedChange={() => handleOptionChange("symbols")}
+              />
+              <span className="text-sm font-medium">Symbols</span>
+            </label>
+          </div>
         </div>
-      </div>
+      </Card>
     </div>
   )
 
@@ -141,6 +143,7 @@ const PasswordGeneratorTool = () => {
         onExampleClick: handleExampleClick,
       }}
       toolControls={toolControls}
+      toolControlsPosition="above"
     />
   )
 }

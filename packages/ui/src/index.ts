@@ -28,6 +28,7 @@ export {
 } from "./dropdown-menu"
 export { Input } from "./input"
 export { Label } from "./label"
+export { NumberInput } from "./number-input"
 export { SearchInput } from "./search-input"
 export { FileUpload } from "./file-upload"
 export { Carousel } from "./carousel"

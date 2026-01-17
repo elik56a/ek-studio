@@ -45,8 +45,8 @@ const HashGeneratorTool = () => {
       options={algorithmOptions}
       value={algorithm}
       onChange={value => setAlgorithm(value as HashAlgorithm)}
-      align="left"
-      size="sm"
+      className="w-[200px]"
+      label="Algorithm"
     />
   )
 

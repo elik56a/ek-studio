@@ -55,6 +55,7 @@ interface ToolLayoutProps {
     customDetailsRender?: (defaultDetails: React.ReactNode) => React.ReactNode
   }
   toolControls?: React.ReactNode | null
+  toolControlsPosition?: "inline" | "above" // New prop to control position
   customToolArea?: React.ReactNode
   className?: string
 }
@@ -66,6 +67,7 @@ export function ToolLayout({
   toolActionsProps,
   statusProps,
   toolControls,
+  toolControlsPosition = "above",
   tool,
   onGenerate,
   customToolArea,
@@ -107,57 +109,74 @@ export function ToolLayout({
             ) : (
               <>
                 {/* Actions Toolbar with Tool Switcher */}
-                <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4 w-full">
-                  {/* Tool Controls - Left */}
-                  {toolControls !== null && (
-                    <div className="flex justify-start lg:w-auto lg:min-w-[200px]">
-                      {toolControls !== undefined
-                        ? toolControls
-                        : tool && (
-                            <ToolSwitcher
-                              currentTool={tool}
-                              hasInput={!!editorProps?.inputValue}
-                            />
+                <div className="flex flex-col gap-4 w-full">
+                  {/* Tool Controls - Full Width Above (only if position is "above") */}
+                  {toolControls !== null &&
+                    toolControls !== undefined &&
+                    toolControlsPosition === "above" && (
+                      <div className="w-full">{toolControls}</div>
+                    )}
+
+                  {/* Generate Button Row */}
+                  <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4 w-full">
+                    {/* Tool Controls - Left (only if position is "inline") */}
+                    {toolControls !== null &&
+                      toolControls !== undefined &&
+                      toolControlsPosition === "inline" && (
+                        <div className="flex justify-start lg:w-auto lg:min-w-[200px]">
+                          {toolControls}
+                        </div>
+                      )}
+
+                    {/* Tool Switcher - Left (only if no custom toolControls) */}
+                    {toolControls === undefined && tool && (
+                      <div className="flex justify-start lg:w-auto lg:min-w-[200px]">
+                        <ToolSwitcher
+                          currentTool={tool}
+                          hasInput={!!editorProps?.inputValue}
+                        />
+                      </div>
+                    )}
+
+                    {/* Main Generate Button - Center (only for generator tools) */}
+                    {showGenerateButton && onGenerate && toolActionsProps && (
+                      <div className="flex justify-center lg:flex-1">
+                        <Button
+                          onClick={onGenerate}
+                          disabled={toolActionsProps.isLoading}
+                          size="lg"
+                          className="relative w-full sm:w-auto sm:min-w-[240px] h-14 sm:h-16 text-base sm:text-lg font-bold shadow-glow hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-[1.02] active:scale-[0.98] rounded-2xl border-0 overflow-hidden group"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                          {toolActionsProps.isLoading ? (
+                            <div className="flex items-center gap-3 relative z-10">
+                              <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-3 border-current border-t-transparent" />
+                              <span>Processing...</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-3 relative z-10">
+                              <Zap className="h-5 w-5 sm:h-6 sm:w-6 drop-shadow-sm" />
+                              <span className="drop-shadow-sm">
+                                {toolActionsProps.convertLabel}
+                              </span>
+                            </div>
                           )}
-                    </div>
-                  )}
+                        </Button>
+                      </div>
+                    )}
 
-                  {/* Main Generate Button - Center (only for generator tools) */}
-                  {showGenerateButton && onGenerate && toolActionsProps && (
-                    <div className="flex justify-center lg:flex-1">
-                      <Button
-                        onClick={onGenerate}
-                        disabled={toolActionsProps.isLoading}
-                        size="lg"
-                        className="relative w-full sm:w-auto sm:min-w-[240px] h-14 sm:h-16 text-base sm:text-lg font-bold shadow-glow hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 hover:scale-[1.02] active:scale-[0.98] rounded-2xl border-0 overflow-hidden group"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                        {toolActionsProps.isLoading ? (
-                          <div className="flex items-center gap-3 relative z-10">
-                            <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-3 border-current border-t-transparent" />
-                            <span>Processing...</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-3 relative z-10">
-                            <Zap className="h-5 w-5 sm:h-6 sm:w-6 drop-shadow-sm" />
-                            <span className="drop-shadow-sm">
-                              {toolActionsProps.convertLabel}
-                            </span>
-                          </div>
-                        )}
-                      </Button>
-                    </div>
-                  )}
+                    {/* Right Spacer - Matches left side width for perfect centering */}
+                    {showGenerateButton &&
+                      (toolControls === undefined ||
+                        (toolControls !== null && toolControlsPosition === "inline")) && (
+                        <div className="hidden lg:block lg:w-auto lg:min-w-[200px]" />
+                      )}
 
-                  {/* Right Spacer - Matches left side width for perfect centering */}
-                  {showGenerateButton && toolControls !== null && (
-                    <div className="hidden lg:block lg:w-auto lg:min-w-[200px]" />
-                  )}
-
-                  {/* Spacer for alignment when no generate button */}
-                  {!showGenerateButton && (
-                    <div className="hidden lg:block lg:flex-1" />
-                  )}
+                    {/* Spacer for alignment when no generate button */}
+                    {!showGenerateButton && (
+                      <div className="hidden lg:block lg:flex-1" />
+                    )}
+                  </div>
                 </div>
 
                 {/* Editor Panel - Enhanced spacing */}

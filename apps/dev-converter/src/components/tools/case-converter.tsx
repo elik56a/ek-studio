@@ -61,8 +61,8 @@ const CaseConverterTool = () => {
       options={caseOptions}
       value={selectedCase}
       onChange={handleCaseChange}
-      align="left"
-      size="sm"
+      className="w-[200px]"
+      label="Case Type"
     />
   )
 

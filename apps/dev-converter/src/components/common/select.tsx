@@ -1,11 +1,12 @@
 "use client"
 
-import { Button } from "@ek-studio/ui"
-import { ChevronDown } from "lucide-react"
-
-import { useState } from "react"
-
-import { Dropdown, DropdownItem } from "./dropdown"
+import {
+  Select as UISelect,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@ek-studio/ui"
 
 export interface SelectOption {
   value: string
@@ -22,6 +23,7 @@ interface SelectProps {
   className?: string
   align?: "left" | "center" | "right"
   size?: "sm" | "default" | "lg"
+  label?: string
 }
 
 export function Select({
@@ -30,44 +32,44 @@ export function Select({
   onChange,
   placeholder = "Select...",
   className = "",
-  align = "left",
-  size = "sm",
+  label,
 }: SelectProps) {
-  const [isOpen, setIsOpen] = useState(false)
-
   const selectedOption = options.find(opt => opt.value === value)
-  const displayLabel = selectedOption?.label || placeholder
-
-  const handleSelect = (optionValue: string) => {
-    onChange(optionValue)
-    setIsOpen(false)
-  }
-
+  
   return (
-    <Dropdown
-      trigger={
-        <Button variant="outline" size={size} className={`gap-2 ${className}`}>
-          {selectedOption?.icon && (
-            <span className="flex-shrink-0">{selectedOption.icon}</span>
-          )}
-          <span className="text-xs font-medium">{displayLabel}</span>
-          <ChevronDown className="h-3 w-3" />
-        </Button>
-      }
-      align={align}
-      open={isOpen}
-      onOpenChange={setIsOpen}
-    >
-      {options.map(option => (
-        <DropdownItem
-          key={option.value}
-          title={option.label}
-          description={option.description}
-          icon={option.icon}
-          onClick={() => handleSelect(option.value)}
-          className={value === option.value ? "bg-primary/10 text-primary" : ""}
-        />
-      ))}
-    </Dropdown>
+    <div className="flex flex-col gap-2">
+      {label && (
+        <label className="text-sm font-medium text-foreground">
+          {label}
+        </label>
+      )}
+      <UISelect value={value} onValueChange={onChange}>
+        <SelectTrigger className={className}>
+          <div className="flex items-center gap-2">
+            {selectedOption?.icon && (
+              <span className="flex-shrink-0">{selectedOption.icon}</span>
+            )}
+            <span>{selectedOption?.label || placeholder}</span>
+          </div>
+        </SelectTrigger>
+        <SelectContent>
+          {options.map(option => (
+            <SelectItem key={option.value} value={option.value}>
+              <div className="flex items-center gap-2">
+                {option.icon && <span className="flex-shrink-0">{option.icon}</span>}
+                <div className="flex flex-col items-start">
+                  <span className="font-medium">{option.label}</span>
+                  {option.description && (
+                    <span className="text-xs text-muted-foreground">
+                      {option.description}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </UISelect>
+    </div>
   )
 }

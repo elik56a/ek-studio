@@ -1,6 +1,6 @@
 "use client"
 
-import { Input, Label } from "@ek-studio/ui"
+import { Card, NumberInput } from "@ek-studio/ui"
 
 import { useState } from "react"
 
@@ -34,22 +34,17 @@ const UUIDGeneratorTool = () => {
   }
 
   const toolControls = (
-    <div className="flex items-center gap-2">
-      <Label htmlFor="uuid-count" className="text-sm whitespace-nowrap">
-        Count:
-      </Label>
-      <Input
-        id="uuid-count"
-        type="number"
-        min="1"
-        max="100"
+    <Card className="flex-row items-center gap-4 px-6 py-3 bg-background/50 backdrop-blur-sm border-primary/10">
+      <span className="text-sm font-medium whitespace-nowrap">
+        Count
+      </span>
+      <NumberInput
         value={count}
-        onChange={e =>
-          setCount(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))
-        }
-        className="w-[100px]"
+        onChange={setCount}
+        min={1}
+        max={100}
       />
-    </div>
+    </Card>
   )
 
   return (
@@ -88,6 +83,7 @@ const UUIDGeneratorTool = () => {
         onExampleClick: handleExampleClick,
       }}
       toolControls={toolControls}
+      toolControlsPosition="inline"
     />
   )
 }
