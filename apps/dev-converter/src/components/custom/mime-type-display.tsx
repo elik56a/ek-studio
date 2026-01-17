@@ -59,99 +59,101 @@ export function MimeTypeDisplay() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Search Bar */}
-      <div className="space-y-4">
-        <SearchInput
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          placeholder="Search by extension, MIME type, or description..."
-          className="w-full"
-        />
+    <Card className="glass border-0 shadow-glow overflow-hidden">
+      <div className="space-y-6 p-4 sm:p-6">
+        {/* Search Bar */}
+        <div className="space-y-4">
+          <SearchInput
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            placeholder="Search by extension, MIME type, or description..."
+            className="w-full"
+          />
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap gap-2">
-          {categories.map(category => (
-            <Badge
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`cursor-pointer transition-all ${
-                selectedCategory === category
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-muted text-muted-foreground border-border hover:bg-muted/80"
-              }`}
-            >
-              {category}
-            </Badge>
-          ))}
-        </div>
-      </div>
-
-      {/* Results Count */}
-      <div className="text-sm text-muted-foreground">
-        Showing {filteredResults.length} MIME type
-        {filteredResults.length !== 1 ? "s" : ""}
-      </div>
-
-      {/* Results Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 max-h-[600px] overflow-y-auto pr-2">
-        {filteredResults.length === 0 ? (
-          <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
-            <FileText className="h-12 w-12 text-muted-foreground/50 mb-4" />
-            <p className="text-sm text-muted-foreground">
-              No MIME types found matching your search
-            </p>
+          {/* Category Filter */}
+          <div className="flex flex-wrap gap-2">
+            {categories.map(category => (
+              <Badge
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`cursor-pointer transition-all ${
+                  selectedCategory === category
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-muted text-muted-foreground border-border hover:bg-muted/80"
+                }`}
+              >
+                {category}
+              </Badge>
+            ))}
           </div>
-        ) : (
-          filteredResults.map((item, index) => (
-            <Card
-              key={`${item.extension}-${index}`}
-              className="p-3 bg-background/50 border-border/50 hover:border-primary/30 transition-colors"
-            >
-              <div className="space-y-2">
-                {/* Header */}
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-1.5 min-w-0 flex-1">
-                    <code className="text-xs font-bold text-foreground bg-muted/50 px-1.5 py-0.5 rounded">
-                      {item.extension}
+        </div>
+
+        {/* Results Count */}
+        <div className="text-sm text-muted-foreground">
+          Showing {filteredResults.length} MIME type
+          {filteredResults.length !== 1 ? "s" : ""}
+        </div>
+
+        {/* Results Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 max-h-[600px] overflow-y-auto pr-2">
+          {filteredResults.length === 0 ? (
+            <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
+              <FileText className="h-12 w-12 text-muted-foreground/50 mb-4" />
+              <p className="text-sm text-muted-foreground">
+                No MIME types found matching your search
+              </p>
+            </div>
+          ) : (
+            filteredResults.map((item, index) => (
+              <Card
+                key={`${item.extension}-${index}`}
+                className="p-3 bg-primary/5 border-primary/20 hover:border-primary/30 hover:bg-primary/10 transition-colors"
+              >
+                <div className="space-y-2">
+                  {/* Header */}
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                      <code className="text-xs font-bold text-foreground bg-muted/50 px-1.5 py-0.5 rounded">
+                        {item.extension}
+                      </code>
+                      <Badge
+                        className={`text-[10px] ${categoryColors[item.category] || categoryColors.Other}`}
+                      >
+                        {item.category}
+                      </Badge>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-xs text-muted-foreground line-clamp-2">
+                    {item.description}
+                  </p>
+
+                  {/* MIME Type with Copy */}
+                  <div className="flex items-center gap-1.5">
+                    <code className="flex-1 text-xs font-mono bg-muted/30 px-2 py-1.5 rounded border border-border/50 break-all">
+                      {item.mimeType}
                     </code>
-                    <Badge
-                      className={`text-[10px] ${categoryColors[item.category] || categoryColors.Other}`}
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleCopy(item.mimeType, index)}
+                      className="shrink-0 h-7 w-7 p-0"
+                      title="Copy MIME type"
                     >
-                      {item.category}
-                    </Badge>
+                      {copiedIndex === index ? (
+                        <Check className="h-3.5 w-3.5 text-green-600" />
+                      ) : (
+                        <Copy className="h-3.5 w-3.5" />
+                      )}
+                    </Button>
                   </div>
                 </div>
-
-                {/* Description */}
-                <p className="text-xs text-muted-foreground line-clamp-2">
-                  {item.description}
-                </p>
-
-                {/* MIME Type with Copy */}
-                <div className="flex items-center gap-1.5">
-                  <code className="flex-1 text-xs font-mono bg-muted/30 px-2 py-1.5 rounded border border-border/50 break-all">
-                    {item.mimeType}
-                  </code>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleCopy(item.mimeType, index)}
-                    className="shrink-0 h-7 w-7 p-0"
-                    title="Copy MIME type"
-                  >
-                    {copiedIndex === index ? (
-                      <Check className="h-3.5 w-3.5 text-green-600" />
-                    ) : (
-                      <Copy className="h-3.5 w-3.5" />
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </Card>
-          ))
-        )}
+              </Card>
+            ))
+          )}
+        </div>
       </div>
-    </div>
+    </Card>
   )
 }
