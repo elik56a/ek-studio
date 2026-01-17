@@ -50,30 +50,30 @@ export function ColorOutputDisplay({
   const items = [
     hexMatch && {
       icon: Hash,
-      title: "HEX",
+      title: "HEX" as const,
       value: hexMatch[1],
     },
     rgbMatch && {
       icon: Droplet,
-      title: "RGB",
+      title: "RGB" as const,
       value: rgbMatch[1],
     },
     hslMatch && {
       icon: Palette,
-      title: "HSL",
+      title: "HSL" as const,
       value: hslMatch[1],
     },
     rgbaMatch && {
       icon: Pipette,
-      title: "RGBA",
+      title: "RGBA" as const,
       value: rgbaMatch[1],
     },
     hslaMatch && {
       icon: Palette,
-      title: "HSLA",
+      title: "HSLA" as const,
       value: hslaMatch[1],
     },
-  ].filter(Boolean)
+  ].filter((item): item is NonNullable<typeof item> => Boolean(item))
 
   return (
     <div className="space-y-3 h-full relative">
