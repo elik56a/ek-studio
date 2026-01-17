@@ -7,8 +7,10 @@ export {
 } from "./accordion"
 export { Badge } from "./badge"
 export { Button } from "./button"
+export { ButtonWithTooltip } from "./button-with-tooltip"
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card"
 export { Checkbox } from "./checkbox"
+export { Collapsible } from "./collapsible"
 export {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -33,6 +35,7 @@ export { SearchInput } from "./search-input"
 export { FileUpload } from "./file-upload"
 export { Carousel } from "./carousel"
 export type { CarouselItem } from "./carousel"
+export { SidePanel } from "./side-panel"
 export {
   Select,
   SelectContent,
