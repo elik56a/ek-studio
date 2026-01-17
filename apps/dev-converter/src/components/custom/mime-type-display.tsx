@@ -1,17 +1,10 @@
 "use client"
 
-import { Badge, Button } from "@ek-studio/ui"
-import { Card } from "@ek-studio/ui"
+import { useState, useMemo } from "react"
+import { SearchInput, Badge, Button, Card } from "@ek-studio/ui"
 import { Check, Copy, FileText } from "lucide-react"
-
-import { useState } from "react"
-
-import { MimeTypeInfo } from "@/features/data/mime"
-
-interface MimeTypeDisplayProps {
-  results: MimeTypeInfo[]
-  placeholder?: string
-}
+import { mimeDatabase, getAllCategories } from "@/features/data/mime"
+import { useCopy } from "@/hooks/use-copy"
 
 const categoryColors: Record<string, string> = {
   Image: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
@@ -28,89 +21,137 @@ const categoryColors: Record<string, string> = {
   Other: "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/20",
 }
 
-export function MimeTypeDisplay({
-  results,
-  placeholder = "MIME type information will appear here...",
-}: MimeTypeDisplayProps) {
+export function MimeTypeDisplay() {
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState<string>("All")
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
+  const { copy } = useCopy({ successMessage: "MIME type copied!" })
+
+  const categories = useMemo(() => ["All", ...getAllCategories()], [])
+
+  // Filter MIME types based on search and category
+  const filteredResults = useMemo(() => {
+    let results = mimeDatabase
+
+    // Filter by category
+    if (selectedCategory !== "All") {
+      results = results.filter(item => item.category === selectedCategory)
+    }
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+      results = results.filter(
+        item =>
+          item.extension.toLowerCase().includes(query) ||
+          item.mimeType.toLowerCase().includes(query) ||
+          item.description.toLowerCase().includes(query)
+      )
+    }
+
+    return results
+  }, [searchQuery, selectedCategory])
 
   const handleCopy = async (mimeType: string, index: number) => {
-    try {
-      await navigator.clipboard.writeText(mimeType)
-      setCopiedIndex(index)
-      setTimeout(() => setCopiedIndex(null), 2000)
-    } catch (err) {
-      console.error("Failed to copy:", err)
-    }
-  }
-
-  if (!results || results.length === 0) {
-    return (
-      <div className="w-full h-full min-h-[200px] flex items-center justify-center bg-muted/30 border border-border/50 rounded-lg">
-        <div className="text-center space-y-2">
-          <FileText className="h-12 w-12 text-muted-foreground/50 mx-auto" />
-          <p className="text-sm text-muted-foreground">{placeholder}</p>
-        </div>
-      </div>
-    )
+    await copy(mimeType)
+    setCopiedIndex(index)
+    setTimeout(() => setCopiedIndex(null), 2000)
   }
 
   return (
-    <div className="w-full max-h-[500px] overflow-y-auto space-y-2 pr-2 relative">
-      {/* Animated border glow */}
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 opacity-50 blur-lg -z-10 animate-pulse" />
+    <div className="space-y-6">
+      {/* Search Bar */}
+      <div className="space-y-4">
+        <SearchInput
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          placeholder="Search by extension, MIME type, or description..."
+          className="w-full"
+        />
 
-      {results.length > 1 && (
-        <div className="text-xs text-muted-foreground mb-2">
-          Found {results.length} result{results.length !== 1 ? "s" : ""}
+        {/* Category Filter */}
+        <div className="flex flex-wrap gap-2">
+          {categories.map(category => (
+            <Badge
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`cursor-pointer transition-all ${
+                selectedCategory === category
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-muted text-muted-foreground border-border hover:bg-muted/80"
+              }`}
+            >
+              {category}
+            </Badge>
+          ))}
         </div>
-      )}
+      </div>
 
-      {results.map((item, index) => (
-        <Card
-          key={`${item.extension}-${index}`}
-          className="p-3 bg-background/50 border-border/50 hover:border-primary/30 transition-colors"
-        >
-          <div className="space-y-2">
-            {/* Header with extension and category */}
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 min-w-0 flex-1">
-                <code className="text-sm font-bold text-foreground bg-muted/50 px-1.5 py-0.5 rounded">
-                  {item.extension}
-                </code>
-                <Badge
-                  className={`text-xs ${categoryColors[item.category] || categoryColors.Other}`}
-                >
-                  {item.category}
-                </Badge>
-              </div>
-            </div>
+      {/* Results Count */}
+      <div className="text-sm text-muted-foreground">
+        Showing {filteredResults.length} MIME type
+        {filteredResults.length !== 1 ? "s" : ""}
+      </div>
 
-            {/* Description */}
-            <p className="text-xs text-muted-foreground">{item.description}</p>
-
-            {/* MIME Type with Copy Button */}
-            <div className="flex items-center gap-2">
-              <code className="flex-1 text-xs font-mono bg-muted/30 px-2 py-1.5 rounded border border-border/50 break-all">
-                {item.mimeType}
-              </code>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => handleCopy(item.mimeType, index)}
-                className="shrink-0 h-7 w-7 p-0"
-                title="Copy MIME type"
-              >
-                {copiedIndex === index ? (
-                  <Check className="h-3.5 w-3.5 text-green-600" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5" />
-                )}
-              </Button>
-            </div>
+      {/* Results Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 max-h-[600px] overflow-y-auto pr-2">
+        {filteredResults.length === 0 ? (
+          <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
+            <FileText className="h-12 w-12 text-muted-foreground/50 mb-4" />
+            <p className="text-sm text-muted-foreground">
+              No MIME types found matching your search
+            </p>
           </div>
-        </Card>
-      ))}
+        ) : (
+          filteredResults.map((item, index) => (
+            <Card
+              key={`${item.extension}-${index}`}
+              className="p-3 bg-background/50 border-border/50 hover:border-primary/30 transition-colors"
+            >
+              <div className="space-y-2">
+                {/* Header */}
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                    <code className="text-xs font-bold text-foreground bg-muted/50 px-1.5 py-0.5 rounded">
+                      {item.extension}
+                    </code>
+                    <Badge
+                      className={`text-[10px] ${categoryColors[item.category] || categoryColors.Other}`}
+                    >
+                      {item.category}
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p className="text-xs text-muted-foreground line-clamp-2">
+                  {item.description}
+                </p>
+
+                {/* MIME Type with Copy */}
+                <div className="flex items-center gap-1.5">
+                  <code className="flex-1 text-xs font-mono bg-muted/30 px-2 py-1.5 rounded border border-border/50 break-all">
+                    {item.mimeType}
+                  </code>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => handleCopy(item.mimeType, index)}
+                    className="shrink-0 h-7 w-7 p-0"
+                    title="Copy MIME type"
+                  >
+                    {copiedIndex === index ? (
+                      <Check className="h-3.5 w-3.5 text-green-600" />
+                    ) : (
+                      <Copy className="h-3.5 w-3.5" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          ))
+        )}
+      </div>
     </div>
   )
 }

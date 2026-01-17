@@ -5,7 +5,7 @@ export const mimeTypeLookupTool: Tool = {
   slug: "mime-type-lookup",
   name: "MIME Type Lookup",
   description:
-    "Find the correct MIME type / Content-Type for any file extension (e.g., .pdf, .png, .json) — helpful for uploads, APIs, and headers",
+    "Browse and search MIME types / Content-Types for file extensions — helpful for uploads, APIs, and headers",
   category: "utility",
   type: "converter",
   keywords: [
@@ -31,13 +31,13 @@ export const mimeTypeLookupTool: Tool = {
   },
   info: {
     description:
-      "MIME Type Lookup helps you find the correct Content-Type header value for a file extension—fast. MIME types tell browsers and servers how to treat a file (render an image, play a video, parse JSON, or download a document). Using the right Content-Type matters for file uploads, API responses, CDN caching, and security controls that prevent content sniffing. Enter an extension with or without a dot (pdf or .pdf) and instantly get the standard MIME type you can use in HTTP headers, server configs, and upload validation logic.",
+      "MIME Type Lookup helps you browse and search the complete database of MIME types (Content-Type headers) for file extensions. MIME types tell browsers and servers how to treat a file (render an image, play a video, parse JSON, or download a document). Using the right Content-Type matters for file uploads, API responses, CDN caching, and security controls that prevent content sniffing. Browse the full list or search by extension, MIME type, or description to find what you need. Filter by category to narrow down results.",
     howToUse: [
-      "Type a file extension (example: pdf, .png, mp4, json)",
-      "Click Lookup to get the MIME type / Content-Type",
-      "Copy the result (example: application/pdf)",
-      "Use it in HTTP headers, upload validation, or server/CDN configuration",
-      "Repeat for other extensions while building file handling rules",
+      "Browse the complete list of MIME types by default",
+      "Use the search bar to filter by extension, MIME type, or description",
+      "Click category badges to filter by type (Image, Document, Video, etc.)",
+      "Click the copy button next to any MIME type to copy it to clipboard",
+      "Use the copied MIME type in HTTP headers, upload validation, or server configuration",
     ],
     useCases: [
       "Set correct Content-Type headers for API responses and static files",
@@ -46,40 +46,38 @@ export const mimeTypeLookupTool: Tool = {
       "Configure CDNs and object storage metadata correctly",
       "Prevent serving content under the wrong type (security hardening)",
       "Map file extensions when generating signed URLs or upload policies",
+      "Quick reference when building file upload systems",
+      "Discover MIME types for uncommon file extensions",
     ],
     features: [
-      "Instant file extension → MIME type lookup",
-      "Accepts inputs with or without a dot (.pdf and pdf)",
-      "Provides copy-ready Content-Type values for HTTP headers",
-      "Useful for uploads, APIs, CDNs, and server configuration",
-      "Text-only input (no file upload required)",
+      "Browse complete MIME type database by default",
+      "Real-time search filtering by extension, MIME type, or description",
+      "Category-based filtering (Image, Document, Video, Audio, etc.)",
+      "One-click copy to clipboard for any MIME type",
+      "Clean, organized display with descriptions",
+      "No conversion needed - just search and copy",
     ],
   },
   examples: [
     {
-      title: "MIME type for PDF",
-      input: ".pdf",
-      description: "Find the Content-Type for PDF documents",
+      title: "Search for PDF",
+      input: "pdf",
+      description: "Search for PDF document MIME type",
     },
     {
-      title: "MIME type for JPEG",
-      input: "jpg",
-      description: "Look up the MIME type for JPEG images",
+      title: "Search for images",
+      input: "image",
+      description: "Find all image-related MIME types",
     },
     {
-      title: "MIME type for JavaScript",
-      input: ".js",
-      description: "Get the correct Content-Type for JS files",
+      title: "Filter by video",
+      input: "video",
+      description: "Browse video format MIME types",
     },
     {
-      title: "MIME type for MP4 video",
-      input: ".mp4",
-      description: "Look up the MIME type for MP4 media files",
-    },
-    {
-      title: "MIME type for JSON",
+      title: "Search JSON",
       input: "json",
-      description: "Find the standard MIME type for JSON responses",
+      description: "Find JSON MIME type",
     },
   ],
   faq: [
@@ -89,14 +87,14 @@ export const mimeTypeLookupTool: Tool = {
         "A MIME type (often used as the HTTP Content-Type header) tells the browser or client what kind of content is being served, like application/json or image/png.",
     },
     {
-      question: "How do I find the MIME type for a file extension?",
+      question: "How do I search for a MIME type?",
       answer:
-        "Enter the extension (with or without a dot) and this tool returns the standard MIME type you can copy into headers or configs.",
+        "Use the search bar to filter by file extension, MIME type, or description. You can also click category badges to filter by type (Image, Document, Video, etc.).",
     },
     {
-      question: "Do I need to include the dot in the extension?",
+      question: "Can I browse all MIME types?",
       answer:
-        "No. Both pdf and .pdf work and return the same MIME type result.",
+        "Yes! By default, the tool shows the complete database of MIME types. You can scroll through the list or use search/filters to narrow down results.",
     },
     {
       question: "Why does Content-Type matter for uploads and APIs?",
@@ -109,9 +107,9 @@ export const mimeTypeLookupTool: Tool = {
         "Files may render incorrectly, be downloaded unexpectedly, fail security checks, or trigger browser warnings (especially for scripts and JSON).",
     },
     {
-      question: "Does this tool upload any files?",
+      question: "How do I copy a MIME type?",
       answer:
-        "No. You only enter a file extension as text, and the lookup runs instantly.",
+        "Click the copy button next to any MIME type in the results list. The MIME type will be copied to your clipboard instantly.",
     },
   ],
   relatedTools: [
