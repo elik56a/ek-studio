@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { createPortal } from "react-dom"
 import { X } from "lucide-react"
 
 import { cn } from "./utils"
@@ -31,6 +32,13 @@ const SidePanel = React.forwardRef<HTMLDivElement, SidePanelProps>(
     },
     ref
   ) => {
+    const [mounted, setMounted] = React.useState(false)
+
+    React.useEffect(() => {
+      setMounted(true)
+      return () => setMounted(false)
+    }, [])
+
     // Close on escape key
     React.useEffect(() => {
       const handleEscape = (e: KeyboardEvent) => {
@@ -42,7 +50,9 @@ const SidePanel = React.forwardRef<HTMLDivElement, SidePanelProps>(
       return () => document.removeEventListener("keydown", handleEscape)
     }, [open, onOpenChange])
 
-    return (
+    if (!mounted) return null
+
+    const panelContent = (
       <>
         {/* Backdrop */}
         {showBackdrop && open && (
@@ -88,6 +98,8 @@ const SidePanel = React.forwardRef<HTMLDivElement, SidePanelProps>(
         </div>
       </>
     )
+
+    return createPortal(panelContent, document.body)
   }
 )
 

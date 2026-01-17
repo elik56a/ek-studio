@@ -104,45 +104,14 @@ export function DiffViewer({
   }
 
   return (
-    <Card
-      className={cn("glass border-0 shadow-glow overflow-hidden", className)}
-    >
-      {/* Header with Title and Stats */}
-      <CardHeader className="pb-4 px-4 sm:px-6 border-b border-border/50 bg-background/50">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <ArrowDown className="h-6 w-6 text-primary" />
-            <h2 className="text-xl sm:text-2xl font-bold">
-              Comparison Results
-            </h2>
-          </div>
-          {(addedLines !== undefined || removedLines !== undefined) && (
-            <div className="flex items-center gap-2 sm:gap-3">
-              {addedLines !== undefined && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
-                  <span className="text-xs font-semibold text-green-600 dark:text-green-400">
-                    +{addedLines}
-                  </span>
-                </div>
-              )}
-              {removedLines !== undefined && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/20">
-                  <span className="text-xs font-semibold text-red-600 dark:text-red-400">
-                    -{removedLines}
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </CardHeader>
-
-      {/* Side Panel for Changes List */}
+    <>
+      {/* Side Panel for Changes List - Outside Card for full-page overlay */}
       <SidePanel
         open={showChangesList}
         onOpenChange={setShowChangesList}
         title="Changes Overview"
         width="350px"
+        showBackdrop={false}
       >
         <div className="p-4">
           {changeBlocks.length > 0 ? (
@@ -202,10 +171,43 @@ export function DiffViewer({
         </div>
       </SidePanel>
 
+      <Card
+        className={cn("glass border-0 shadow-glow overflow-hidden", className)}
+      >
+      {/* Header with Title and Stats */}
+      <CardHeader className="pb-4 px-4 sm:px-6 border-b border-border/50 bg-background/50">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <ArrowDown className="h-6 w-6 text-primary" />
+            <h2 className="text-xl sm:text-2xl font-bold">
+              Comparison Results
+            </h2>
+          </div>
+          {(addedLines !== undefined || removedLines !== undefined) && (
+            <div className="flex items-center gap-2 sm:gap-3">
+              {addedLines !== undefined && (
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
+                  <span className="text-xs font-semibold text-green-600 dark:text-green-400">
+                    +{addedLines}
+                  </span>
+                </div>
+              )}
+              {removedLines !== undefined && (
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/20">
+                  <span className="text-xs font-semibold text-red-600 dark:text-red-400">
+                    -{removedLines}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </CardHeader>
+
       {/* Toolbar */}
       <div className="sticky top-0 z-10 flex items-center justify-between gap-3 px-4 py-2.5 border-b border-border/50 bg-background/95 backdrop-blur-sm shadow-md flex-wrap">
-        {/* Left side - Search */}
-        <div className="w-full sm:w-auto sm:min-w-[200px] sm:max-w-[300px] flex-1">
+        {/* Left side - Search (fills available space) */}
+        <div className="flex-1 min-w-[200px]">
           <SearchInput
             placeholder="Search in diff..."
             value={searchQuery}
@@ -213,6 +215,9 @@ export function DiffViewer({
             onClear={() => setSearchQuery("")}
           />
         </div>
+
+        {/* Separator */}
+        <div className="h-6 w-px bg-border" />
 
         {/* Right side - Controls */}
         <div className="flex items-center gap-2 flex-wrap">
@@ -235,7 +240,7 @@ export function DiffViewer({
               </ButtonWithTooltip>
 
               {/* Separator */}
-              <div className="h-6 w-px bg-border/50" />
+              <div className="h-6 w-px bg-border" />
             </>
           )}
 
@@ -268,7 +273,7 @@ export function DiffViewer({
           </div>
 
           {/* Separator */}
-          <div className="h-6 w-px bg-border/50" />
+          <div className="h-6 w-px bg-border" />
 
           {/* View Mode */}
           <div className="flex items-center gap-2">
@@ -294,7 +299,7 @@ export function DiffViewer({
           </div>
 
           {/* Separator */}
-          <div className="h-6 w-px bg-border/50" />
+          <div className="h-6 w-px bg-border" />
 
           {/* Whitespace Toggle */}
           <div className="flex items-center gap-2">
@@ -325,6 +330,7 @@ export function DiffViewer({
         )}
       </CardContent>
     </Card>
+    </>
   )
 }
 
