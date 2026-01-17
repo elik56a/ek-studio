@@ -1,9 +1,9 @@
 "use client"
 
-import { Button, cn } from "@ek-studio/ui"
-import { Calendar, Check, Clock, Copy, Globe, Hash, Timer } from "lucide-react"
+import { cn } from "@ek-studio/ui"
+import { Calendar, Clock, Globe, Hash, Timer } from "lucide-react"
 
-import { useCopy } from "@/hooks/use-copy"
+import { InfoRow } from "@/components/common/info-row"
 
 interface TimestampDisplayProps {
   timestamp: number
@@ -22,43 +22,31 @@ export function TimestampDisplay({
   relative,
   className,
 }: TimestampDisplayProps) {
-  const { copy } = useCopy()
-
   const items = [
     {
       icon: Hash,
-      label: "Unix",
+      title: "Unix",
       value: timestamp.toString(),
-      color: "text-blue-600 dark:text-blue-400",
-      bgColor: "bg-blue-500/10",
     },
     {
       icon: Calendar,
-      label: "ISO 8601",
+      title: "ISO 8601",
       value: iso,
-      color: "text-purple-600 dark:text-purple-400",
-      bgColor: "bg-purple-500/10",
     },
     {
       icon: Globe,
-      label: "UTC",
+      title: "UTC",
       value: utc,
-      color: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-500/10",
     },
     {
       icon: Clock,
-      label: "Local",
+      title: "Local",
       value: local,
-      color: "text-orange-600 dark:text-orange-400",
-      bgColor: "bg-orange-500/10",
     },
     {
       icon: Timer,
-      label: "Relative",
+      title: "Relative",
       value: relative,
-      color: "text-pink-600 dark:text-pink-400",
-      bgColor: "bg-pink-500/10",
     },
   ]
 
@@ -67,41 +55,9 @@ export function TimestampDisplay({
       {/* Animated border glow */}
       <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 opacity-50 blur-lg -z-10 animate-pulse" />
 
-      {items.map((item, index) => {
-        const Icon = item.icon
-        return (
-          <div
-            key={index}
-            className={cn(
-              "flex items-center gap-2 p-2 rounded-md border transition-colors hover:bg-muted/50 group",
-              item.bgColor,
-              "border-border/50"
-            )}
-          >
-            <Icon className={cn("h-3.5 w-3.5 flex-shrink-0", item.color)} />
-            <span
-              className={cn(
-                "text-xs font-medium flex-shrink-0 min-w-[60px]",
-                item.color
-              )}
-            >
-              {item.label}
-            </span>
-            <span className="text-xs font-mono text-foreground/90 break-all flex-1">
-              {item.value}
-            </span>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => copy(item.value)}
-              className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-              title={`Copy ${item.label}`}
-            >
-              <Copy className="h-3 w-3" />
-            </Button>
-          </div>
-        )
-      })}
+      {items.map((item, index) => (
+        <InfoRow key={index} {...item} />
+      ))}
     </div>
   )
 }

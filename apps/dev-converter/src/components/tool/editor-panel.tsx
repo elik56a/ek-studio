@@ -4,6 +4,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
+  Input,
   Textarea,
   Tooltip,
   TooltipContent,
@@ -36,6 +37,7 @@ interface EditorPanelProps {
   inputActions?: React.ReactNode
   showAutoDetect?: boolean // New prop to indicate auto-detection
   autoDetectLabel?: string // Label to show what was detected (e.g., "Encoded", "Plain Text")
+  useInputField?: boolean // New prop to use Input instead of Textarea
 }
 
 export function EditorPanel({
@@ -59,6 +61,7 @@ export function EditorPanel({
   inputActions,
   showAutoDetect = false,
   autoDetectLabel,
+  useInputField = false,
 }: EditorPanelProps) {
   const showInput = inputValue !== undefined && onInputChange !== undefined
   const isOutputAnimating = useOutputAnimation(outputValue)
@@ -118,6 +121,14 @@ export function EditorPanel({
             <CardContent className="flex-1 sm:p-6 pt-3 sm:pt-4">
               {customInputComponent ? (
                 customInputComponent
+              ) : useInputField ? (
+                <Input
+                  value={inputValue}
+                  onChange={e => onInputChange(e.target.value)}
+                  placeholder={inputPlaceholder}
+                  autoFocus
+                  className="w-full h-11 font-mono text-xs sm:text-sm bg-background/50 border-border/50 focus:bg-background focus:border-primary/50 transition-all duration-200"
+                />
               ) : (
                 <Textarea
                   value={inputValue}

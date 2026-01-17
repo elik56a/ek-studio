@@ -131,8 +131,7 @@ export const unixTimestampConverterTool: Tool = {
     "color-converter",
   ],
   ui: {
-    inputPlaceholder:
-      "Enter epoch time (e.g., 1704672000 / 1704672000000) or a date (e.g., 2024-01-08T00:00:00Z)...",
+    inputPlaceholder: "1704672000 or 2024-01-08T00:00:00Z",
     outputPlaceholder: "Converted date/timestamp will appear here...",
     inputLabel: "Timestamp or Date",
     outputLabel: "Converted Result",

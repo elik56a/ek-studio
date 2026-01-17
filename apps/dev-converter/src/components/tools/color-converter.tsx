@@ -46,6 +46,7 @@ const ColorConverterTool = () => {
         inputLabel: tool.ui.inputLabel,
         outputLabel: tool.ui.outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
+        useInputField: true,
         customOutputComponent: (
           <ColorOutputDisplay
             output={output}

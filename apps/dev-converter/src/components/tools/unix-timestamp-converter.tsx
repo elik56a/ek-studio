@@ -68,6 +68,7 @@ const UnixTimestampConverter = () => {
         inputLabel: tool.ui.inputLabel,
         outputLabel: tool.ui.outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
+        useInputField: true,
         customOutputComponent: timestampData ? (
           <TimestampDisplay
             timestamp={timestampData.timestamp}

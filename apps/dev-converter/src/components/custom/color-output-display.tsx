@@ -1,6 +1,10 @@
 "use client"
 
 import { useRef } from "react"
+import { cn } from "@ek-studio/ui"
+import { Palette, Hash, Droplet, Pipette } from "lucide-react"
+
+import { InfoRow } from "@/components/common/info-row"
 
 interface ColorOutputDisplayProps {
   output: string
@@ -15,14 +19,22 @@ export function ColorOutputDisplay({
 }: ColorOutputDisplayProps) {
   const colorInputRef = useRef<HTMLInputElement>(null)
 
-  // Extract hex color from output
-  let colorPreview = ""
-  if (output) {
-    const hexMatch = output.match(/HEX:\s+(#[A-Fa-f0-9]{6})/)
-    if (hexMatch) {
-      colorPreview = hexMatch[1]
-    }
+  if (!output) {
+    return (
+      <div className="w-full h-full min-h-[100px] flex items-center justify-center bg-muted/30 border border-border/50 rounded-lg">
+        <p className="text-sm text-muted-foreground">{placeholder}</p>
+      </div>
+    )
   }
+
+  // Parse color values from output
+  const hexMatch = output.match(/HEX:\s+(#[A-Fa-f0-9]{6})/)
+  const rgbMatch = output.match(/RGB:\s+(.+)/)
+  const hslMatch = output.match(/HSL:\s+(.+)/)
+  const rgbaMatch = output.match(/RGBA:\s+(.+)/)
+  const hslaMatch = output.match(/HSLA:\s+(.+)/)
+
+  const colorPreview = hexMatch ? hexMatch[1] : ""
 
   const handleColorPickerClick = () => {
     colorInputRef.current?.click()
@@ -35,13 +47,33 @@ export function ColorOutputDisplay({
     }
   }
 
-  if (!output) {
-    return (
-      <div className="w-full h-full min-h-[100px] flex items-center justify-center bg-muted/30 border border-border/50 rounded-lg">
-        <p className="text-sm text-muted-foreground">{placeholder}</p>
-      </div>
-    )
-  }
+  const items = [
+    hexMatch && {
+      icon: Hash,
+      title: "HEX",
+      value: hexMatch[1],
+    },
+    rgbMatch && {
+      icon: Droplet,
+      title: "RGB",
+      value: rgbMatch[1],
+    },
+    hslMatch && {
+      icon: Palette,
+      title: "HSL",
+      value: hslMatch[1],
+    },
+    rgbaMatch && {
+      icon: Pipette,
+      title: "RGBA",
+      value: rgbaMatch[1],
+    },
+    hslaMatch && {
+      icon: Palette,
+      title: "HSLA",
+      value: hslaMatch[1],
+    },
+  ].filter(Boolean)
 
   return (
     <div className="space-y-3 h-full relative">
@@ -75,10 +107,12 @@ export function ColorOutputDisplay({
         />
       </div>
 
-      {/* Color Values Output */}
-      <pre className="w-full p-3 font-mono text-xs sm:text-sm bg-muted/30 border border-border/50 rounded-md overflow-auto whitespace-pre-wrap break-all">
-        {output}
-      </pre>
+      {/* Color Values as InfoRows */}
+      <div className="space-y-1.5">
+        {items.map((item, index) => (
+          <InfoRow key={index} {...item} />
+        ))}
+      </div>
     </div>
   )
 }

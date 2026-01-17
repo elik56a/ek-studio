@@ -39,6 +39,7 @@ interface ToolLayoutProps {
     showAutoDetect?: boolean
     autoDetectLabel?: string
     inputActions?: React.ReactNode
+    useInputField?: boolean
   }
   footerProps: {
     examples?: Array<{ title: string; input: string; description?: string }>

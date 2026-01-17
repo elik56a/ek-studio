@@ -128,8 +128,7 @@ export const colorConverterTool: Tool = {
     "url-encode-decode",
   ],
   ui: {
-    inputPlaceholder:
-      "Enter a color (e.g., #FF5733, #F80, rgb(255, 87, 51), hsl(9, 100%, 60%))...",
+    inputPlaceholder: "#FF5733 or rgb(255, 87, 51)",
     outputPlaceholder: "Converted color values will appear here...",
     inputLabel: "Color Input",
     outputLabel: "Converted Values",
