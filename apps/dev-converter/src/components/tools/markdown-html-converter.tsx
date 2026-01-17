@@ -56,6 +56,8 @@ const MarkdownHtmlConverter = () => {
       onChange={handleModeChange}
       align="left"
       size="sm"
+      className="w-[200px]"
+      label="Conversion Mode"
     />
   )
 

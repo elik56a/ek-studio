@@ -4,7 +4,7 @@ import * as React from "react"
 import { X } from "lucide-react"
 
 import { cn } from "./utils"
-import { ButtonWithTooltip } from "./button-with-tooltip"
+import { Button } from "./button"
 
 export interface SidePanelProps {
   open: boolean
@@ -72,14 +72,14 @@ const SidePanel = React.forwardRef<HTMLDivElement, SidePanelProps>(
           {title && (
             <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-background/95 backdrop-blur-sm">
               <h3 className="text-lg font-semibold">{title}</h3>
-              <ButtonWithTooltip
+              <Button
                 variant="ghost"
                 size="icon-sm"
                 onClick={() => onOpenChange(false)}
-                tooltip="Close panel"
+                aria-label="Close panel"
               >
                 <X className="h-4 w-4" />
-              </ButtonWithTooltip>
+              </Button>
             </div>
           )}
 

@@ -8,14 +8,19 @@ import {
   Input,
   Label,
   Textarea,
+  ButtonWithTooltip,
+  Collapsible,
+  SidePanel,
 } from "@ek-studio/ui"
 import { cn } from "@ek-studio/ui"
+import { ChevronDown, ChevronUp, BookOpen } from "lucide-react"
 
 import { useEffect, useRef, useState } from "react"
 
 import { RegexCheatSheet } from "@/components/custom/regex-cheat-sheet"
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { testRegex, testRegexWithFormatting } from "@/features/text/regex"
+import { testRegexWithFormatting } from "@/features/text/regex/format"
+import { getHighlightedParts, parseExampleInput } from "@/features/text/regex/render"
 import { useTool } from "@/hooks/use-tool"
 
 const RegexTesterTool = () => {
@@ -29,6 +34,8 @@ const RegexTesterTool = () => {
     y: false,
   })
   const [testText, setTestText] = useState("")
+  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false)
+  const [isCheatSheetOpen, setIsCheatSheetOpen] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -48,7 +55,6 @@ const RegexTesterTool = () => {
     toolSlug,
     tool,
     relatedTools,
-    handleExampleClick,
     convert,
   } = useTool({
     convertFn,
@@ -96,52 +102,21 @@ const RegexTesterTool = () => {
 
   // Highlight matches in the test text
   const renderHighlightedText = () => {
-    if (!input || !regexPattern) {
+    const result = getHighlightedParts(regexPattern, flags, input)
+
+    if (result.type === "empty" || result.type === "no-matches") {
       return (
-        <div className="text-muted-foreground text-sm">
-          {tool.ui.inputPlaceholder}
+        <div className="flex items-center justify-center h-32 text-center">
+          <p className="text-muted-foreground/60 text-sm italic">
+            {result.message}
+          </p>
         </div>
       )
-    }
-
-    const flagsString = Object.entries(flags)
-      .filter(([_, enabled]) => enabled)
-      .map(([flag]) => flag)
-      .join("")
-
-    const fullRegex = `/${regexPattern}/${flagsString}`
-    const result = testRegex(fullRegex, input)
-
-    if (!result.success || !result.data || result.data.matches.length === 0) {
-      return (
-        <div className="whitespace-pre-wrap break-words font-mono text-sm">
-          {input}
-        </div>
-      )
-    }
-
-    const matches = result.data.matches
-    const parts: { text: string; isMatch: boolean; matchIndex?: number }[] = []
-    let lastIndex = 0
-
-    matches.forEach((match, idx) => {
-      if (match.index > lastIndex) {
-        parts.push({
-          text: input.slice(lastIndex, match.index),
-          isMatch: false,
-        })
-      }
-      parts.push({ text: match.match, isMatch: true, matchIndex: idx + 1 })
-      lastIndex = match.index + match.match.length
-    })
-
-    if (lastIndex < input.length) {
-      parts.push({ text: input.slice(lastIndex), isMatch: false })
     }
 
     return (
       <div className="whitespace-pre-wrap break-words font-mono text-sm">
-        {parts.map((part, idx) =>
+        {result.parts?.map((part, idx) =>
           part.isMatch ? (
             <mark
               key={idx}
@@ -189,6 +164,64 @@ const RegexTesterTool = () => {
         </div>
       </div>
 
+      {/* Advanced Flags Section */}
+      <Collapsible
+        open={isAdvancedOpen}
+        onOpenChange={setIsAdvancedOpen}
+        trigger={
+          <ButtonWithTooltip
+            variant="ghost"
+            size="sm"
+            className="w-full justify-between"
+            tooltip="Toggle advanced regex flags configuration"
+            tooltipSide="right"
+          >
+            <span className="text-sm font-medium">Advanced Flags</span>
+            {isAdvancedOpen ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+          </ButtonWithTooltip>
+        }
+        contentClassName="mt-2"
+      >
+        <div className="flex items-center gap-2 flex-wrap p-3 bg-muted/30 rounded-lg border border-border/50">
+          {[
+            { key: "g", label: "Global" },
+            { key: "i", label: "Ignore Case" },
+            { key: "m", label: "Multiline" },
+            { key: "s", label: "Dot All" },
+            { key: "u", label: "Unicode" },
+            { key: "y", label: "Sticky" },
+          ].map(({ key, label }) => (
+            <div
+              key={key}
+              className={cn(
+                "flex items-center gap-1.5 px-2.5 py-1 rounded-md border transition-all cursor-pointer hover:bg-muted/50",
+                flags[key as keyof typeof flags]
+                  ? "border-primary bg-primary/5"
+                  : "border-border/50"
+              )}
+              onClick={() => handleFlagToggle(key as keyof typeof flags)}
+            >
+              <Checkbox
+                id={`flag-${key}`}
+                checked={flags[key as keyof typeof flags]}
+                onCheckedChange={() => handleFlagToggle(key as keyof typeof flags)}
+              />
+              <label
+                htmlFor={`flag-${key}`}
+                className="text-xs font-medium cursor-pointer flex items-center gap-1 whitespace-nowrap"
+              >
+                <span className="font-mono font-bold text-primary">{key}</span>
+                <span className="text-muted-foreground">- {label}</span>
+              </label>
+            </div>
+          ))}
+        </div>
+      </Collapsible>
+
       {/* Test Text Input */}
       <div className="flex-1 flex flex-col space-y-2 min-h-0">
         <Label className="text-sm font-semibold">Test Text</Label>
@@ -202,142 +235,101 @@ const RegexTesterTool = () => {
     </div>
   )
 
-  const inputToolbar = (
-    <div className="flex items-center gap-2 flex-wrap">
-      <span className="text-xs font-semibold text-muted-foreground mr-1">
-        Regex Flags:
-      </span>
-      {[
-        { key: "g", label: "Global" },
-        { key: "i", label: "Ignore Case" },
-        { key: "m", label: "Multiline" },
-        { key: "s", label: "Dot All" },
-        { key: "u", label: "Unicode" },
-        { key: "y", label: "Sticky" },
-      ].map(({ key, label }) => (
-        <div
-          key={key}
-          className={cn(
-            "flex items-center gap-1.5 px-2.5 py-1 rounded-md border transition-all cursor-pointer hover:bg-muted/50",
-            flags[key as keyof typeof flags]
-              ? "border-primary bg-primary/5"
-              : "border-border/50"
-          )}
-          onClick={() => handleFlagToggle(key as keyof typeof flags)}
-        >
-          <Checkbox
-            id={`flag-${key}`}
-            checked={flags[key as keyof typeof flags]}
-            onCheckedChange={() => handleFlagToggle(key as keyof typeof flags)}
-          />
-          <label
-            htmlFor={`flag-${key}`}
-            className="text-xs font-medium cursor-pointer flex items-center gap-1 whitespace-nowrap"
-          >
-            <span className="font-mono font-bold text-primary">{key}</span>
-            <span className="text-muted-foreground">- {label}</span>
-          </label>
-        </div>
-      ))}
-    </div>
-  )
-
   const customOutputComponent = (
     <div className="h-full flex flex-col gap-4">
       {/* Match Results with Highlighting */}
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col space-y-2 flex-1">
         <div className="flex items-center justify-between">
           <Label className="text-sm font-semibold">Highlighted Matches</Label>
-          {output && output !== "No matches found" && (
-            <Badge variant="secondary" className="text-xs">
-              {output.split("\n\n").length}{" "}
-              {output.split("\n\n").length === 1 ? "match" : "matches"}
-            </Badge>
-          )}
+          <div className="flex items-center gap-2">
+            {output && output !== "No matches found" && (
+              <Badge variant="secondary" className="text-xs">
+                {output.split("\n\n").length}{" "}
+                {output.split("\n\n").length === 1 ? "match" : "matches"}
+              </Badge>
+            )}
+            <ButtonWithTooltip
+              variant="outline"
+              size="sm"
+              onClick={() => setIsCheatSheetOpen(true)}
+              tooltip="Open Regex Cheat Sheet"
+              tooltipSide="left"
+            >
+              <BookOpen className="h-4 w-4" />
+              <span>Cheat Sheet</span>
+            </ButtonWithTooltip>
+          </div>
         </div>
-        <Card className="bg-background/30 border-border/50">
+        <Card className="bg-background/30 border-border/50 flex-1">
           <CardContent className="p-4">{renderHighlightedText()}</CardContent>
-        </Card>
-      </div>
-
-      {/* Regex Cheat Sheet */}
-      <div className="flex-1 flex flex-col space-y-2 min-h-0">
-        <Label className="text-sm font-semibold">Regex Cheat Sheet</Label>
-        <Card className="flex-1 min-h-0 bg-background/30 border-border/50">
-          <CardContent className="p-4 h-full overflow-hidden min-h-[300px] max-h-[500px]">
-            <RegexCheatSheet onInsert={handleInsertPattern} />
-          </CardContent>
         </Card>
       </div>
     </div>
   )
 
   return (
-    <ToolLayout
-      tool={tool}
-      headerProps={{
-        title: tool.name,
-        description: tool.description,
-      }}
-      editorProps={{
-        inputValue: input,
-        outputValue: output,
-        onInputChange: setInput,
-        inputPlaceholder: tool.ui.inputPlaceholder,
-        outputPlaceholder: tool.ui.outputPlaceholder,
-        inputLabel: "Regex Pattern & Test Text",
-        outputLabel: "Results & Cheat Sheet",
-        errorMessage: status === "error" ? statusMessage : undefined,
-        customInputComponent,
-        customOutputComponent,
-        inputActions: inputToolbar,
-      }}
-      toolActionsProps={{
-        onCopy: handleCopy,
-        onClear: handleClearAll,
-        toolSlug: toolSlug,
-        shareData: { input, output },
-        isLoading: status === "loading",
-        hasOutput: !!output,
-        convertLabel: tool.ui.convertLabel,
-        toolName: tool.name,
-        outputValue: output,
-      }}
-      statusProps={{
-        status: status,
-        message: statusMessage,
-      }}
-      footerProps={{
-        examples: tool.examples,
-        faqs: tool.faq,
-        relatedTools,
-        onExampleClick: exampleInput => {
-          // Parse example input format: /pattern/flags\n\ntest text
-          const parts = exampleInput.split("\n\n")
-          if (parts.length >= 2) {
-            const regexPart = parts[0]
-            const testText = parts.slice(1).join("\n\n")
-
-            // Parse regex pattern and flags
-            const match = regexPart.match(/^\/(.+)\/([gimsuvy]*)$/)
-            if (match) {
-              setRegexPattern(match[1])
-              const flagsStr = match[2]
-              setFlags({
-                g: flagsStr.includes("g"),
-                i: flagsStr.includes("i"),
-                m: flagsStr.includes("m"),
-                s: flagsStr.includes("s"),
-                u: flagsStr.includes("u"),
-                y: flagsStr.includes("y"),
-              })
+    <>
+      <ToolLayout
+        tool={tool}
+        headerProps={{
+          title: tool.name,
+          description: tool.description,
+        }}
+        editorProps={{
+          inputValue: input,
+          outputValue: output,
+          onInputChange: setInput,
+          inputPlaceholder: tool.ui.inputPlaceholder,
+          outputPlaceholder: tool.ui.outputPlaceholder,
+          inputLabel: "Regex Pattern & Test Text",
+          outputLabel: "Results & Cheat Sheet",
+          errorMessage: status === "error" ? statusMessage : undefined,
+          customInputComponent,
+          customOutputComponent,
+        }}
+        toolActionsProps={{
+          onCopy: handleCopy,
+          onClear: handleClearAll,
+          toolSlug: toolSlug,
+          shareData: { input, output },
+          isLoading: status === "loading",
+          hasOutput: !!output,
+          convertLabel: tool.ui.convertLabel,
+          toolName: tool.name,
+          outputValue: output,
+        }}
+        statusProps={{
+          status: status,
+          message: statusMessage,
+        }}
+        footerProps={{
+          examples: tool.examples,
+          faqs: tool.faq,
+          relatedTools,
+          onExampleClick: exampleInput => {
+            const parsed = parseExampleInput(exampleInput)
+            if (parsed) {
+              setRegexPattern(parsed.pattern)
+              setFlags(parsed.flags)
+              setInput(parsed.testText)
             }
+          },
+        }}
+      />
 
-            setInput(testText)
-          }
-        },
-      }}
-    />
+      {/* Regex Cheat Sheet Side Panel */}
+      <SidePanel
+        open={isCheatSheetOpen}
+        onOpenChange={setIsCheatSheetOpen}
+        title="Regex Cheat Sheet"
+        side="right"
+        width="500px"
+      >
+        <div className="p-4">
+          <RegexCheatSheet onInsert={handleInsertPattern} />
+        </div>
+      </SidePanel>
+    </>
   )
 }
 
