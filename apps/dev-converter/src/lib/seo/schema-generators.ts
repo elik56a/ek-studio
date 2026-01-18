@@ -26,21 +26,30 @@ function sanitizeText(text: string): string {
  * Handles both relative paths (/about) and already absolute URLs
  */
 function ensureAbsoluteUrl(url: string): string {
-  // Already absolute URL
-  if (url.startsWith("http://") || url.startsWith("https://")) {
-    return url
+  const trimmed = (url || "").trim()
+
+  // Strip leading slashes so "/https://..." becomes "https://..."
+  const noLeadingSlash = trimmed.replace(/^\/+/, "")
+
+  // If it's already absolute (even if it originally had a leading slash) – return as-is
+  if (
+    noLeadingSlash.startsWith("http://") ||
+    noLeadingSlash.startsWith("https://")
+  ) {
+    return noLeadingSlash
   }
 
-  // Remove leading slash to avoid double slashes
-  const cleanUrl = url.startsWith("/") ? url.slice(1) : url
-
-  // Ensure siteConfig.url doesn't have trailing slash
+  // Ensure base URL doesn't have trailing slash
   const baseUrl = siteConfig.url.endsWith("/")
     ? siteConfig.url.slice(0, -1)
     : siteConfig.url
 
-  return `${baseUrl}/${cleanUrl}`
+  // Ensure path doesn't have leading slash
+  const cleanPath = trimmed.startsWith("/") ? trimmed.slice(1) : trimmed
+
+  return `${baseUrl}/${cleanPath}`
 }
+
 
 /**
  * Generates enhanced WebApplication schema with isAccessibleForFree and featureList
