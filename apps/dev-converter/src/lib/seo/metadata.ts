@@ -402,12 +402,14 @@ export function generateFAQPageSchema(tool: Tool) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "@id": `${url}#faqpage`,
-    mainEntity: tool.faq.map(faq => ({
+    "@id": `${url}#faq`,
+    mainEntity: tool.faq.map((faq, index) => ({
       "@type": "Question",
+      "@id": `${url}#faq-question-${index}`,
       name: faq.question,
       acceptedAnswer: {
         "@type": "Answer",
+        "@id": `${url}#faq-answer-${index}`,
         text: faq.answer,
       },
     })),

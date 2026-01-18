@@ -20,6 +20,7 @@ import { SmoothLink } from "@/components/layout/smooth-link"
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
 import { categoryContent } from "@/config/category-content"
 import { popularTools } from "@/config/popular-tools"
+import { siteConfig } from "@/config/site"
 import { generateCategoryMetadata } from "@/lib/seo/metadata"
 import { generateCollectionPageSchema } from "@/lib/seo/schema-generators"
 import { categories, getCategoryById } from "@/lib/tools/categories"
@@ -95,16 +96,20 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   })
 
   // Generate FAQPage schema if FAQs exist
+  const categoryUrl = `${siteConfig.url}/categories/${category.id}`
   const faqSchema =
     content?.faqs && content.faqs.length > 0
       ? {
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          mainEntity: content.faqs.map(faq => ({
+          "@id": `${categoryUrl}#faq`,
+          mainEntity: content.faqs.map((faq, index) => ({
             "@type": "Question",
+            "@id": `${categoryUrl}#faq-question-${index}`,
             name: faq.question,
             acceptedAnswer: {
               "@type": "Answer",
+              "@id": `${categoryUrl}#faq-answer-${index}`,
               text: faq.answer,
             },
           })),

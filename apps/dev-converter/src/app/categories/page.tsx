@@ -106,10 +106,12 @@ export default function CategoriesPage() {
   })
 
   // FAQ schema
+  const categoriesUrl = `${siteConfig.url}/categories`
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: generateFAQQuestionsSchema(faqItems),
+    "@id": `${categoriesUrl}#faq`,
+    mainEntity: generateFAQQuestionsSchema(faqItems, categoriesUrl),
   }
 
   // ItemList schema for categories

@@ -6,6 +6,7 @@ import type { Metadata } from "next"
 import { FAQ, FAQItem } from "@/components/common/faq"
 import { SmoothLink } from "@/components/layout/smooth-link"
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
+import { siteConfig } from "@/config/site"
 import { generateStaticPageMetadata } from "@/lib/seo/metadata"
 import {
   generateFAQQuestionsSchema,
@@ -123,6 +124,8 @@ export default function FAQPage() {
   // Flatten all FAQ items for the schema
   const allFAQs = faqSections.flatMap(section => section.questions)
 
+  const faqUrl = `${siteConfig.url}/faq`
+  
   // Generate FAQPage schema with questions
   const pageSchema = {
     ...generateStaticPageSchema({
@@ -139,7 +142,7 @@ export default function FAQPage() {
         "devconverter",
       ],
     }),
-    mainEntity: generateFAQQuestionsSchema(allFAQs),
+    mainEntity: generateFAQQuestionsSchema(allFAQs, faqUrl),
   }
 
   return (

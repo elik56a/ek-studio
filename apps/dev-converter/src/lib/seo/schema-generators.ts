@@ -121,20 +121,30 @@ export function generateBreadcrumbListSchema(
  * This generates just the questions array, not the full page schema
  * Use this within a FAQPage or as part of another page type
  */
-export function generateFAQQuestionsSchema(faqs: ToolFAQ[]) {
+export function generateFAQQuestionsSchema(faqs: ToolFAQ[], baseUrl?: string) {
   // Don't generate schema if there are no FAQs
   if (!faqs || faqs.length === 0) {
     return null
   }
 
-  return faqs.map(faq => ({
-    "@type": "Question",
-    name: sanitizeText(faq.question),
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: sanitizeText(faq.answer),
-    },
-  }))
+  return faqs.map((faq, index) => {
+    const question: Record<string, any> = {
+      "@type": "Question",
+      name: sanitizeText(faq.question),
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: sanitizeText(faq.answer),
+      },
+    }
+
+    // Add IDs if baseUrl is provided
+    if (baseUrl) {
+      question["@id"] = `${baseUrl}#faq-question-${index}`
+      question.acceptedAnswer["@id"] = `${baseUrl}#faq-answer-${index}`
+    }
+
+    return question
+  })
 }
 
 /**
