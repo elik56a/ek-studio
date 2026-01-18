@@ -15,6 +15,7 @@ export const diffCheckerTool: Tool = {
     "Compare two texts side-by-side and highlight additions, deletions, and edits — ideal for code, configs, and document reviews",
   category: "text",
   type: "converter",
+  order: 1,
   keywords: [
     "diff checker",
     "text diff",

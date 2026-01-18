@@ -1,5 +1,3 @@
-"use client"
-
 import { ChevronDown } from "lucide-react"
 
 import { useState } from "react"
@@ -7,6 +5,7 @@ import { useState } from "react"
 import { usePathname } from "next/navigation"
 
 import { SmoothLink } from "@/components/layout/smooth-link"
+import { sortToolsByOrder } from "@/lib/tools/categories"
 import { getToolBySlug } from "@/lib/tools/registry"
 import { Category } from "@/lib/tools/types"
 
@@ -55,6 +54,10 @@ export function CategoryDropdown({
     </SmoothLink>
   )
 
+  const sortedTools = sortToolsByOrder(
+    category.tools.map(toolId => getToolBySlug(toolId)).filter((tool): tool is NonNullable<typeof tool> => tool !== undefined)
+  )
+
   return (
     <Dropdown
       trigger={trigger}
@@ -63,7 +66,6 @@ export function CategoryDropdown({
       variant={variant === "header" ? "hover" : "click"}
       contentClassName="w-64"
     >
-      {/* Category Header */}
       <DropdownItem
         href={`/categories/${category.id}`}
         onClick={handleLinkClick}
@@ -79,11 +81,7 @@ export function CategoryDropdown({
 
       <DropdownSeparator />
 
-      {/* Tools List */}
-      {category.tools.map(toolId => {
-        const tool = getToolBySlug(toolId)
-        if (!tool) return null
-
+      {sortedTools.map(tool => {
         const isToolActive = isActiveTool(tool.slug)
 
         return (

@@ -16,6 +16,7 @@ export const jwtDecoderTool: Tool = {
     "Decode JSON Web Tokens (JWT) locally to inspect header, payload claims, expiration, issuer/audience, and debug OAuth2/OIDC authentication issues",
   category: "security",
   type: "converter",
+  order: 1,
   keywords: [
     "jwt decoder",
     "decode jwt",

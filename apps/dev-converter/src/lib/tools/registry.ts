@@ -1,5 +1,6 @@
 import * as allToolConfigs from "@/tools/configs"
 
+import { sortToolsByOrder } from "./categories"
 import { getToolComponent } from "./component-loader"
 import { Tool } from "./types"
 
@@ -23,7 +24,8 @@ export const getToolById = (id: string): Tool | undefined => {
 }
 
 export const getToolsByCategory = (categoryId: string): Tool[] => {
-  return tools.filter(tool => tool.category === categoryId)
+  const tools = toolsWithComponents.filter(tool => tool.category === categoryId)
+  return sortToolsByOrder(tools)
 }
 
 export const getAllTools = (): Tool[] => {

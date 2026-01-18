@@ -76,12 +76,13 @@ export interface Tool {
   metadata: ToolMetadata
   examples?: ToolExample[]
   faq: ToolFAQ[]
-  relatedTools?: string[] // tool IDs
+  relatedTools?: string[]
   ui: ToolUI
-  component?: React.ComponentType // Optional, loaded dynamically
+  component?: React.ComponentType
   switcher?: ToolSwitcherConfig
   type: "converter" | "generator"
   info?: ToolInfo
+  order?: number
 }
 
 export interface Category {

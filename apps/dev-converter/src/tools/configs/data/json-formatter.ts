@@ -15,6 +15,7 @@ export const jsonFormatterTool: Tool = {
     "Format, validate, beautify, and minify JSON with instant error detection",
   category: "json-data",
   type: "converter",
+  order: 1,
   keywords: [
     "json formatter",
     "json validator",

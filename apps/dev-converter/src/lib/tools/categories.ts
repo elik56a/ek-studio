@@ -15,7 +15,7 @@ import * as textConfigs from "@/tools/configs/text"
 import * as timeConfigs from "@/tools/configs/time"
 import * as utilityConfigs from "@/tools/configs/utility"
 
-import { Category } from "./types"
+import { Category, Tool } from "./types"
 
 const extractSlugs = (configs: Record<string, any>): string[] => {
   return Object.values(configs)
@@ -122,5 +122,13 @@ export const getCategoryConfigByToolId = (
 // Helper function to get icon component by category ID
 export const getCategoryIcon = (categoryId: string): LucideIcon => {
   const config = getCategoryConfigById(categoryId)
-  return config?.icon || Database // fallback to Database icon
+  return config?.icon || Database
+}
+
+export const sortToolsByOrder = (tools: Tool[]): Tool[] => {
+  return [...tools].sort((a, b) => {
+    const orderA = a.order ?? Infinity
+    const orderB = b.order ?? Infinity
+    return orderA - orderB
+  })
 }
