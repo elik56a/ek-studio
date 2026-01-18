@@ -48,7 +48,7 @@ const TextDiffChecker = () => {
         setTimeout(() => {
           const resultsElement = document.getElementById("diff-results")
           if (resultsElement) {
-            const yOffset = -50 // Offset to show header
+            const yOffset = -100 // Offset to show header
             const y =
               resultsElement.getBoundingClientRect().top +
               window.pageYOffset +

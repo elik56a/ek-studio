@@ -14,8 +14,6 @@ import { cn } from "@ek-studio/ui"
 import {
   ArrowDown,
   Check,
-  ChevronDown,
-  ChevronRight,
   Columns2,
   ListTree,
   Minus,
@@ -61,7 +59,7 @@ export function DiffViewer({
 }: DiffViewerProps) {
   const [viewMode, setViewMode] = useState<"split" | "unified">("unified")
   const [ignoreWhitespace, setIgnoreWhitespace] = useState(false)
-  const [showChangesList, setShowChangesList] = useState(false)
+  const [showChangesList, setShowChangesList] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
   const [fontSize, setFontSize] = useState(14)
 
@@ -121,7 +119,6 @@ export function DiffViewer({
                   key={block.id}
                   onClick={() => {
                     scrollToChange(block.id)
-                    setShowChangesList(false)
                   }}
                   className={cn(
                     "w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-all hover:bg-muted/50 flex items-start gap-2",
