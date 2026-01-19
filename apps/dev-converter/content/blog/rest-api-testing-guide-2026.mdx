@@ -1,0 +1,590 @@
+---
+title: "REST API Testing in 2026: Complete Guide for Developers (cURL, Postman, Axios)"
+description: "Master REST API testing with practical examples and best practices. Learn GET, POST, PUT, DELETE requests, authentication, error handling, and debugging strategies for production APIs."
+date: "2026-01-18"
+author:
+  name: "DevConverter Team"
+  url: "https://devconverter.dev"
+tags:
+  - api-testing
+  - rest-api
+  - web-development
+  - postman
+  - curl
+  - axios
+  - debugging
+  - backend-development
+  - jwt
+  - authentication
+image: "/images/blog/rest-api-testing-guide-2026.svg"
+---
+
+
+# REST API Testing Guide 2026: Master cURL, Postman & Axios
+
+## Why REST API Testing Matters in 2026
+
+**Broken APIs cost businesses millions.** Stripe lost $500K+ in one hour due to API failures. GitHub experienced cascading failures from bad endpoints. In 2026, API testing isn't optional—it's survival.
+
+This guide covers essential REST API testing techniques, authentication strategies, debugging methods, and production-ready workflows for developers.
+
+---
+
+## Understanding REST API Basics
+
+### The 5 Essential HTTP Methods
+
+<table>
+  <thead>
+    <tr>
+      <th align="left">Method</th>
+      <th align="left">Purpose</th>
+      <th align="center">Idempotent</th>
+      <th align="center">Safe</th>
+      <th align="center">Body Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>GET</strong></td>
+      <td>Retrieve data</td>
+      <td align="center">✅</td>
+      <td align="center">✅</td>
+      <td align="center">❌</td>
+    </tr>
+    <tr>
+      <td><strong>POST</strong></td>
+      <td>Create resource</td>
+      <td align="center">❌</td>
+      <td align="center">❌</td>
+      <td align="center">✅</td>
+    </tr>
+    <tr>
+      <td><strong>PUT</strong></td>
+      <td>Replace resource</td>
+      <td align="center">✅</td>
+      <td align="center">❌</td>
+      <td align="center">✅</td>
+    </tr>
+    <tr>
+      <td><strong>PATCH</strong></td>
+      <td>Partial update</td>
+      <td align="center">❌</td>
+      <td align="center">❌</td>
+      <td align="center">✅</td>
+    </tr>
+    <tr>
+      <td><strong>DELETE</strong></td>
+      <td>Remove resource</td>
+      <td align="center">✅</td>
+      <td align="center">❌</td>
+      <td align="center">❌</td>
+    </tr>
+  </tbody>
+</table>
+
+**Key Terms:**
+- **Idempotent**: Same request multiple times = same result
+- **Safe**: Doesn't modify server state (read-only)
+
+---
+
+
+## Method 1: cURL - Command Line Testing
+
+### Basic Requests
+
+```bash
+# GET request
+curl https://api.example.com/users
+
+# GET with query parameters
+curl "https://api.example.com/users?role=admin&status=active"
+
+# POST with JSON body
+curl -X POST https://api.example.com/users \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Alice","email":"alice@example.com"}'
+
+# Bearer token authentication
+curl https://api.example.com/users/me \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+💡 **Pro tip**: Decode JWT tokens before making requests with [JWT Token Decoder](https://devconverter.dev/jwt-decoder) to inspect expiration and claims.
+
+### Advanced cURL Options
+
+```bash
+# Show response headers
+curl -i https://api.example.com/health
+
+# Detailed debugging
+curl -v https://api.example.com/users
+
+# Follow redirects
+curl -L https://api.example.com/redirect
+
+# Save response to file
+curl https://api.example.com/data -o output.json
+
+# Upload file
+curl -X POST https://api.example.com/upload \
+  -F "file=@document.pdf"
+```
+
+---
+
+## Method 2: Postman - Visual API Client
+
+### Why Postman?
+
+- Visual interface for building requests
+- Collections for organizing tests
+- Environment variables (dev, staging, prod)
+- Automated testing with JavaScript
+- Mock servers and documentation generation
+
+### Example: Login Endpoint Test
+
+```javascript
+// Postman test script
+pm.test("Login successful", function () {
+    pm.response.to.have.status(200);
+});
+
+const response = pm.response.json();
+
+pm.test("Response has token", function () {
+    pm.expect(response).to.have.property('token');
+});
+
+// Save token for next requests
+pm.environment.set("auth_token", response.token);
+```
+
+💡 Use [JWT Decoder](https://devconverter.dev/jwt-decoder) to inspect auth tokens and verify expiration times.
+
+### Environment Variables
+
+```json
+// Dev Environment
+{
+  "base_url": "https://dev-api.example.com",
+  "api_key": "dev_key_123"
+}
+
+// Usage in requests
+GET {{base_url}}/users
+X-API-Key: {{api_key}}
+```
+
+---
+
+## Method 3: Axios - JavaScript/Node.js Testing
+
+### Basic Implementation
+
+```javascript
+const axios = require('axios');
+
+// GET request
+async function getUsers() {
+  try {
+    const response = await axios.get('https://api.example.com/users');
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error:', error.response?.status);
+  }
+}
+
+// POST with authentication
+async function createUser() {
+  const response = await axios.post(
+    'https://api.example.com/users',
+    { name: 'Bob', email: 'bob@example.com' },
+    {
+      headers: {
+        'Authorization': 'Bearer YOUR_TOKEN',
+        'Content-Type': 'application/json'
+      }
+    }
+  );
+  return response.data;
+}
+```
+
+### Configured Axios Instance
+
+```javascript
+const api = axios.create({
+  baseURL: 'https://api.example.com',
+  timeout: 5000,
+  headers: {
+    'Authorization': `Bearer ${process.env.API_TOKEN}`,
+    'Content-Type': 'application/json'
+  }
+});
+
+// Request interceptor
+api.interceptors.request.use(config => {
+  console.log(`${config.method.toUpperCase()} ${config.url}`);
+  return config;
+});
+
+// Error handling interceptor
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      console.error('Token expired!');
+    }
+    return Promise.reject(error);
+  }
+);
+```
+
+---
+
+## Authentication Strategies
+
+### 1. Bearer Token (JWT, OAuth2)
+
+```bash
+# cURL
+curl https://api.example.com/protected \
+  -H "Authorization: Bearer eyJhbGc..."
+```
+
+```javascript
+// Axios
+const response = await axios.get('https://api.example.com/protected', {
+  headers: { 'Authorization': `Bearer ${token}` }
+});
+```
+
+**Common Issues:**
+- Token expired (check `exp` claim)
+- Missing "Bearer" prefix
+- Wrong token type
+
+💡 **Debug tokens**: [JWT Token Decoder](https://devconverter.dev/jwt-decoder) shows expiration in readable format.
+
+### 2. API Key Authentication
+
+```bash
+# Header method
+curl https://api.example.com/data \
+  -H "X-API-Key: abc123"
+
+# Query parameter
+curl "https://api.example.com/data?api_key=abc123"
+```
+
+### 3. Basic Authentication
+
+```bash
+# Using -u flag
+curl -u username:password https://api.example.com/data
+
+# Manually encoded
+curl https://api.example.com/data \
+  -H "Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ="
+```
+
+💡 **Encode credentials**: [Base64 Encoder/Decoder](https://devconverter.dev/base64-encode-decode) for safe encoding.
+
+### 4. OAuth 2.0 Flow
+
+```bash
+# Step 1: Get token
+curl -X POST https://oauth.example.com/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=client_credentials" \
+  -d "client_id=YOUR_ID" \
+  -d "client_secret=YOUR_SECRET"
+
+# Step 2: Use token
+curl https://api.example.com/data \
+  -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+---
+
+## Debugging Failed Requests
+
+### HTTP Status Codes Quick Reference
+
+<table>
+  <thead>
+    <tr>
+      <th align="left">Code</th>
+      <th align="left">Meaning</th>
+      <th align="left">Fix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>400</strong></td>
+      <td>Bad Request</td>
+      <td>Check JSON syntax</td>
+    </tr>
+    <tr>
+      <td><strong>401</strong></td>
+      <td>Unauthorized</td>
+      <td>Verify token</td>
+    </tr>
+    <tr>
+      <td><strong>403</strong></td>
+      <td>Forbidden</td>
+      <td>Check permissions</td>
+    </tr>
+    <tr>
+      <td><strong>404</strong></td>
+      <td>Not Found</td>
+      <td>Verify URL</td>
+    </tr>
+    <tr>
+      <td><strong>429</strong></td>
+      <td>Rate Limited</td>
+      <td>Implement retry</td>
+    </tr>
+    <tr>
+      <td><strong>500</strong></td>
+      <td>Server Error</td>
+      <td>Check logs</td>
+    </tr>
+    <tr>
+      <td><strong>503</strong></td>
+      <td>Unavailable</td>
+      <td>Retry later</td>
+    </tr>
+  </tbody>
+</table>
+
+
+### Debugging 401 Unauthorized
+
+```javascript
+// Check token expiration
+const token = 'eyJhbGc...';
+const payload = JSON.parse(atob(token.split('.')[1]));
+const now = Math.floor(Date.now() / 1000);
+
+if (payload.exp < now) {
+  console.error(`Token expired ${now - payload.exp} seconds ago`);
+}
+
+// Common mistakes
+// ❌ Wrong
+headers: { 'Authorization': token }
+// ✅ Correct
+headers: { 'Authorization': `Bearer ${token}` }
+```
+
+💡 **Decode visually**: [JWT Decoder Tool](https://devconverter.dev/jwt-decoder) for readable format.
+
+### Debugging 400 Bad Request
+
+```javascript
+// ❌ Wrong: String instead of object
+axios.post('/users', '{"name":"Alice"}')
+
+// ✅ Correct
+axios.post('/users', { name: 'Alice' })
+
+// Validate JSON first
+try {
+  const data = JSON.parse(jsonString);
+  await axios.post('/users', data);
+} catch (error) {
+  console.error('Invalid JSON:', error.message);
+}
+```
+
+💡 **Validate JSON**: [JSON Formatter](https://devconverter.dev/json-formatter) catches syntax errors.
+
+---
+
+## Production Best Practices
+
+### 1. Use Environment Variables
+
+```javascript
+// ❌ Never hardcode
+const API_KEY = 'abc123';
+
+// ✅ Use env vars
+const API_KEY = process.env.API_KEY;
+
+if (!process.env.API_KEY) {
+  throw new Error('API_KEY required');
+}
+```
+
+### 2. Implement Retry Logic
+
+```javascript
+async function apiRequestWithRetry(url, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await axios.get(url);
+    } catch (error) {
+      const status = error.response?.status;
+      
+      // Don't retry 4xx errors
+      if (status >= 400 && status < 500) throw error;
+      
+      if (attempt < maxRetries) {
+        const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
+        console.log(`Retry in ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      } else {
+        throw error;
+      }
+    }
+  }
+}
+```
+
+### 3. Set Timeouts
+
+```javascript
+const api = axios.create({
+  baseURL: 'https://api.example.com',
+  timeout: 5000,
+  headers: { 'Content-Type': 'application/json' }
+});
+
+// Different timeouts for operations
+api.get('/health', { timeout: 2000 }); // Quick check
+api.get('/report', { timeout: 30000 }); // Long operation
+```
+
+### 4. Validate Responses
+
+```javascript
+function validateUserResponse(data) {
+  const required = ['id', 'email', 'name'];
+  for (const field of required) {
+    if (!(field in data)) {
+      throw new Error(`Missing: ${field}`);
+    }
+  }
+  
+  if (!data.email.includes('@')) {
+    throw new Error('Invalid email');
+  }
+  
+  return data;
+}
+```
+
+---
+
+## Security Best Practices
+
+### 1. Never Log Secrets
+
+```javascript
+// ❌ Never
+console.log('Token:', token);
+
+// ✅ Sanitize
+function sanitize(obj) {
+  const sensitive = ['password', 'token', 'apiKey'];
+  const safe = { ...obj };
+  for (const key in safe) {
+    if (sensitive.some(s => key.toLowerCase().includes(s))) {
+      safe[key] = '[REDACTED]';
+    }
+  }
+  return safe;
+}
+```
+
+### 2. Always Use HTTPS
+
+```javascript
+// ❌ Insecure
+axios.get('http://api.example.com/users');
+
+// ✅ Secure
+axios.get('https://api.example.com/users');
+```
+
+### 3. Test Authorization
+
+```javascript
+// Test what users CANNOT do
+try {
+  await api.delete('/admin/users/123');
+  console.error('❌ Security issue!');
+} catch (error) {
+  if (error.response?.status === 403) {
+    console.log('✅ Auth enforced');
+  }
+}
+```
+
+---
+
+## API Testing Checklist
+
+- ☑ Health endpoint tested
+- ☑ Auth success + failure tested
+- ☑ CRUD operations validated
+- ☑ Error responses verified
+- ☑ Rate limits tested
+- ☑ Timeouts configured
+- ☑ Secrets in env vars
+- ☑ Logs sanitized
+- ☑ HTTPS enforced
+- ☑ CI tests automated
+
+---
+
+## Common Mistakes to Avoid
+
+❌ Only testing 200 responses  
+❌ Hardcoding tokens  
+❌ Ignoring error responses  
+❌ Not validating schemas  
+❌ Logging secrets  
+
+✅ Test failures  
+✅ Automate critical flows  
+✅ Validate auth & permissions  
+✅ Use proper tooling  
+
+---
+
+## Essential Developer Tools
+
+When testing REST APIs, use these tools to debug faster:
+
+**[JWT Token Decoder](https://devconverter.dev/jwt-decoder)** - Decode and inspect JWT tokens, check expiration, verify claims
+
+**[JSON Formatter & Validator](https://devconverter.dev/json-formatter)** - Format and validate JSON before sending requests
+
+**[Base64 Encoder/Decoder](https://devconverter.dev/base64-encode-decode)** - Encode credentials for Basic Auth
+
+**[URL Encoder/Decoder](https://devconverter.dev/url-encode-decode)** - Handle URL query parameters correctly
+
+**[Hash Generator](https://devconverter.dev/hash-generator)** - Generate API signatures and checksums
+
+---
+
+## Quick Summary
+
+✅ REST APIs power modern applications  
+✅ Test with cURL, Postman, and Axios  
+✅ Master authentication (Bearer, API Key, OAuth)  
+✅ Debug with proper tools  
+✅ Always test auth, errors, and rate limits  
+✅ Automate API tests in CI/CD  
+✅ Use developer tools for debugging  
+
+**Master REST API testing in 2026 and ship with confidence.**
+
+Visit [DevConverter.dev](https://devconverter.dev) for more developer tools and guides.

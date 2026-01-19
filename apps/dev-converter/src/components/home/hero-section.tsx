@@ -44,7 +44,7 @@ export function HeroSection() {
         </h1>
 
         <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
-          Format JSON, decode JWT, encode Base64, generate hashes, and 50+ more
+          Format JSON, decode JWT, encode Base64, generate hashes, and 20+ more
           utilities.
           <span className="block mt-1 font-semibold text-foreground">
             Fast. Private. Free Forever.

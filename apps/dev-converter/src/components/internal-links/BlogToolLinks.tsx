@@ -167,7 +167,7 @@ const blogPostsData: Record<string, BlogPost> = {
   },
   "json-to-yaml-converter-guide": {
     slug: "json-to-yaml-converter-guide",
-    title: "JSON to YAML Converter: Complete Guide",
+    title: "How to Format JSON in 2026",
     description:
       "Convert between JSON and YAML formats easily. Learn the differences, use cases, and best practices for configuration files.",
     date: "2025-01-04",
