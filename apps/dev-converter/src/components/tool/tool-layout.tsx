@@ -47,6 +47,7 @@ interface ToolLayoutProps {
     relatedTools?: Array<{ name: string; href: string; description: string }>
     onExampleClick?: (input: string) => void
     settings?: React.ReactNode
+    tool?: Tool
   }
   toolActionsProps?: ToolActionsProps
   statusProps?: {
@@ -169,7 +170,8 @@ export function ToolLayout({
                     {/* Right Spacer - Matches left side width for perfect centering */}
                     {showGenerateButton &&
                       (toolControls === undefined ||
-                        (toolControls !== null && toolControlsPosition === "inline")) && (
+                        (toolControls !== null &&
+                          toolControlsPosition === "inline")) && (
                         <div className="hidden lg:block lg:w-auto lg:min-w-[200px]" />
                       )}
 
@@ -213,7 +215,7 @@ export function ToolLayout({
           footerProps.faqs?.length ||
           footerProps.relatedTools?.length) && (
           <Card className="glass border-0 shadow-glow p-4 sm:p-6 md:p-8 mt-4 sm:mt-6">
-            <ToolFooter {...footerProps} />
+            <ToolFooter {...footerProps} tool={tool} />
           </Card>
         )}
       </div>

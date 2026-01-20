@@ -50,7 +50,6 @@ function ensureAbsoluteUrl(url: string): string {
   return `${baseUrl}/${cleanPath}`
 }
 
-
 /**
  * Generates enhanced WebApplication schema with isAccessibleForFree and featureList
  */

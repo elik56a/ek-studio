@@ -1,21 +1,23 @@
 "use client"
 
 import { useRef } from "react"
-import { cn } from "@ek-studio/ui"
 import { Palette, Hash, Droplet, Pipette } from "lucide-react"
 
 import { InfoRow } from "@/components/common/info-row"
+import { ColorConverterPreset } from "@/features/ui"
 
 interface ColorOutputDisplayProps {
   output: string
   onColorChange?: (hexColor: string) => void
   placeholder?: string
+  preset?: ColorConverterPreset
 }
 
 export function ColorOutputDisplay({
   output,
   onColorChange,
   placeholder = "Color output will appear here...",
+  preset,
 }: ColorOutputDisplayProps) {
   const colorInputRef = useRef<HTMLInputElement>(null)
 
@@ -50,30 +52,38 @@ export function ColorOutputDisplay({
   const items = [
     hexMatch && {
       icon: Hash,
-      title: "HEX" as const,
+      title: "HEX",
       value: hexMatch[1],
     },
     rgbMatch && {
       icon: Droplet,
-      title: "RGB" as const,
+      title: "RGB",
       value: rgbMatch[1],
     },
     hslMatch && {
       icon: Palette,
-      title: "HSL" as const,
+      title: "HSL",
       value: hslMatch[1],
     },
     rgbaMatch && {
       icon: Pipette,
-      title: "RGBA" as const,
+      title: "RGBA",
       value: rgbaMatch[1],
     },
     hslaMatch && {
       icon: Palette,
-      title: "HSLA" as const,
+      title: "HSLA" ,
       value: hslaMatch[1],
     },
   ].filter((item): item is NonNullable<typeof item> => Boolean(item))
+
+  // Reorder items based on preset.highlight
+  const orderedItems = preset?.highlight
+    ? [
+        ...items.filter(item => item.title === preset.highlight),
+        ...items.filter(item => item.title !== preset.highlight),
+      ]
+    : items
 
   return (
     <div className="space-y-3 h-full relative">
@@ -109,9 +119,23 @@ export function ColorOutputDisplay({
 
       {/* Color Values as InfoRows */}
       <div className="space-y-1.5">
-        {items.map((item, index) => (
-          <InfoRow key={index} {...item} />
-        ))}
+        {orderedItems.map((item, index) => {
+          // Check if this is the highlighted format
+          const isHighlighted = preset?.highlight === item.title
+          
+          return (
+            <InfoRow
+              key={index}
+              {...item}
+              className={
+                isHighlighted
+                  ? "border-2 border-primary shadow-md shadow-primary/20 bg-gradient-to-r from-primary/15 via-primary/25 to-primary/15 scale-[1.02]"
+                  : undefined
+              }
+              bgColor={isHighlighted ? "" : undefined}
+            />
+          )
+        })}
       </div>
     </div>
   )

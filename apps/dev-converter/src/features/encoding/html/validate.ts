@@ -1,9 +1,10 @@
 import { ValidationResult } from "@/shared/types"
 
 export const validateHtmlEscaped = (input: string): ValidationResult => {
-  const incompletePattern = /&(?:[a-zA-Z][a-zA-Z0-9]*|#x?[0-9a-fA-F]+)(?![;\w])/g
+  const incompletePattern =
+    /&(?:[a-zA-Z][a-zA-Z0-9]*|#x?[0-9a-fA-F]+)(?![;\w])/g
   const matches = [...input.matchAll(incompletePattern)]
-  
+
   if (matches.length > 0) {
     const incompleteEntities = matches.map(m => m[0])
     const examples = incompleteEntities.slice(0, 3).join(", ")

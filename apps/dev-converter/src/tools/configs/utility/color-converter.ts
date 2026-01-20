@@ -120,6 +120,14 @@ export const colorConverterTool: Tool = {
     },
   ],
   relatedTools: [
+    // Key variants (popular conversions)
+    "hex-to-rgb",
+    "rgb-to-hex",
+    "hex-to-hsl",
+    "hsl-to-rgb",
+    "rgba-to-hex",
+    "hsla-to-rgb",
+    // Other related tools
     "hash-generator",
     "base64-encode-decode",
     "mime-type-lookup",
@@ -133,5 +141,6 @@ export const colorConverterTool: Tool = {
     inputLabel: "Color Input",
     outputLabel: "Converted Values",
     convertLabel: "Convert Color",
+    relatedToolsTitle: "Popular conversions",
   },
 }

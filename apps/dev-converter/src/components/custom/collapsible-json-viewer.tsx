@@ -2,19 +2,14 @@
 
 import {
   Button,
-  cn,
   SearchInput,
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
+  cn,
 } from "@ek-studio/ui"
-import {
-  ChevronsDown,
-  ChevronsRight,
-  FileJson,
-  List,
-} from "lucide-react"
+import { ChevronsDown, ChevronsRight, FileJson, List } from "lucide-react"
 
 import { useCallback, useMemo, useState } from "react"
 

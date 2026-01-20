@@ -10,7 +10,7 @@ const toolConfigs = Object.values(allToolConfigs).filter(
 
 const toolsWithComponents: Tool[] = toolConfigs.map(tool => ({
   ...tool,
-  component: getToolComponent(tool.id) || undefined,
+  component: getToolComponent(tool.componentId ?? tool.id) || undefined,
 }))
 
 export const tools: Tool[] = toolsWithComponents

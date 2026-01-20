@@ -9,7 +9,7 @@ import {
 } from "lucide-react"
 
 import { FAQ } from "@/components/common/faq"
-import { SmoothLink } from "@/components/layout/smooth-link"
+import type { Tool } from "@/lib/tools/types"
 
 interface Example {
   title: string
@@ -35,6 +35,7 @@ interface ToolFooterProps {
   onExampleClick?: (input: string) => void
   settings?: React.ReactNode
   className?: string
+  tool?: Tool
 }
 
 export function ToolFooter({
@@ -44,6 +45,7 @@ export function ToolFooter({
   onExampleClick,
   settings,
   className,
+  tool,
 }: ToolFooterProps) {
   const handleExampleClick = (input: string) => {
     if (onExampleClick) {
@@ -186,7 +188,9 @@ export function ToolFooter({
               <ArrowRight className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             </div>
             <div>
-              <h2 className="text-xl font-bold">Related Tools</h2>
+              <h2 className="text-xl font-bold">
+                {tool?.ui.relatedToolsTitle ?? "Related Tools"}
+              </h2>
               <p className="text-sm text-muted-foreground">
                 You might also need
               </p>

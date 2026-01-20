@@ -128,10 +128,16 @@ export const base64EncodeDecodeTool: Tool = {
     },
   ],
   relatedTools: [
+    // Key variants (popular conversions)
+    "base64-encode",
+    "base64-decode",
+    "base64url-encode",
+    "base64url-decode",
+    "text-to-base64",
+    "base64-to-text",
+    // Then other related tools
     "url-encode-decode",
     "html-escape-unescape",
-    "file-to-base64",
-    "json-escape-unescape",
     "jwt-decoder",
     "json-formatter",
   ],
@@ -142,6 +148,7 @@ export const base64EncodeDecodeTool: Tool = {
     outputLabel: "Output",
     convertLabel: "Encode/Decode",
     showSwapButton: true,
+    relatedToolsTitle: "Popular conversions",
     autoDetect: {
       enabled: true,
       emptyLabel: "paste text or Base64",

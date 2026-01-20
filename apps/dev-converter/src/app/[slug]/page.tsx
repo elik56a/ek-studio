@@ -7,6 +7,7 @@ import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
 import { ToolStructuredData } from "@/components/seo/structured-data"
 import { generateFAQPageSchema, generateToolMetadata } from "@/lib/seo/metadata"
 import { getCategoryByToolId } from "@/lib/tools/categories"
+import { getPreset } from "@/lib/tools/presets"
 import { getToolBySlug } from "@/lib/tools/registry"
 
 const ComingSoonPlaceholder = dynamic(
@@ -48,6 +49,8 @@ export default async function ToolPage({ params }: ToolPageProps) {
   const category = getCategoryByToolId(tool.id)
   const ToolComponent = tool.component
   const faqSchema = generateFAQPageSchema(tool)
+  const componentId = tool.componentId ?? tool.id
+  const preset = getPreset(componentId as any , tool.preset)
 
   // Build breadcrumb data for both UI and schema
   const breadcrumbItems = [
@@ -116,7 +119,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
       <div className="container mx-auto px-4 py-6 space-y-4">
         <Breadcrumb items={breadcrumbItems} />
-        <ToolComponent />
+        <ToolComponent {...{ preset }} />
       </div>
     </>
   )

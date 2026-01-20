@@ -19,12 +19,13 @@ export const getHighlightedParts = (
 ): RenderResult => {
   // Handle empty states
   if (!input || !regexPattern) {
-    const message = !regexPattern && !input
-      ? "Enter a regex pattern and test text to see matches"
-      : !regexPattern
-        ? "Enter a regex pattern above"
-        : "Enter test text to match against"
-    
+    const message =
+      !regexPattern && !input
+        ? "Enter a regex pattern and test text to see matches"
+        : !regexPattern
+          ? "Enter a regex pattern above"
+          : "Enter test text to match against"
+
     return { type: "empty", message }
   }
 
@@ -72,7 +73,7 @@ export const getHighlightedParts = (
 
 export const parseExampleInput = (exampleInput: string) => {
   const parts = exampleInput.split("\n\n")
-  
+
   if (parts.length < 2) {
     return null
   }
@@ -82,14 +83,14 @@ export const parseExampleInput = (exampleInput: string) => {
 
   // Parse regex pattern and flags
   const match = regexPart.match(/^\/(.+)\/([gimsuvy]*)$/)
-  
+
   if (!match) {
     return null
   }
 
   const pattern = match[1]
   const flagsStr = match[2]
-  
+
   const flags = {
     g: flagsStr.includes("g"),
     i: flagsStr.includes("i"),

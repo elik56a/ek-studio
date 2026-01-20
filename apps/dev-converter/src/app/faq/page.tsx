@@ -125,7 +125,7 @@ export default function FAQPage() {
   const allFAQs = faqSections.flatMap(section => section.questions)
 
   const faqUrl = `${siteConfig.url}/faq`
-  
+
   // Generate FAQPage schema with questions
   const pageSchema = {
     ...generateStaticPageSchema({

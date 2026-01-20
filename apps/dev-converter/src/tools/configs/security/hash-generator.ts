@@ -1,6 +1,5 @@
 import { Tool } from "@/lib/tools/types"
 
-
 export const hashGeneratorTool: Tool = {
   id: "hash-generator",
   slug: "hash-generator",

@@ -1,5 +1,8 @@
 import { LucideIcon } from "lucide-react"
 
+import { ToolComponentId } from "./component-loader"
+import type { PresetRegistry } from "./presets"
+
 export interface ToolExample {
   title: string
   input: string
@@ -33,6 +36,7 @@ export interface ToolUI {
   outputLabel: string
   convertLabel: string
   showSwapButton?: boolean
+  relatedToolsTitle?: string
   autoDetect?: {
     enabled: boolean
     emptyLabel: string // Label when no input (e.g., "paste text or Base64")
@@ -78,11 +82,16 @@ export interface Tool {
   faq: ToolFAQ[]
   relatedTools?: string[]
   ui: ToolUI
-  component?: React.ComponentType
+  component?: React.ComponentType<any>
   switcher?: ToolSwitcherConfig
   type: "converter" | "generator"
   info?: ToolInfo
   order?: number
+  componentId?: ToolComponentId
+  nav?: {
+    showInHeader?: boolean
+  }
+  preset?: PresetRegistry[keyof PresetRegistry]
 }
 
 export interface Category {

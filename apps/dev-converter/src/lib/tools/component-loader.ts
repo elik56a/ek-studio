@@ -3,7 +3,7 @@ import { ComponentType } from "react"
 import dynamic from "next/dynamic"
 
 // Lazy load all tool components to avoid circular dependencies
-export const toolComponents: Record<string, ComponentType<any>> = {
+export const toolComponents = {
   // JSON & Data Tools
   "json-formatter": dynamic(() => import("@/components/tools/json-formatter"), {
     ssr: true,
@@ -88,10 +88,12 @@ export const toolComponents: Record<string, ComponentType<any>> = {
     () => import("@/components/tools/mime-type-lookup"),
     { ssr: true }
   ),
-}
+} as const satisfies Record<string, ComponentType<any>>
+
+export type ToolComponentId = keyof typeof toolComponents
 
 export const getToolComponent = (
   toolId: string
 ): ComponentType<any> | undefined => {
-  return toolComponents[toolId]
+  return toolComponents[toolId as ToolComponentId]
 }

@@ -35,15 +35,8 @@ const UUIDGeneratorTool = () => {
 
   const toolControls = (
     <Card className="flex-row items-center gap-4 px-6 py-3 bg-background/50 backdrop-blur-sm border-primary/10">
-      <span className="text-sm font-medium whitespace-nowrap">
-        Count
-      </span>
-      <NumberInput
-        value={count}
-        onChange={setCount}
-        min={1}
-        max={100}
-      />
+      <span className="text-sm font-medium whitespace-nowrap">Count</span>
+      <NumberInput value={count} onChange={setCount} min={1} max={100} />
     </Card>
   )
 

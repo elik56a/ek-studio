@@ -55,7 +55,10 @@ export function CategoryDropdown({
   )
 
   const sortedTools = sortToolsByOrder(
-    category.tools.map(toolId => getToolBySlug(toolId)).filter((tool): tool is NonNullable<typeof tool> => tool !== undefined)
+    category.tools
+      .map(toolId => getToolBySlug(toolId))
+      .filter((tool): tool is NonNullable<typeof tool> => tool !== undefined)
+      .filter(tool => (tool.nav?.showInHeader ?? true) === true)
   )
 
   return (

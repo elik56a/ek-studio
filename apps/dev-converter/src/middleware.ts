@@ -11,8 +11,8 @@ export function middleware(req: NextRequest) {
   } catch {}
 
   const isBrokenHttpPath =
-    /^\/https?:\/\//i.test(p) ||        // /http://...
-    /^\/https?:\//i.test(p) ||          // /http:/...  (Vercel normalization)
+    /^\/https?:\/\//i.test(p) || // /http://...
+    /^\/https?:\//i.test(p) || // /http:/...  (Vercel normalization)
     /^\/https?:\/\//i.test(decoded) ||
     /^\/https?:\//i.test(decoded)
 

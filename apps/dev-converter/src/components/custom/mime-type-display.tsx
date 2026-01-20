@@ -1,9 +1,11 @@
 "use client"
 
-import { useState, useMemo } from "react"
-import { SearchInput, Badge, Button, Card } from "@ek-studio/ui"
+import { Badge, Button, Card, SearchInput } from "@ek-studio/ui"
 import { Check, Copy, FileText } from "lucide-react"
-import { mimeDatabase, getAllCategories } from "@/features/data/mime"
+
+import { useMemo, useState } from "react"
+
+import { getAllCategories, mimeDatabase } from "@/features/data/mime"
 import { useCopy } from "@/hooks/use-copy"
 
 const categoryColors: Record<string, string> = {

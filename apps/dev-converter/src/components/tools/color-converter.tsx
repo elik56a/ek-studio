@@ -2,10 +2,15 @@
 
 import { ColorOutputDisplay } from "@/components/custom/color-output-display"
 import { ToolLayout } from "@/components/tool/tool-layout"
+import { ColorConverterPreset } from "@/features/ui"
 import { convertColor } from "@/features/ui/color"
 import { useTool } from "@/hooks/use-tool"
 
-const ColorConverterTool = () => {
+interface ColorConverterProps {
+  preset?: ColorConverterPreset
+}
+
+const ColorConverterTool = ({ preset }: ColorConverterProps) => {
   const {
     input,
     setInput,
@@ -52,6 +57,7 @@ const ColorConverterTool = () => {
             output={output}
             onColorChange={handleColorPickerChange}
             placeholder={tool.ui.outputPlaceholder}
+            preset={preset}
           />
         ),
       }}
@@ -75,6 +81,7 @@ const ColorConverterTool = () => {
         faqs: tool.faq,
         relatedTools,
         onExampleClick: handleExampleClick,
+        tool,
       }}
     />
   )

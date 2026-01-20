@@ -7,6 +7,7 @@ import { useCallback, useState } from "react"
 import { ButtonGroup } from "@/components/common/button-group"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import {
+  type Base64Preset,
   type CharacterEncoding,
   base64Convert,
   detectBase64,
@@ -14,10 +15,16 @@ import {
 import { useAutoDetect } from "@/hooks/use-auto-detect"
 import { useTool } from "@/hooks/use-tool"
 
-const Base64EncodeDecodeTool = () => {
-  const [useUrlSafe, setUseUrlSafe] = useState(false)
-  const [removePadding, setRemovePadding] = useState(false)
-  const [encoding, setEncoding] = useState<CharacterEncoding>("utf8")
+interface Base64EncodeDecodeToolProps {
+  preset?: Base64Preset
+}
+
+const Base64EncodeDecodeTool = ({ preset }: Base64EncodeDecodeToolProps) => {
+  const [useUrlSafe, setUseUrlSafe] = useState(preset?.urlSafe)
+  const [removePadding, setRemovePadding] = useState(preset?.noPadding)
+  const [encoding, setEncoding] = useState<CharacterEncoding>(
+    preset?.encoding || "utf8"
+  )
 
   const {
     input,
@@ -60,22 +67,6 @@ const Base64EncodeDecodeTool = () => {
   // Input actions with encoding options (displayed below auto-detect)
   const inputActions = (
     <div className="flex flex-wrap items-end gap-3">
-      {/* Character Encoding Selector */}
-      <div className="flex flex-col gap-1">
-        <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
-          Encoding
-        </span>
-        <ButtonGroup
-          options={[
-            { value: "utf8", label: "UTF-8" },
-            { value: "binary", label: "Binary (btoa/atob)" },
-          ]}
-          value={encoding}
-          onChange={value => setEncoding(value as CharacterEncoding)}
-          size="sm"
-        />
-      </div>
-
       {/* Base64 Mode Selector */}
       <div className="flex flex-col gap-1">
         <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
@@ -95,6 +86,22 @@ const Base64EncodeDecodeTool = () => {
               setRemovePadding(true)
             }
           }}
+          size="sm"
+        />
+      </div>
+
+            {/* Character Encoding Selector */}
+      <div className="flex flex-col gap-1">
+        <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
+          Encoding
+        </span>
+        <ButtonGroup
+          options={[
+            { value: "utf8", label: "UTF-8" },
+            { value: "binary", label: "Binary (btoa/atob)" },
+          ]}
+          value={encoding}
+          onChange={value => setEncoding(value as CharacterEncoding)}
           size="sm"
         />
       </div>
@@ -161,6 +168,7 @@ const Base64EncodeDecodeTool = () => {
         faqs: tool.faq,
         relatedTools,
         onExampleClick: handleExampleClick,
+        tool,
       }}
     />
   )

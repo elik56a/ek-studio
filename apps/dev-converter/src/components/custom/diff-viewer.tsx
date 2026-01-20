@@ -98,7 +98,9 @@ export function DiffViewer({
   }, [searchQuery, filteredChanges])
 
   if (!hasChanges) {
-    return <EmptyState message="No differences found. The texts are identical." />
+    return (
+      <EmptyState message="No differences found. The texts are identical." />
+    )
   }
 
   return (
@@ -171,162 +173,166 @@ export function DiffViewer({
       <Card
         className={cn("glass border-0 shadow-glow overflow-hidden", className)}
       >
-      {/* Header with Title and Stats */}
-      <CardHeader className="pb-4 px-4 sm:px-6 border-b border-border/50 bg-background/50">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <ArrowDown className="h-6 w-6 text-primary" />
-            <h2 className="text-xl sm:text-2xl font-bold">
-              Comparison Results
-            </h2>
-          </div>
-          {(addedLines !== undefined || removedLines !== undefined) && (
-            <div className="flex items-center gap-2 sm:gap-3">
-              {addedLines !== undefined && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
-                  <span className="text-xs font-semibold text-green-600 dark:text-green-400">
-                    +{addedLines}
-                  </span>
-                </div>
-              )}
-              {removedLines !== undefined && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/20">
-                  <span className="text-xs font-semibold text-red-600 dark:text-red-400">
-                    -{removedLines}
-                  </span>
-                </div>
-              )}
+        {/* Header with Title and Stats */}
+        <CardHeader className="pb-4 px-4 sm:px-6 border-b border-border/50 bg-background/50">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <ArrowDown className="h-6 w-6 text-primary" />
+              <h2 className="text-xl sm:text-2xl font-bold">
+                Comparison Results
+              </h2>
             </div>
-          )}
-        </div>
-      </CardHeader>
+            {(addedLines !== undefined || removedLines !== undefined) && (
+              <div className="flex items-center gap-2 sm:gap-3">
+                {addedLines !== undefined && (
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
+                    <span className="text-xs font-semibold text-green-600 dark:text-green-400">
+                      +{addedLines}
+                    </span>
+                  </div>
+                )}
+                {removedLines !== undefined && (
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/20">
+                    <span className="text-xs font-semibold text-red-600 dark:text-red-400">
+                      -{removedLines}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </CardHeader>
 
-      {/* Toolbar */}
-      <div className="sticky top-0 z-10 flex items-center justify-between gap-3 px-4 py-2.5 border-b border-border/50 bg-background/95 backdrop-blur-sm shadow-md flex-wrap">
-        {/* Left side - Search (fills available space) */}
-        <div className="flex-1 min-w-[200px]">
-          <SearchInput
-            placeholder="Search in diff..."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            onClear={() => setSearchQuery("")}
-          />
-        </div>
+        {/* Toolbar */}
+        <div className="sticky top-0 z-10 flex items-center justify-between gap-3 px-4 py-2.5 border-b border-border/50 bg-background/95 backdrop-blur-sm shadow-md flex-wrap">
+          {/* Left side - Search (fills available space) */}
+          <div className="flex-1 min-w-[200px]">
+            <SearchInput
+              placeholder="Search in diff..."
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              onClear={() => setSearchQuery("")}
+            />
+          </div>
 
-        {/* Separator */}
-        <div className="h-6 w-px bg-border" />
+          {/* Separator */}
+          <div className="h-6 w-px bg-border" />
 
-        {/* Right side - Controls */}
-        <div className="flex items-center gap-2 flex-wrap">
-          {/* Changes List Button */}
-          {changeBlocks.length > 0 && (
-            <>
+          {/* Right side - Controls */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Changes List Button */}
+            {changeBlocks.length > 0 && (
+              <>
+                <ButtonWithTooltip
+                  variant={showChangesList ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setShowChangesList(!showChangesList)}
+                  tooltip={
+                    showChangesList ? "Hide changes list" : "Show changes list"
+                  }
+                  className="gap-2"
+                >
+                  <ListTree className="h-4 w-4" />
+                  <span className="hidden sm:inline">
+                    {changeBlocks.length} change
+                    {changeBlocks.length !== 1 ? "s" : ""}
+                  </span>
+                  <span className="sm:hidden">{changeBlocks.length}</span>
+                </ButtonWithTooltip>
+
+                {/* Separator */}
+                <div className="h-6 w-px bg-border" />
+              </>
+            )}
+
+            {/* Zoom Controls */}
+            <div className="flex items-center gap-1">
               <ButtonWithTooltip
-                variant={showChangesList ? "default" : "outline"}
-                size="sm"
-                onClick={() => setShowChangesList(!showChangesList)}
-                tooltip={showChangesList ? "Hide changes list" : "Show changes list"}
-                className="gap-2"
+                variant="outline"
+                size="icon-sm"
+                onClick={() => setFontSize(prev => Math.max(prev - 2, 10))}
+                tooltip="Zoom out"
               >
-                <ListTree className="h-4 w-4" />
-                <span className="hidden sm:inline">
-                  {changeBlocks.length} change
-                  {changeBlocks.length !== 1 ? "s" : ""}
-                </span>
-                <span className="sm:hidden">{changeBlocks.length}</span>
+                <ZoomOut className="h-4 w-4" />
               </ButtonWithTooltip>
+              <ButtonWithTooltip
+                variant="outline"
+                size="icon-sm"
+                onClick={() => setFontSize(14)}
+                tooltip="Reset zoom"
+              >
+                <RotateCcw className="h-4 w-4" />
+              </ButtonWithTooltip>
+              <ButtonWithTooltip
+                variant="outline"
+                size="icon-sm"
+                onClick={() => setFontSize(prev => Math.min(prev + 2, 24))}
+                tooltip="Zoom in"
+              >
+                <ZoomIn className="h-4 w-4" />
+              </ButtonWithTooltip>
+            </div>
 
-              {/* Separator */}
-              <div className="h-6 w-px bg-border" />
-            </>
-          )}
+            {/* Separator */}
+            <div className="h-6 w-px bg-border" />
 
-          {/* Zoom Controls */}
-          <div className="flex items-center gap-1">
-            <ButtonWithTooltip
-              variant="outline"
-              size="icon-sm"
-              onClick={() => setFontSize(prev => Math.max(prev - 2, 10))}
-              tooltip="Zoom out"
-            >
-              <ZoomOut className="h-4 w-4" />
-            </ButtonWithTooltip>
-            <ButtonWithTooltip
-              variant="outline"
-              size="icon-sm"
-              onClick={() => setFontSize(14)}
-              tooltip="Reset zoom"
-            >
-              <RotateCcw className="h-4 w-4" />
-            </ButtonWithTooltip>
-            <ButtonWithTooltip
-              variant="outline"
-              size="icon-sm"
-              onClick={() => setFontSize(prev => Math.min(prev + 2, 24))}
-              tooltip="Zoom in"
-            >
-              <ZoomIn className="h-4 w-4" />
-            </ButtonWithTooltip>
-          </div>
+            {/* View Mode */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-muted-foreground hidden sm:inline">
+                View:
+              </span>
+              <ButtonGroup
+                options={[
+                  {
+                    value: "unified",
+                    label: "Unified",
+                    icon: <Rows3 className="h-3.5 w-3.5" />,
+                  },
+                  {
+                    value: "split",
+                    label: "Split",
+                    icon: <Columns2 className="h-3.5 w-3.5" />,
+                  },
+                ]}
+                value={viewMode}
+                onChange={value => setViewMode(value as "split" | "unified")}
+              />
+            </div>
 
-          {/* Separator */}
-          <div className="h-6 w-px bg-border" />
+            {/* Separator */}
+            <div className="h-6 w-px bg-border" />
 
-          {/* View Mode */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-muted-foreground hidden sm:inline">
-              View:
-            </span>
-            <ButtonGroup
-              options={[
-                {
-                  value: "unified",
-                  label: "Unified",
-                  icon: <Rows3 className="h-3.5 w-3.5" />,
-                },
-                {
-                  value: "split",
-                  label: "Split",
-                  icon: <Columns2 className="h-3.5 w-3.5" />,
-                },
-              ]}
-              value={viewMode}
-              onChange={value => setViewMode(value as "split" | "unified")}
-            />
-          </div>
-
-          {/* Separator */}
-          <div className="h-6 w-px bg-border" />
-
-          {/* Whitespace Toggle */}
-          <div className="flex items-center gap-2">
-            <Checkbox
-              id="ignore-whitespace"
-              checked={ignoreWhitespace}
-              onCheckedChange={checked => setIgnoreWhitespace(checked === true)}
-            />
-            <Label
-              htmlFor="ignore-whitespace"
-              className="text-sm font-medium cursor-pointer whitespace-nowrap"
-            >
-              Ignore whitespace
-            </Label>
+            {/* Whitespace Toggle */}
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="ignore-whitespace"
+                checked={ignoreWhitespace}
+                onCheckedChange={checked =>
+                  setIgnoreWhitespace(checked === true)
+                }
+              />
+              <Label
+                htmlFor="ignore-whitespace"
+                className="text-sm font-medium cursor-pointer whitespace-nowrap"
+              >
+                Ignore whitespace
+              </Label>
+            </div>
           </div>
         </div>
-      </div>
 
-      <CardContent className="p-0">
-        {!hasSearchResults ? (
-          <div className="p-8">
-            <EmptyState message="No results found for your search query." />
-          </div>
-        ) : viewMode === "split" ? (
-          <SplitView changes={filteredChanges} fontSize={fontSize} />
-        ) : (
-          <UnifiedView changes={filteredChanges} fontSize={fontSize} />
-        )}
-      </CardContent>
-    </Card>
+        <CardContent className="p-0">
+          {!hasSearchResults ? (
+            <div className="p-8">
+              <EmptyState message="No results found for your search query." />
+            </div>
+          ) : viewMode === "split" ? (
+            <SplitView changes={filteredChanges} fontSize={fontSize} />
+          ) : (
+            <UnifiedView changes={filteredChanges} fontSize={fontSize} />
+          )}
+        </CardContent>
+      </Card>
     </>
   )
 }
@@ -406,16 +412,16 @@ function UnifiedView({
         })}
       </div>
 
-        <Minimap
-          lines={allLines}
-          onLineClick={(index, blockId) => {
-            if (blockId) {
-              scrollToChange(blockId)
-            } else {
-              scrollToPositionUnified(index, allLines.length)
-            }
-          }}
-        />
+      <Minimap
+        lines={allLines}
+        onLineClick={(index, blockId) => {
+          if (blockId) {
+            scrollToChange(blockId)
+          } else {
+            scrollToPositionUnified(index, allLines.length)
+          }
+        }}
+      />
     </div>
   )
 }
@@ -533,16 +539,16 @@ function SplitView({
         </div>
       </div>
 
-        <Minimap
-          lines={minimapLines}
-          onLineClick={(index, blockId) => {
-            if (blockId) {
-              scrollToChange(blockId)
-            } else {
-              scrollToPositionSplit(index, minimapLines.length)
-            }
-          }}
-        />
+      <Minimap
+        lines={minimapLines}
+        onLineClick={(index, blockId) => {
+          if (blockId) {
+            scrollToChange(blockId)
+          } else {
+            scrollToPositionSplit(index, minimapLines.length)
+          }
+        }}
+      />
     </div>
   )
 }

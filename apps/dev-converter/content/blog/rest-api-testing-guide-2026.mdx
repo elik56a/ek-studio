@@ -19,7 +19,6 @@ tags:
 image: "/images/blog/rest-api-testing-guide-2026.svg"
 ---
 
-
 # REST API Testing Guide 2026: Master cURL, Postman & Axios
 
 ## Why REST API Testing Matters in 2026
@@ -46,35 +45,45 @@ This guide covers essential REST API testing techniques, authentication strategi
   </thead>
   <tbody>
     <tr>
-      <td><strong>GET</strong></td>
+      <td>
+        <strong>GET</strong>
+      </td>
       <td>Retrieve data</td>
       <td align="center">✅</td>
       <td align="center">✅</td>
       <td align="center">❌</td>
     </tr>
     <tr>
-      <td><strong>POST</strong></td>
+      <td>
+        <strong>POST</strong>
+      </td>
       <td>Create resource</td>
       <td align="center">❌</td>
       <td align="center">❌</td>
       <td align="center">✅</td>
     </tr>
     <tr>
-      <td><strong>PUT</strong></td>
+      <td>
+        <strong>PUT</strong>
+      </td>
       <td>Replace resource</td>
       <td align="center">✅</td>
       <td align="center">❌</td>
       <td align="center">✅</td>
     </tr>
     <tr>
-      <td><strong>PATCH</strong></td>
+      <td>
+        <strong>PATCH</strong>
+      </td>
       <td>Partial update</td>
       <td align="center">❌</td>
       <td align="center">❌</td>
       <td align="center">✅</td>
     </tr>
     <tr>
-      <td><strong>DELETE</strong></td>
+      <td>
+        <strong>DELETE</strong>
+      </td>
       <td>Remove resource</td>
       <td align="center">✅</td>
       <td align="center">❌</td>
@@ -84,11 +93,11 @@ This guide covers essential REST API testing techniques, authentication strategi
 </table>
 
 **Key Terms:**
+
 - **Idempotent**: Same request multiple times = same result
 - **Safe**: Doesn't modify server state (read-only)
 
 ---
-
 
 ## Method 1: cURL - Command Line Testing
 
@@ -150,17 +159,17 @@ curl -X POST https://api.example.com/upload \
 ```javascript
 // Postman test script
 pm.test("Login successful", function () {
-    pm.response.to.have.status(200);
-});
+  pm.response.to.have.status(200)
+})
 
-const response = pm.response.json();
+const response = pm.response.json()
 
 pm.test("Response has token", function () {
-    pm.expect(response).to.have.property('token');
-});
+  pm.expect(response).to.have.property("token")
+})
 
 // Save token for next requests
-pm.environment.set("auth_token", response.token);
+pm.environment.set("auth_token", response.token)
 ```
 
 💡 Use [JWT Decoder](https://devconverter.dev/jwt-decoder) to inspect auth tokens and verify expiration times.
@@ -186,31 +195,31 @@ X-API-Key: {{api_key}}
 ### Basic Implementation
 
 ```javascript
-const axios = require('axios');
+const axios = require("axios")
 
 // GET request
 async function getUsers() {
   try {
-    const response = await axios.get('https://api.example.com/users');
-    console.log(response.data);
+    const response = await axios.get("https://api.example.com/users")
+    console.log(response.data)
   } catch (error) {
-    console.error('Error:', error.response?.status);
+    console.error("Error:", error.response?.status)
   }
 }
 
 // POST with authentication
 async function createUser() {
   const response = await axios.post(
-    'https://api.example.com/users',
-    { name: 'Bob', email: 'bob@example.com' },
+    "https://api.example.com/users",
+    { name: "Bob", email: "bob@example.com" },
     {
       headers: {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
-      }
+        Authorization: "Bearer YOUR_TOKEN",
+        "Content-Type": "application/json",
+      },
     }
-  );
-  return response.data;
+  )
+  return response.data
 }
 ```
 
@@ -218,30 +227,30 @@ async function createUser() {
 
 ```javascript
 const api = axios.create({
-  baseURL: 'https://api.example.com',
+  baseURL: "https://api.example.com",
   timeout: 5000,
   headers: {
-    'Authorization': `Bearer ${process.env.API_TOKEN}`,
-    'Content-Type': 'application/json'
-  }
-});
+    Authorization: `Bearer ${process.env.API_TOKEN}`,
+    "Content-Type": "application/json",
+  },
+})
 
 // Request interceptor
 api.interceptors.request.use(config => {
-  console.log(`${config.method.toUpperCase()} ${config.url}`);
-  return config;
-});
+  console.log(`${config.method.toUpperCase()} ${config.url}`)
+  return config
+})
 
 // Error handling interceptor
 api.interceptors.response.use(
   response => response,
   error => {
     if (error.response?.status === 401) {
-      console.error('Token expired!');
+      console.error("Token expired!")
     }
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 ```
 
 ---
@@ -258,12 +267,13 @@ curl https://api.example.com/protected \
 
 ```javascript
 // Axios
-const response = await axios.get('https://api.example.com/protected', {
-  headers: { 'Authorization': `Bearer ${token}` }
-});
+const response = await axios.get("https://api.example.com/protected", {
+  headers: { Authorization: `Bearer ${token}` },
+})
 ```
 
 **Common Issues:**
+
 - Token expired (check `exp` claim)
 - Missing "Bearer" prefix
 - Wrong token type
@@ -325,43 +335,56 @@ curl https://api.example.com/data \
   </thead>
   <tbody>
     <tr>
-      <td><strong>400</strong></td>
+      <td>
+        <strong>400</strong>
+      </td>
       <td>Bad Request</td>
       <td>Check JSON syntax</td>
     </tr>
     <tr>
-      <td><strong>401</strong></td>
+      <td>
+        <strong>401</strong>
+      </td>
       <td>Unauthorized</td>
       <td>Verify token</td>
     </tr>
     <tr>
-      <td><strong>403</strong></td>
+      <td>
+        <strong>403</strong>
+      </td>
       <td>Forbidden</td>
       <td>Check permissions</td>
     </tr>
     <tr>
-      <td><strong>404</strong></td>
+      <td>
+        <strong>404</strong>
+      </td>
       <td>Not Found</td>
       <td>Verify URL</td>
     </tr>
     <tr>
-      <td><strong>429</strong></td>
+      <td>
+        <strong>429</strong>
+      </td>
       <td>Rate Limited</td>
       <td>Implement retry</td>
     </tr>
     <tr>
-      <td><strong>500</strong></td>
+      <td>
+        <strong>500</strong>
+      </td>
       <td>Server Error</td>
       <td>Check logs</td>
     </tr>
     <tr>
-      <td><strong>503</strong></td>
+      <td>
+        <strong>503</strong>
+      </td>
       <td>Unavailable</td>
       <td>Retry later</td>
     </tr>
   </tbody>
 </table>
-
 
 ### Debugging 401 Unauthorized
 
@@ -388,17 +411,17 @@ headers: { 'Authorization': `Bearer ${token}` }
 
 ```javascript
 // ❌ Wrong: String instead of object
-axios.post('/users', '{"name":"Alice"}')
+axios.post("/users", '{"name":"Alice"}')
 
 // ✅ Correct
-axios.post('/users', { name: 'Alice' })
+axios.post("/users", { name: "Alice" })
 
 // Validate JSON first
 try {
-  const data = JSON.parse(jsonString);
-  await axios.post('/users', data);
+  const data = JSON.parse(jsonString)
+  await axios.post("/users", data)
 } catch (error) {
-  console.error('Invalid JSON:', error.message);
+  console.error("Invalid JSON:", error.message)
 }
 ```
 
@@ -428,19 +451,19 @@ if (!process.env.API_KEY) {
 async function apiRequestWithRetry(url, maxRetries = 3) {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      return await axios.get(url);
+      return await axios.get(url)
     } catch (error) {
-      const status = error.response?.status;
-      
+      const status = error.response?.status
+
       // Don't retry 4xx errors
-      if (status >= 400 && status < 500) throw error;
-      
+      if (status >= 400 && status < 500) throw error
+
       if (attempt < maxRetries) {
-        const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
-        console.log(`Retry in ${delay}ms...`);
-        await new Promise(resolve => setTimeout(resolve, delay));
+        const delay = Math.min(1000 * Math.pow(2, attempt), 10000)
+        console.log(`Retry in ${delay}ms...`)
+        await new Promise(resolve => setTimeout(resolve, delay))
       } else {
-        throw error;
+        throw error
       }
     }
   }
@@ -451,32 +474,32 @@ async function apiRequestWithRetry(url, maxRetries = 3) {
 
 ```javascript
 const api = axios.create({
-  baseURL: 'https://api.example.com',
+  baseURL: "https://api.example.com",
   timeout: 5000,
-  headers: { 'Content-Type': 'application/json' }
-});
+  headers: { "Content-Type": "application/json" },
+})
 
 // Different timeouts for operations
-api.get('/health', { timeout: 2000 }); // Quick check
-api.get('/report', { timeout: 30000 }); // Long operation
+api.get("/health", { timeout: 2000 }) // Quick check
+api.get("/report", { timeout: 30000 }) // Long operation
 ```
 
 ### 4. Validate Responses
 
 ```javascript
 function validateUserResponse(data) {
-  const required = ['id', 'email', 'name'];
+  const required = ["id", "email", "name"]
   for (const field of required) {
     if (!(field in data)) {
-      throw new Error(`Missing: ${field}`);
+      throw new Error(`Missing: ${field}`)
     }
   }
-  
-  if (!data.email.includes('@')) {
-    throw new Error('Invalid email');
+
+  if (!data.email.includes("@")) {
+    throw new Error("Invalid email")
   }
-  
-  return data;
+
+  return data
 }
 ```
 
@@ -488,18 +511,18 @@ function validateUserResponse(data) {
 
 ```javascript
 // ❌ Never
-console.log('Token:', token);
+console.log("Token:", token)
 
 // ✅ Sanitize
 function sanitize(obj) {
-  const sensitive = ['password', 'token', 'apiKey'];
-  const safe = { ...obj };
+  const sensitive = ["password", "token", "apiKey"]
+  const safe = { ...obj }
   for (const key in safe) {
     if (sensitive.some(s => key.toLowerCase().includes(s))) {
-      safe[key] = '[REDACTED]';
+      safe[key] = "[REDACTED]"
     }
   }
-  return safe;
+  return safe
 }
 ```
 
@@ -507,10 +530,10 @@ function sanitize(obj) {
 
 ```javascript
 // ❌ Insecure
-axios.get('http://api.example.com/users');
+axios.get("http://api.example.com/users")
 
 // ✅ Secure
-axios.get('https://api.example.com/users');
+axios.get("https://api.example.com/users")
 ```
 
 ### 3. Test Authorization
@@ -518,11 +541,11 @@ axios.get('https://api.example.com/users');
 ```javascript
 // Test what users CANNOT do
 try {
-  await api.delete('/admin/users/123');
-  console.error('❌ Security issue!');
+  await api.delete("/admin/users/123")
+  console.error("❌ Security issue!")
 } catch (error) {
   if (error.response?.status === 403) {
-    console.log('✅ Auth enforced');
+    console.log("✅ Auth enforced")
   }
 }
 ```
@@ -550,12 +573,12 @@ try {
 ❌ Hardcoding tokens  
 ❌ Ignoring error responses  
 ❌ Not validating schemas  
-❌ Logging secrets  
+❌ Logging secrets
 
 ✅ Test failures  
 ✅ Automate critical flows  
 ✅ Validate auth & permissions  
-✅ Use proper tooling  
+✅ Use proper tooling
 
 ---
 
@@ -583,7 +606,7 @@ When testing REST APIs, use these tools to debug faster:
 ✅ Debug with proper tools  
 ✅ Always test auth, errors, and rate limits  
 ✅ Automate API tests in CI/CD  
-✅ Use developer tools for debugging  
+✅ Use developer tools for debugging
 
 **Master REST API testing in 2026 and ship with confidence.**
 

@@ -2,25 +2,28 @@
 
 import {
   Badge,
+  ButtonWithTooltip,
   Card,
   CardContent,
   Checkbox,
+  Collapsible,
   Input,
   Label,
-  Textarea,
-  ButtonWithTooltip,
-  Collapsible,
   SidePanel,
+  Textarea,
 } from "@ek-studio/ui"
 import { cn } from "@ek-studio/ui"
-import { ChevronDown, ChevronUp, BookOpen } from "lucide-react"
+import { BookOpen, ChevronDown, ChevronUp } from "lucide-react"
 
 import { useEffect, useRef, useState } from "react"
 
 import { RegexCheatSheet } from "@/components/custom/regex-cheat-sheet"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { testRegexWithFormatting } from "@/features/text/regex/format"
-import { getHighlightedParts, parseExampleInput } from "@/features/text/regex/render"
+import {
+  getHighlightedParts,
+  parseExampleInput,
+} from "@/features/text/regex/render"
 import { useTool } from "@/hooks/use-tool"
 
 const RegexTesterTool = () => {
@@ -208,7 +211,9 @@ const RegexTesterTool = () => {
               <Checkbox
                 id={`flag-${key}`}
                 checked={flags[key as keyof typeof flags]}
-                onCheckedChange={() => handleFlagToggle(key as keyof typeof flags)}
+                onCheckedChange={() =>
+                  handleFlagToggle(key as keyof typeof flags)
+                }
               />
               <label
                 htmlFor={`flag-${key}`}
