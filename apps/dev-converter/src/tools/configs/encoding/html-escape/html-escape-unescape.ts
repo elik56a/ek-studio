@@ -97,6 +97,10 @@ export const htmlEscapeUnescapeTool: Tool = {
     },
   ],
   relatedTools: [
+    "html-escape",
+    "html-unescape",
+    "html-entity-encode",
+    "html-entity-decode",
     "url-encode-decode",
     "json-escape-unescape",
     "base64-encode-decode",
@@ -111,6 +115,7 @@ export const htmlEscapeUnescapeTool: Tool = {
     outputLabel: "Output",
     convertLabel: "Escape/Unescape",
     showSwapButton: true,
+    relatedToolsTitle: "Popular conversions",
     autoDetect: {
       enabled: true,
       emptyLabel: "paste HTML or entities",

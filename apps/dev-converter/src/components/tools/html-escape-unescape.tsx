@@ -1,11 +1,24 @@
 "use client"
 
+import { ButtonGroup } from "@/components/common/button-group"
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { detectHtmlEscaped, htmlEscapeUnescape } from "@/features/encoding/html"
+import {
+  convertHtmlWithMode,
+  getHtmlLabels,
+  type HtmlEscapeMode,
+  type HtmlEscapePreset,
+} from "@/features/encoding/html"
 import { useAutoDetect } from "@/hooks/use-auto-detect"
 import { useTool } from "@/hooks/use-tool"
+import { useState, useCallback } from "react"
 
-const HtmlEscapeUnescapeTool = () => {
+interface HtmlEscapeUnescapeToolProps {
+  preset?: HtmlEscapePreset
+}
+
+const HtmlEscapeUnescapeTool = ({ preset }: HtmlEscapeUnescapeToolProps) => {
+  const [mode, setMode] = useState<HtmlEscapeMode>(preset?.mode || "auto")
+
   const {
     input,
     setInput,
@@ -18,28 +31,58 @@ const HtmlEscapeUnescapeTool = () => {
     toolSlug,
     tool,
     relatedTools,
-    convert,
     handleExampleClick,
   } = useTool({
-    convertFn: htmlEscapeUnescape,
+    convertFn: useCallback(
+      (input: string) => convertHtmlWithMode(input, mode),
+      [mode]
+    ),
   })
 
   if (!tool) {
     return <div>Tool not found</div>
   }
 
-  // Use auto-detect hook for all dynamic labels
-  const { inputLabel, outputLabel, autoDetectLabel, convertLabel } =
-    useAutoDetect({
-      tool,
-      input,
-      isDetected: Boolean(input.trim() && detectHtmlEscaped(input)),
-    })
+  const labels = getHtmlLabels(mode, input, tool.ui.autoDetect)
+  const { inputLabel, outputLabel, convertLabel } = labels
 
-  // Split error message and details (separated by |)
+  const { autoDetectLabel } = useAutoDetect({
+    tool,
+    input,
+    isDetected: false,
+  })
+
   const [errorMessage, errorDetails] = statusMessage?.includes("|")
     ? statusMessage.split("|")
     : [statusMessage, undefined]
+
+  const handleModeSwap = () => {
+    if (mode === "escape") {
+      setMode("unescape")
+    } else if (mode === "unescape") {
+      setMode("escape")
+    }
+    handleSwap()
+  }
+
+  // Input actions with mode selector
+  const inputActions = (
+    <div className="flex flex-col gap-1">
+      <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
+        Mode
+      </span>
+      <ButtonGroup
+        options={[
+          { value: "auto", label: "Auto" },
+          { value: "escape", label: "Escape" },
+          { value: "unescape", label: "Unescape" },
+        ]}
+        value={mode}
+        onChange={value => setMode(value as HtmlEscapeMode)}
+        size="sm"
+      />
+    </div>
+  )
 
   return (
     <ToolLayout
@@ -59,9 +102,10 @@ const HtmlEscapeUnescapeTool = () => {
         errorMessage: status === "error" ? errorMessage : undefined,
         errorDetails: status === "error" ? errorDetails : undefined,
         showSwapButton: tool.ui.showSwapButton,
-        onSwap: handleSwap,
-        showAutoDetect: tool.ui.autoDetect?.enabled,
+        onSwap: handleModeSwap,
+        showAutoDetect: mode === "auto" && tool.ui.autoDetect?.enabled,
         autoDetectLabel: autoDetectLabel,
+        inputActions: inputActions,
       }}
       toolActionsProps={{
         onCopy: handleCopy,
@@ -83,6 +127,7 @@ const HtmlEscapeUnescapeTool = () => {
         faqs: tool.faq,
         relatedTools,
         onExampleClick: handleExampleClick,
+        tool,
       }}
     />
   )
