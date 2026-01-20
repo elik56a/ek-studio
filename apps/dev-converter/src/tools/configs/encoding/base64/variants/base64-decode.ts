@@ -95,6 +95,24 @@ export const base64DecodeTool: Tool = {
     },
   ],
 
+  examples: [
+    {
+      title: "Decode simple Base64 text",
+      input: "SGVsbG8sIFdvcmxkIQ==",
+      description: "Decode Base64 back to readable text",
+    },
+    {
+      title: "Decode Base64 JSON",
+      input: "eyJuYW1lIjoiSm9obiIsImFnZSI6MzB9",
+      description: "Decode Base64-encoded JSON data",
+    },
+    {
+      title: "Decode HTTP header value",
+      input: "QmFzaWMgdXNlcm5hbWU6cGFzc3dvcmQ=",
+      description: "Decode Base64 from HTTP Authorization header",
+    },
+  ],
+
   relatedTools: [
     "base64-encode-decode",
     "base64-encode",

@@ -95,6 +95,24 @@ export const textToBase64Tool: Tool = {
     },
   ],
 
+  examples: [
+    {
+      title: "Convert text to Base64",
+      input: "Hello, World!",
+      description: "Convert plain text to Base64 encoding",
+    },
+    {
+      title: "Convert JSON to Base64",
+      input: '{"name":"John","age":30}',
+      description: "Encode JSON data as Base64",
+    },
+    {
+      title: "Convert credentials to Base64",
+      input: "username:password",
+      description: "Encode credentials for HTTP Basic Auth",
+    },
+  ],
+
   relatedTools: [
     "base64-encode-decode",
     "base64-to-text",

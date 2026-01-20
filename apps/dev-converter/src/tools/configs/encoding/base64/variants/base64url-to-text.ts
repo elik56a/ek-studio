@@ -94,6 +94,24 @@ export const base64urlToTextTool: Tool = {
     },
   ],
 
+  examples: [
+    {
+      title: "Convert JWT header to text",
+      input: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+      description: "Convert JWT header to readable JSON",
+    },
+    {
+      title: "Convert JWT payload to text",
+      input: "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
+      description: "Extract JWT payload as text",
+    },
+    {
+      title: "Convert URL parameter to text",
+      input: "dXNlcjoxMjM0NXxyb2xlOmFkbWlu",
+      description: "Decode URL-safe Base64 to text",
+    },
+  ],
+
   relatedTools: [
     "base64-encode-decode",
     "text-to-base64url",

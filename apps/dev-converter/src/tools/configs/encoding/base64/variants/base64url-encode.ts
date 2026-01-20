@@ -94,6 +94,24 @@ export const base64urlEncodeTool: Tool = {
     },
   ],
 
+  examples: [
+    {
+      title: "Encode JWT header",
+      input: '{"alg":"HS256","typ":"JWT"}',
+      description: "Create JWT header segment",
+    },
+    {
+      title: "Encode for URL parameter",
+      input: "user:12345|role:admin",
+      description: "Create URL-safe encoded parameter",
+    },
+    {
+      title: "Encode token data",
+      input: "session-token-abc123",
+      description: "Create URL-safe token identifier",
+    },
+  ],
+
   relatedTools: [
     "base64-encode-decode",
     "base64url-decode",

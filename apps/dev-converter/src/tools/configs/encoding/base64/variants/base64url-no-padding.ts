@@ -95,6 +95,24 @@ export const base64urlNoPaddingTool: Tool = {
     },
   ],
 
+  examples: [
+    {
+      title: "Create JWT header",
+      input: '{"alg":"HS256","typ":"JWT"}',
+      description: "Encode JWT header without padding",
+    },
+    {
+      title: "Create JWT payload",
+      input: '{"sub":"1234567890","name":"John Doe","iat":1516239022}',
+      description: "Encode JWT payload in standard format",
+    },
+    {
+      title: "Encode for OAuth token",
+      input: "client_id:app123|scope:read",
+      description: "Create OAuth-compatible encoded string",
+    },
+  ],
+
   relatedTools: [
     "base64-encode-decode",
     "base64url-encode",

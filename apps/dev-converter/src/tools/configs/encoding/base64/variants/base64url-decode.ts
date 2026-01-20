@@ -94,6 +94,24 @@ export const base64urlDecodeTool: Tool = {
     },
   ],
 
+  examples: [
+    {
+      title: "Decode JWT header",
+      input: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+      description: "Decode JWT header segment to JSON",
+    },
+    {
+      title: "Decode JWT payload",
+      input: "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
+      description: "Decode JWT payload to see claims",
+    },
+    {
+      title: "Decode URL parameter",
+      input: "dXNlcjoxMjM0NXxyb2xlOmFkbWlu",
+      description: "Decode Base64URL from URL parameter",
+    },
+  ],
+
   relatedTools: [
     "base64-encode-decode",
     "base64url-encode",

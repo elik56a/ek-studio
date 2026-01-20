@@ -94,6 +94,24 @@ export const base64ToTextTool: Tool = {
     },
   ],
 
+  examples: [
+    {
+      title: "Convert Base64 to text",
+      input: "SGVsbG8sIFdvcmxkIQ==",
+      description: "Convert Base64 back to readable text",
+    },
+    {
+      title: "Extract JSON from Base64",
+      input: "eyJuYW1lIjoiSm9obiIsImFnZSI6MzB9",
+      description: "Convert Base64 to JSON text",
+    },
+    {
+      title: "Decode API response",
+      input: "QVBJIHJlc3BvbnNlIGRhdGE=",
+      description: "Convert Base64 API data to text",
+    },
+  ],
+
   relatedTools: [
     "base64-encode-decode",
     "text-to-base64",

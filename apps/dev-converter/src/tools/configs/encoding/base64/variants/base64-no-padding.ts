@@ -94,6 +94,24 @@ export const base64NoPaddingTool: Tool = {
     },
   ],
 
+  examples: [
+    {
+      title: "Encode without padding",
+      input: "Hello!",
+      description: "Create Base64 without = padding characters",
+    },
+    {
+      title: "Encode short text",
+      input: "Hi",
+      description: "Encode text that would normally have padding",
+    },
+    {
+      title: "Encode for compact storage",
+      input: "compact-data-123",
+      description: "Create cleaner Base64 for storage systems",
+    },
+  ],
+
   relatedTools: [
     "base64-encode-decode",
     "base64-encode",

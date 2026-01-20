@@ -95,6 +95,24 @@ export const textToBase64urlTool: Tool = {
     },
   ],
 
+  examples: [
+    {
+      title: "Convert text to Base64URL",
+      input: '{"alg":"HS256","typ":"JWT"}',
+      description: "Convert JWT header to Base64URL",
+    },
+    {
+      title: "Convert for URL parameter",
+      input: "user:12345|role:admin",
+      description: "Create URL-safe encoded string",
+    },
+    {
+      title: "Convert token to Base64URL",
+      input: "session-abc123-xyz789",
+      description: "Encode token for URL transmission",
+    },
+  ],
+
   relatedTools: [
     "base64-encode-decode",
     "base64url-to-text",
