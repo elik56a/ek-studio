@@ -1,4 +1,4 @@
-import { Base64Preset, FileToBase64Preset, HtmlEscapePreset } from "@/features/encoding"
+import { Base64Preset, FileToBase64Preset, HtmlEscapePreset, JsonEscapePreset, UrlEncodePreset } from "@/features/encoding"
 import { ColorConverterPreset } from "@/features/ui/color"
 
 
@@ -7,6 +7,8 @@ export interface PresetRegistry {
   "base64-encode-decode": Base64Preset
   "file-to-base64": FileToBase64Preset
   "html-escape-unescape": HtmlEscapePreset
+  "json-escape-unescape": JsonEscapePreset
+  "url-encode-decode": UrlEncodePreset
   // Future tools can be added here:
   // 'json-formatter': JsonFormatterPreset
   // 'image-converter': ImageConverterPreset

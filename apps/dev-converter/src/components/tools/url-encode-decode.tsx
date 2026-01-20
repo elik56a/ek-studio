@@ -1,11 +1,19 @@
 "use client"
 
+import { ButtonGroup } from "@/components/common/button-group"
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { detectUrlEncoded, urlEncodeDecode } from "@/features/encoding/url"
+import { detectUrlEncoded, urlEncodeDecodeWithMode, type UrlEncodeMode, type UrlEncodePreset } from "@/features/encoding/url"
 import { useAutoDetect } from "@/hooks/use-auto-detect"
 import { useTool } from "@/hooks/use-tool"
+import { useState, useCallback } from "react"
 
-const UrlEncodeDecodeTool = () => {
+interface UrlEncodeDecodeToolProps {
+  preset?: UrlEncodePreset
+}
+
+const UrlEncodeDecodeTool = ({ preset }: UrlEncodeDecodeToolProps) => {
+  const [mode, setMode] = useState<UrlEncodeMode>(preset?.mode || "auto")
+
   const {
     input,
     setInput,
@@ -18,10 +26,12 @@ const UrlEncodeDecodeTool = () => {
     toolSlug,
     tool,
     relatedTools,
-    convert,
     handleExampleClick,
   } = useTool({
-    convertFn: urlEncodeDecode,
+    convertFn: useCallback(
+      (input: string) => urlEncodeDecodeWithMode(input, mode),
+      [mode]
+    ),
   })
 
   if (!tool) {
@@ -41,6 +51,34 @@ const UrlEncodeDecodeTool = () => {
     ? statusMessage.split("|")
     : [statusMessage, undefined]
 
+  const handleModeSwap = () => {
+    if (mode === "encode") {
+      setMode("decode")
+    } else if (mode === "decode") {
+      setMode("encode")
+    }
+    handleSwap()
+  }
+
+  // Input actions with mode selector
+  const inputActions = (
+    <div className="flex flex-col gap-1">
+      <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
+        Mode
+      </span>
+      <ButtonGroup
+        options={[
+          { value: "auto", label: "Auto" },
+          { value: "encode", label: "Encode" },
+          { value: "decode", label: "Decode" },
+        ]}
+        value={mode}
+        onChange={value => setMode(value as UrlEncodeMode)}
+        size="sm"
+      />
+    </div>
+  )
+
   return (
     <ToolLayout
       tool={tool}
@@ -59,9 +97,10 @@ const UrlEncodeDecodeTool = () => {
         errorMessage: status === "error" ? errorMessage : undefined,
         errorDetails: status === "error" ? errorDetails : undefined,
         showSwapButton: tool.ui.showSwapButton,
-        onSwap: handleSwap,
-        showAutoDetect: tool.ui.autoDetect?.enabled,
+        onSwap: handleModeSwap,
+        showAutoDetect: mode === "auto" && tool.ui.autoDetect?.enabled,
         autoDetectLabel: autoDetectLabel,
+        inputActions: inputActions,
       }}
       toolActionsProps={{
         onCopy: handleCopy,
@@ -83,6 +122,7 @@ const UrlEncodeDecodeTool = () => {
         faqs: tool.faq,
         relatedTools,
         onExampleClick: handleExampleClick,
+        tool,
       }}
     />
   )

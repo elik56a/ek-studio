@@ -32,11 +32,11 @@ export interface ToolMetadata {
 export interface ToolUI {
   inputPlaceholder: string
   outputPlaceholder: string
+  relatedToolsTitle?: string;
   inputLabel: string
   outputLabel: string
   convertLabel: string
   showSwapButton?: boolean
-  relatedToolsTitle?: string
   autoDetect?: {
     enabled: boolean
     emptyLabel: string // Label when no input (e.g., "paste text or Base64")

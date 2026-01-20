@@ -1,11 +1,19 @@
 "use client"
 
+import { ButtonGroup } from "@/components/common/button-group"
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { detectJsonEscaped, jsonEscapeUnescape } from "@/features/encoding/json"
+import { detectJsonEscaped, jsonEscapeUnescapeWithMode, type JsonEscapeMode, type JsonEscapePreset } from "@/features/encoding/json"
 import { useAutoDetect } from "@/hooks/use-auto-detect"
 import { useTool } from "@/hooks/use-tool"
+import { useState, useCallback } from "react"
 
-const JsonEscapeUnescapeTool = () => {
+interface JsonEscapeUnescapeToolProps {
+  preset?: JsonEscapePreset
+}
+
+const JsonEscapeUnescapeTool = ({ preset }: JsonEscapeUnescapeToolProps) => {
+  const [mode, setMode] = useState<JsonEscapeMode>(preset?.mode || "auto")
+
   const {
     input,
     setInput,
@@ -18,17 +26,18 @@ const JsonEscapeUnescapeTool = () => {
     toolSlug,
     tool,
     relatedTools,
-    convert,
     handleExampleClick,
   } = useTool({
-    convertFn: jsonEscapeUnescape,
+    convertFn: useCallback(
+      (input: string) => jsonEscapeUnescapeWithMode(input, mode),
+      [mode]
+    ),
   })
 
   if (!tool) {
     return <div>Tool not found</div>
   }
 
-  // Use auto-detect hook for all dynamic labels
   const { inputLabel, outputLabel, autoDetectLabel, convertLabel } =
     useAutoDetect({
       tool,
@@ -36,10 +45,37 @@ const JsonEscapeUnescapeTool = () => {
       isDetected: Boolean(input.trim() && detectJsonEscaped(input)),
     })
 
-  // Split error message and details (separated by |)
   const [errorMessage, errorDetails] = statusMessage?.includes("|")
     ? statusMessage.split("|")
     : [statusMessage, undefined]
+
+  const handleModeSwap = () => {
+    if (mode === "escape") {
+      setMode("unescape")
+    } else if (mode === "unescape") {
+      setMode("escape")
+    }
+    handleSwap()
+  }
+
+  // Input actions with mode selector
+  const inputActions = (
+    <div className="flex flex-col gap-1">
+      <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
+        Mode
+      </span>
+      <ButtonGroup
+        options={[
+          { value: "auto", label: "Auto" },
+          { value: "escape", label: "Escape" },
+          { value: "unescape", label: "Unescape" },
+        ]}
+        value={mode}
+        onChange={value => setMode(value as JsonEscapeMode)}
+        size="sm"
+      />
+    </div>
+  )
 
   return (
     <ToolLayout
@@ -58,10 +94,11 @@ const JsonEscapeUnescapeTool = () => {
         outputLabel: outputLabel,
         errorMessage: status === "error" ? errorMessage : undefined,
         errorDetails: status === "error" ? errorDetails : undefined,
-        showSwapButton: tool.ui.showSwapButton,
-        onSwap: handleSwap,
-        showAutoDetect: tool.ui.autoDetect?.enabled,
+        showSwapButton: true,
+        onSwap: handleModeSwap,
+        showAutoDetect: mode === "auto" && tool.ui.autoDetect?.enabled,
         autoDetectLabel: autoDetectLabel,
+        inputActions: inputActions,
       }}
       toolActionsProps={{
         onCopy: handleCopy,
@@ -83,6 +120,7 @@ const JsonEscapeUnescapeTool = () => {
         faqs: tool.faq,
         relatedTools,
         onExampleClick: handleExampleClick,
+        tool,
       }}
     />
   )

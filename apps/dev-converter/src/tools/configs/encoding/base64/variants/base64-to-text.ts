@@ -127,7 +127,7 @@ export const base64ToTextTool: Tool = {
     inputLabel: "Base64 (Encoded)",
     outputLabel: "Text (Plain)",
     convertLabel: "Convert to Text",
-    showSwapButton: true,
+    showSwapButton: false,
     autoDetect: {
       enabled: true,
       emptyLabel: "paste Base64 to convert",

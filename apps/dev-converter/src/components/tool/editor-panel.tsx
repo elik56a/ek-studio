@@ -142,9 +142,9 @@ export function EditorPanel({
           </Card>
         )}
 
-        {/* Swap Button - Floating between panels - Only show if input panel exists */}
-        {showInput && showSwapButton && onSwap && (
-          <div className="hidden xl:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+        {/* Swap Button - Floating between panels - Only show if input panel exists, temp hiding */}
+        {false && (
+          <div className="hidden xl:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/1 z-10">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
