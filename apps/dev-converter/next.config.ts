@@ -70,12 +70,6 @@ const nextConfig: NextConfig = {
         destination: "/apple-icon",
         permanent: true,
       },
-      // Redirect image-to-base64 to file-to-base64
-      {
-        source: "/image-to-base64",
-        destination: "/file-to-base64",
-        permanent: true,
-      },
     ]
   },
 
