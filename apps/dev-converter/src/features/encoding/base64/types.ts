@@ -8,3 +8,9 @@ export interface Base64Preset {
   noPadding?: boolean
   encoding?: CharacterEncoding
 }
+
+
+export interface FileToBase64Preset {
+  accept?: string[] 
+  label?: string
+}

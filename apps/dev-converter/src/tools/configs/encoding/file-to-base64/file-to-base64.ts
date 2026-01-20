@@ -97,12 +97,12 @@ export const fileToBase64Tool: Tool = {
     },
   ],
   relatedTools: [
+    "image-to-base64",
+    "png-to-base64",
+    "jpg-to-base64",
+    "pdf-to-base64",
     "base64-encode-decode",
     "url-encode-decode",
-    "html-escape-unescape",
-    "json-formatter",
-    "json-escape-unescape",
-    "jwt-decoder",
   ],
   ui: {
     inputPlaceholder: "Upload a file (PNG, JPG, SVG, PDF, etc.)...",
@@ -110,5 +110,6 @@ export const fileToBase64Tool: Tool = {
     inputLabel: "File Upload",
     outputLabel: "Base64 Data URL",
     convertLabel: "Convert to Base64",
+    relatedToolsTitle: "Popular conversions",
   },
 }

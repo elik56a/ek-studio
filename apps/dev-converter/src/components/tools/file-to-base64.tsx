@@ -7,8 +7,14 @@ import { useCallback, useMemo, useState } from "react"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { fileToBase64 } from "@/features/encoding/base64"
 import { useTool } from "@/hooks/use-tool"
+import { FileToBase64Preset } from "@/features/encoding"
+import { getPreset } from "@/lib/tools/presets"
 
-const FileToBase64Tool = () => {
+interface FileToBase64ToolProps {
+  preset?: FileToBase64Preset
+}
+
+const FileToBase64Tool = ({ preset: presetProp }: FileToBase64ToolProps) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
   const {
@@ -45,6 +51,8 @@ const FileToBase64Tool = () => {
     return <div>Tool not found</div>
   }
 
+  const preset = getPreset("file-to-base64", presetProp || tool.preset)
+
   const handleFileSelect = useCallback(
     (file: File) => {
       setSelectedFile(file)
@@ -61,20 +69,24 @@ const FileToBase64Tool = () => {
   }, [originalHandleClear])
 
   // Memoize the custom input component to prevent re-renders
-  const customInputComponent = useMemo(
-    () => (
+  const customInputComponent = useMemo(() => {
+    const accept = preset?.accept ? preset.accept.join(",") : "*/*"
+    const acceptLabel = preset?.label
+      ? `${preset.label} files`
+      : "All file types supported"
+
+    return (
       <FileUpload
         onFileSelect={handleFileSelect}
         onClear={handleClear}
         selectedFile={selectedFile}
-        accept="*/*"
-        acceptLabel="All file types supported"
+        accept={accept}
+        acceptLabel={acceptLabel}
         maxSize={10 * 1024 * 1024}
         disabled={status === "loading"}
       />
-    ),
-    [handleFileSelect, handleClear, selectedFile, status]
-  )
+    )
+  }, [handleFileSelect, handleClear, selectedFile, status, preset])
 
   return (
     <ToolLayout
