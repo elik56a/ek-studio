@@ -1,6 +1,8 @@
 "use client"
 
+import { useMemo } from "react"
 import { CollapsibleJsonViewer } from "@/components/custom/collapsible-json-viewer"
+import { FileOrTextInput } from "@/components/custom/file-or-text-input"
 import { ToolLayout } from "@/components/tool/tool-layout"
 import { yamlToJson } from "@/features/data-transform/json"
 import { useTool } from "@/hooks/use-tool"
@@ -17,7 +19,6 @@ const YamlToJsonTool = () => {
     toolSlug,
     tool,
     relatedTools,
-    convert,
     handleExampleClick,
   } = useTool({
     convertFn: yamlToJson,
@@ -26,6 +27,20 @@ const YamlToJsonTool = () => {
   if (!tool) {
     return <div>Tool not found</div>
   }
+
+  const customInputComponent = useMemo(
+    () => (
+      <FileOrTextInput
+        value={input}
+        onChange={setInput}
+        placeholder={tool.ui.inputPlaceholder}
+        accept=".yaml,.yml,.txt"
+        acceptLabel="YAML, YML, TXT"
+        disabled={status === "loading"}
+      />
+    ),
+    [input, setInput, tool.ui.inputPlaceholder, status]
+  )
 
   return (
     <ToolLayout
@@ -43,6 +58,7 @@ const YamlToJsonTool = () => {
         inputLabel: tool.ui.inputLabel,
         outputLabel: tool.ui.outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
+        customInputComponent: customInputComponent,
         customOutputComponent: (
           <CollapsibleJsonViewer
             value={output}

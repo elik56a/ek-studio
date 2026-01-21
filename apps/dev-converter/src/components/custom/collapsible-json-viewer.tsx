@@ -5,7 +5,7 @@ import {
   cn,
 } from "@ek-studio/ui"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState, memo, startTransition } from "react"
 
 import { ButtonGroup } from "@/components/common/button-group"
 import { JsonValueRenderer } from "@/components/custom/json-value-renderer"
@@ -22,24 +22,29 @@ interface CollapsibleJsonViewerProps {
   value: string
   className?: string
   placeholder?: string
-  preset:  JsonFormatterPreset | undefined
+  preset?:  JsonFormatterPreset | undefined
   viewMode?: "tree" | "pretty" | "minify"
+  onViewModeChange?: (mode: "tree" | "pretty" | "minify") => void
 }
 
-export function CollapsibleJsonViewer({
+export const CollapsibleJsonViewer = memo(function CollapsibleJsonViewer({
   value,
   className,
   placeholder = "Output will appear here...",
   preset = {},
   viewMode: externalViewMode,
+  onViewModeChange,
 }: CollapsibleJsonViewerProps) {
   const [collapsedNodes, setCollapsedNodes] = useState<NodeState>({})
   const [globalCollapsed, setGlobalCollapsed] = useState(false)
   const { mode , expandAll} = preset
-
+  const [internalViewMode, setInternalViewMode] = useState<"tree" | "pretty" | "minify">(
+    mode === "minify" ? "minify" : "tree"
+  )
   const [searchQuery, setSearchQuery] = useState("")
   
-  const viewMode = externalViewMode 
+  // Use external viewMode if provided, otherwise use internal state
+  const viewMode = externalViewMode ?? internalViewMode
 
   // Parse the input value (supports JSON and YAML-like structures)
   const parsedData = useMemo(() => parseJsonOrYaml(value), [value])
@@ -75,13 +80,17 @@ export function CollapsibleJsonViewer({
 
   const collapseAll = useCallback(() => {
     if (!parsedData) return
-    setCollapsedNodes(createCollapsedState(parsedData))
-    setGlobalCollapsed(true)
+    startTransition(() => {
+      setCollapsedNodes(createCollapsedState(parsedData))
+      setGlobalCollapsed(true)
+    })
   }, [parsedData])
 
   const expandAllNodes = useCallback(() => {
-    setCollapsedNodes({})
-    setGlobalCollapsed(false)
+    startTransition(() => {
+      setCollapsedNodes({})
+      setGlobalCollapsed(false)
+    })
   }, [])
 
   if (!value || value.trim() === "") {
@@ -186,4 +195,4 @@ export function CollapsibleJsonViewer({
       </div>
     </div>
   )
-}
+})

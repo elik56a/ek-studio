@@ -1,11 +1,24 @@
 "use client"
 
+import { useCallback, useMemo, useState } from "react"
+import { Checkbox, Label } from "@ek-studio/ui"
+import { ButtonGroup } from "@/components/common/button-group"
 import { CollapsibleJsonViewer } from "@/components/custom/collapsible-json-viewer"
+import { FileOrTextInput } from "@/components/custom/file-or-text-input"
 import { ToolLayout } from "@/components/tool/tool-layout"
-import { csvToJson } from "@/features/data-transform/json/from-csv"
+import { csvToJson, CsvToJsonOptions, CsvToJsonPreset } from "@/features/data-transform/csv"
 import { useTool } from "@/hooks/use-tool"
 
-const CsvToJsonTool = () => {
+interface CsvToJsonToolProps {
+  preset?: CsvToJsonPreset
+}
+
+const CsvToJsonTool = ({ preset }: CsvToJsonToolProps) => {
+  const [hasHeaders, setHasHeaders] = useState(preset?.hasHeaders ?? true)
+  const [outputFormat, setOutputFormat] = useState<"array" | "object">(
+    preset?.outputFormat ?? "array"
+  )
+
   const {
     input,
     setInput,
@@ -17,15 +30,74 @@ const CsvToJsonTool = () => {
     toolSlug,
     tool,
     relatedTools,
-    convert,
     handleExampleClick,
   } = useTool({
-    convertFn: csvToJson,
+    convertFn: useCallback(
+      (csvInput: string) => {
+        const options: CsvToJsonOptions = {
+          hasHeaders,
+          outputFormat,
+        }
+        return csvToJson(csvInput, options)
+      },
+      [hasHeaders, outputFormat]
+    ),
   })
 
   if (!tool) {
     return <div>Tool not found</div>
   }
+
+  const customInputComponent = useMemo(
+    () => (
+      <FileOrTextInput
+        value={input}
+        onChange={setInput}
+        placeholder={tool.ui.inputPlaceholder}
+        accept=".csv,.txt"
+        acceptLabel="CSV, TXT"
+        disabled={status === "loading"}
+      />
+    ),
+    [input, setInput, tool.ui.inputPlaceholder, status]
+  )
+
+  // Input actions with options
+  const inputActions = (
+    <div className="flex flex-wrap items-end gap-4">
+      {/* Output Format Selector */}
+      <div className="flex flex-col gap-1">
+        <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
+          Output As
+        </span>
+        <ButtonGroup
+          options={[
+            { value: "array", label: "Array" },
+            { value: "object", label: "Object" },
+          ]}
+          value={outputFormat}
+          onChange={(value) => setOutputFormat(value as "array" | "object")}
+          size="sm"
+        />
+      </div>
+
+      {/* Headers Checkbox */}
+      <div className="flex items-center gap-2 pb-[3px]">
+        <Checkbox
+          id="has-headers"
+          checked={hasHeaders}
+          onCheckedChange={(checked) => setHasHeaders(checked as boolean)}
+          disabled={status === "loading"}
+        />
+        <Label 
+          htmlFor="has-headers" 
+          className="text-sm cursor-pointer"
+        >
+          First row is headers
+        </Label>
+      </div>
+    </div>
+  )
 
   return (
     <ToolLayout
@@ -43,6 +115,8 @@ const CsvToJsonTool = () => {
         inputLabel: tool.ui.inputLabel,
         outputLabel: tool.ui.outputLabel,
         errorMessage: status === "error" ? statusMessage : undefined,
+        customInputComponent: customInputComponent,
+        inputActions: inputActions,
         customOutputComponent: (
           <CollapsibleJsonViewer
             value={output}

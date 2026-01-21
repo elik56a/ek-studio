@@ -80,8 +80,8 @@ export function ColorOutputDisplay({
   // Reorder items based on preset.highlight
   const orderedItems = preset?.highlight
     ? [
-        ...items.filter(item => item.title === preset.highlight),
-        ...items.filter(item => item.title !== preset.highlight),
+        ...items.filter(item => item.title.toLowerCase() === preset.highlight?.toLowerCase()),
+        ...items.filter(item => item.title.toLowerCase() !== preset.highlight?.toLowerCase()),
       ]
     : items
 
@@ -121,7 +121,7 @@ export function ColorOutputDisplay({
       <div className="space-y-1.5">
         {orderedItems.map((item, index) => {
           // Check if this is the highlighted format
-          const isHighlighted = preset?.highlight === item.title
+          const isHighlighted = preset?.highlight?.toUpperCase() === item.title?.toUpperCase()
           
           return (
             <InfoRow
@@ -129,7 +129,7 @@ export function ColorOutputDisplay({
               {...item}
               className={
                 isHighlighted
-                  ? "border-2 border-primary shadow-md shadow-primary/20 bg-gradient-to-r from-primary/15 via-primary/25 to-primary/15 scale-[1.02]"
+                  ? "border-2 border-primary shadow-md shadow-primary/20 bg-gradient-to-r from-primary/15 via-primary/20 to-primary/15 scale-[1.02]"
                   : undefined
               }
               bgColor={isHighlighted ? "" : undefined}

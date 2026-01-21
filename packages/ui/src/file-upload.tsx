@@ -15,6 +15,7 @@ export interface FileUploadProps {
   disabled?: boolean
   className?: string
   children?: React.ReactNode
+  variant?: "default" | "compact"
 }
 
 export function FileUpload({
@@ -27,6 +28,7 @@ export function FileUpload({
   disabled = false,
   className,
   children,
+  variant = "default",
 }: FileUploadProps) {
   const [isDragging, setIsDragging] = React.useState(false)
   const fileInputRef = React.useRef<HTMLInputElement>(null)
@@ -109,10 +111,13 @@ export function FileUpload({
     onClear?.()
   }
 
+  const isCompact = variant === "compact"
+
   return (
     <div
       className={cn(
-        "relative w-full h-full min-h-[300px] flex flex-col items-center justify-center gap-4 p-8 rounded-lg border-2 border-dashed transition-all duration-200",
+        "relative w-full flex flex-col items-center justify-center rounded-lg border-2 border-dashed transition-all duration-200",
+        isCompact ? "min-h-[120px] gap-2 p-4" : "h-full min-h-[300px] gap-4 p-8",
         isDragging
           ? "border-primary bg-primary/5 scale-[1.02]"
           : "border-border/50 bg-background/50 hover:border-primary/50",
@@ -144,67 +149,113 @@ export function FileUpload({
         />
       )}
 
-      <div className="relative z-0 flex flex-col items-center gap-4 pointer-events-none">
+      <div className={cn(
+        "relative z-0 flex flex-col items-center pointer-events-none",
+        isCompact ? "gap-2" : "gap-4"
+      )}>
         {children || (
           <>
-            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-              {isDragging ? (
-                <Upload className="w-8 h-8 text-primary animate-bounce" />
-              ) : (
-                <ImageIcon className="w-8 h-8 text-primary" />
-              )}
-            </div>
-
-            {selectedFile ? (
-              <div className="flex flex-col items-center gap-2">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-medium text-foreground">
-                    {selectedFile.name}
+            {isCompact ? (
+              // Compact variant
+              selectedFile ? (
+                <div className="flex flex-col items-center gap-2 w-full">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-medium text-foreground truncate max-w-[200px]">
+                      {selectedFile.name}
+                    </p>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-5 w-5 pointer-events-auto"
+                      onClick={handleClear}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {(selectedFile.size / 1024).toFixed(2)} KB
                   </p>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 pointer-events-auto"
-                    onClick={handleClear}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  {(selectedFile.size / 1024).toFixed(2)} KB
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="mt-2 pointer-events-auto"
-                  onClick={e => {
-                    e.stopPropagation()
-                    handleClick()
-                  }}
-                >
-                  <Upload className="w-4 h-4 mr-2" />
-                  Change File
-                </Button>
-              </div>
-            ) : (
-              <>
-                <div className="text-center space-y-2">
-                  <p className="text-base font-medium text-foreground">
+              ) : (
+                <>
+                  <p className="text-sm font-medium text-foreground">
                     {isDragging ? "Drop your file here" : "Drag & drop your file here"}
                   </p>
-                  <p className="text-sm text-muted-foreground">or</p>
+                  <p className="text-xs text-muted-foreground">or</p>
+                  <Button variant="outline" size="sm" className="gap-2 pointer-events-auto h-8">
+                    <Upload className="w-3 h-3" />
+                    Browse Files
+                  </Button>
+                  <p className="text-[10px] text-muted-foreground text-center">
+                    Supported formats: {acceptLabel}
+                    <br />
+                    Maximum file size: {maxSize / 1024 / 1024}MB
+                  </p>
+                </>
+              )
+            ) : (
+              // Default variant
+              <>
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  {isDragging ? (
+                    <Upload className="w-8 h-8 text-primary animate-bounce" />
+                  ) : (
+                    <ImageIcon className="w-8 h-8 text-primary" />
+                  )}
                 </div>
 
-                <Button variant="outline" size="lg" className="gap-2 pointer-events-auto">
-                  <Upload className="w-4 h-4" />
-                  Browse Files
-                </Button>
+                {selectedFile ? (
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-medium text-foreground">
+                        {selectedFile.name}
+                      </p>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6 pointer-events-auto"
+                        onClick={handleClear}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      {(selectedFile.size / 1024).toFixed(2)} KB
+                    </p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-2 pointer-events-auto"
+                      onClick={e => {
+                        e.stopPropagation()
+                        handleClick()
+                      }}
+                    >
+                      <Upload className="w-4 h-4 mr-2" />
+                      Change File
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <div className="text-center space-y-2">
+                      <p className="text-base font-medium text-foreground">
+                        {isDragging ? "Drop your file here" : "Drag & drop your file here"}
+                      </p>
+                      <p className="text-sm text-muted-foreground">or</p>
+                    </div>
 
-                <p className="text-xs text-muted-foreground text-center max-w-md">
-                  Supported formats: {acceptLabel}
-                  <br />
-                  Maximum file size: {maxSize / 1024 / 1024}MB
-                </p>
+                    <Button variant="outline" size="lg" className="gap-2 pointer-events-auto">
+                      <Upload className="w-4 h-4" />
+                      Browse Files
+                    </Button>
+
+                    <p className="text-xs text-muted-foreground text-center max-w-md">
+                      Supported formats: {acceptLabel}
+                      <br />
+                      Maximum file size: {maxSize / 1024 / 1024}MB
+                    </p>
+                  </>
+                )}
               </>
             )}
           </>

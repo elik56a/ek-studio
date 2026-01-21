@@ -1,6 +1,7 @@
 import { Base64Preset, FileToBase64Preset, HtmlEscapePreset, JsonEscapePreset, UrlEncodePreset } from "@/features/encoding"
 import { ColorConverterPreset } from "@/features/ui/color"
 import { JsonFormatterPreset } from "@/features/data-transform/json"
+import { CsvToJsonPreset } from "@/features/data-transform/csv"
 
 
 export interface PresetRegistry {
@@ -11,6 +12,7 @@ export interface PresetRegistry {
   "json-escape-unescape": JsonEscapePreset
   "url-encode-decode": UrlEncodePreset
   "json-formatter": JsonFormatterPreset
+  "csv-to-json": CsvToJsonPreset
   // Future tools can be added here:
   // 'image-converter': ImageConverterPreset
 }

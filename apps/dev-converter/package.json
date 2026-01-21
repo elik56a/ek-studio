@@ -16,6 +16,7 @@
     "@ek-studio/blog": "workspace:*",
     "@ek-studio/ui": "workspace:*",
     "@tailwindcss/typography": "^0.5.19",
+    "@tanstack/react-virtual": "^3.13.18",
     "@types/nprogress": "^0.2.3",
     "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.3.1",

@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react"
 
-import React from "react"
+import React, { memo } from "react"
 
 import {
   JsonArray,
@@ -10,6 +10,7 @@ import {
   formatValueForDisplay,
   getValueTypeClasses,
 } from "@/features/ui/json-viewer"
+import { VirtualizedJsonArray } from "./virtualized-json-array"
 
 interface JsonValueRendererProps {
   value: JsonValue
@@ -19,7 +20,10 @@ interface JsonValueRendererProps {
   onToggleNode: (path: string) => void
 }
 
-export function JsonValueRenderer({
+// Threshold for when to use virtualization
+const VIRTUALIZATION_THRESHOLD = 100
+
+export const JsonValueRenderer = memo(function JsonValueRenderer({
   value,
   path,
   depth,
@@ -37,12 +41,27 @@ export function JsonValueRenderer({
     )
   }
 
-  // Array
+  // Array - use virtualization for large arrays
   if (Array.isArray(value)) {
     if (value.length === 0) {
       return <span className="text-muted-foreground">[]</span>
     }
 
+    // Use virtualization for large arrays
+    if (value.length >= VIRTUALIZATION_THRESHOLD) {
+      return (
+        <VirtualizedJsonArray
+          value={value}
+          path={path}
+          depth={depth}
+          collapsedNodes={collapsedNodes}
+          onToggleNode={onToggleNode}
+          isCollapsed={isCollapsed}
+        />
+      )
+    }
+
+    // Regular rendering for small arrays
     return (
       <div className="inline-block w-full">
         <button
@@ -59,24 +78,22 @@ export function JsonValueRenderer({
           </span>
         </button>
 
-        <div
-          className={`ml-4 border-l-2 border-border/50 pl-3 mt-1 overflow-hidden transition-all duration-150 ${
-            isCollapsed ? "max-h-0 opacity-0" : "max-h-[10000px] opacity-100"
-          }`}
-        >
-          {value.map((item, index) => (
-            <div key={index} className="py-0.5">
-              <span className="text-muted-foreground mr-2">{index}:</span>
-              <JsonValueRenderer
-                value={item}
-                path={`${path}[${index}]`}
-                depth={depth + 1}
-                collapsedNodes={collapsedNodes}
-                onToggleNode={onToggleNode}
-              />
-            </div>
-          ))}
-        </div>
+        {!isCollapsed && (
+          <div className="ml-4 border-l-2 border-border/50 pl-3 mt-1">
+            {value.map((item, index) => (
+              <div key={index} className="py-0.5">
+                <span className="text-muted-foreground mr-2">{index}:</span>
+                <JsonValueRenderer
+                  value={item}
+                  path={`${path}[${index}]`}
+                  depth={depth + 1}
+                  collapsedNodes={collapsedNodes}
+                  onToggleNode={onToggleNode}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     )
   }
@@ -105,27 +122,25 @@ export function JsonValueRenderer({
         </span>
       </button>
 
-      <div
-        className={`ml-4 border-l-2 border-border/50 pl-3 mt-1 overflow-hidden transition-all duration-150 ${
-          isCollapsed ? "max-h-0 opacity-0" : "max-h-[10000px] opacity-100"
-        }`}
-      >
-        {keys.map(key => (
-          <div key={key} className="py-0.5">
-            <span className="text-cyan-600 dark:text-cyan-400 font-medium">
-              {key}
-            </span>
-            <span className="text-muted-foreground">: </span>
-            <JsonValueRenderer
-              value={(value as JsonObject)[key]}
-              path={path ? `${path}.${key}` : key}
-              depth={depth + 1}
-              collapsedNodes={collapsedNodes}
-              onToggleNode={onToggleNode}
-            />
-          </div>
-        ))}
-      </div>
+      {!isCollapsed && (
+        <div className="ml-4 border-l-2 border-border/50 pl-3 mt-1">
+          {keys.map(key => (
+            <div key={key} className="py-0.5">
+              <span className="text-cyan-600 dark:text-cyan-400 font-medium">
+                {key}
+              </span>
+              <span className="text-muted-foreground">: </span>
+              <JsonValueRenderer
+                value={(value as JsonObject)[key]}
+                path={path ? `${path}.${key}` : key}
+                depth={depth + 1}
+                collapsedNodes={collapsedNodes}
+                onToggleNode={onToggleNode}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
-}
+})

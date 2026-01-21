@@ -10,29 +10,29 @@ export function useAutoSave<T>(
 ) {
   const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
-    if (!value || !enabled) return
+  // useEffect(() => {
+  //   if (!value || !enabled) return
 
-    setIsLoading(true)
-    const timer = setTimeout(() => {
-      try {
-        localStorage.setItem(key, JSON.stringify(value))
-      } catch (error) {
-        console.warn("Failed to save to localStorage:", error)
-      }
-      setIsLoading(false)
-    }, delay)
+  //   setIsLoading(true)
+  //   const timer = setTimeout(() => {
+  //     try {
+  //       localStorage.setItem(key, JSON.stringify(value))
+  //     } catch (error) {
+  //       console.warn("Failed to save to localStorage:", error)
+  //     }
+  //     setIsLoading(false)
+  //   }, delay)
 
-    return () => clearTimeout(timer)
-  }, [key, value, delay, enabled])
+  //   return () => clearTimeout(timer)
+  // }, [key, value, delay, enabled])
 
-  const loadSaved = (): T | null => {
-    try {
-      const saved = localStorage.getItem(key)
-      return saved ? JSON.parse(saved) : null
-    } catch {
-      return null
-    }
+  const loadSaved = (): any => {
+    // try {
+    //   const saved = localStorage.getItem(key)
+    //   return saved ? JSON.parse(saved) : null
+    // } catch {
+    //   return null
+    // }
   }
 
   const clearSaved = () => {
