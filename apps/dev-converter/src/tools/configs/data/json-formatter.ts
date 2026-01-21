@@ -105,12 +105,14 @@ export const jsonFormatterTool: Tool = {
     },
   ],
   relatedTools: [
+    "json-validator",
+    "json-minify",
+    "beautify-json",
+    "json-viewer",
     "json-to-yaml",
     "json-to-csv",
     "yaml-to-json",
     "csv-to-json",
-    "base64-encode",
-    "url-encode",
   ],
   ui: {
     inputPlaceholder: "Paste JSON here...",

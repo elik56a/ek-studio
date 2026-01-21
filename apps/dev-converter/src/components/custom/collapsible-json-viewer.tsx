@@ -1,18 +1,13 @@
 "use client"
 
 import {
-  Button,
   SearchInput,
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
   cn,
 } from "@ek-studio/ui"
-import { ChevronsDown, ChevronsRight, FileJson, List } from "lucide-react"
 
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
+import { ButtonGroup } from "@/components/common/button-group"
 import { JsonValueRenderer } from "@/components/custom/json-value-renderer"
 import {
   NodeState,
@@ -21,25 +16,46 @@ import {
   parseJsonOrYaml,
 } from "@/features/ui/json-viewer"
 import { useOutputAnimation } from "@/hooks/use-output-animation"
+import type { JsonFormatterPreset } from "@/features/data-transform/json"
 
 interface CollapsibleJsonViewerProps {
   value: string
   className?: string
   placeholder?: string
+  preset:  JsonFormatterPreset | undefined
+  viewMode?: "tree" | "pretty" | "minify"
 }
 
 export function CollapsibleJsonViewer({
   value,
   className,
   placeholder = "Output will appear here...",
+  preset = {},
+  viewMode: externalViewMode,
 }: CollapsibleJsonViewerProps) {
   const [collapsedNodes, setCollapsedNodes] = useState<NodeState>({})
   const [globalCollapsed, setGlobalCollapsed] = useState(false)
-  const [viewMode, setViewMode] = useState<"tree" | "pretty">("tree")
+  const { mode , expandAll} = preset
+
   const [searchQuery, setSearchQuery] = useState("")
+  
+  const viewMode = externalViewMode 
 
   // Parse the input value (supports JSON and YAML-like structures)
   const parsedData = useMemo(() => parseJsonOrYaml(value), [value])
+
+  // Set initial collapsed state based on expandAll preset
+  useEffect(() => {
+    if (parsedData && preset?.mode === "viewer") {
+      if (expandAll) {
+        setCollapsedNodes({})
+        setGlobalCollapsed(false)
+      } else {
+        setCollapsedNodes(createCollapsedState(parsedData))
+        setGlobalCollapsed(true)
+      }
+    }
+  }, [parsedData, mode, expandAll])
 
   // Add glowing animation on value change
   const isOutputAnimating = useOutputAnimation(value)
@@ -63,7 +79,7 @@ export function CollapsibleJsonViewer({
     setGlobalCollapsed(true)
   }, [parsedData])
 
-  const expandAll = useCallback(() => {
+  const expandAllNodes = useCallback(() => {
     setCollapsedNodes({})
     setGlobalCollapsed(false)
   }, [])
@@ -104,127 +120,70 @@ export function CollapsibleJsonViewer({
         className
       )}
     >
-      <TooltipProvider>
-        {/* JSON Tree View with Controls */}
-        <div
-          className={cn(
-            "flex-1 overflow-auto bg-white dark:bg-muted/30 border border-border/50 rounded-lg flex flex-col relative transition-all duration-500",
-            isOutputAnimating && "output-glow-animation"
-          )}
-        >
-          {/* Toolbar */}
-          <div className="flex items-center gap-2 px-3 py-2 border-b border-border/50 bg-white/80 dark:bg-background/50 backdrop-blur-sm sticky top-0 z-10">
-            {/* Search Input */}
-            <SearchInput
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              className="h-7 text-xs max-w-xs"
-            />
+      {/* JSON Tree View with Controls */}
+      <div
+        className={cn(
+          "flex-1 overflow-auto bg-white dark:bg-muted/30 border border-border/50 rounded-lg flex flex-col relative transition-all duration-500",
+          isOutputAnimating && "output-glow-animation"
+        )}
+      >
+        {/* Toolbar */}
+        <div className="flex items-center gap-2 px-3 py-2 border-b border-border/50 bg-white/80 dark:bg-background/50 backdrop-blur-sm sticky top-0 z-10">
+          {/* Search Input */}
+          <SearchInput
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            className="h-7 text-xs max-w-xs"
+          />
 
-            {/* View Mode Toggle */}
-            <div className="inline-flex rounded-lg border border-border/50 bg-background/50">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant={viewMode === "tree" ? "default" : "secondary"}
-                    size="sm"
-                    onClick={() => setViewMode("tree")}
-                    className={cn(
-                      "h-7 px-2 rounded-none rounded-l-lg",
-                      viewMode === "tree" && "shadow-sm",
-                      viewMode !== "tree" && "hover:bg-primary/10"
-                    )}
-                  >
-                    <List className="h-3.5 w-3.5" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>Tree view</TooltipContent>
-              </Tooltip>
-
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant={viewMode === "pretty" ? "default" : "secondary"}
-                    size="sm"
-                    onClick={() => setViewMode("pretty")}
-                    className={cn(
-                      "h-7 px-2 rounded-none rounded-r-lg",
-                      viewMode === "pretty" && "shadow-sm",
-                      viewMode !== "pretty" && "hover:bg-primary/10"
-                    )}
-                  >
-                    <FileJson className="h-3.5 w-3.5" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>Pretty JSON</TooltipContent>
-              </Tooltip>
-            </div>
-
-            {/* Collapse/Expand Controls */}
-            {viewMode === "tree" && (
-              <div className="inline-flex rounded-lg border border-border/50 bg-background/50">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant={!globalCollapsed ? "default" : "secondary"}
-                      size="sm"
-                      onClick={expandAll}
-                      className={cn(
-                        "h-7 px-2 rounded-none rounded-l-lg",
-                        !globalCollapsed && "shadow-sm",
-                        globalCollapsed && "hover:bg-primary/10"
-                      )}
-                    >
-                      <ChevronsDown className="h-3.5 w-3.5" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Expand all</TooltipContent>
-                </Tooltip>
-
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant={globalCollapsed ? "default" : "secondary"}
-                      size="sm"
-                      onClick={collapseAll}
-                      className={cn(
-                        "h-7 px-2 rounded-none rounded-r-lg",
-                        globalCollapsed && "shadow-sm",
-                        !globalCollapsed && "hover:bg-primary/10"
-                      )}
-                    >
-                      <ChevronsRight className="h-3.5 w-3.5" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Collapse all</TooltipContent>
-                </Tooltip>
-              </div>
-            )}
-          </div>
-
-          {/* JSON Content */}
-          <div className="flex-1 overflow-auto p-4 font-mono text-xs sm:text-sm">
-            {searchQuery && !filteredData ? (
-              <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
-                No matches found for "{searchQuery}"
-              </div>
-            ) : viewMode === "pretty" ? (
-              <pre className="whitespace-pre-wrap break-words">
-                {JSON.stringify(displayData, null, 2)}
-              </pre>
-            ) : (
-              <JsonValueRenderer
-                value={displayData}
-                path="root"
-                depth={0}
-                collapsedNodes={collapsedNodes}
-                onToggleNode={toggleNode}
+          {/* Collapse/Expand Controls - Only show in tree view */}
+          {viewMode === "tree" && (
+            <div className="flex flex-col gap-1">
+              <ButtonGroup
+                options={[
+                  { value: "expand", label: "Expand All" },
+                  { value: "collapse", label: "Collapse All" },
+                ]}
+                value={globalCollapsed ? "collapse" : "expand"}
+                onChange={value => {
+                  if (value === "expand") {
+                    expandAllNodes()
+                  } else {
+                    collapseAll()
+                  }
+                }}
+                size="sm"
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
-      </TooltipProvider>
+
+        {/* JSON Content */}
+        <div className="flex-1 overflow-auto p-4 font-mono text-xs sm:text-sm">
+          {searchQuery && !filteredData ? (
+            <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
+              No matches found for "{searchQuery}"
+            </div>
+          ) : viewMode === "minify" ? (
+            <pre className="whitespace-pre-wrap break-words">
+              {JSON.stringify(displayData)}
+            </pre>
+          ) : viewMode === "pretty" ? (
+            <pre className="whitespace-pre-wrap break-words">
+              {JSON.stringify(displayData, null, 2)}
+            </pre>
+          ) : (
+            <JsonValueRenderer
+              value={displayData}
+              path="root"
+              depth={0}
+              collapsedNodes={collapsedNodes}
+              onToggleNode={toggleNode}
+            />
+          )}
+        </div>
+      </div>
     </div>
   )
 }
