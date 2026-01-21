@@ -7,6 +7,7 @@ import { TrustSection } from "@/components/home/trust-section"
 import { siteConfig } from "@/config/site"
 import { orgStructuredData } from "@/lib/seo/metadata"
 import { categories } from "@/lib/tools/categories"
+import { getToolsCount } from "@/lib/tools/registry"
 
 // Lazy load below-the-fold sections
 const PopularToolsSection = dynamic(
@@ -42,10 +43,12 @@ const CTASection = dynamic(() => import("@/components/home/cta-section"), {
   ssr: true,
 })
 
+const toolCount = getToolsCount()
+
 export const metadata: Metadata = {
   title: "Free Developer Tools - DevConverter | JSON, Base64, JWT & More",
   description:
-    "Professional developer tools for JSON formatting, Base64 encoding/decoding, JWT token analysis, hash generation (MD5, SHA-256), and 20+ more utilities. Fast, secure, privacy-first tools that work entirely in your browser. No registration, no data collection, 100% free forever.",
+    `Professional developer tools for JSON formatting, Base64 encoding/decoding, JWT token analysis, hash generation (MD5, SHA-256), and ${toolCount}+ more utilities. Fast, secure, privacy-first tools that work entirely in your browser. No registration, no data collection, 100% free forever.`,
   keywords: [
     "developer tools",
     "online tools",
@@ -90,7 +93,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Free Developer Tools - DevConverter | JSON, Base64, JWT & More",
     description:
-      "Professional developer tools: JSON formatter, Base64 encoder, JWT decoder, hash generator, and 20+ utilities. Fast, private, browser-based. No registration required.",
+      `Professional developer tools: JSON formatter, Base64 encoder, JWT decoder, hash generator, and ${toolCount}+ utilities. Fast, private, browser-based. No registration required.`,
     type: "website",
     siteName: "DevConverter",
     url: siteConfig.url,
@@ -107,7 +110,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Free Developer Tools - DevConverter",
     description:
-      "Professional developer tools: JSON formatter, Base64 encoder, JWT decoder, and 20+ utilities. Fast, private, browser-based.",
+      `Professional developer tools: JSON formatter, Base64 encoder, JWT decoder, and ${toolCount}+ utilities. Fast, private, browser-based.`,
     images: [`${siteConfig.url}/opengraph-image`],
     creator: "@devconverter",
   },

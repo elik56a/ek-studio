@@ -9,6 +9,7 @@ import {
 import { ArrowRight } from "lucide-react"
 
 import { SmoothLink } from "@/components/layout/smooth-link"
+import { getToolsCount } from "@/lib/tools/registry"
 
 interface Category {
   id: string
@@ -23,6 +24,8 @@ export default function CategoriesSection({
 }: {
   categories: Category[]
 }) {
+  const toolCount = getToolsCount()
+
   return (
     <section id="categories" className="space-y-12 px-4">
       <div className="text-center space-y-4 max-w-3xl mx-auto">
@@ -30,7 +33,7 @@ export default function CategoriesSection({
           Browse by Category
         </h2>
         <p className="text-base sm:text-lg text-muted-foreground">
-          Discover 20+ developer tools organized by category. From JSON
+          Discover {toolCount}+ developer tools organized by category. From JSON
           formatting to cryptography, find the perfect tool for your workflow.
         </p>
       </div>

@@ -6,8 +6,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@ek-studio/ui"
+import { getToolsCount } from "@/lib/tools/registry"
 
 export default function FAQSection() {
+  const toolCount = getToolsCount()
+
   const faqs = [
     {
       question: "Are DevConverter tools really free?",
@@ -32,7 +35,7 @@ export default function FAQSection() {
     {
       question: "What tools are available on DevConverter?",
       answer:
-        "DevConverter offers 20+ developer tools including JSON formatter and validator, Base64 encoder/decoder, JWT decoder, hash generators (MD5, SHA-1, SHA-256, SHA-512), UUID generator, Unix timestamp converter, URL encoder/decoder, regex tester, text diff checker, YAML/JSON/CSV converters, markdown converter, color converter, and many more. We're constantly adding new tools based on developer feedback.",
+        `DevConverter offers ${toolCount}+ developer tools including JSON formatter and validator, Base64 encoder/decoder, JWT decoder, hash generators (MD5, SHA-1, SHA-256, SHA-512), UUID generator, Unix timestamp converter, URL encoder/decoder, regex tester, text diff checker, YAML/JSON/CSV converters, markdown converter, color converter, and many more. We're constantly adding new tools based on developer feedback.`,
     },
     {
       question: "How fast are the tools?",

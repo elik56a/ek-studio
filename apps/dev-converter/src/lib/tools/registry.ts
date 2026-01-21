@@ -43,3 +43,8 @@ export const searchTools = (query: string): Tool[] => {
       )
   )
 }
+
+
+export const getToolsCount = (): number => {
+  return Math.floor(tools.length / 5) * 5
+}

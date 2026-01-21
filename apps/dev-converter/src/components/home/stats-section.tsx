@@ -3,8 +3,11 @@
 import { Award, Clock, Lock, Users } from "lucide-react"
 
 import { useEffect, useRef, useState } from "react"
+import { getToolsCount } from "@/lib/tools/registry"
 
 export function StatsSection() {
+  const toolCount = getToolsCount()
+
   return (
     <section className="px-4">
       <div className="container mx-auto max-w-6xl">
@@ -23,7 +26,7 @@ export function StatsSection() {
           />
           <StatCard
             icon={Users}
-            value="20+"
+            value={`${toolCount}+`}
             label="Developer Tools"
             description="Growing collection of utilities"
           />

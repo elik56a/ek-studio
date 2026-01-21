@@ -6,11 +6,13 @@ import { useEffect, useState } from "react"
 
 import { Logo } from "@/components/layout/logo"
 import { SmoothLink } from "@/components/layout/smooth-link"
+import { getToolsCount } from "@/lib/tools/registry"
 
 import { CodePatternSVG } from "./decorative-svg"
 
 export function HeroSection() {
   const [mounted, setMounted] = useState(false)
+  const toolCount = getToolsCount()
 
   useEffect(() => {
     setMounted(true)
@@ -30,7 +32,7 @@ export function HeroSection() {
       <div className="space-y-4 max-w-5xl mx-auto">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-primary animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
           <Sparkles className="w-4 h-4" />
-          <span>50+ Professional Developer Tools</span>
+          <span>{toolCount}+ Professional Developer Tools</span>
           <Sparkles className="w-4 h-4" />
         </div>
 
@@ -44,7 +46,7 @@ export function HeroSection() {
         </h1>
 
         <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
-          Format JSON, decode JWT, encode Base64, generate hashes, and 20+ more
+          Format JSON, decode JWT, encode Base64, generate hashes, and {toolCount}+ more
           utilities.
           <span className="block mt-1 font-semibold text-foreground">
             Fast. Private. Free Forever.

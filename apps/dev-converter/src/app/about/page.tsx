@@ -15,6 +15,7 @@ import type { Metadata } from "next"
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema"
 import { generateStaticPageMetadata } from "@/lib/seo/metadata"
 import { generateStaticPageSchema } from "@/lib/seo/schema-generators"
+import { getToolsCount } from "@/lib/tools/registry"
 
 export const metadata: Metadata = generateStaticPageMetadata({
   title: "About Us",
@@ -30,6 +31,8 @@ export const metadata: Metadata = generateStaticPageMetadata({
 })
 
 export default function AboutPage() {
+  const toolCount = getToolsCount()
+
   // Generate AboutPage schema
   const pageSchema = generateStaticPageSchema({
     title: "About DevConverter - Built for Developers, By Developers",
@@ -156,7 +159,7 @@ export default function AboutPage() {
                     <Code2 className="w-6 h-6 text-primary" />
                   </div>
                   <div className="text-3xl sm:text-4xl font-bold text-primary mb-1">
-                    20+
+                    {toolCount}+
                   </div>
                   <div className="text-sm text-muted-foreground">
                     Developer Tools
