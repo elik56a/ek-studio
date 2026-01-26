@@ -1,5 +1,3 @@
-"use client"
-
 import { Card } from "@ek-studio/ui"
 import { cn } from "@ek-studio/ui"
 import {

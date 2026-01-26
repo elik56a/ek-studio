@@ -1,12 +1,9 @@
-"use client"
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@ek-studio/ui"
-import { motion } from "framer-motion"
 
 export interface FAQItem {
   question: string
@@ -31,29 +28,18 @@ export function FAQ({ items, defaultOpen, className }: FAQProps) {
         {items.map((item, index) => {
           const value = `item-${index}`
           return (
-            <motion.div
-              key={value}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.3,
-                delay: index * 0.05,
-                ease: "easeOut",
-              }}
-            >
-              <AccordionItem value={value}>
-                <AccordionTrigger className="hover:no-underline group">
-                  <h3 className="text-left font-medium group-hover:text-primary transition-colors text-base">
-                    {item.question}
-                  </h3>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="text-muted-foreground leading-relaxed">
-                    {item.answer}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </motion.div>
+            <AccordionItem key={value} value={value}>
+              <AccordionTrigger className="hover:no-underline group">
+                <h3 className="text-left font-medium group-hover:text-primary transition-colors text-base">
+                  {item.question}
+                </h3>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="text-muted-foreground leading-relaxed">
+                  {item.answer}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
           )
         })}
       </Accordion>
