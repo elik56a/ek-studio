@@ -1,173 +1,220 @@
 import { Tool } from "@/lib/tools/types"
 
-/**
- * JWT Decoder Tool Configuration
- *
- * Decodes JSON Web Tokens (JWT) to inspect header and payload claims.
- * Essential for debugging OAuth2/OIDC authentication, inspecting token expiration,
- * and troubleshooting 401/403 authorization errors.
- * Runs entirely in-browser using Base64URL parsing for privacy.
- */
+
 export const jwtDecoderTool: Tool = {
   id: "jwt-decoder",
   slug: "jwt-decoder",
   name: "JWT Decoder",
   description:
-    "Decode JSON Web Tokens (JWT) locally to inspect header, payload claims, expiration, issuer/audience, and debug OAuth2/OIDC authentication issues",
+    "Decode JWT tokens locally to inspect header + payload claims (exp/nbf/iat, iss/aud, scopes/roles) and debug OAuth2/OIDC authentication issues.",
   category: "security",
   type: "converter",
   order: 1,
   keywords: [
     "jwt decoder",
+    "jwt decoder online",
     "decode jwt",
+    "decode jwt token",
     "jwt claims",
-    "jwt payload",
-    "oauth2 token",
-    "oidc token",
-    "bearer token",
+    "jwt payload decoder",
+    "jwt header decoder",
     "jwt inspector",
+    "jwt parser",
+    "oauth2 token",
+    "oauth2 access token",
+    "oidc token",
+    "oidc id token",
+    "bearer token",
+    "authorization header",
+    "jwt exp iat nbf",
+    "jwt issuer audience",
+    "jws decoder",
+    "jwe vs jwt",
   ],
   metadata: {
-    title: "JWT Decoder & Claims Inspector (OAuth2 / OIDC)",
+    title: "JWT Decoder & Claims Inspector (exp/iat/nbf, iss/aud, scopes/roles)",
     description:
-      "Decode JWT tokens online (locally). Inspect header/payload claims, check exp/nbf/iat, issuer & audience, and debug OAuth2/OIDC bearer tokens securely.",
+      "Decode a JWT locally in your browser. Inspect header/payload claims, check exp/nbf/iat validity, issuer & audience, and debug OAuth2/OIDC access tokens and ID tokens securely.",
     keywords: [
       "jwt decoder",
       "jwt claims inspector",
       "decode jwt token",
-      "oauth2 token decoder",
-      "oidc id token decoder",
       "jwt payload decoder",
       "jwt header decoder",
+      "oauth2 token decoder",
+      "oidc id token decoder",
+      "jwt exp iat nbf",
+      "jwt issuer audience",
+      "bearer token decoder",
+      "jws decoder",
     ],
   },
   info: {
     description:
-      "JWT Decoder & Claims Inspector is a developer-focused tool for decoding JSON Web Tokens used in OAuth2, OpenID Connect (OIDC), SSO, and API authentication. Paste a token and instantly view the decoded header and payload as readable JSON, including common claims like exp (expiration), nbf (not before), iat (issued at), iss (issuer), aud (audience), sub (subject), scope, and roles. This helps you debug 401/403 errors, confirm what your identity provider is sending, and spot risky configurations such as unexpected algorithms or missing validation-critical claims. Decoding runs entirely in your browser using Base64URL parsing—no requests, no storage, and no token logging.",
+      "JWT Decoder & Claims Inspector is a developer tool for decoding JSON Web Tokens (JWT/JWS) used in OAuth2, OpenID Connect (OIDC), SSO, and API authentication. Paste a token and instantly view the decoded header and payload as readable JSON, including important claims like exp (expiration), nbf (not before), iat (issued at), iss (issuer), aud (audience), sub (subject), jti (token id), scope/scp, roles, permissions, and custom app claims. This is ideal for debugging 401/403 errors, validating that your identity provider (Auth0/Okta/Cognito/Keycloak/etc.) is issuing the expected claims, and catching risky headers such as unexpected alg values. Decoding happens locally with Base64URL parsing—no network calls, no storage, and no token logging.",
     howToUse: [
-      "Copy the full JWT (three dot-separated parts) from an Authorization header, cookie, or API response",
-      "Paste the token into the JWT input field",
-      'Click "Decode JWT" to display the decoded header and payload JSON',
-      "Review exp/nbf/iat timestamps to confirm token validity window",
-      "Check iss (issuer) and aud (audience) for common OAuth2/OIDC misconfigurations",
-      "Inspect scopes/roles/permissions to verify authorization behavior",
-      "Copy decoded JSON for debugging notes or bug reports (avoid sharing real production data)",
+      "Copy the full token from your Authorization header (Bearer …), cookie, localStorage, or API response",
+      "Paste the JWT into the input field (format: header.payload.signature)",
+      'Click "Decode JWT" (or decode automatically) to view header + payload as JSON',
+      "Check exp/nbf/iat to confirm the token is currently valid (clock skew can matter)",
+      "Verify iss (issuer) and aud (audience) match what your backend expects",
+      "Inspect scope/scp/roles/permissions claims to understand authorization decisions",
+      "Confirm typ/kid/alg in the header to ensure your verification settings match",
+      "Copy decoded JSON when debugging (avoid sharing real production tokens publicly)",
     ],
     useCases: [
-      "Fix 401 Unauthorized: Identify expired tokens (exp), wrong issuer (iss), or mismatched audience (aud)",
-      "Debug OAuth2/OIDC flows: Inspect scopes, client_id, nonce, and identity claims for login issues",
-      "Inspect RBAC permissions: Confirm roles/permissions claims match expected access rules",
-      "Troubleshoot microservices auth: Compare tokens at gateway vs downstream services to find where claims change",
-      "Validate SSO integrations: Verify what your IdP includes in the token without guessing",
-      "Detect suspicious headers: Spot unexpected alg values or missing token fields that break verification",
+      "Fix 401 Unauthorized: Confirm exp is not expired and nbf is not in the future",
+      "Fix 403 Forbidden: Inspect scopes/roles/permissions claims vs your RBAC rules",
+      "Debug OAuth2/OIDC issues: Verify iss/aud, client_id/azp, nonce, and identity claims",
+      "Troubleshoot API gateways: Compare claims at the edge vs downstream services",
+      "Validate SSO integrations: Ensure your IdP includes the claims your app requires",
+      "Check token type: Distinguish access tokens vs ID tokens by typical claim patterns",
+      "Detect suspicious headers: Spot alg=none, unexpected typ, missing kid, or weird structures",
+      "Explain auth bugs in PRs/tickets: Copy readable claim JSON instead of raw tokens",
     ],
     features: [
-      "Instant Base64URL decoding of header and payload",
-      "Readable JSON output with formatting for fast claim inspection",
-      "Highlights common validation-critical claims (exp, nbf, iat, iss, aud, sub)",
-      "Helps debug OAuth2/OIDC bearer tokens and ID tokens",
-      "No network calls: runs fully in-browser for privacy",
-      "Copy-friendly decoded output for troubleshooting",
+      "Instant Base64URL decoding of JWT header + payload",
+      "Readable JSON output (great for debugging and documentation)",
+      "Highlights validation-critical claims: exp, nbf, iat, iss, aud, sub, jti",
+      "Works for OAuth2 access tokens and OIDC ID tokens (claim inspection)",
+      "Helps triage 401 vs 403 quickly by inspecting validity vs permissions",
+      "Local-only processing: no network calls, no uploads, privacy-first",
+      "Copy-friendly output for bug reports (sanitize sensitive claims first)",
+      "Handles common real-world claim shapes: scope/scp arrays/strings, roles, permissions",
     ],
   },
+
   examples: [
     {
-      title: "Decode a JWT with identity claims",
+      title: "Decode a JWT with basic identity claims",
       input:
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
       description:
-        "Inspect common claims like sub (user id), name, and iat (issued at) to understand what the token represents",
+        "Inspect sub, name, and iat to understand what the token represents.",
     },
     {
-      title: "Inspect an OAuth2 token with roles",
+      title: "Check expiration window (exp/nbf/iat)",
       input:
-        "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MjEiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJyb2xlcyI6WyJ1c2VyIiwiYWRtaW4iXSwiZXhwIjoxNzM2MjA4MDAwfQ.signature",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzEyMyIsImlhdCI6MTcwMDAwMDAwMCwibmJmIjoxNzAwMDAwMDAwLCJleHAiOjE3MDAwMDM2MDB9.signature",
       description:
-        "Verify roles/permissions and the exp timestamp when debugging RBAC authorization",
+        "Confirm whether the token is valid right now (watch for exp and nbf).",
     },
     {
-      title: "Find why a token is rejected (expired exp)",
+      title: "OAuth2 access token with scopes (scope string)",
       input:
-        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxMDAxIiwiZXhwIjoxNzM2MjA4MDAwfQ.signature",
+        "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2F1dGguZXhhbXBsZS5jb20iLCJhdWQiOiJodHRwczovL2FwaS5leGFtcGxlLmNvbSIsInN1YiI6InVzZXJfMTIzIiwic2NvcGUiOiJyZWFkOnVzZXJzIHdyaXRlOnVzZXJzIiwiaWF0IjoxNzAwMDAwMDAwLCJleHAiOjE3MDAwMDM2MDB9.signature",
       description:
-        "Check the exp claim to confirm whether expiration is causing 401 errors",
+        "Inspect iss/aud and scope when debugging 401/403 authorization issues.",
     },
     {
-      title: "Validate issuer and audience (SSO troubleshooting)",
+      title: "OAuth2 token with roles array (RBAC debugging)",
       input:
-        "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoLmV4YW1wbGUuY29tIiwiYXVkIjoiYXBpLmV4YW1wbGUuY29tIn0.signature",
+        "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MjEiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJyb2xlcyI6WyJ1c2VyIiwiYWRtaW4iXSwicGVybWlzc2lvbnMiOlsicmVhZDpyZXBvcnRzIiwid3JpdGU6dXNlcnMiXSwiZXhwIjoxNzM2MjA4MDAwfQ.signature",
       description:
-        "Confirm iss/aud values match your OAuth provider and API verification settings",
+        "Verify roles/permissions claims vs your RBAC rules when access is denied.",
     },
     {
-      title: "Spot risky algorithm choice (header inspection)",
+      title: "Validate issuer and audience (common OIDC misconfiguration)",
+      input:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2lkcC5leGFtcGxlLmNvbS8iLCJhdWQiOiJteS1hcGktYXVkaWVuY2UiLCJzdWIiOiJ1c2VyXzEyMyIsImV4cCI6MTczNjIwODAwMH0.signature",
+      description:
+        "Confirm iss/aud match your backend’s expected issuer and audience values.",
+    },
+    {
+      title: "Spot algorithm/header issues (kid/alg/typ)",
+      input:
+        "eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMjYtMDEta2V5LTEiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJ1c2VyXzEyMyIsImF1ZCI6ImFwaSIsImlzcyI6Imh0dHBzOi8vYXV0aC5leGFtcGxlLmNvbSIsImV4cCI6MTczNjIwODAwMH0.signature",
+      description:
+        "Use header fields (alg/kid/typ) to debug signature verification configuration.",
+    },
+    {
+      title: "Risky header example (alg: none) — for learning only",
       input:
         "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJhdHRhY2tlciIsImFkbWluIjp0cnVlfQ.",
       description:
-        "Inspect the header alg field and flag unsafe configurations (never accept 'none' in production verification)",
+        "Inspect alg=none in the header (never accept 'none' during verification in production).",
     },
     {
-      title: "Inspect an OIDC ID token payload",
+      title: "OIDC ID token payload (profile claims)",
       input:
         "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIzIiwiZW1haWwiOiJ1c2VyQGV4YW1wbGUuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJKb2huIERvZSIsInBpY3R1cmUiOiJodHRwczovL2V4YW1wbGUuY29tL3Bob3RvLmpwZyJ9.signature",
       description:
-        "Verify identity claims like email/email_verified/name when debugging OIDC login flows",
+        "Verify identity fields like email/email_verified/name when debugging login flows.",
+    },
+    {
+      title: "JWE hint: token that won’t decode like a JWT (5 parts)",
+      input:
+        "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZHQ00ifQ.eyJraWQiOiJrZXkxIn0.ZXhhbXBsZQ.encryptedPayload.tag",
+      description:
+        "If the token has 5 dot-separated parts, it may be a JWE (encrypted). Decoding claims requires decryption keys, not just Base64URL parsing.",
     },
   ],
+
   faq: [
     {
       question: "What is a JWT (JSON Web Token)?",
       answer:
-        "A JWT is a compact token format used for authentication and authorization. It has three parts: header, payload (claims), and signature, separated by dots.",
+        "A JWT is a compact token format used for authentication and authorization. It typically contains three dot-separated parts: header, payload (claims), and signature.",
     },
     {
       question: "How do I decode a JWT token to debug 401 errors?",
       answer:
-        "Decode the token and check exp (expired), iss (wrong issuer), aud (wrong audience), and missing fields like sub/scope/roles. These are common causes of 401/403 failures.",
+        "Decode the token and check exp (expired), nbf (not active yet), iss (issuer mismatch), aud (audience mismatch), and whether required claims are missing. These are common causes of 401.",
+    },
+    {
+      question: "How do I debug 403 Forbidden with a JWT?",
+      answer:
+        "403 usually means the token is valid but lacks permissions. Inspect scope/scp, roles, permissions, and custom authorization claims to see why access was denied.",
     },
     {
       question: "Does this JWT decoder verify the signature?",
       answer:
-        "No. This tool decodes and displays the header/payload only. Signature verification must be done server-side using the correct secret/public key and allowed algorithms.",
+        "No. This tool decodes and displays the header/payload only. Signature verification must be done server-side using the correct secret/public key and a strict allowlist of algorithms.",
     },
     {
       question: "What do exp, iat, and nbf mean in a JWT?",
       answer:
-        "exp is expiration time, iat is issued-at time, and nbf is not-before time. They are Unix timestamps that define when a token is valid.",
+        "exp is expiration time, iat is issued-at time, and nbf is not-before time. They’re usually Unix timestamps that define when a token is valid.",
     },
     {
-      question:
-        "What is the difference between an OAuth2 access token and an OIDC ID token?",
+      question: "What are iss and aud and why do they matter?",
       answer:
-        "Access tokens authorize API access (often contain scopes/permissions). ID tokens represent user identity for the client app (often contain profile claims like email/name).",
+        "iss (issuer) identifies who issued the token; aud (audience) identifies who the token is intended for. Backends commonly reject tokens when iss/aud don’t match expected values.",
+    },
+    {
+      question: "What’s the difference between an OAuth2 access token and an OIDC ID token?",
+      answer:
+        "Access tokens are for API authorization (often include scopes/permissions). ID tokens represent user identity for the client app (often include profile claims like email/name).",
     },
     {
       question: "Is it safe to paste a production JWT into an online decoder?",
       answer:
-        "This decoder runs locally in your browser and doesn't send tokens to a server. Still, treat JWTs like sensitive data—avoid sharing real production tokens in screenshots or bug reports.",
+        "This decoder runs locally in your browser and doesn’t send tokens to a server. Still, treat JWTs as sensitive: don’t share real tokens in screenshots or public tickets.",
     },
     {
       question: "Why is 'alg: none' considered dangerous?",
       answer:
-        "'none' means no signature. If a backend mistakenly accepts it during verification, attackers can forge tokens. Always restrict allowed algorithms on the server.",
+        "'none' means no signature. If a backend mistakenly accepts it, attackers can forge tokens. Always restrict allowed algorithms during verification.",
     },
     {
       question: "Why does my token fail to decode or look corrupted?",
       answer:
-        "Common causes are missing segments (not three parts), whitespace/newlines added during copy, or the token isn't a JWT (it might be an opaque token or a JWE with five parts).",
+        "Common causes: the token isn’t three segments, whitespace/newlines were inserted, it’s an opaque token (not JWT), or it’s a JWE (encrypted token with five segments).",
     },
   ],
+
   relatedTools: [
-    "hash-generator",
     "base64-encode-decode",
-    "uuid-generator",
-    "password-generator",
     "json-formatter",
     "url-encode-decode",
+    "hash-generator",
+    "uuid-generator",
+    "password-generator",
   ],
+
   ui: {
-    inputPlaceholder: "Paste your JWT token (header.payload.signature)...",
-    outputPlaceholder: "Decoded header and payload will appear here...",
+    inputPlaceholder: "Paste your JWT (header.payload.signature)…",
+    outputPlaceholder: "Decoded header and payload JSON will appear here…",
     inputLabel: "JWT Token",
     outputLabel: "Decoded JWT",
     convertLabel: "Decode JWT",
